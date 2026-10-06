@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v21 · Khipu brief, first pass · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--fog:#e6eae8;--paper:#f6f7f4;--ink:#17212a;--mute:#4f5b62;--indigo:#2f3f7f;--coch:#a1283c;--rule:#c5cdca}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fog);color:var(--ink);font:17.5px/1.58 'Instrument Sans',sans-serif}
+a{color:var(--indigo);text-underline-offset:.2em}
+:focus-visible{outline:2.5px solid var(--coch);outline-offset:3px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;font-size:14.5px}
+.top b{font:500 1.15rem 'Newsreader',serif}
+.top a{color:var(--ink)}
+.hero{display:grid;grid-template-columns:minmax(0,4.4fr) minmax(0,7.6fr);gap:1rem;align-items:start;padding:.5rem 2rem 2rem;min-height:calc(100vh - 60px)}
+.txt{padding-top:7rem}
+h1{font:500 clamp(2.6rem,4.6vw,4.3rem)/1.03 'Newsreader',serif;letter-spacing:-.015em;margin:0 0 1.3rem}
+.txt p{font-size:1.12rem;max-width:30rem;margin:0 0 1.4rem;color:#2c3740}
+.btn{display:inline-block;background:var(--coch);color:#fff;text-decoration:none;font-weight:600;padding:.75rem 1.2rem;border-radius:2px}
+.btn:hover{background:#86202f}
+.kh svg{width:100%;height:auto;display:block}
+.pend{cursor:pointer}.pend:focus{outline:none}.pend.on .cord,.pend:focus-visible .cord{stroke-width:7}
+.read{margin:.2rem 0 0 2rem;font-size:.98rem;color:var(--mute);min-height:3em}
+.read b{color:var(--ink);font:600 1.25rem 'Newsreader',serif;margin-right:.35rem}
+.wrap{max-width:1180px;margin:0 auto;padding:0 2rem}
+.take{background:var(--paper);border-left:5px solid var(--coch);padding:1.4rem 1.8rem;margin:1rem 0 3.4rem}
+.take h2{font:600 1.35rem 'Newsreader',serif;margin:0 0 .5rem}
+.take ul{margin:0;padding-left:1.2rem}
+.take li{margin-bottom:.35rem}
+h2.s{font:500 2rem/1.1 'Newsreader',serif;margin:0 0 1.2rem}
+.ev{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem;margin-bottom:3.4rem}
+.case{background:var(--paper);border-top:3px solid var(--indigo);padding:1.3rem 1.5rem 1.4rem}
+.case h3{font:600 1.35rem/1.15 'Newsreader',serif;margin:0 0 .2rem}
+.case .m{font-size:.9rem;color:var(--mute);margin:0 0 .6rem}
+.case p{margin:0 0 .6rem}
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;padding:2.4rem 0 4rem;border-top:1px solid var(--rule)}
+.about p{margin:0 0 1rem}
+@media (max-width:900px){.hero{grid-template-columns:1fr;min-height:0;padding:.5rem 1.2rem 1rem}.txt{padding-top:1.5rem}.read{margin-left:0}.ev,.about{grid-template-columns:1fr}.wrap,.top{padding-left:1.2rem;padding-right:1.2rem}}
+</style>
+</head>
+<body>
+<header class="top"><b>Gabriela Medrano Torres</b><span><a href="index.html">← Gallery</a> · v21</span></header>
+<section class="hero">
+  <div class="txt">
+    <h1>I turn messy, real-world records into tools people use to decide.</h1>
+    <p>Fisheries engineer, former business intelligence analyst, and M.S. candidate in Computational Analysis and Public Policy at the University of Chicago.</p>
+    <a class="btn" href="https://github.com/gmedranotorres">Write to me on GitHub</a>
+  </div>
+  <div class="kh"><svg id="k" viewBox="0 0 760 640" role="group" aria-label="Khipu with eight cords recording numbers from my work"></svg>
+  <p class="read" id="read" aria-live="polite">This khipu records eight numbers from my work. Select a cord to read it.</p></div>
+</section>
+<div class="wrap">
+  <section class="take"><h2>In short</h2><ul>
+    <li>Most of the value of a data tool is created before the chart: defining indicators, cleaning names, linking records to places.</li>
+    <li>I have built tools for organizers, analysts and operations teams in Peru, Spain and Chicago.</li>
+    <li>I graduate in June 2027 and I’m looking for research, policy and data work in Chicago.</li></ul></section>
+  <h2 class="s">Evidence</h2>
+  <div class="ev">
+    <article class="case"><h3>COFI outreach dashboard</h3><p class="m">Chicago, summer 2026</p><p>Field records from an organizing team became a live neighborhood map of doors knocked, conversations, flyers and referrals, documented in English and Spanish.</p><a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the dashboard</a></article>
+    <article class="case"><h3>MortgageMatch</h3><p class="m">UChicago team project, 2026</p><p>An interactive view of mortgage lending across Illinois. I helped merge HMDA records, Census ACS indicators and lender data into one dataset.</p><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></article>
+    <article class="case"><h3>Business intelligence</h3><p class="m">Teleperformance and Baufest, Peru, 2021–2025</p><p>SQL, ETL and DAX behind more than 30 Power BI dashboards for operational reporting.</p></article>
+    <article class="case"><h3>Jumbo squid surimi research</h3><p class="m">UNALM thesis research, 2024</p><p>How a clay-derived additive changes texture, gel strength and water-holding capacity in <i>Dosidicus gigas</i> gels.</p></article>
+  </div>
+  <section class="about">
+    <div><h2 class="s">About</h2><p>I studied fisheries engineering at Universidad Nacional Agraria La Molina in Lima, finishing fourth in my class, and spent a semester in food-science labs in Orihuela, Spain. After nearly four years in business intelligence, I came to the University of Chicago in 2025. I teach programming to Spanish-speaking beginners and work in English and Spanish.</p></div>
+    <div><h2 class="s">Contact</h2><p>Open to research, policy and data roles in Chicago from June 2027.</p><a class="btn" href="https://github.com/gmedranotorres">Write to me on GitHub</a></div>
+  </section>
+</div>
+<script>
+const P=[[30,'#a1283c','Power BI dashboards built: 20+ at Teleperformance and 10 at Baufest.'],[4,'#1f6b68','Indicators on the COFI outreach map: doors, conversations, flyers and referrals.'],[3,'#2f3f7f','Public datasets merged in MortgageMatch: HMDA, ACS and lender data.'],[1,'#b8892f','Squid species studied for my thesis: Dosidicus gigas.'],[3,'#7a5a3f','Countries I have studied and worked in: Peru, Spain and the United States.'],[2,'#5d6fae','Working languages: English and Spanish.'],[10,'#8d6e9b','Certifications, from Qualified Fishing Sailor (2019) to Statistics with SAS (2025).'],[2027,'#4a3a2e','Graduation year: M.S., University of Chicago, June 2027.']];
+const svg=document.getElementById('k'),NS='http://www.w3.org/2000/svg';
+const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+const sh=(h,f)=>'#'+[16,8,0].map(s=>Math.round((parseInt(h.slice(1),16)>>s&255)*f).toString(16).padStart(2,'0')).join('');
+const x1=20,x2=740,y0=30,sag=30,pd=`M${x1},${y0} Q${(x1+x2)/2},${y0+sag*2} ${x2},${y0}`;
+E('path',{d:pd,stroke:'#b9ad92','stroke-width':10,fill:'none','stroke-linecap':'round'});E('path',{d:pd,stroke:'#7d6f55','stroke-width':10,fill:'none','stroke-dasharray':'3 6',opacity:.7});
+const LEN=[470,520,480,545,465,510,490,535];
+P.forEach((p,i)=>{const x=x1+55+i*(x2-x1-110)/(P.length-1),t=(x-x1)/(x2-x1),ya=y0+2*sag*t*(1-t),L=LEN[i],sx=((i%3)-1)*7,col=p[1],dk=sh(col,.62);
+ const c=[x,ya,x+7,ya+L*.33,x-7,ya+L*.66,x+sx,ya+L],pt=f=>{const u=1-f;return[u*u*u*c[0]+3*u*u*f*c[2]+3*u*f*f*c[4]+f*f*f*c[6],u*u*u*c[1]+3*u*u*f*c[3]+3*u*f*f*c[5]+f*f*f*c[7]]};
+ const g=E('g',{class:'pend',tabindex:0,role:'button','aria-label':`${p[0]}: ${p[2]}`,'data-i':i});
+ E('rect',{x:x-22,y:ya,width:44,height:L+20,fill:'transparent'},g);
+ const d=`M${c[0]},${c[1]} C${c[2]},${c[3]} ${c[4]},${c[5]} ${c[6]},${c[7]}`;
+ E('path',{class:'cord',d,stroke:col,'stroke-width':4.5,fill:'none','stroke-linecap':'round'},g);E('path',{d,stroke:dk,'stroke-width':4.5,fill:'none','stroke-dasharray':'2 5',opacity:.5},g);
+ E('ellipse',{cx:x,cy:ya+2,rx:6.5,ry:4.5,fill:'none',stroke:col,'stroke-width':3.5},g);
+ const dg=String(p[0]).padStart(4,'0').split('').map(Number),F=[.16,.34,.53,.79];
+ for(let q=0;q<3;q++)for(let k=0;k<dg[q];k++){const[kx,ky]=pt(F[q]+(k-(dg[q]-1)/2)*10/L);E('ellipse',{cx:kx,cy:ky,rx:7,ry:4.8,fill:dk},g)}
+ const u=dg[3],[ux,uy]=pt(F[3]);
+ if(u===1){E('circle',{cx:ux,cy:uy-5.5,r:5,fill:'none',stroke:dk,'stroke-width':3.2},g);E('circle',{cx:ux,cy:uy+5.5,r:5,fill:'none',stroke:dk,'stroke-width':3.2},g)}
+ else if(u>1){const h=8+u*5;E('rect',{x:ux-6.5,y:uy-h/2,width:13,height:h,rx:6.5,fill:dk},g);for(let k=1;k<u;k++){const yy=uy-h/2+k*h/u;E('path',{d:`M${ux-5.5},${yy+2} L${ux+5.5},${yy-2}`,stroke:col,'stroke-width':1.3},g)}}
+ const[ex,ey]=pt(1);for(const dx of[-3.5,0,3.5])E('path',{d:`M${ex},${ey} l${dx},10`,stroke:col,'stroke-width':2,'stroke-linecap':'round'},g)});
+const rd=document.getElementById('read');
+function show(i){const p=P[i];rd.innerHTML=`<b>${p[0]}</b>${p[2]}`;document.querySelectorAll('.pend').forEach(e=>e.classList.toggle('on',+e.dataset.i===i))}
+['mouseover','click','focusin'].forEach(ev=>svg.addEventListener(ev,e=>{const g=e.target.closest('.pend');if(g)show(+g.dataset.i)}));
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v23 · Readable knots · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--fog:#e6eae8;--paper:#f6f7f4;--ink:#17212a;--mute:#4f5b62;--indigo:#2f3f7f;--coch:#a1283c;--rule:#c3cbc8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fog);color:var(--ink);font:17.5px/1.58 'Instrument Sans',sans-serif}
+a{color:var(--indigo);text-underline-offset:.2em}
+:focus-visible{outline:2.5px solid var(--coch);outline-offset:3px}
+.top{display:flex;align-items:center;gap:2rem;padding:1rem 2.2rem;border-bottom:1px solid var(--rule)}
+.top b{font:500 1.2rem 'Newsreader',serif;margin-right:auto}
+.top nav{display:flex;gap:1.4rem;font-weight:500}
+.top nav a{color:var(--ink);text-decoration:none}.top nav a:hover{text-decoration:underline}
+.gal{font-size:14px;color:var(--mute)}.gal a{color:var(--mute)}
+.hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:3rem;align-items:center;max-width:1240px;margin:0 auto;padding:3.4rem 2.2rem 2.6rem}
+h1{font:500 clamp(2.5rem,4.4vw,4.1rem)/1.04 'Newsreader',serif;letter-spacing:-.015em;margin:0 0 1.3rem;max-width:17ch}
+.lead{font-size:1.15rem;max-width:34rem;margin:0 0 .8rem;color:#2c3740}
+.status{font-weight:600;margin:0 0 1.6rem}
+.acts{display:flex;flex-wrap:wrap;gap:.8rem}
+.btn{display:inline-block;padding:.75rem 1.2rem;font-weight:600;text-decoration:none;border-radius:2px}
+.btn.p{background:var(--coch);color:#fff}.btn.p:hover{background:#86202f}
+.btn.s{border:1.5px solid var(--ink);color:var(--ink)}.btn.s:hover{background:rgba(23,33,42,.06)}
+.kh svg{width:100%;height:auto;display:block;max-width:520px;margin-left:auto}
+.pend{cursor:pointer}.pend:focus{outline:none}.pend.on .cord,.pend:focus-visible .cord{stroke-width:7}
+.read{font-size:.95rem;color:var(--mute);min-height:3.2em;margin:.4rem 0 0;max-width:520px;margin-left:auto}
+.read b{color:var(--ink);font:600 1.2rem 'Newsreader',serif;margin-right:.35rem}
+.sec{max-width:1240px;margin:0 auto;padding:3rem 2.2rem}
+h2{font:500 2.1rem/1.1 'Newsreader',serif;margin:0 0 1.6rem}
+.entry{display:grid;grid-template-columns:11rem minmax(0,1fr) 15rem;gap:2rem;padding:1.6rem .8rem;border-top:1px solid var(--rule);scroll-margin-top:1rem}
+.entry:last-child{border-bottom:1px solid var(--rule)}
+.yr{font:500 1.5rem/1 'Newsreader',serif;display:block;margin-bottom:.35rem}
+.ctx{font-size:.9rem;color:var(--mute)}
+.entry h3{font:600 1.5rem/1.15 'Newsreader',serif;margin:0 0 .4rem}
+.entry p{margin:0}
+.act{font-size:.92rem;color:var(--mute)}
+.act a{display:inline-block;margin-top:.5rem;font-weight:600}
+.path{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 3rem;margin:0}
+.path div{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;padding:.65rem 0;border-top:1px solid var(--rule)}
+.path dt{font:500 1.15rem 'Newsreader',serif}.path dd{margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.4rem;counter-reset:s}
+.steps li{counter-increment:s;border-top:3px solid var(--indigo);padding-top:.7rem}
+.steps li::before{content:counter(s);display:block;font:500 1.8rem/1 'Newsreader',serif;color:var(--indigo);margin-bottom:.5rem}
+.steps b{display:block;margin-bottom:.2rem}
+.contact{background:var(--ink);color:#eef1ef}
+.contact .sec{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:3rem;align-items:end;padding:3.6rem 2.2rem}
+.contact h2{color:#fff;font-size:clamp(2rem,3.6vw,3rem);margin:0}
+.contact p{margin:0 0 1rem;color:#c8d0cd}
+.contact .btn.p{background:#fff;color:var(--ink)}
+@media (max-width:900px){.top{flex-wrap:wrap;gap:.6rem 1.2rem;padding:.9rem 1.2rem}.top nav{order:3;width:100%}.hero{grid-template-columns:1fr;gap:1.5rem;padding:2rem 1.2rem}.sec{padding:2.4rem 1.2rem}.entry{grid-template-columns:1fr;gap:.6rem}.path{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.contact .sec{grid-template-columns:1fr;padding:2.6rem 1.2rem}.kh svg{margin:0 auto}}
+
+.tn{font:600 21px 'Newsreader',serif;fill:var(--ink)}
+.tl{font:500 12.5px 'Instrument Sans',sans-serif;fill:var(--mute)}
+.pend.on .tl{fill:var(--coch)}
+.read .how{display:block;font-size:.88rem;margin-top:.2rem}
+details.legend{max-width:520px;margin:.5rem 0 0 auto;font-size:.92rem}
+details.legend summary{cursor:pointer;font-weight:600;color:var(--indigo)}
+details.legend ul{margin:.5rem 0 0;padding-left:1.1rem;color:#2c3740}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1.8rem;font-size:.95rem}
+.chips>span{color:var(--mute);margin-right:.2rem}
+.chips button{font:600 .92rem 'Instrument Sans',sans-serif;padding:.42rem .85rem;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--ink);color:#fff}
+.entry{transition:opacity .2s,box-shadow .2s}
+.entry.dim{opacity:.33}
+.entry.cue{box-shadow:inset 4px 0 0 var(--coch);background:rgba(161,40,60,.05)}
+@media (prefers-reduced-motion:reduce){.entry{transition:none}}
+</style>
+</head>
+<body>
+<header class="top"><b>Gabriela Medrano Torres</b><nav aria-label="Sections"><a href="#work">Work</a><a href="#path">Path</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav><span class="gal"><a href="index.html">← Gallery</a> · v23</span></header>
+<section class="hero">
+  <div>
+    <h1>I turn messy, real-world records into tools people use to decide.</h1>
+    <p class="lead">I’m Gabriela Medrano Torres, a fisheries engineer and former business intelligence analyst, finishing an M.S. in Computational Analysis and Public Policy at the University of Chicago.</p>
+    <p class="status">Graduating June 2027. Looking for research, policy and data work in Chicago.</p>
+    <div class="acts"><a class="btn p" href="https://github.com/gmedranotorres">Write to me on GitHub</a><a class="btn s" href="#work">See my work</a></div>
+    <div class="chips" role="group" aria-label="Highlight work by focus"><span>Show me work for</span><button type="button" data-a="policy" aria-pressed="false">Policy research</button><button type="button" data-a="civic" aria-pressed="false">Civic tech</button><button type="button" data-a="env" aria-pressed="false">Environmental data</button><button type="button" data-a="bi" aria-pressed="false">Analytics</button></div>
+  </div>
+  <div class="kh"><svg id="k" viewBox="0 0 520 520" role="group" aria-label="Khipu with six cords recording numbers from my work"></svg>
+    <p class="read" id="read" aria-live="polite">This khipu records six numbers from my work, knotted in base ten. Select a cord to read it.</p>
+    <details class="legend"><summary>How to read a khipu</summary><ul><li>Single knots count tens, hundreds and thousands, by their height on the cord.</li><li>A long knot near the end counts units from two to nine by its turns.</li><li>A figure-eight knot is a single unit; an empty stretch of cord is a zero.</li><li>Khipus are knotted-cord records used in the Andes for centuries. I’m Peruvian; this is a small tribute.</li></ul></details></div>
+</section>
+<section class="sec" id="work" aria-labelledby="wh">
+  <h2 id="wh">Selected work</h2>
+  <article class="entry" id="cofi" data-a="civic policy"><div><span class="yr">2026</span><span class="ctx">Chicago, summer internship</span></div><div><h3>COFI outreach dashboard</h3><p>An organizing team’s field records became a live map of doors knocked, conversations, flyers and referrals across Chicago community areas. I standardized community names, matched records to geography and documented the system in English and Spanish so staff could maintain it.</p></div><div class="act">Google Sheets, Apps Script, Leaflet, GitHub Pages<br><a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the dashboard</a></div></article>
+  <article class="entry" id="mm" data-a="policy bi"><div><span class="yr">2026</span><span class="ctx">UChicago team project</span></div><div><h3>MortgageMatch</h3><p>An interactive dashboard for comparing mortgage approvals and denials across Illinois counties, lenders, income groups and loan sizes. With my team, I cleaned and merged HMDA application records, Census ACS indicators and lender data, and built analysis-ready variables.</p></div><div class="act">Python, HMDA, ACS<br><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></div></article>
+  <article class="entry" id="bi" data-a="bi"><div><span class="yr">2021–2025</span><span class="ctx">Teleperformance and Baufest, Peru</span></div><div><h3>Business intelligence for operations teams</h3><p>More than 30 Power BI dashboards built on SQL extraction, ETL and DAX measures, with indicator definitions agreed with the people who used them.</p></div><div class="act">SQL, DAX, Power BI</div></article>
+  <article class="entry" id="sq" data-a="env"><div><span class="yr">2024</span><span class="ctx">UNALM thesis research</span></div><div><h3>Jumbo squid surimi gels</h3><p>How a clay-derived additive changes texture, gel strength and water-holding capacity in <i>Dosidicus gigas</i> gels: a question about turning an abundant resource into a higher-value food.</p></div><div class="act">Experimental design, lab measurement, statistics</div></article>
+</section>
+<section class="sec" id="path" aria-labelledby="ph">
+  <h2 id="ph">Path</h2>
+  <dl class="path">
+    <div><dt>2019</dt><dd>Food-science exchange and lab internship, Orihuela, Spain</dd></div>
+    <div><dt>2021</dt><dd>Business intelligence analyst, Teleperformance Perú</dd></div>
+    <div><dt>2022</dt><dd>B.S. Fisheries Engineering, UNALM, Lima, fourth in my class</dd></div>
+    <div><dt>2024</dt><dd>Thesis on jumbo squid gels; began teaching programming in Spanish</dd></div>
+    <div><dt>2025</dt><dd>Data specialist at Baufest; M.S. begins at UChicago</dd></div>
+    <div><dt>2026</dt><dd>MortgageMatch, COFI internship, K–8 tutoring</dd></div>
+    <div><dt>2027</dt><dd>Graduation, June</dd></div>
+  </dl>
+</section>
+<section class="sec" id="approach" aria-labelledby="ah">
+  <h2 id="ah">How I work</h2>
+  <ol class="steps">
+    <li><b>Begin with the decision</b>Who needs this, and what will they do with it?</li>
+    <li><b>Examine the data honestly</b>Missing values, inconsistent definitions, duplicates.</li>
+    <li><b>Build a traceable workflow</b>Steps someone else can follow.</li>
+    <li><b>Challenge the result</b>Does the evidence support it?</li>
+    <li><b>Deliver for the audience</b>A map, a model or a plain explanation.</li>
+  </ol>
+</section>
+<section class="contact" id="contact" aria-labelledby="ch"><div class="sec">
+  <h2 id="ch">Working on a question like these in Chicago? I’d like to hear about it.</h2>
+  <div><p>Open to research, policy and data roles from June 2027. I work in English and Spanish.</p><a class="btn p" href="https://github.com/gmedranotorres">Write to me on GitHub</a></div>
+</div></section>
+<script>
+const P=[{v:30,c:'#a1283c',l:'dashboards',k:'bi',d:'Power BI dashboards built: 20+ at Teleperformance and 10 at Baufest.'},{v:4,c:'#1f6b68',l:'map indicators',k:'cofi',d:'Indicators on the COFI outreach map: doors knocked, conversations, flyers and referrals.'},{v:3,c:'#2f3f7f',l:'datasets merged',k:'mm',d:'Public datasets merged in MortgageMatch: HMDA, Census ACS and lender data.'},{v:1,c:'#b8892f',l:'squid species',k:'sq',d:'Squid species studied for my thesis: Dosidicus gigas, the jumbo squid.'},{v:3,c:'#7a5a3f',l:'countries',k:'path',d:'Countries I have studied and worked in: Peru, Spain and the United States.'},{v:2027,c:'#4a3a2e',l:'graduation',k:'contact',d:'Graduation year: M.S., University of Chicago, June 2027.'}];
+const svg=document.getElementById('k'),NS='http://www.w3.org/2000/svg';
+const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+const sh=(h,f)=>'#'+[16,8,0].map(s=>Math.round((parseInt(h.slice(1),16)>>s&255)*f).toString(16).padStart(2,'0')).join('');
+function drawKhipu(TAGS){const x1=10,x2=510,y0=24,sag=18,pd=`M${x1},${y0} Q${(x1+x2)/2},${y0+sag*2} ${x2},${y0}`;
+E('path',{d:pd,stroke:'#b9ad92','stroke-width':10,fill:'none','stroke-linecap':'round'});E('path',{d:pd,stroke:'#7d6f55','stroke-width':10,fill:'none','stroke-dasharray':'3 6',opacity:.7});
+const LEN=[330,382,345,395,335,388];
+P.forEach((p,i)=>{const x=x1+42+i*(x2-x1-84)/(P.length-1),t=(x-x1)/(x2-x1),ya=y0+2*sag*t*(1-t),L=LEN[i],sx=((i%3)-1)*6,col=p.c,dk=sh(col,.62);
+ const c=[x,ya,x+6,ya+L*.33,x-6,ya+L*.66,x+sx,ya+L],pt=f=>{const u=1-f;return[u*u*u*c[0]+3*u*u*f*c[2]+3*u*f*f*c[4]+f*f*f*c[6],u*u*u*c[1]+3*u*u*f*c[3]+3*u*f*f*c[5]+f*f*f*c[7]]};
+ const g=E('g',{class:'pend',tabindex:0,role:'button','aria-label':`${p.v}: ${p.d}`,'data-i':i});
+ E('rect',{x:x-26,y:ya,width:52,height:L+(TAGS?72:20),fill:'transparent'},g);
+ const d=`M${c[0]},${c[1]} C${c[2]},${c[3]} ${c[4]},${c[5]} ${c[6]},${c[7]}`;
+ E('path',{class:'cord',d,stroke:col,'stroke-width':4.5,fill:'none','stroke-linecap':'round'},g);E('path',{d,stroke:dk,'stroke-width':4.5,fill:'none','stroke-dasharray':'2 5',opacity:.5},g);
+ E('ellipse',{cx:x,cy:ya+2,rx:6.5,ry:4.5,fill:'none',stroke:col,'stroke-width':3.5},g);
+ const dg=String(p.v).padStart(4,'0').split('').map(Number),F=[.16,.34,.53,.79];
+ for(let q=0;q<3;q++)for(let k=0;k<dg[q];k++){const[kx,ky]=pt(F[q]+(k-(dg[q]-1)/2)*10/L);E('ellipse',{cx:kx,cy:ky,rx:7,ry:4.8,fill:dk},g)}
+ const u=dg[3],[ux,uy]=pt(F[3]);
+ if(u===1){E('circle',{cx:ux,cy:uy-5.5,r:5,fill:'none',stroke:dk,'stroke-width':3.2},g);E('circle',{cx:ux,cy:uy+5.5,r:5,fill:'none',stroke:dk,'stroke-width':3.2},g)}
+ else if(u>1){const h=8+u*5;E('rect',{x:ux-6.5,y:uy-h/2,width:13,height:h,rx:6.5,fill:dk},g);for(let k=1;k<u;k++){const yy=uy-h/2+k*h/u;E('path',{d:`M${ux-5.5},${yy+2} L${ux+5.5},${yy-2}`,stroke:col,'stroke-width':1.3},g)}}
+ const[ex,ey]=pt(1);for(const dx of[-3.5,0,3.5])E('path',{d:`M${ex},${ey} l${dx},10`,stroke:col,'stroke-width':2,'stroke-linecap':'round'},g);
+ if(TAGS)TAGS(g,p,ex,ey)})}
+drawKhipu((g,p,ex,ey)=>{const t=E('text',{x:ex,y:ey+34,'text-anchor':'middle',class:'tn'},g);t.textContent=p.v;const l=E('text',{x:ex,y:ey+51,'text-anchor':'middle',class:'tl'},g);l.textContent=p.l});
+const W=['zero','one','two','three','four','five','six','seven','eight','nine'],POS=['thousands','hundreds','tens'];
+function describe(v){const d=String(v).padStart(4,'0').split('').map(Number),f=d.findIndex(x=>x>0),o=[];for(let i=0;i<3;i++){if(d[i])o.push(`${W[d[i]]} single knot${d[i]>1?'s':''} in the ${POS[i]}`);else if(f>-1&&i>f)o.push(`a blank stretch for zero ${POS[i]}`)}o.push(d[3]===0?'no knot in the units':d[3]===1?'a figure-eight knot in the units':`a long knot of ${W[d[3]]} turns in the units`);return o.join(', ')}
+const rd=document.getElementById('read');
+function show(i){const p=P[i];rd.innerHTML=`<b>${p.v}</b>${p.d}<span class="how">Read it: ${describe(p.v)}.</span>`;document.querySelectorAll('.pend').forEach(e=>e.classList.toggle('on',+e.dataset.i===i));document.querySelectorAll('.entry').forEach(e=>e.classList.toggle('cue',e.id===p.k))}
+['mouseover','click','focusin'].forEach(ev=>svg.addEventListener(ev,e=>{const g=e.target.closest('.pend');if(g)show(+g.dataset.i)}));
+document.querySelectorAll('.entry').forEach(en=>en.addEventListener('mouseenter',()=>{const i=P.findIndex(p=>p.k===en.id);if(i>-1)show(i)}));
+document.querySelector('.chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const on=b.getAttribute('aria-pressed')!=='true';document.querySelectorAll('.chips button').forEach(x=>x.setAttribute('aria-pressed',x===b&&on));document.querySelectorAll('.entry').forEach(en=>en.classList.toggle('dim',on&&!en.dataset.a.includes(b.dataset.a)))});
+</script>
+</body>
+</html>

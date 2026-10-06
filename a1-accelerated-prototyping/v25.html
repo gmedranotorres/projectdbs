@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en" data-l="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v25 · Final · Gabriela Medrano Torres</title>
+<meta name="description" content="Gabriela Medrano Torres: fisheries engineer and data and policy analyst in Chicago. I turn messy, real-world records into tools people use to decide.">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--fog:#e6eae8;--paper:#f6f7f4;--ink:#17212a;--mute:#4f5b62;--indigo:#2f3f7f;--coch:#a1283c;--rule:#c3cbc8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fog);color:var(--ink);font:17.5px/1.58 'Instrument Sans',sans-serif}
+a{color:var(--indigo);text-underline-offset:.2em}
+:focus-visible{outline:2.5px solid var(--coch);outline-offset:3px}
+.top{display:flex;align-items:center;gap:2rem;padding:1rem 2.2rem;border-bottom:1px solid var(--rule)}
+.top b{font:500 1.2rem 'Newsreader',serif;margin-right:auto}
+.top nav{display:flex;gap:1.4rem;font-weight:500}
+.top nav a{color:var(--ink);text-decoration:none}.top nav a:hover{text-decoration:underline}
+.gal{font-size:14px;color:var(--mute)}.gal a{color:var(--mute)}
+.hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:3rem;align-items:center;max-width:1240px;margin:0 auto;padding:3.4rem 2.2rem 2.6rem}
+h1{font:500 clamp(2.5rem,4.4vw,4.1rem)/1.04 'Newsreader',serif;letter-spacing:-.015em;margin:0 0 1.3rem;max-width:17ch}
+.lead{font-size:1.15rem;max-width:34rem;margin:0 0 .8rem;color:#2c3740}
+.status{font-weight:600;margin:0 0 1.6rem}
+.acts{display:flex;flex-wrap:wrap;gap:.8rem}
+.btn{display:inline-block;padding:.75rem 1.2rem;font-weight:600;text-decoration:none;border-radius:2px}
+.btn.p{background:var(--coch);color:#fff}.btn.p:hover{background:#86202f}
+.btn.s{border:1.5px solid var(--ink);color:var(--ink)}.btn.s:hover{background:rgba(23,33,42,.06)}
+.kh svg{width:100%;height:auto;display:block;max-width:520px;margin-left:auto}
+.pend{cursor:pointer}.pend:focus{outline:none}.pend.on .cord,.pend:focus-visible .cord{stroke-width:7}
+.read{font-size:.95rem;color:var(--mute);min-height:3.2em;margin:.4rem 0 0;max-width:520px;margin-left:auto}
+.read b{color:var(--ink);font:600 1.2rem 'Newsreader',serif;margin-right:.35rem}
+.sec{max-width:1240px;margin:0 auto;padding:3rem 2.2rem}
+h2{font:500 2.1rem/1.1 'Newsreader',serif;margin:0 0 1.6rem}
+.entry{display:grid;grid-template-columns:11rem minmax(0,1fr) 15rem;gap:2rem;padding:1.6rem .8rem;border-top:1px solid var(--rule);scroll-margin-top:1rem}
+.entry:last-child{border-bottom:1px solid var(--rule)}
+.yr{font:500 1.5rem/1 'Newsreader',serif;display:block;margin-bottom:.35rem}
+.ctx{font-size:.9rem;color:var(--mute)}
+.entry h3{font:600 1.5rem/1.15 'Newsreader',serif;margin:0 0 .4rem}
+.entry p{margin:0}
+.act{font-size:.92rem;color:var(--mute)}
+.act a{display:inline-block;margin-top:.5rem;font-weight:600}
+.path{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 3rem;margin:0}
+.path div{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;padding:.65rem 0;border-top:1px solid var(--rule)}
+.path dt{font:500 1.15rem 'Newsreader',serif}.path dd{margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.4rem;counter-reset:s}
+.steps li{counter-increment:s;border-top:3px solid var(--indigo);padding-top:.7rem}
+.steps li::before{content:counter(s);display:block;font:500 1.8rem/1 'Newsreader',serif;color:var(--indigo);margin-bottom:.5rem}
+.steps b{display:block;margin-bottom:.2rem}
+.contact{background:var(--ink);color:#eef1ef}
+.contact .sec{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:3rem;align-items:end;padding:3.6rem 2.2rem}
+.contact h2{color:#fff;font-size:clamp(2rem,3.6vw,3rem);margin:0}
+.contact p{margin:0 0 1rem;color:#c8d0cd}
+.contact .btn.p{background:#fff;color:var(--ink)}
+@media (max-width:900px){.top{flex-wrap:wrap;gap:.6rem 1.2rem;padding:.9rem 1.2rem}.top nav{order:3;width:100%}.hero{grid-template-columns:1fr;gap:1.5rem;padding:2rem 1.2rem}.sec{padding:2.4rem 1.2rem}.entry{grid-template-columns:1fr;gap:.6rem}.path{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.contact .sec{grid-template-columns:1fr;padding:2.6rem 1.2rem}.kh svg{margin:0 auto}}
+
+html[data-l="en"] .es,html[data-l="es"] .en{display:none}
+.lang{display:flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;font:600 13.5px 'Instrument Sans',sans-serif;padding:.34rem .8rem;cursor:pointer;color:var(--ink)}
+.lang button[aria-pressed=true]{background:var(--ink);color:#fff}
+.tn{font:600 21px 'Newsreader',serif;fill:var(--ink)}
+.tl{font:500 12.5px 'Instrument Sans',sans-serif;fill:var(--mute)}
+.pend.on .tl{fill:var(--coch)}
+.read .how{display:block;font-size:.88rem;margin-top:.2rem}
+details.legend{max-width:520px;margin:.5rem 0 0 auto;font-size:.92rem}
+details.legend summary{cursor:pointer;font-weight:600;color:var(--indigo)}
+details.legend ul{margin:.5rem 0 0;padding-left:1.1rem;color:#2c3740}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1.8rem;font-size:.95rem}
+.chips>span{color:var(--mute);margin-right:.2rem}
+.chips button{font:600 .92rem 'Instrument Sans',sans-serif;padding:.42rem .85rem;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--ink);color:#fff}
+.entry{transition:opacity .2s,box-shadow .2s}
+.entry.dim{opacity:.33}
+.entry.cue{box-shadow:inset 4px 0 0 var(--coch);background:rgba(161,40,60,.05)}
+@media (max-width:600px){.steps{grid-template-columns:1fr}h1{font-size:2.35rem}.top b{font-size:1.05rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.cordline{height:9px;background:repeating-linear-gradient(112deg,#b9ad92 0 5px,#7d6f55 5px 7px)}
+.top{border-bottom:0}
+.hero{align-items:start;padding-top:0}
+.hero>div:first-child{padding-top:3.6rem}
+.qs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem 3rem}
+.qs li{font:400 1.42rem/1.32 'Newsreader',serif;border-top:1px solid var(--rule);padding-top:.8rem}
+.pcord{list-style:none;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1.1rem;position:relative}
+.pcord::before{content:'';position:absolute;left:0;right:0;top:8px;height:8px;border-radius:4px;background:repeating-linear-gradient(112deg,#b9ad92 0 5px,#7d6f55 5px 7px)}
+.pcord li{position:relative;padding-top:2.5rem;font-size:.95rem}
+.pcord .kn{position:absolute;top:2px;left:0;width:24px;height:20px;border-radius:50%;background:var(--ink)}
+.pcord li.fut .kn{background:var(--fog);border:3px solid var(--coch)}
+.pcord b{display:block;font:500 1.4rem/1 'Newsreader',serif;margin-bottom:.35rem}
+.also{margin:2.2rem 0 0;max-width:46rem;color:#2c3740}
+.foot{border-top:1px solid var(--rule)}
+.foot .sec{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;padding-top:1.4rem;padding-bottom:1.6rem;font-size:.9rem;color:var(--mute)}
+.foot a{color:var(--mute)}
+::selection{background:#f1c9d0}
+@media (max-width:900px){.hero>div:first-child{padding-top:2rem}.kh{border-top:8px solid #9d907a;padding-top:0}.qs{grid-template-columns:1fr}
+ .pcord{grid-template-columns:1fr;gap:0;padding-left:2.4rem}.pcord::before{left:8px;right:auto;top:0;bottom:0;width:8px;height:auto;background:repeating-linear-gradient(22deg,#b9ad92 0 5px,#7d6f55 5px 7px)}.pcord li{padding:0 0 1.3rem}.pcord .kn{left:-2.4rem;top:.1rem}}
+@media print{body{background:#fff}.top nav,.lang,.gal,.acts,.kh,.cordline{display:none}.hero{grid-template-columns:1fr}.contact{background:#fff;color:#000}.contact h2,.contact p{color:#000}a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;color:#444}.entry{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top"><b>Gabriela Medrano Torres</b><nav aria-label="Sections"><a href="#work"><span class="en">Work</span><span class="es" lang="es">Trabajo</span></a><a href="#path"><span class="en">Path</span><span class="es" lang="es">Trayectoria</span></a><a href="#approach"><span class="en">Approach</span><span class="es" lang="es">Método</span></a><a href="#contact"><span class="en">Contact</span><span class="es" lang="es">Contacto</span></a></nav><div class="lang" role="group" aria-label="Language / Idioma"><button type="button" data-set="en" aria-pressed="true">English</button><button type="button" data-set="es" aria-pressed="false">Español</button></div><span class="gal"><a href="index.html">← <span class="en">Gallery</span><span class="es" lang="es">Galería</span></a> · v25</span></header>
+<div class="cordline" aria-hidden="true"></div>
+<main>
+<section class="hero">
+  <div>
+    <h1><span class="en">I turn messy, real-world records into tools people use to decide.</span><span class="es" lang="es">Convierto registros reales y desordenados en herramientas que la gente usa para decidir.</span></h1>
+    <p class="lead"><span class="en">I’m Gabriela Medrano Torres, a fisheries engineer and former business intelligence analyst, finishing an M.S. in Computational Analysis and Public Policy at the University of Chicago.</span><span class="es" lang="es">Soy Gabriela Medrano Torres, ingeniera pesquera y exanalista de inteligencia de negocios. Estoy terminando la Maestría en Análisis Computacional y Políticas Públicas en la Universidad de Chicago.</span></p>
+    <p class="status"><span class="en">Graduating June 2027. Looking for research, policy and data work in Chicago.</span><span class="es" lang="es">Me gradúo en junio de 2027. Busco trabajo en investigación, políticas públicas y datos en Chicago.</span></p>
+    <div class="acts"><a class="btn p" href="https://github.com/gmedranotorres"><span class="en">Write to me on GitHub</span><span class="es" lang="es">Escríbeme en GitHub</span></a><a class="btn s" href="#work"><span class="en">See my work</span><span class="es" lang="es">Ver mi trabajo</span></a></div>
+  </div>
+  <div class="kh"><svg id="k" viewBox="0 0 520 500" role="group" aria-label="Khipu: six cords recording numbers from my work"></svg>
+    <p class="read" id="read" aria-live="polite"><span class="en">This khipu records six numbers from my work, knotted in base ten. Select a cord to read it.</span><span class="es" lang="es">Este khipu registra seis números de mi trabajo, anudados en base diez. Elige un cordón para leerlo.</span></p>
+    <details class="legend"><summary><span class="en">How to read a khipu</span><span class="es" lang="es">Cómo leer un khipu</span></summary><ul><li><span class="en">Single knots count tens, hundreds and thousands, by their height on the cord.</span><span class="es" lang="es">Los nudos simples cuentan decenas, centenas y millares, según su altura en el cordón.</span></li><li><span class="en">A long knot near the end counts units from two to nine by its turns.</span><span class="es" lang="es">Un nudo largo cerca del extremo cuenta unidades del dos al nueve según sus vueltas.</span></li><li><span class="en">A figure-eight knot is a single unit; an empty stretch of cord is a zero.</span><span class="es" lang="es">Un nudo en forma de ocho es una unidad; un tramo vacío del cordón es un cero.</span></li><li><span class="en">Khipus are knotted-cord records used in the Andes for centuries. I’m Peruvian; this is a small tribute.</span><span class="es" lang="es">Los khipus son registros de cuerdas anudadas usados en los Andes durante siglos. Soy peruana; este es un pequeño homenaje.</span></li></ul></details>
+  </div>
+</section>
+<section class="sec" id="work" aria-labelledby="wh">
+  <h2 id="wh"><span class="en">Selected work</span><span class="es" lang="es">Trabajo seleccionado</span></h2>
+  <article class="entry" id="cofi" data-a="civic policy"><div><span class="yr">2026</span><span class="ctx"><span class="en">Chicago, summer internship</span><span class="es" lang="es">Chicago, prácticas de verano</span></span></div><div><h3><span class="en">COFI outreach dashboard</span><span class="es" lang="es">Tablero de alcance comunitario de COFI</span></h3><p><span class="en">An organizing team’s field records became a live map of doors knocked, conversations, flyers and referrals across Chicago community areas. I standardized community names, matched records to geography and documented the system in English and Spanish so staff could maintain it.</span><span class="es" lang="es">Los registros de campo de un equipo de organización comunitaria se convirtieron en un mapa en vivo de puertas tocadas, conversaciones, volantes y derivaciones en las áreas comunitarias de Chicago. Estandaricé los nombres de las comunidades, vinculé los registros a su geografía y documenté el sistema en inglés y en español para que el equipo pudiera mantenerlo.</span></p></div><div class="act">Google Sheets, Apps Script, Leaflet, GitHub Pages<br><a href="https://gmedranotorres.github.io/cofi-dashboard/"><span class="en">Open the dashboard</span><span class="es" lang="es">Abrir el tablero</span></a></div></article>
+  <article class="entry" id="mm" data-a="policy bi"><div><span class="yr">2026</span><span class="ctx"><span class="en">UChicago team project</span><span class="es" lang="es">Proyecto en equipo, UChicago</span></span></div><div><h3>MortgageMatch</h3><p><span class="en">An interactive dashboard for comparing mortgage approvals and denials across Illinois counties, lenders, income groups and loan sizes. With my team, I cleaned and merged HMDA application records, Census ACS indicators and lender data, and built analysis-ready variables.</span><span class="es" lang="es">Un tablero interactivo para comparar aprobaciones y rechazos de hipotecas entre condados, prestamistas, grupos de ingreso y montos de préstamo en Illinois. Con mi equipo limpié y uní los registros de solicitudes de HMDA, los indicadores del censo (ACS) y los datos de prestamistas, y construí variables listas para el análisis.</span></p></div><div class="act">Python, HMDA, ACS<br><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions"><span class="en">See the repository</span><span class="es" lang="es">Ver el repositorio</span></a></div></article>
+  <article class="entry" id="bi" data-a="bi"><div><span class="yr">2021–2025</span><span class="ctx"><span class="en">Teleperformance and Baufest, Peru</span><span class="es" lang="es">Teleperformance y Baufest, Perú</span></span></div><div><h3><span class="en">Business intelligence for operations teams</span><span class="es" lang="es">Inteligencia de negocios para equipos de operaciones</span></h3><p><span class="en">More than 30 Power BI dashboards built on SQL extraction, ETL and DAX measures, with indicator definitions agreed with the people who used them.</span><span class="es" lang="es">Más de 30 tableros de Power BI construidos sobre extracción SQL, ETL y medidas DAX, con definiciones de indicadores acordadas con quienes los usaban.</span></p></div><div class="act">SQL, DAX, Power BI</div></article>
+  <article class="entry" id="sq" data-a="env"><div><span class="yr">2024</span><span class="ctx"><span class="en">UNALM thesis research</span><span class="es" lang="es">Investigación de tesis, UNALM</span></span></div><div><h3><span class="en">Jumbo squid surimi gels</span><span class="es" lang="es">Geles de surimi de pota</span></h3><p><span class="en">How a clay-derived additive with nanoscale crystalline domains changes texture, gel strength and water-holding capacity in <i>Dosidicus gigas</i> gels: a question about turning an abundant resource into a higher-value food.</span><span class="es" lang="es">Cómo un aditivo derivado de arcilla con dominios cristalinos nanométricos cambia la textura, la fuerza de gel y la capacidad de retención de agua en geles de <i>Dosidicus gigas</i>: una pregunta sobre cómo convertir un recurso abundante en un alimento de mayor valor.</span></p></div><div class="act"><span class="en">Experimental design, lab measurement, statistics</span><span class="es" lang="es">Diseño experimental, mediciones de laboratorio, estadística</span></div></article>
+</section>
+<section class="sec" id="path" aria-labelledby="ph">
+  <h2 id="ph"><span class="en">Path</span><span class="es" lang="es">Trayectoria</span></h2>
+  <p><span class="en">One cord, one knot per year. The open knot is still ahead.</span><span class="es" lang="es">Un cordón, un nudo por año. El nudo abierto todavía está por venir.</span></p>
+  <ol class="pcord"><li><span class="kn" aria-hidden="true"></span><b>2019</b><span class="en">Food-science exchange and lab internship, Orihuela, Spain</span><span class="es" lang="es">Intercambio y prácticas en ciencia de los alimentos, Orihuela, España</span></li><li><span class="kn" aria-hidden="true"></span><b>2021</b><span class="en">Business intelligence analyst, Teleperformance Perú</span><span class="es" lang="es">Analista de inteligencia de negocios, Teleperformance Perú</span></li><li><span class="kn" aria-hidden="true"></span><b>2022</b><span class="en">B.S. Fisheries Engineering, UNALM, Lima, fourth in my class</span><span class="es" lang="es">Ingeniera pesquera, UNALM, Lima, cuarta de mi promoción</span></li><li><span class="kn" aria-hidden="true"></span><b>2024</b><span class="en">Thesis on jumbo squid gels; began teaching programming in Spanish</span><span class="es" lang="es">Tesis sobre geles de pota; empecé a enseñar programación en español</span></li><li><span class="kn" aria-hidden="true"></span><b>2025</b><span class="en">Data specialist at Baufest; M.S. begins at UChicago</span><span class="es" lang="es">Especialista de datos en Baufest; inicio de la maestría en UChicago</span></li><li><span class="kn" aria-hidden="true"></span><b>2026</b><span class="en">MortgageMatch, COFI internship, K–8 tutoring</span><span class="es" lang="es">MortgageMatch, prácticas en COFI, tutoría escolar</span></li><li class="fut"><span class="kn" aria-hidden="true"></span><b>2027</b><span class="en">Graduation, June</span><span class="es" lang="es">Graduación, junio</span></li></ol>
+</section>
+<section class="sec" id="questions" aria-labelledby="qh">
+  <h2 id="qh"><span class="en">Questions I want to work on</span><span class="es" lang="es">Preguntas en las que quiero trabajar</span></h2>
+  <ul class="qs"><li><span class="en">How can environmental monitoring data lead to stronger enforcement?</span><span class="es" lang="es">¿Cómo pueden los datos de monitoreo ambiental llevar a una fiscalización más efectiva?</span></li><li><span class="en">Where are public services or outreach failing to reach the people who need them?</span><span class="es" lang="es">¿Dónde no llegan los servicios públicos o el trabajo comunitario a quienes los necesitan?</span></li><li><span class="en">How can administrative records become evidence instead of disconnected files?</span><span class="es" lang="es">¿Cómo pueden los registros administrativos convertirse en evidencia y no en archivos dispersos?</span></li><li><span class="en">When can machine learning improve targeting while keeping decisions transparent?</span><span class="es" lang="es">¿Cuándo puede el aprendizaje automático mejorar la focalización sin perder transparencia?</span></li></ul>
+</section>
+<section class="sec" id="approach" aria-labelledby="ah">
+  <h2 id="ah"><span class="en">How I work</span><span class="es" lang="es">Cómo trabajo</span></h2>
+  <ol class="steps">
+    <li><b><span class="en">Begin with the decision</span><span class="es" lang="es">Empezar por la decisión</span></b><span class="en">Who needs this, and what will they do with it?</span><span class="es" lang="es">¿Quién lo necesita y qué hará con ello?</span></li>
+    <li><b><span class="en">Examine the data honestly</span><span class="es" lang="es">Revisar los datos con honestidad</span></b><span class="en">Missing values, inconsistent definitions, duplicates.</span><span class="es" lang="es">Valores faltantes, definiciones inconsistentes, duplicados.</span></li>
+    <li><b><span class="en">Build a traceable workflow</span><span class="es" lang="es">Construir un flujo trazable</span></b><span class="en">Steps someone else can follow.</span><span class="es" lang="es">Pasos que otra persona pueda seguir.</span></li>
+    <li><b><span class="en">Challenge the result</span><span class="es" lang="es">Cuestionar el resultado</span></b><span class="en">Does the evidence support it?</span><span class="es" lang="es">¿La evidencia lo respalda?</span></li>
+    <li><b><span class="en">Deliver for the audience</span><span class="es" lang="es">Entregar para el público</span></b><span class="en">A map, a model or a plain explanation.</span><span class="es" lang="es">Un mapa, un modelo o una explicación clara.</span></li>
+  </ol>
+  <p class="also"><span class="en">I also teach programming to Spanish-speaking beginners, from blocks to Python, and tutored K–8 students with UChicago’s Neighborhood Schools Program. Ten certifications, including environmental enforcement (OEFA) and fishing-sailor training.</span><span class="es" lang="es">También enseño programación a principiantes hispanohablantes, de los bloques a Python, y fui tutora escolar en el Neighborhood Schools Program de UChicago. Diez certificaciones, entre ellas fiscalización ambiental (OEFA) y formación como marinera de pesca.</span></p>
+</section>
+<section class="contact" id="contact" aria-labelledby="ch"><div class="sec">
+  <h2 id="ch"><span class="en">Working on a question like these in Chicago? I’d like to hear about it.</span><span class="es" lang="es">¿Trabajas en una pregunta así en Chicago? Me encantaría conversar.</span></h2>
+  <div><p><span class="en">Open to research, policy and data roles from June 2027. I work in English and Spanish.</span><span class="es" lang="es">Disponible para roles en investigación, políticas públicas y datos desde junio de 2027. Trabajo en inglés y en español.</span></p><a class="btn p" href="https://github.com/gmedranotorres"><span class="en">Write to me on GitHub</span><span class="es" lang="es">Escríbeme en GitHub</span></a></div>
+</div></section>
+</main>
+<footer class="foot"><div class="sec"><span><span class="en">Built in plain HTML, CSS and a little JavaScript. Typeset in Newsreader and Instrument Sans.</span><span class="es" lang="es">Hecho con HTML, CSS y un poco de JavaScript. Tipografías: Newsreader e Instrument Sans.</span></span><a href="index.html">← <span class="en">Back to the gallery</span><span class="es" lang="es">Volver a la galería</span></a></div></footer>
+<script>
+const P=[{v:30,c:'#a1283c',l:{en:'dashboards',es:'tableros'},k:'bi',d:{en:'Power BI dashboards built: 20+ at Teleperformance and 10 at Baufest.',es:'Tableros de Power BI construidos: más de 20 en Teleperformance y 10 en Baufest.'}},
+{v:4,c:'#1f6b68',l:{en:'map indicators',es:'indicadores'},k:'cofi',d:{en:'Indicators on the COFI outreach map: doors knocked, conversations, flyers and referrals.',es:'Indicadores del mapa de COFI: puertas tocadas, conversaciones, volantes y derivaciones.'}},
+{v:3,c:'#2f3f7f',l:{en:'datasets merged',es:'fuentes unidas'},k:'mm',d:{en:'Public datasets merged in MortgageMatch: HMDA, Census ACS and lender data.',es:'Fuentes públicas unidas en MortgageMatch: HMDA, ACS del censo y datos de prestamistas.'}},
+{v:1,c:'#b8892f',l:{en:'squid species',es:'especie de pota'},k:'sq',d:{en:'Squid species studied for my thesis: Dosidicus gigas, the jumbo squid.',es:'Especie estudiada en mi tesis: Dosidicus gigas, la pota.'}},
+{v:3,c:'#7a5a3f',l:{en:'countries',es:'países'},k:'path',d:{en:'Countries I have studied and worked in: Peru, Spain and the United States.',es:'Países donde he estudiado y trabajado: Perú, España y Estados Unidos.'}},
+{v:2027,c:'#4a3a2e',l:{en:'graduation',es:'graduación'},k:'contact',d:{en:'Graduation year: M.S., University of Chicago, June 2027.',es:'Año de graduación: maestría en la Universidad de Chicago, junio de 2027.'}}];
+const svg=document.getElementById('k'),NS='http://www.w3.org/2000/svg';
+const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+const sh=(h,f)=>'#'+[16,8,0].map(s=>Math.round((parseInt(h.slice(1),16)>>s&255)*f).toString(16).padStart(2,'0')).join('');
+function drawKhipu(HANG){const x1=10,x2=510,y0=HANG?2:24,sag=HANG?0:18;
+ if(!HANG){const pd=`M${x1},${y0} Q${(x1+x2)/2},${y0+sag*2} ${x2},${y0}`;E('path',{d:pd,stroke:'#b9ad92','stroke-width':10,fill:'none','stroke-linecap':'round'});E('path',{d:pd,stroke:'#7d6f55','stroke-width':10,fill:'none','stroke-dasharray':'3 6',opacity:.7})}
+ const LEN=HANG?[352,404,366,418,356,410]:[330,382,345,395,335,388];
+ P.forEach((p,i)=>{const x=x1+42+i*(x2-x1-84)/(P.length-1),t=(x-x1)/(x2-x1),ya=y0+2*sag*t*(1-t),L=LEN[i],sx=((i%3)-1)*6,col=p.c,dk=sh(col,.62);
+  const c=[x,ya,x+6,ya+L*.33,x-6,ya+L*.66,x+sx,ya+L],pt=f=>{const u=1-f;return[u*u*u*c[0]+3*u*u*f*c[2]+3*u*f*f*c[4]+f*f*f*c[6],u*u*u*c[1]+3*u*u*f*c[3]+3*u*f*f*c[5]+f*f*f*c[7]]};
+  const g=E('g',{class:'pend',tabindex:0,role:'button','data-i':i});
+  E('rect',{x:x-26,y:ya,width:52,height:L+72,fill:'transparent'},g);
+  const d=`M${c[0]},${c[1]} C${c[2]},${c[3]} ${c[4]},${c[5]} ${c[6]},${c[7]}`;
+  E('path',{class:'cord',d,stroke:col,'stroke-width':4.5,fill:'none','stroke-linecap':'round'},g);E('path',{d,stroke:dk,'stroke-width':4.5,fill:'none','stroke-dasharray':'2 5',opacity:.5},g);
+  E('ellipse',{cx:x,cy:ya+3,rx:6.5,ry:4.5,fill:'none',stroke:col,'stroke-width':3.5},g);
+  const dg=String(p.v).padStart(4,'0').split('').map(Number),F=[.16,.34,.53,.79];
+  for(let q=0;q<3;q++)for(let k=0;k<dg[q];k++){const[kx,ky]=pt(F[q]+(k-(dg[q]-1)/2)*10/L);E('ellipse',{cx:kx,cy:ky,rx:7,ry:4.8,fill:dk},g)}
+  const u=dg[3],[ux,uy]=pt(F[3]);
+  if(u===1){E('circle',{cx:ux,cy:uy-5.5,r:5,fill:'none',stroke:dk,'stroke-width':3.2},g);E('circle',{cx:ux,cy:uy+5.5,r:5,fill:'none',stroke:dk,'stroke-width':3.2},g)}
+  else if(u>1){const h=8+u*5;E('rect',{x:ux-6.5,y:uy-h/2,width:13,height:h,rx:6.5,fill:dk},g);for(let k=1;k<u;k++){const yy=uy-h/2+k*h/u;E('path',{d:`M${ux-5.5},${yy+2} L${ux+5.5},${yy-2}`,stroke:col,'stroke-width':1.3},g)}}
+  const[ex,ey]=pt(1);for(const dx of[-3.5,0,3.5])E('path',{d:`M${ex},${ey} l${dx},10`,stroke:col,'stroke-width':2,'stroke-linecap':'round'},g);
+  const tn=E('text',{x:ex,y:ey+34,'text-anchor':'middle',class:'tn'},g);tn.textContent=p.v;
+  for(const lg of['en','es']){const tl=E('text',{x:ex,y:ey+51,'text-anchor':'middle',class:'tl '+lg},g);tl.textContent=p.l[lg]}})}
+let L='en',cur=-1;
+const W={en:['zero','one','two','three','four','five','six','seven','eight','nine'],es:['cero','un','dos','tres','cuatro','cinco','seis','siete','ocho','nueve']},POS={en:['thousands','hundreds','tens'],es:['los millares','las centenas','las decenas']};
+function describe(v){const d=String(v).padStart(4,'0').split('').map(Number),f=d.findIndex(x=>x>0),o=[],en=L==='en';
+ for(let i=0;i<3;i++){if(d[i])o.push(en?`${W.en[d[i]]} single knot${d[i]>1?'s':''} in the ${POS.en[i]}`:`${W.es[d[i]]} nudo${d[i]>1?'s':''} simple${d[i]>1?'s':''} en ${POS.es[i]}`);else if(f>-1&&i>f)o.push(en?`a blank stretch for zero ${POS.en[i]}`:`un tramo vacío en ${POS.es[i]}`)}
+ const u=d[3];o.push(u===0?(en?'no knot in the units':'ningún nudo en las unidades'):u===1?(en?'a figure-eight knot in the units':'un nudo en ocho en las unidades'):(en?`a long knot of ${W.en[u]} turns in the units`:`un nudo largo de ${W.es[u]} vueltas en las unidades`));return o.join(', ')}
+const rd=document.getElementById('read');
+function show(i){cur=i;const p=P[i];rd.innerHTML=`<b>${p.v}</b>${p.d[L]}<span class="how">${L==='en'?'Read it':'Cómo se lee'}: ${describe(p.v)}.</span>`;document.querySelectorAll('.pend').forEach(e=>e.classList.toggle('on',+e.dataset.i===i));document.querySelectorAll('.entry').forEach(e=>e.classList.toggle('cue',e.id===p.k))}
+function labels(){document.querySelectorAll('.pend').forEach(g=>{const p=P[+g.dataset.i];g.setAttribute('aria-label',`${p.v}: ${p.d[L]}`)})}
+drawKhipu(true);
+labels();
+['mouseover','click','focusin'].forEach(ev=>svg.addEventListener(ev,e=>{const g=e.target.closest('.pend');if(g)show(+g.dataset.i)}));
+svg.addEventListener('keydown',e=>{const g=e.target.closest('.pend');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();show(+g.dataset.i)}});
+document.querySelectorAll('.entry').forEach(en=>en.addEventListener('mouseenter',()=>{const i=P.findIndex(p=>p.k===en.id);if(i>-1)show(i)}));
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{L=b.dataset.set;document.documentElement.dataset.l=L;document.documentElement.lang=L;document.querySelectorAll('.lang button').forEach(x=>x.setAttribute('aria-pressed',x===b));labels();if(cur>-1)show(cur)}));
+</script>
+</body>
+</html>
