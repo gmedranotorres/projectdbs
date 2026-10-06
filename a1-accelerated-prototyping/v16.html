@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v16 · Khipu index · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--bg:#f2f3f0;--ink:#1d2124;--mute:#5d6468;--link:#2b6b60;--rule:#d3d7d1}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:19px/1.66 'Literata',Georgia,serif;font-optical-sizing:auto}
+a{color:var(--link);text-underline-offset:.18em}
+:focus-visible{outline:2px solid var(--link);outline-offset:3px}
+.gal{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mute);padding:1rem 1.6rem}
+.gal a{color:var(--mute)}
+.layout{display:grid;grid-template-columns:300px minmax(0,36rem);gap:3.4rem;max-width:1100px;margin:0 auto;padding:1rem 1.6rem 5rem}
+.idx{position:sticky;top:1.2rem;align-self:start}
+.idx svg{width:100%;height:auto;display:block}
+.idx a text{font:600 15px 'Literata',serif;fill:var(--ink)}
+.idx a text.n{font-weight:400;fill:var(--mute);font-size:13px}
+.idx a.on text{fill:var(--link)}
+.idx a.on .cord{stroke-width:6}
+.idx a:focus{outline:none}.idx a:focus-visible text{text-decoration:underline}
+.idx p{font-size:.78rem;color:var(--mute);margin:.6rem 0 0 .2rem;line-height:1.45}
+.mnav{display:none}
+section{scroll-margin-top:1.4rem;margin-bottom:3.6rem}
+h1{font-size:1rem;font-weight:600;margin:0 0 1.2rem}
+.lede{font-size:1.6rem;line-height:1.38;margin:0 0 1.5rem}
+h2{font-size:1.02rem;font-weight:600;margin:0 0 .8rem}
+p{margin:0 0 1rem}
+dl{margin:0;display:grid;grid-template-columns:5.2rem 1fr;gap:.1rem 1rem}
+dt{color:var(--mute);font-size:.84rem;padding-top:.3rem}
+dd{margin:0 0 1.2rem}
+ol,ul{margin:0;padding-left:1.3rem}
+li{margin-bottom:.5rem}
+.knum{font-size:.84rem;color:var(--mute);margin-top:-.4rem}
+@media (max-width:900px){.layout{grid-template-columns:1fr;gap:1rem}.idx{display:none}.mnav{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font-size:.9rem;margin-bottom:2rem}dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="gal" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v16 · Khipu index</span></nav>
+<div class="layout">
+  <nav class="idx" aria-label="Sections"><svg id="k" viewBox="0 0 300 600"></svg><p>Each cord is a section. Its knots record a number from that section, in base ten.</p></nav>
+  <main>
+    <nav class="mnav" aria-label="Sections"><a href="#work">Work</a><a href="#path">Path</a><a href="#lang">Languages</a><a href="#questions">Questions</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav>
+    <section id="top">
+      <h1>Gabriela Medrano Torres</h1>
+      <p class="lede">I turn messy, real-world records into tools people can use to decide: for policy, for communities and for the environment.</p>
+      <p>Fisheries engineer and former business intelligence analyst, now finishing an M.S. in Computational Analysis and Public Policy at the University of Chicago.</p>
+    </section>
+    <section id="work"><h2>Work</h2><p class="knum">Cord 1 reads 30: Power BI dashboards built.</p>
+      <dl>
+        <dt>2026</dt><dd><b>COFI outreach dashboard.</b> A live map of doors knocked, conversations, flyers and referrals by Chicago community area, documented in English and Spanish. <a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the map</a></dd>
+        <dt>2026</dt><dd><b>MortgageMatch.</b> Team dashboard of mortgage lending in Illinois; I helped merge HMDA, ACS and lender data. <a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">Read the code</a></dd>
+        <dt>2021–25</dt><dd><b>Business intelligence.</b> 20+ dashboards at Teleperformance and 10 at Baufest, on SQL, ETL and DAX.</dd>
+        <dt>2024</dt><dd><b>Squid surimi research.</b> Thesis on a clay-derived additive in jumbo squid gels.</dd>
+      </dl></section>
+    <section id="path"><h2>Path</h2><p class="knum">Cord 2 reads 3: countries.</p><p>Fisheries engineering at Universidad Nacional Agraria La Molina in Lima (B.S. 2022, fourth in class). A food-science exchange and lab internship in Orihuela, Spain. Nearly four years of business intelligence in Peru. Since 2025, the University of Chicago.</p></section>
+    <section id="lang"><h2>Languages and teaching</h2><p class="knum">Cord 3 reads 2: working languages.</p><p>I work in English and Spanish, and I write documentation in both so the people who inherit a tool can maintain it. I teach programming to Spanish-speaking beginners, from block-based tools to Python, and tutored K–8 students with UChicago’s Neighborhood Schools Program.</p></section>
+    <section id="questions"><h2>Questions I want to work on</h2><p class="knum">Cord 4 reads 6: questions.</p><ol>
+      <li>How can environmental monitoring data lead to stronger enforcement?</li><li>Where are public services or outreach failing to reach people?</li><li>How can administrative records become evidence?</li><li>When can machine learning improve targeting and stay transparent?</li><li>How can maps make geographic inequality easier to see?</li><li>How can aquatic-resource systems become more sustainable without losing sight of livelihoods?</li></ol></section>
+    <section id="approach"><h2>How I work</h2><p class="knum">Cord 5 reads 5: steps.</p><ol><li>Begin with the decision.</li><li>Examine the data honestly.</li><li>Build a traceable workflow.</li><li>Challenge the result.</li><li>Deliver for the audience.</li></ol></section>
+    <section id="contact"><h2>Contact</h2><p class="knum">Cord 6 reads 2027: graduation year.</p><p>I graduate in June 2027 and want to keep working in Chicago. <a href="https://github.com/gmedranotorres">Find me on GitHub</a>.</p></section>
+  </main>
+</div>
+<script>
+const C=[['work','Work',30,'#b5434d'],['path','Path',3,'#7a5a3f'],['lang','Languages',2,'#3f55a0'],['questions','Questions',6,'#b8892f'],['approach','Approach',5,'#1f6b68'],['contact','Contact',2027,'#5b4433']];
+const svg=document.getElementById('k'),NS='http://www.w3.org/2000/svg';
+function E(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
+function shade(h,f){const n=parseInt(h.slice(1),16);return '#'+[n>>16,n>>8&255,n&255].map(v=>Math.round(v*f).toString(16).padStart(2,'0')).join('')}
+E('path',{d:'M26,12 Q34,300 26,588',stroke:'#c8bb9c','stroke-width':9,fill:'none','stroke-linecap':'round'});
+E('path',{d:'M26,12 Q34,300 26,588',stroke:'#8a7b5f','stroke-width':9,fill:'none','stroke-dasharray':'3 6',opacity:.7});
+C.forEach((c,i)=>{const y=70+i*90,x0=31,L=230,col=c[3],dk=shade(col,.62);
+ const a=E('a',{href:'#'+c[0],'data-s':c[0]});
+ E('path',{class:'cord',d:`M${x0},${y} C${x0+80},${y+6} ${x0+160},${y-6} ${x0+L},${y+4}`,stroke:col,'stroke-width':4.5,fill:'none','stroke-linecap':'round'},a);
+ E('rect',{x:x0,y:y-30,width:L+10,height:44,fill:'transparent'},a);
+ const t=E('text',{x:x0+10,y:y-14},a);t.textContent=c[1];
+ const n=E('text',{x:x0+L,y:y-14,'text-anchor':'end',class:'n'},a);n.textContent=c[2];
+ const d=String(c[2]).padStart(4,'0').split('').map(Number),F=[.16,.34,.53,.79];
+ for(let q=0;q<3;q++)for(let k=0;k<d[q];k++){const kx=x0+L*F[q]+(k-(d[q]-1)/2)*11;E('ellipse',{cx:kx,cy:y+1,rx:4.6,ry:6.6,fill:dk},a)}
+ const u=d[3],ux=x0+L*F[3];
+ if(u===1){E('circle',{cx:ux-5,cy:y+1,r:4.5,fill:'none',stroke:dk,'stroke-width':3},a);E('circle',{cx:ux+5,cy:y+1,r:4.5,fill:'none',stroke:dk,'stroke-width':3},a)}
+ else if(u>1){const w=8+u*5;E('rect',{x:ux-w/2,y:y-6,width:w,height:13,rx:6.5,fill:dk},a);for(let k=1;k<u;k++){const xx=ux-w/2+k*w/u;E('path',{d:`M${xx-2},${y-5} L${xx+2},${y+6}`,stroke:col,'stroke-width':1.3},a)}}
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.querySelectorAll('.idx a').forEach(a=>a.classList.toggle('on',a.dataset.s===e.target.id))}),{rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('main section[id]').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>

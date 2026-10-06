@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v20 · Audience router · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--bg:#f5f5f0;--ink:#15171c;--mute:#5a5e66;--policy:#3b3f9e;--civic:#00675f;--env:#4a7a24;--bi:#d9502a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 'Instrument Sans',sans-serif}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.gbar{display:flex;justify-content:space-between;padding:.7rem 1.6rem;font-size:13.5px;color:var(--mute)}
+.wrap{max-width:1180px;margin:0 auto;padding:1.4rem 1.6rem 4rem}
+.who{font-weight:600;margin:0 0 .5rem}
+h1{font:800 clamp(3rem,8vw,6.4rem)/.9 'Bricolage Grotesque',sans-serif;font-stretch:80%;letter-spacing:-.025em;margin:0 0 1.4rem}
+.chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.3rem}
+.chips button{font:600 16px 'Instrument Sans',sans-serif;padding:.6rem 1.05rem;border-radius:999px;border:2px solid var(--c,var(--ink));background:transparent;color:var(--c,var(--ink));cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--c,var(--ink));color:#fff}
+.intro{font-size:1.3rem;line-height:1.45;max-width:46rem;min-height:3.8rem;margin:0 0 2.2rem}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem}
+.card{background:#fff;border:1.5px solid #dcdcd4;padding:1.2rem 1.3rem 1.3rem;display:flex;flex-direction:column;gap:.45rem;transition:opacity .2s}
+.card.feature{grid-column:span 2;border-width:2.5px;border-color:var(--ink)}
+.card.feature h2{font-size:2rem}
+.card.dim{opacity:.38}
+.card h2{font:700 1.45rem/1.1 'Bricolage Grotesque',sans-serif;margin:0}
+.card .ctx{color:var(--mute);font-size:.92rem;margin:0}
+.card p{margin:0}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:auto;padding-top:.5rem}
+.tags span{font-size:.8rem;font-weight:600;padding:.12rem .55rem;border-radius:999px;color:#fff}
+.card a{font-weight:600}
+.foot{display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between;align-items:center;margin-top:3rem;padding-top:1.4rem;border-top:2px solid var(--ink)}
+.foot p{margin:0;font-size:1.15rem;max-width:44rem}
+.btn{background:var(--ink);color:#fff;text-decoration:none;font-weight:700;padding:.8rem 1.2rem}
+@media (max-width:900px){.grid{grid-template-columns:1fr}.card.feature{grid-column:auto}}
+@media (prefers-reduced-motion:reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v20 · Audience router</span></nav>
+<div class="wrap">
+  <p class="who">Gabriela Medrano Torres, data and policy analyst</p>
+  <h1>What brings you here?</h1>
+  <div class="chips" role="group" aria-label="Choose your focus">
+    <button type="button" data-a="all" aria-pressed="true">Show everything</button>
+    <button type="button" data-a="policy" style="--c:var(--policy)" aria-pressed="false">Policy research</button>
+    <button type="button" data-a="civic" style="--c:var(--civic)" aria-pressed="false">Civic and community tech</button>
+    <button type="button" data-a="env" style="--c:var(--env)" aria-pressed="false">Environmental data</button>
+    <button type="button" data-a="bi" style="--c:var(--bi)" aria-pressed="false">Analytics and BI</button>
+  </div>
+  <p class="intro" id="intro" aria-live="polite"></p>
+  <div class="grid" id="grid">
+    <article class="card" data-t="civic policy"><h2>COFI outreach dashboard</h2><p class="ctx">Chicago, summer 2026</p><p>Field records from an organizing team became a live map of doors knocked, conversations, flyers and referrals by community area, documented in English and Spanish.</p><a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the map</a><div class="tags"></div></article>
+    <article class="card" data-t="policy bi"><h2>MortgageMatch</h2><p class="ctx">UChicago team project, 2026</p><p>An interactive view of mortgage approvals and denials across Illinois. I helped merge HMDA, Census ACS and lender data into one dataset.</p><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a><div class="tags"></div></article>
+    <article class="card" data-t="bi"><h2>30+ Power BI dashboards</h2><p class="ctx">Teleperformance and Baufest, Peru, 2021–2025</p><p>SQL extraction, ETL and DAX measures, with indicator definitions agreed with the people who used them.</p><div class="tags"></div></article>
+    <article class="card" data-t="env"><h2>Jumbo squid surimi research</h2><p class="ctx">UNALM thesis research, 2024</p><p>How a clay-derived additive changes gel strength and water-holding capacity: turning an abundant marine resource into a higher-value food.</p><div class="tags"></div></article>
+    <article class="card" data-t="env policy"><h2>Environmental enforcement training</h2><p class="ctx">OEFA certificate, Peru, 2022</p><p>Monitoring of water, soil and air; sanctions, incentives and corporate obligations. The reason I care about monitoring data that leads to enforcement.</p><div class="tags"></div></article>
+    <article class="card" data-t="civic"><h2>Teaching programming in Spanish</h2><p class="ctx">Community classes, 2024 to now</p><p>Logic, variables, conditionals and loops with block-based tools, then Python. Also a K–8 tutor with UChicago’s Neighborhood Schools Program.</p><div class="tags"></div></article>
+  </div>
+  <div class="foot"><p>Graduating June 2027 with an M.S. in Computational Analysis and Public Policy from the University of Chicago. Looking for work in Chicago.</p><a class="btn" href="https://github.com/gmedranotorres">Write to me on GitHub</a></div>
+</div>
+<script>
+const N={policy:['Policy research','var(--policy)'],civic:['Civic tech','var(--civic)'],env:['Environment','var(--env)'],bi:['Analytics','var(--bi)']};
+const I={all:'Fisheries engineer, former business intelligence analyst, M.S. candidate at the University of Chicago. Pick a focus to see the most relevant work first, or read everything.',
+policy:'For policy research: MortgageMatch and my training in causal inference and program evaluation come first, with the COFI map as a field example.',
+civic:'For civic and community tech: the COFI map was built for an organizing team, and I teach programming to Spanish-speaking beginners.',
+env:'For environmental data: I trained as a fisheries engineer, studied a sustainable use for jumbo squid, and hold an environmental enforcement certificate.',
+bi:'For analytics and BI: nearly four years of SQL, ETL and DAX, and more than 30 Power BI dashboards in production.'};
+const cards=[...document.querySelectorAll('.card')];
+cards.forEach(c=>c.querySelector('.tags').innerHTML=c.dataset.t.split(' ').map(t=>`<span style="background:${N[t][1]}">${N[t][0]}</span>`).join(''));
+function pick(a){document.getElementById('intro').textContent=I[a];
+ let i=0;const rel=cards.filter(c=>a==='all'||c.dataset.t.includes(a)),rest=cards.filter(c=>!rel.includes(c));
+ [...rel,...rest].forEach(c=>{c.style.order=i++;c.classList.toggle('dim',a!=='all'&&!rel.includes(c));c.classList.toggle('feature',c===rel[0])});
+ document.querySelectorAll('.chips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.a===a))}
+document.querySelector('.chips').addEventListener('click',e=>{const b=e.target.closest('button');if(b)pick(b.dataset.a)});
+pick('all');
+</script>
+</body>
+</html>

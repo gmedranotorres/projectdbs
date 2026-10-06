@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v17 · Policy brief · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--navy:#15223f;--ochre:#c08a2c;--ink:#1c1f24;--mute:#596069;--rule:#cdd1d6;--tint:#f3efe4}
+*{box-sizing:border-box}
+body{margin:0;background:#e6e8eb;color:var(--ink);font:18px/1.62 'Newsreader',Georgia,serif;font-optical-sizing:auto}
+a{color:#1f4f8f}
+:focus-visible{outline:2px solid var(--ochre);outline-offset:2px}
+.gbar{display:flex;justify-content:space-between;max-width:1140px;margin:0 auto;padding:.7rem 1rem 0;font:500 13.5px 'Instrument Sans',sans-serif;color:var(--mute)}
+.gbar a{color:var(--ink)}
+.doc{max-width:1140px;margin:.7rem auto 3rem;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.08)}
+.mast{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;background:var(--navy);color:#e8ecf4;padding:.85rem 2.6rem;font:500 14px 'Instrument Sans',sans-serif}
+.tb{padding:2.6rem 2.6rem 1.8rem;border-bottom:1px solid var(--rule)}
+h1{font-weight:500;font-size:clamp(2.4rem,4.8vw,3.9rem);line-height:1.03;letter-spacing:-.015em;max-width:19ch;margin:0 0 1rem}
+.by{font:15px/1.5 'Instrument Sans',sans-serif;color:var(--mute);margin:0}
+.by b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:3rem;padding:2.2rem 2.6rem 2.8rem}
+.take{background:var(--tint);border-top:4px solid var(--ochre);padding:1.2rem 1.5rem 1rem;margin-bottom:2.2rem}
+.take h2{font:700 15px 'Instrument Sans',sans-serif;margin:0 0 .5rem}
+.take ul{margin:0;padding-left:1.15rem}
+.take li{margin-bottom:.45rem}
+h2.s{font-weight:600;font-size:1.55rem;line-height:1.2;margin:2.2rem 0 .6rem}
+h2.s:first-of-type{margin-top:0}
+p{margin:0 0 1rem}
+.case{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:1.6rem;padding:1.3rem 0;border-top:1px solid var(--rule)}
+.case h3{font-weight:600;font-size:1.2rem;margin:0 0 .15rem}
+.meta{font:13.5px 'Instrument Sans',sans-serif;color:var(--mute);margin:0 0 .5rem}
+figure{margin:0;align-self:start;background:#fafafa;border:1px solid #e3e5e8;padding:.6rem}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font:12.5px/1.4 'Instrument Sans',sans-serif;color:var(--mute);margin-top:.35rem}
+.recs{counter-reset:r;list-style:none;padding:0;margin:0}
+.recs li{counter-increment:r;display:grid;grid-template-columns:2.2rem 1fr;gap:.6rem;margin-bottom:1rem}
+.recs li::before{content:counter(r);font:600 1.6rem/1 'Newsreader',serif;color:var(--ochre)}
+.recs b{display:block}
+aside{font:15px/1.55 'Instrument Sans',sans-serif}
+aside .box{border-top:2px solid var(--navy);padding-top:.7rem;margin-bottom:1.9rem}
+aside h2{font:700 14px 'Instrument Sans',sans-serif;color:var(--navy);margin:0 0 .45rem}
+aside p{margin:0 0 .6rem}
+aside ul{margin:0;padding-left:1.1rem}
+.btn{display:inline-block;background:var(--navy);color:#fff;text-decoration:none;font-weight:600;padding:.6rem 1rem;margin-top:.2rem}
+.btn:hover{background:#0c1630}
+.cite{font-size:13.5px;color:var(--mute)}
+@media (max-width:900px){.cols{grid-template-columns:1fr;padding:1.6rem 1.2rem}.tb{padding:2rem 1.2rem 1.4rem}.mast{padding:.8rem 1.2rem}.case{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v17 · Policy brief</span></nav>
+<article class="doc">
+  <div class="mast"><span>Brief no. 17, October 2026</span><span>Data for decisions in Chicago</span></div>
+  <header class="tb">
+    <h1>Turning messy records into clearer decisions</h1>
+    <p class="by"><b>Gabriela Medrano Torres</b>, M.S. candidate in Computational Analysis and Public Policy, Harris School of Public Policy, University of Chicago. Fisheries engineer and former business intelligence analyst.</p>
+  </header>
+  <div class="cols">
+    <main>
+      <section class="take"><h2>Key takeaways</h2><ul>
+        <li>Most of the value of a data tool is created before the chart: defining indicators, cleaning names, linking records to places.</li>
+        <li>Across four projects in three countries, the author built tools for people with very different levels of technical experience.</li>
+        <li>She graduates in June 2027 and is looking for research, policy and data work in Chicago.</li></ul></section>
+      <h2 class="s">The problem</h2>
+      <p>Organizations collect more records than they can use. Outreach logs, loan applications and operational databases often stay as disconnected files because nobody has defined what the numbers mean, who will act on them, and how the tool will be maintained after its builder leaves.</p>
+      <h2 class="s">Evidence from four projects</h2>
+      <div class="case"><div><h3>COFI Community Outreach Dashboard</h3><p class="meta">Chicago, summer 2026</p><p>An organizing team’s field records became a live neighborhood map of doors knocked, conversations, flyers and referrals. Community names were standardized before mapping, and the system was documented in English and Spanish so staff could maintain it. <a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the dashboard</a></p></div>
+        <figure><svg viewBox="0 0 220 186" role="img" aria-label="Flow from field records to staff decisions"><g font-family="Instrument Sans, sans-serif" font-size="12" text-anchor="middle"><g fill="#fff" stroke="#15223f"><rect x="20" y="4" width="180" height="30"/><rect x="20" y="52" width="180" height="30"/><rect x="20" y="100" width="180" height="30"/></g><rect x="20" y="148" width="180" height="30" fill="#15223f"/><text x="110" y="23">Field records in Google Sheets</text><text x="110" y="71">Cleaning in Apps Script</text><text x="110" y="119">Leaflet choropleth map</text><text x="110" y="167" fill="#fff">Staff decide where to go next</text></g><g stroke="#c08a2c" stroke-width="2"><path d="M110 34 v16 M110 82 v16 M110 130 v16"/></g></svg><figcaption>Figure 1. How field data reaches staff.</figcaption></figure></div>
+      <div class="case"><div><h3>MortgageMatch</h3><p class="meta">UChicago team project, 2026</p><p>A dashboard of mortgage approvals and denials across Illinois. As part of the team, the author helped download and clean three public sources, standardize county and lender identifiers, and construct approval, income and loan-size variables. <a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></p></div>
+        <figure><svg viewBox="0 0 220 160" role="img" aria-label="Three data sources merged into one dataset and a dashboard"><g font-family="Instrument Sans, sans-serif" font-size="11.5" text-anchor="middle"><g fill="#fff" stroke="#15223f"><rect x="2" y="4" width="66" height="34"/><rect x="77" y="4" width="66" height="34"/><rect x="152" y="4" width="66" height="34"/><rect x="45" y="72" width="130" height="30"/></g><rect x="45" y="124" width="130" height="30" fill="#15223f"/><text x="35" y="25">HMDA</text><text x="110" y="25">ACS</text><text x="185" y="25">Lenders</text><text x="110" y="91">One clean dataset</text><text x="110" y="143" fill="#fff">Lending dashboard</text></g><g stroke="#c08a2c" stroke-width="2" fill="none"><path d="M35 38 L95 72 M110 38 V72 M185 38 L125 72 M110 102 V122"/></g></svg><figcaption>Figure 2. Three public sources, one dataset.</figcaption></figure></div>
+      <div class="case"><div><h3>Business intelligence in Peru</h3><p class="meta">Teleperformance and Baufest, 2021–2025</p><p>SQL extraction, ETL and DAX measures behind dashboards for operational reporting. The recurring lesson: a dashboard is only valuable when its definitions are trustworthy and its audience knows what to do with it.</p></div>
+        <figure><svg viewBox="0 0 220 96" role="img" aria-label="Dashboards built: more than 20 at Teleperformance, 10 at Baufest"><g font-family="Instrument Sans, sans-serif" font-size="12"><text x="0" y="16">Teleperformance</text><rect x="0" y="22" width="190" height="16" fill="#15223f"/><text x="196" y="35">20+</text><text x="0" y="62">Baufest</text><rect x="0" y="68" width="95" height="16" fill="#c08a2c"/><text x="101" y="81">10</text></g></svg><figcaption>Figure 3. Power BI dashboards built.</figcaption></figure></div>
+      <div class="case"><div><h3>Jumbo squid surimi research</h3><p class="meta">Universidad Nacional Agraria La Molina, 2024</p><p>Thesis research on how a clay-derived additive changes jumbo squid (<i>Dosidicus gigas</i>) surimi gels: experimental design, laboratory measurement and statistical analysis in service of a sustainability question.</p></div>
+        <figure><svg viewBox="0 0 220 110" role="img" aria-label="Four measured properties: texture, gel strength, water-holding capacity, color"><g font-family="Instrument Sans, sans-serif" font-size="12" text-anchor="middle"><g fill="#f3efe4" stroke="#c08a2c"><rect x="2" y="2" width="104" height="48"/><rect x="114" y="2" width="104" height="48"/><rect x="2" y="58" width="104" height="48"/><rect x="114" y="58" width="104" height="48"/></g><text x="54" y="31">Texture</text><text x="166" y="31">Gel strength</text><text x="54" y="80">Water-holding</text><text x="54" y="95">capacity</text><text x="166" y="87">Color</text></g></svg><figcaption>Figure 4. Properties measured.</figcaption></figure></div>
+      <h2 class="s">Recommendations: what the author brings to a team</h2>
+      <ol class="recs">
+        <li><span><b>Start from the decision, not the dataset.</b>Clarify who needs the analysis and what they should be able to do with it.</span></li>
+        <li><span><b>Make the data trustworthy before it is pretty.</b>Missing values, inconsistent definitions and duplicates are handled first, in a workflow someone else can trace.</span></li>
+        <li><span><b>Leave tools others can maintain.</b>Documentation in the language the team works in, English or Spanish.</span></li>
+      </ol>
+    </main>
+    <aside>
+      <div class="box"><h2>About the author</h2><p>B.S. Fisheries Engineering, UNALM, Lima (2022, fourth in class). Food-science exchange in Orihuela, Spain. Nearly four years in business intelligence. M.S. expected June 2027.</p></div>
+      <div class="box"><h2>Methods and tools</h2><ul><li>Python, R, Stata, SQL, DAX</li><li>Power BI, Leaflet, QGIS, ArcGIS</li><li>Causal inference, econometrics, geospatial analysis</li><li>PostgreSQL, DuckDB, ETL workflows</li></ul></div>
+      <div class="box"><h2>Also</h2><p>Teaches programming to Spanish-speaking beginners. Former K–8 tutor. Environmental Enforcement Certificate (OEFA, 2022).</p></div>
+      <div class="box"><h2>Contact</h2><p>Open to research, policy and data roles in Chicago from June 2027.</p><a class="btn" href="https://github.com/gmedranotorres">Write on GitHub</a></div>
+      <p class="cite">Suggested citation: Medrano Torres, G. (2026). Turning messy records into clearer decisions. Brief no. 17.</p>
+    </aside>
+  </div>
+</article>
+</body>
+</html>

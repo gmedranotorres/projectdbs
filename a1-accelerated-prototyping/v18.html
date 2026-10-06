@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v18 · Line timeline · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--blue:#00a1de;--brown:#62361b;--green:#009b3a;--red:#c60c30;--ink:#121212}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:400 19px/1.45 'Big Shoulders',sans-serif;font-optical-sizing:auto}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.gbar{display:flex;justify-content:space-between;padding:.6rem 1.6rem;font-size:16px;font-weight:600;color:#555}
+.wrap{max-width:1240px;margin:0 auto;padding:0 1.6rem}
+header{padding:1.6rem 0 0}
+h1{font-size:clamp(3rem,8vw,6.6rem);font-weight:800;line-height:.88;margin:0;letter-spacing:-.01em}
+.sub{font-size:1.45rem;margin:.6rem 0 0;max-width:44ch;color:#333}
+.line{list-style:none;margin:5.5rem 0 5.5rem;padding:0;display:flex;justify-content:space-between;position:relative}
+.line::before{content:'';position:absolute;left:0;right:0;top:50%;height:12px;margin-top:-6px;background:var(--red);border-radius:6px}
+.line::after{content:'';position:absolute;right:-1.6rem;top:50%;width:6rem;margin-top:-6px;height:12px;background:repeating-linear-gradient(90deg,#fff 0 6px,transparent 6px 14px)}
+.line li{position:relative;z-index:1;width:0;display:flex;justify-content:center}
+.line a{display:block;width:26px;height:26px;border-radius:50%;background:#fff;border:4px solid var(--ink)}
+.line a:hover,.line a:focus-visible{background:#ffd23f}
+.line span{position:absolute;bottom:2.3rem;white-space:nowrap;text-align:center;line-height:1.05;font-size:1.05rem}
+.line span b{display:block;font-weight:800;font-size:1.2rem}
+.line li:nth-child(even) span{bottom:auto;top:2.3rem}
+.line li:first-child span{left:-.6rem;text-align:left}
+.line li:last-child span{right:-.6rem;text-align:right}
+.sec{font-size:2rem;font-weight:800;margin:0 0 1rem}
+.signs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem;margin-bottom:3rem}
+.sign{border:3px solid var(--ink);scroll-margin-top:1rem}
+.sign h3{display:flex;align-items:center;gap:.6rem;background:var(--ink);color:#fff;font-size:1.7rem;font-weight:800;margin:0;padding:.55rem .9rem}
+.sign h3 i{display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;font:800 .95rem 'Big Shoulders',sans-serif;font-style:normal;color:#fff}
+.sign .bd{padding:.9rem 1rem 1rem}
+.sign .bd p{margin:0 0 .6rem}
+.sign .when{font-weight:700;color:#555}
+.sign a{font-weight:800}
+.xfer{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between;background:var(--red);color:#fff;padding:1.3rem 1.5rem;margin-bottom:3rem}
+.xfer p{margin:0;font-size:1.35rem;max-width:52ch}
+.xfer a{background:#fff;color:var(--ink);text-decoration:none;font-weight:800;font-size:1.25rem;padding:.6rem 1.2rem}
+.lines{display:flex;flex-wrap:wrap;gap:1rem 2rem;font-size:1.05rem;margin:0 0 2rem}
+.lines i{display:inline-grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;color:#fff;font:800 .85rem 'Big Shoulders';font-style:normal;margin-right:.35rem;vertical-align:-.15rem}
+@media (max-width:860px){.line{flex-direction:column;gap:1.1rem;margin:2.4rem 0;padding-left:.3rem}.line::before{left:12px;right:auto;top:0;bottom:0;width:12px;height:auto;margin:0}.line::after{display:none}.line li{width:auto;justify-content:flex-start;align-items:center;gap:1rem}.line span,.line li:nth-child(even) span,.line li:first-child span,.line li:last-child span{position:static;text-align:left;white-space:normal}.signs{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v18 · Line timeline</span></nav>
+<div class="wrap">
+  <header>
+    <h1>Gabriela Medrano Torres</h1>
+    <p class="sub">Fisheries engineer, business intelligence analyst, and now public policy at the University of Chicago. One line, many stops.</p>
+  </header>
+  <ol class="line" aria-label="Career timeline">
+    <li><a href="#s-science" aria-label="Orihuela, 2019"></a><span><b>Orihuela</b>2019</span></li>
+    <li><a href="#s-data" aria-label="Teleperformance, 2021"></a><span><b>Teleperformance</b>2021</span></li>
+    <li><a href="#s-science" aria-label="B.S., 2022"></a><span><b>B.S. UNALM</b>2022</span></li>
+    <li><a href="#s-science" aria-label="Squid thesis, 2024"></a><span><b>Squid thesis</b>2024</span></li>
+    <li><a href="#s-data" aria-label="Baufest, 2025"></a><span><b>Baufest</b>2025</span></li>
+    <li><a href="#s-policy" aria-label="UChicago, 2025"></a><span><b>UChicago</b>2025</span></li>
+    <li><a href="#s-policy" aria-label="MortgageMatch, 2026"></a><span><b>MortgageMatch</b>2026</span></li>
+    <li><a href="#s-cofi" aria-label="COFI, 2026"></a><span><b>COFI</b>2026</span></li>
+    <li><a href="#contact" aria-label="Graduation, June 2027"></a><span><b>Graduation</b>June 2027</span></li>
+  </ol>
+  <h2 class="sec">Featured stops</h2>
+  <div class="lines"><span><i style="background:var(--red)">P</i>Policy</span><span><i style="background:var(--brown)">D</i>Data</span><span><i style="background:var(--blue)">S</i>Science</span><span><i style="background:var(--green)">T</i>Teaching</span></div>
+  <div class="signs">
+    <section class="sign" id="s-cofi"><h3>COFI <i style="background:var(--red)">P</i><i style="background:var(--brown)">D</i><i style="background:var(--green)">T</i></h3><div class="bd"><p class="when">Summer 2026, Chicago</p><p>An outreach dashboard for Community Organizing and Family Issues: doors knocked, conversations, flyers and referrals mapped by community area, with bilingual documentation for staff.</p><a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the dashboard</a></div></section>
+    <section class="sign" id="s-policy"><h3>UChicago and MortgageMatch <i style="background:var(--red)">P</i><i style="background:var(--brown)">D</i></h3><div class="bd"><p class="when">2025 to June 2027</p><p>M.S. in Computational Analysis and Public Policy. In the MortgageMatch team project I helped merge HMDA, Census ACS and lender data into an interactive view of Illinois lending.</p><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></div></section>
+    <section class="sign" id="s-data"><h3>Business intelligence <i style="background:var(--brown)">D</i></h3><div class="bd"><p class="when">2021 to 2025, Peru</p><p>Business intelligence analyst at Teleperformance (20+ Power BI dashboards) and data specialist at Baufest (10 dashboards): SQL, ETL, DAX and indicator definitions.</p></div></section>
+    <section class="sign" id="s-science"><h3>Fisheries and food science <i style="background:var(--blue)">S</i></h3><div class="bd"><p class="when">2019 to 2024, Lima and Orihuela</p><p>B.S. Fisheries Engineering at UNALM, fourth in class. Exchange and lab internship in Spain. Thesis on a clay-derived additive in jumbo squid surimi gels.</p></div></section>
+  </div>
+  <div class="xfer" id="contact"><p>Transfer here for research, policy and data work in Chicago, from June 2027. I teach and document in English and Spanish.</p><a href="https://github.com/gmedranotorres">Write on GitHub</a></div>
+</div>
+</body>
+</html>
