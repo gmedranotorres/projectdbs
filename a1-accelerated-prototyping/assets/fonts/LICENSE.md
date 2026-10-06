@@ -1,0 +1,2 @@
+All fonts in this folder are distributed under the SIL Open Font License 1.1 (https://openfontlicense.org) and were taken from Fontsource packages (https://fontsource.org):
+Source Serif 4, Source Sans 3, Newsreader, Cormorant Garamond, Open Sans, Big Shoulders, Oswald, Alegreya, Alegreya SC, Alegreya Sans, Fraunces, Public Sans, Nunito, Caveat, Literata, Bricolage Grotesque, Instrument Sans, Instrument Serif, IBM Plex Mono, Courier Prime, Abril Fatface, VT323, IM Fell English, IM Fell English SC.
