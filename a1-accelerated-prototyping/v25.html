@@ -51,6 +51,8 @@ h2{font:500 2.1rem/1.1 'Newsreader',serif;margin:0 0 1.6rem}
 .contact h2{color:#fff;font-size:clamp(2rem,3.6vw,3rem);margin:0}
 .contact p{margin:0 0 1rem;color:#c8d0cd}
 .contact .btn.p{background:#fff;color:var(--ink)}
+.cacts{display:flex;flex-wrap:wrap;gap:.8rem}
+.contact .btn.s{border-color:#fff;color:#fff}.contact .btn.s:hover{background:rgba(255,255,255,.1)}
 @media (max-width:900px){.top{flex-wrap:wrap;gap:.6rem 1.2rem;padding:.9rem 1.2rem}.top nav{order:3;width:100%}.hero{grid-template-columns:1fr;gap:1.5rem;padding:2rem 1.2rem}.sec{padding:2.4rem 1.2rem}.entry{grid-template-columns:1fr;gap:.6rem}.path{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.contact .sec{grid-template-columns:1fr;padding:2.6rem 1.2rem}.kh svg{margin:0 auto}}
 
 html[data-l="en"] .es,html[data-l="es"] .en{display:none}
@@ -93,7 +95,7 @@ details.legend ul{margin:.5rem 0 0;padding-left:1.1rem;color:#2c3740}
 ::selection{background:#f1c9d0}
 @media (max-width:900px){.hero>div:first-child{padding-top:2rem}.kh{border-top:8px solid #9d907a;padding-top:0}.qs{grid-template-columns:1fr}
  .pcord{grid-template-columns:1fr;gap:0;padding-left:2.4rem}.pcord::before{left:8px;right:auto;top:0;bottom:0;width:8px;height:auto;background:repeating-linear-gradient(22deg,#b9ad92 0 5px,#7d6f55 5px 7px)}.pcord li{padding:0 0 1.3rem}.pcord .kn{left:-2.4rem;top:.1rem}}
-@media print{body{background:#fff}.top nav,.lang,.gal,.acts,.kh,.cordline{display:none}.hero{grid-template-columns:1fr}.contact{background:#fff;color:#000}.contact h2,.contact p{color:#000}a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;color:#444}.entry{break-inside:avoid}}
+@media print{body{background:#fff}.top nav,.lang,.gal,.acts,.kh,.cordline{display:none}.hero{grid-template-columns:1fr}.contact{background:#fff;color:#000}.contact h2,.contact p{color:#000}.contact .btn.s{color:#000;border-color:#000}a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;color:#444}.entry{break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -141,7 +143,7 @@ details.legend ul{margin:.5rem 0 0;padding-left:1.1rem;color:#2c3740}
 </section>
 <section class="contact" id="contact" aria-labelledby="ch"><div class="sec">
   <h2 id="ch"><span class="en">Working on a question like these in Chicago? I’d like to hear about it.</span><span class="es" lang="es">¿Trabajas en una pregunta así en Chicago? Me encantaría conversar.</span></h2>
-  <div><p><span class="en">Open to research, policy and data roles from June 2027. I work in English and Spanish.</span><span class="es" lang="es">Disponible para roles en investigación, políticas públicas y datos desde junio de 2027. Trabajo en inglés y en español.</span></p><a class="btn p" href="https://github.com/gmedranotorres"><span class="en">Write to me on GitHub</span><span class="es" lang="es">Escríbeme en GitHub</span></a></div>
+  <div><p><span class="en">Open to research, policy and data roles from June 2027. I work in English and Spanish.</span><span class="es" lang="es">Disponible para roles en investigación, políticas públicas y datos desde junio de 2027. Trabajo en inglés y en español.</span></p><div class="cacts"><a class="btn p" href="https://github.com/gmedranotorres"><span class="en">Write to me on GitHub</span><span class="es" lang="es">Escríbeme en GitHub</span></a><a class="btn s" href="mailto:gmedranotorres@uchicago.edu"><span class="en">Email me</span><span class="es" lang="es">Escríbeme por correo</span></a><a class="btn s" href="https://www.linkedin.com/in/gabrielam1995"><span class="en">Find me on LinkedIn</span><span class="es" lang="es">Búscame en LinkedIn</span></a></div></div>
 </div></section>
 </main>
 <footer class="foot"><div class="sec"><span><span class="en">Built in plain HTML, CSS and a little JavaScript. Typeset in Newsreader and Instrument Sans.</span><span class="es" lang="es">Hecho con HTML, CSS y un poco de JavaScript. Tipografías: Newsreader e Instrument Sans.</span></span><a href="index.html">← <span class="en">Back to the gallery</span><span class="es" lang="es">Volver a la galería</span></a></div></footer>
