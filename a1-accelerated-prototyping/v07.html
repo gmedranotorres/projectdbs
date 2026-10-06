@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v07 · Echo sounder · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--scr:#04121f;--pan:#071726;--line:#123553;--txt:#e3edf0;--cy:#62d6ea;--yl:#ffd84a}
+*{box-sizing:border-box}
+body{margin:0;background:#0b0e10;color:var(--txt);font:15px/1.5 'IBM Plex Mono',monospace}
+a{color:var(--yl)}
+:focus-visible{outline:2px solid var(--yl);outline-offset:2px}
+.gbar{display:flex;justify-content:space-between;max-width:1420px;margin:0 auto;padding:.6rem 1rem 0;color:#8a979e;font-size:13px}
+.gbar a{color:#d8e2e6;text-decoration:none}
+.unit{max-width:1420px;margin:0 auto;padding:12px 16px 28px}
+.bezel{background:linear-gradient(#262b2e,#141719);border-radius:24px;padding:18px 18px 14px;box-shadow:inset 0 1px 0 #3c4347,0 24px 50px rgba(0,0,0,.7)}
+.screen{display:grid;grid-template-columns:1fr 380px;height:min(78vh,760px);min-height:540px;background:var(--scr);border:2px solid #000;border-radius:8px;overflow:hidden}
+.echo{position:relative;overflow:hidden}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.status{position:absolute;left:0;right:46px;top:0;display:flex;gap:1.4rem;padding:6px 10px;background:rgba(2,10,18,.72);font-size:12.5px;color:var(--cy)}
+.status b{color:var(--yl);font-weight:500}
+.scale{position:absolute;right:0;top:0;bottom:0;width:46px;background:rgba(2,10,18,.6);border-left:1px solid var(--line)}
+.scale span{position:absolute;right:6px;font:18px 'VT323',monospace;color:#cfe3ea;transform:translateY(-50%)}
+.scale span::before{content:'';position:absolute;right:30px;top:50%;width:8px;border-top:1px solid #cfe3ea}
+.tg{position:absolute;display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:left}
+.tg i{position:relative;width:22px;height:22px;border:2px solid var(--yl);border-radius:50%;flex:none}
+.tg i::after{content:'';position:absolute;inset:-2px;border:2px solid var(--yl);border-radius:50%;animation:ping 2.4s ease-out infinite}
+.tg span{background:rgba(2,10,18,.82);border:1px solid #2b5a7a;padding:2px 8px;font-size:13px;white-space:nowrap}
+.tg span b{color:var(--yl);font-weight:500;margin-right:.5em}
+.tg[aria-pressed=true] span{border-color:var(--yl);color:#fff}
+@keyframes ping{from{transform:scale(1);opacity:.9}to{transform:scale(2.6);opacity:0}}
+.panel{background:var(--pan);border-left:2px solid var(--line);padding:14px 18px 16px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.panel>*{flex-shrink:0}
+.read{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.read div{border:1px solid var(--line);padding:4px 8px 2px}
+.read small{display:block;color:var(--cy);font-size:11.5px}
+.read b{font:400 34px/1 'VT323',monospace;color:var(--yl)}
+.read .wide{grid-column:1/-1}
+.read .wide b{font-size:24px}
+h1{font-size:20px;font-weight:600;margin:0 0 4px;color:#fff}
+.id p{margin:0;color:#b8c7cd;font-size:13.5px}
+h2{font-size:12.5px;font-weight:500;color:var(--cy);margin:0 0 6px}
+.list{display:grid;gap:5px}
+.list button{display:flex;justify-content:space-between;gap:8px;width:100%;background:#0b2033;border:1px solid var(--line);color:var(--txt);font:inherit;font-size:13.5px;padding:6px 9px;cursor:pointer;text-align:left}
+.list button[aria-pressed=true]{border-color:var(--yl);background:#10304a}
+.list button b{color:var(--yl);font-weight:500}
+.info{border:1px solid #2b5a7a;padding:10px 12px;min-height:150px;background:#061523}
+.info h3{margin:0 0 4px;font-size:15px;color:#fff}
+.info p{margin:0 0 6px;font-size:13.5px;color:#c9d6db}
+.hail{display:block;text-align:center;background:var(--yl);color:#071726;font-weight:600;text-decoration:none;padding:9px;border-radius:4px;box-shadow:inset 0 -3px 0 #c7a21d}
+.keys{display:flex;justify-content:space-between;align-items:center;padding:12px 8px 0;color:#7f8c92;font-size:12px}
+.keys span{display:inline-block;margin-right:10px;padding:6px 12px;border-radius:6px;background:linear-gradient(#30363a,#1d2124);box-shadow:inset 0 1px 0 #4a5257;color:#aab6bb}
+@media (max-width:900px){.screen{grid-template-columns:1fr;height:auto}.echo{height:58vh;min-height:380px}.panel{border-left:0;border-top:2px solid var(--line)}.status{gap:.8rem;font-size:11px}.tg span{font-size:11.5px}.keys span:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.tg i::after{animation:none;opacity:0}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v07 · Echo sounder</span></nav>
+<div class="unit">
+ <div class="bezel">
+  <div class="screen">
+   <div class="echo" id="echo">
+     <canvas id="cv" aria-hidden="true"></canvas>
+     <div class="status" aria-hidden="true"><span>SONAR <b>200 kHz</b></span><span>RANGE <b>0–80 m</b></span><span>GAIN <b>AUTO</b></span><span>MODE <b>DATA → DECISIONS</b></span></div>
+     <div class="scale" id="scale" aria-hidden="true"></div>
+     <div id="targets"></div>
+   </div>
+   <aside class="panel">
+     <div class="read" aria-hidden="true">
+       <div><small>DEPTH</small><b id="depth">41.9</b><small>m</small></div>
+       <div><small>WATER</small><b>14.6</b><small>°C</small></div>
+       <div class="wide"><small>POSITION</small><b>41°47′N 087°36′W</b></div>
+     </div>
+     <div class="id">
+       <h1>Gabriela Medrano Torres</h1>
+       <p>Fisheries engineer turned data and policy analyst. M.S. in Computational Analysis and Public Policy, University of Chicago, June 2027. I turn messy records into tools people use to decide.</p>
+     </div>
+     <div><h2>TARGETS DETECTED: 4</h2><div class="list" id="list"></div></div>
+     <div class="info" id="info" aria-live="polite"></div>
+     <a class="hail" href="https://github.com/gmedranotorres">Hail on GitHub</a>
+   </aside>
+  </div>
+  <div class="keys" aria-hidden="true"><div><span>MENU</span><span>RANGE</span><span>GAIN</span><span>ZOOM</span></div><span style="background:none;box-shadow:none">ECHO-GMT 2027</span></div>
+ </div>
+</div>
+<script>
+const T=[
+ {id:1,d:14.2,x:.24,y:.18,n:'COFI outreach map',t:'Summer 2026, Chicago. Field outreach records turned into a live neighborhood map: doors knocked, conversations, flyers and referrals by community area. Sheets, Apps Script, Leaflet, GitHub Pages. Documented in English and Spanish.',u:'https://gmedranotorres.github.io/cofi-dashboard/',l:'Open the dashboard'},
+ {id:2,d:26.5,x:.52,y:.33,n:'MortgageMatch',t:'Team project, 2026. Interactive dashboard of mortgage approvals and denials in Illinois. I helped clean and merge HMDA records, ACS county indicators and lender data.',u:'https://github.com/uchicago-2026-capp30122/project-data-4-decisions',l:'See the repository'},
+ {id:3,d:40.8,x:.16,y:.51,n:'30+ BI dashboards',t:'2021 to 2025, Teleperformance and Baufest Perú. SQL extraction, ETL and DAX measures; more than 30 Power BI dashboards that turned operational data into reporting teams could act on.'},
+ {id:4,d:57.6,x:.6,y:.72,n:'Squid surimi research',t:'Thesis research, UNALM, 2024. How a clay-derived additive changes texture, gel strength and water-holding capacity in jumbo squid (Dosidicus gigas) surimi gels. The squid lives deep and rises at night; so does good data, from raw records up to decisions.'}];
+const tg=document.getElementById('targets'),list=document.getElementById('list'),info=document.getElementById('info');
+T.forEach(o=>{tg.insertAdjacentHTML('beforeend',`<button class="tg" data-id="${o.id}" style="left:${o.x*100}%;top:${o.y*100}%" aria-pressed="false"><i></i><span><b>T${o.id} ${o.d.toFixed(1)} m</b>${o.n}</span></button>`);
+ list.insertAdjacentHTML('beforeend',`<button data-id="${o.id}" aria-pressed="false"><span>T${o.id} ${o.n}</span><b>${o.d.toFixed(1)} m</b></button>`)});
+function pick(id){const o=T.find(v=>v.id==id);info.innerHTML=`<h3>T${o.id} · ${o.n} · ${o.d.toFixed(1)} m</h3><p>${o.t}</p>${o.u?`<a href="${o.u}">${o.l}</a>`:''}`;
+ document.querySelectorAll('[data-id]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id==id));document.getElementById('depth').textContent=o.d.toFixed(1)}
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-id]');if(b)pick(b.dataset.id)});
+pick(1);
+const sc=document.getElementById('scale');for(let m=0;m<=80;m+=10)sc.insertAdjacentHTML('beforeend',`<span style="top:${Math.max(2,Math.min(98,m/80*100))}%">${m}</span>`);
+// echogram
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');let W,H,t=0,arches=[];
+const pal=[[4,18,31],[12,52,92],[28,112,176],[40,158,72],[214,196,30],[234,118,28],[210,36,40]];
+function col(v){v=Math.max(0,Math.min(.999,v))*(pal.length-1);const i=v|0,f=v-i,a=pal[i],b=pal[i+1];return `rgb(${a[0]+(b[0]-a[0])*f|0},${a[1]+(b[1]-a[1])*f|0},${a[2]+(b[2]-a[2])*f|0})`}
+const R=Math.random,g=(y,c,w)=>Math.exp(-((y-c)*(y-c))/(2*w*w));
+function column(x){t++;const bot=H*(.86+.045*Math.sin(t/150)+.015*Math.sin(t/37));
+ for(let y=0;y<H;y+=3){const d=y/H;let v;
+  if(y>bot){const k=(y-bot)/H;v=k<.014?.99:k<.05?.82-k*6:.34-k*2.2;v+=R()*.07}
+  else{v=.03+.6*g(d,.012,.012)+.36*g(d,.37+.02*Math.sin(t/95),.028)*R()+.3*g(d,.6,.035)*R();if(R()<.004)v=.45+R()*.4}
+  cx.fillStyle=col(v);cx.fillRect(x,y,2,3)}
+ if(R()<.014)arches.push({y:H*(.1+R()*.62),k:0,n:16+(R()*16|0)});
+ arches.forEach(a=>{const dy=Math.pow(a.k-a.n/2,2)*.2;cx.fillStyle=col(.9);cx.fillRect(x,a.y+dy,2,4);cx.fillStyle=col(.62);cx.fillRect(x,a.y+dy+4,2,3);a.k++});arches=arches.filter(a=>a.k<a.n)}
+function size(){const r=cv.getBoundingClientRect();W=cv.width=Math.max(1,Math.round(r.width));H=cv.height=Math.max(1,Math.round(r.height));cx.fillStyle='rgb(4,18,31)';cx.fillRect(0,0,W,H);for(let x=0;x<W;x+=2)column(x)}
+size();addEventListener('resize',size);
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){let last=0;(function loop(ts){if(ts-last>45){cx.drawImage(cv,-2,0);column(W-2);last=ts}requestAnimationFrame(loop)})(0)}
+</script>
+</body>
+</html>

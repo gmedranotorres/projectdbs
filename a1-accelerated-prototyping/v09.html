@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v09 · Form GMT-27 · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--ink:#111;--field:#eaf2fb;--rule:#111;--red:#b3261e;--blue:#0b5394}
+*{box-sizing:border-box}
+body{margin:0;background:#dde0e2;color:var(--ink);font:15px/1.4 'Public Sans',sans-serif}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.gbar{display:flex;justify-content:space-between;max-width:1000px;margin:0 auto;padding:.7rem 1rem 0;font-size:13.5px;color:#444}
+.gbar a{color:#111;font-weight:600}
+.form{position:relative;max-width:1000px;margin:.8rem auto 3rem;background:#fff;border:1px solid #8d949a;box-shadow:0 2px 14px rgba(0,0,0,.12)}
+.head{display:grid;grid-template-columns:230px 1fr 210px;border-bottom:4px solid var(--rule)}
+.head>div{padding:.75rem .9rem}
+.fno{border-right:1px solid var(--rule);font-size:.8rem}
+.fno b{display:block;white-space:nowrap;font-size:2.5rem;font-weight:850;line-height:.95;letter-spacing:-.02em}
+.ttl{text-align:center}
+.ttl p{margin:0;font-size:.85rem}
+.ttl h1{font-size:1.7rem;font-weight:850;line-height:1.1;margin:.25rem 0}
+.omb{border-left:1px solid var(--rule);font-size:.8rem}
+.omb b{display:block;font-size:1.05rem;margin-top:.3rem}
+.stamp{position:absolute;right:2.2rem;top:6.6rem;transform:rotate(-9deg);border:3px solid var(--red);color:var(--red);padding:.3rem .8rem;font:800 1rem/1.15 'Public Sans',sans-serif;letter-spacing:.08em;text-align:center;opacity:.82;border-radius:4px;background:rgba(255,255,255,.4)}
+.instr{padding:.5rem .9rem;font-size:.85rem;border-bottom:1px solid var(--rule);background:#f6f7f8}
+.part{display:flex;border-bottom:1px solid var(--rule)}
+.part .tag{background:var(--ink);color:#fff;font-weight:800;padding:.32rem .9rem;min-width:5.6rem}
+.part h2{margin:0;padding:.32rem .9rem;font-size:1rem;font-weight:750}
+.row{display:grid;border-bottom:1px solid var(--rule)}
+.c{padding:.35rem .65rem .55rem;border-right:1px solid var(--rule);min-width:0}
+.c:last-child{border-right:0}
+.lbl{display:block;font-size:.74rem;color:#333;margin-bottom:.2rem}
+.ln{font-weight:800;margin-right:.35rem;color:var(--ink)}
+.fill{display:block;font:500 1rem/1.4 'IBM Plex Mono',monospace;background:var(--field);padding:.18rem .45rem;min-height:1.75em}
+.chk{display:inline-flex;gap:.45rem;align-items:center;margin:.15rem 1.4rem .15rem 0;font-size:.95rem}
+.bx{width:17px;height:17px;border:1.6px solid var(--ink);display:inline-grid;place-items:center;font:700 14px/1 'IBM Plex Mono',monospace;flex:none}
+.list{padding:.5rem .9rem .7rem;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;gap:.25rem 1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{font-size:.74rem;font-weight:700;text-align:left;padding:.35rem .6rem;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);background:#f6f7f8}
+td{padding:.4rem .6rem;border-bottom:1px solid #9aa0a6;border-right:1px solid var(--rule);vertical-align:top}
+th:last-child,td:last-child{border-right:0}
+td.t{font-family:'IBM Plex Mono',monospace;font-size:.86rem;background:var(--field)}
+.tw{overflow-x:auto;border-bottom:1px solid var(--rule)}
+.ex{display:grid;grid-template-columns:repeat(2,1fr)}
+.ex>div{padding:.6rem .9rem;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.ex>div:nth-child(2n){border-right:0}
+.ex b{display:block}
+.steps{margin:0;padding:.5rem .9rem .7rem 2.4rem;border-bottom:1px solid var(--rule)}
+.steps li{padding:.12rem 0}
+.sign{display:grid;grid-template-columns:1.6fr 1fr 1fr;border-bottom:4px solid var(--rule)}
+.sign .c{padding-bottom:.7rem}
+.jurat{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--rule);font-size:.85rem}
+.sig{font:600 2.1rem/1 'Caveat',cursive;color:#1a3d8f;background:#fff8c6;padding:.25rem .6rem;display:inline-block}
+.file{display:inline-block;margin-top:.2rem;background:var(--blue);color:#fff;font-weight:700;text-decoration:none;padding:.6rem 1.1rem}
+.file:hover{background:#073a6b}
+.pra{padding:.7rem .9rem;font-size:.78rem;color:#333}
+@media (max-width:760px){.head{grid-template-columns:1fr}.fno,.omb{border:0}.stamp{position:static;display:inline-block;margin:.5rem .9rem}.row,.sign,.ex,.list{grid-template-columns:1fr!important}.c{border-right:0;border-bottom:1px solid #9aa0a6}.ex>div{border-right:0}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v09 · Form GMT-27</span></nav>
+<main class="form">
+  <div class="head">
+    <div class="fno">Form<b>GMT-27</b>Rev. October 2026</div>
+    <div class="ttl"><p>Department of Clearer Decisions</p><h1>Application for Collaboration</h1><p>Attach evidence. Do not staple data to decisions without cleaning it first.</p></div>
+    <div class="omb">Valid through<b>June 2027</b>and well after.<br>Location: Chicago, IL</div>
+  </div>
+  <div class="stamp" aria-hidden="true">RECEIVED<br>OCT 05 2026</div>
+  <p class="instr">Read every line. This form has already been completed by the applicant; your only task is to decide.</p>
+
+  <div class="part"><span class="tag">Part I</span><h2>Applicant information</h2></div>
+  <div class="row" style="grid-template-columns:1.2fr 1fr 1fr">
+    <div class="c"><span class="lbl"><span class="ln">1a</span>Last name</span><span class="fill">MEDRANO TORRES</span></div>
+    <div class="c"><span class="lbl"><span class="ln">1b</span>First name</span><span class="fill">GABRIELA</span></div>
+    <div class="c"><span class="lbl"><span class="ln">1c</span>Expected completion (mm/yyyy)</span><span class="fill">06/2027</span></div>
+  </div>
+  <div class="row" style="grid-template-columns:1fr">
+    <div class="c"><span class="lbl"><span class="ln">2</span>Current program</span><span class="fill">M.S., Computational Analysis and Public Policy, University of Chicago (Harris School)</span></div>
+  </div>
+  <div class="row" style="grid-template-columns:1fr 1fr">
+    <div class="c"><span class="lbl"><span class="ln">3</span>Working languages</span><span class="chk"><span class="bx">X</span>English</span><span class="chk"><span class="bx">X</span>Spanish</span></div>
+    <div class="c"><span class="lbl"><span class="ln">4</span>Countries of study or work</span><span class="chk"><span class="bx">X</span>Peru</span><span class="chk"><span class="bx">X</span>Spain</span><span class="chk"><span class="bx">X</span>United States</span></div>
+  </div>
+
+  <div class="part"><span class="tag">Part II</span><h2>Purpose of application. Check all that apply.</h2></div>
+  <div class="list">
+    <span class="chk"><span class="bx">X</span>Turn administrative records into evidence</span>
+    <span class="chk"><span class="bx">X</span>Find where services or outreach miss people</span>
+    <span class="chk"><span class="bx">X</span>Build dashboards people actually use</span>
+    <span class="chk"><span class="bx">X</span>Strengthen environmental monitoring and enforcement</span>
+    <span class="chk"><span class="bx">X</span>Explain technical work in English y en español</span>
+    <span class="chk"><span class="bx"></span>Build something nobody asked for</span>
+  </div>
+
+  <div class="part"><span class="tag">Part III</span><h2>Employment and experience</h2></div>
+  <div class="tw"><table>
+    <thead><tr><th>Organization</th><th>Title</th><th>From</th><th>To</th><th>Duties</th></tr></thead>
+    <tbody>
+      <tr><td>Community Organizing and Family Issues, Chicago</td><td>Organizing intern</td><td class="t">06/2026</td><td class="t">08/2026</td><td>Outreach dashboard, data cleaning and geographic matching, bilingual documentation</td></tr>
+      <tr><td>UChicago Neighborhood Schools Program</td><td>Graduate tutor, K–8</td><td class="t">06/2026</td><td class="t">07/2026</td><td>Individual and small-group academic support</td></tr>
+      <tr><td>Baufest Perú (remote)</td><td>Data specialist</td><td class="t">06/2025</td><td class="t">08/2025</td><td>SQL cleaning and ETL; built and maintained 10 dashboards</td></tr>
+      <tr><td>Teleperformance Perú</td><td>Business intelligence analyst</td><td class="t">10/2021</td><td class="t">04/2025</td><td>Large SQL datasets; 20+ Power BI dashboards; DAX</td></tr>
+      <tr><td>Community-based classes</td><td>Programming instructor</td><td class="t">2024</td><td class="t">present</td><td>Programming for Spanish-speaking beginners, from blocks to Python</td></tr>
+      <tr><td>Universidad Miguel Hernández, Orihuela</td><td>Food and technology intern</td><td class="t">12/2019</td><td class="t">02/2020</td><td>Chemical, physicochemical and sensory analysis of meat products</td></tr>
+    </tbody></table></div>
+
+  <div class="part"><span class="tag">Part IV</span><h2>Supporting evidence</h2></div>
+  <div class="ex">
+    <div><b>Exhibit A. COFI outreach dashboard</b>Live neighborhood map of doors knocked, conversations, flyers and referrals. <a href="https://gmedranotorres.github.io/cofi-dashboard/">Open exhibit A</a></div>
+    <div><b>Exhibit B. MortgageMatch (team project)</b>Illinois lending dashboard from HMDA, ACS and lender data. <a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">Open exhibit B</a></div>
+    <div><b>Exhibit C. Squid surimi thesis research</b>Clay-derived additive in jumbo squid gels; texture, gel strength, water-holding capacity. UNALM, 2024.</div>
+    <div><b>Exhibit D. Education</b>B.S. Fisheries Engineering, UNALM, 2022, ranked 4th in class. Exchange in Food Science, Miguel Hernández University, 2019.</div>
+  </div>
+
+  <div class="part"><span class="tag">Part V</span><h2>Method. Complete lines 5a through 5e in order.</h2></div>
+  <ol class="steps" type="a">
+    <li>Begin with the decision: who needs the analysis, and what will they do with it?</li>
+    <li>Examine the data honestly: missing values, inconsistent definitions, duplicates.</li>
+    <li>Build a traceable workflow someone else can follow.</li>
+    <li>Challenge the result before anyone relies on it.</li>
+    <li>Deliver in a form the audience can use: model, map, dashboard or plain explanation.</li>
+  </ol>
+
+  <div class="part"><span class="tag">Part VI</span><h2>Signature</h2></div>
+  <div class="sign">
+    <div class="c jurat">Under penalties of clarity, I declare that I have examined this application and, to the best of my knowledge, it is true, correct and complete, and that I will ask what decision the data is for before building anything.</div>
+    <div class="c"><span class="lbl"><span class="ln">6a</span>Applicant’s signature</span><span class="sig">Gabriela Medrano Torres</span></div>
+    <div class="c"><span class="lbl"><span class="ln">6b</span>Date</span><span class="fill">10/05/2026</span></div>
+    <div class="c"><span class="lbl"><span class="ln">6c</span>Submit</span><a class="file" href="https://github.com/gmedranotorres">File via GitHub</a></div>
+  </div>
+  <p class="pra"><b>Paperwork reduction notice.</b> We estimate this form takes about two minutes to read. If you have suggestions for making it simpler, the applicant would like to hear them.</p>
+</main>
+</body>
+</html>

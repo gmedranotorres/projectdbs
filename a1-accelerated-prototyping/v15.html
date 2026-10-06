@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v15 · Descent · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+*{box-sizing:border-box}
+html{background:#01070d}
+body{margin:0;font:19px/1.6 'Instrument Sans',sans-serif;color:#0b2633;background:linear-gradient(180deg,#bfe6ee 0%,#6fbad1 8%,#2f86ad 18%,#15608a 31%,#0b3d60 46%,#06263f 62%,#03131f 80%,#01070d 100%)}
+a{color:inherit}
+:focus-visible{outline:2px solid #9ff3ff;outline-offset:3px}
+.gbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;padding:.7rem 1.2rem;font-size:14px;font-weight:600;color:#fff;mix-blend-mode:difference}
+.gbar a{color:#fff}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:1}
+#snow i{position:absolute;border-radius:50%;background:#fff;animation:fall linear infinite}
+@keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
+.z{position:relative;z-index:2;min-height:96vh;display:grid;grid-template-columns:minmax(110px,180px) minmax(0,42rem);gap:2rem;align-content:center;padding:5rem clamp(1.2rem,6vw,6rem);color:var(--fg)}
+.dep{font:italic 400 clamp(2rem,4vw,3.4rem)/1 'Instrument Serif',serif;border-top:1px solid currentColor;padding-top:.5rem;opacity:.85;align-self:start;margin-top:.6rem}
+.dep small{display:block;font:600 .8rem/1.4 'Instrument Sans',sans-serif;font-style:normal;opacity:.85;margin-top:.4rem}
+h1,h2{font:400 clamp(2.5rem,5.6vw,5rem)/1 'Instrument Serif',serif;letter-spacing:-.01em;margin:0 0 1.2rem}
+h1{font-size:clamp(3rem,7.6vw,7rem)}
+p{margin:0 0 1rem;max-width:38rem}
+.lead{font-size:1.3rem;line-height:1.5}
+.btn{display:inline-block;margin-top:.6rem;padding:.7rem 1.1rem;border:1px solid currentColor;text-decoration:none;font-weight:600}
+.btn:hover{background:rgba(255,255,255,.12)}
+.squid{position:absolute;right:8%;top:16%;width:min(26vw,260px);opacity:.42;animation:bob 7s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-26px) rotate(-3deg)}}
+.glow{position:absolute;width:6px;height:6px;border-radius:50%;background:#9ff3ff;box-shadow:0 0 12px 4px rgba(120,240,255,.75)}
+.cta{display:inline-block;margin-top:1rem;padding:1rem 1.5rem;border-radius:999px;background:#9ff3ff;color:#01141f;font-weight:700;text-decoration:none;box-shadow:0 0 28px 8px rgba(120,240,255,.35)}
+.path{list-style:none;margin:0;padding:0;border-left:1px solid currentColor}
+.path li{padding:0 0 .9rem 1.1rem;position:relative}
+.path li::before{content:'';position:absolute;left:-5px;top:.55rem;width:9px;height:9px;border-radius:50%;background:currentColor}
+.gauge{position:fixed;right:1.1rem;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:.4rem;color:#fff;mix-blend-mode:difference;font-weight:600;font-size:.8rem;text-align:center}
+.track{position:relative;width:2px;height:42vh;background:currentColor;opacity:.8}
+.track i{position:absolute;left:-6px;width:14px;height:3px;background:currentColor}
+.gauge b{font:400 1.6rem/1 'Instrument Serif',serif}
+@media (max-width:760px){.z{grid-template-columns:1fr;gap:.6rem;padding:4.5rem 3.4rem 3rem 1.2rem}.gauge{right:.4rem}.track{height:30vh}.squid{opacity:.25}}
+@media (prefers-reduced-motion:reduce){#snow i,.squid{animation:none}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v15 · Descent</span></nav>
+<div id="snow" aria-hidden="true"></div>
+<div class="gauge" aria-hidden="true"><span>Depth</span><div class="track"><i id="mk"></i></div><b id="dv">0 m</b><span id="zn">Sunlight zone</span></div>
+<main>
+  <section class="z" data-d="0" style="--fg:#06212d">
+    <div class="dep">0 m<small>Surface</small></div>
+    <div><h1>Gabriela Medrano Torres</h1><p class="lead">Fisheries engineer turned data and policy analyst. I turn messy, real-world records into tools people use to decide, for policy, communities and the environment.</p><p>Scroll to descend. The work goes deeper than it looks.</p></div>
+  </section>
+  <section class="z" data-d="30" style="--fg:#041b26">
+    <div class="dep">30 m<small>Sunlit shallows</small></div>
+    <div><h2>The work people see</h2><p>For Community Organizing and Family Issues (COFI) in Chicago, I turned field outreach records into a live neighborhood map: doors knocked, conversations, flyers and referrals by community area. Updates flow from Google Sheets through Apps Script to a Leaflet map, documented in English and Spanish so staff can maintain it.</p><a class="btn" href="https://gmedranotorres.github.io/cofi-dashboard/">Open the COFI map</a></div>
+  </section>
+  <section class="z" data-d="120" style="--fg:#eaf7fb">
+    <div class="dep">120 m<small>Still lit</small></div>
+    <div><h2>Lending, county by county</h2><p>MortgageMatch is a team dashboard of mortgage approvals and denials across Illinois. I helped clean and merge HMDA application records, Census ACS county indicators and lender reference data into one analysis-ready dataset.</p><a class="btn" href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></div>
+  </section>
+  <section class="z" data-d="250" style="--fg:#e3f3f8">
+    <div class="dep">250 m<small>Twilight zone</small></div>
+    <div><h2>Below every dashboard</h2><p>Before graduate school I spent nearly four years in business intelligence in Peru: SQL extraction, ETL and DAX measures behind more than 30 Power BI dashboards at Teleperformance and Baufest. Most of the work happens where nobody looks: definitions, joins, duplicates.</p></div>
+  </section>
+  <section class="z" data-d="480" style="--fg:#dcecf2">
+    <svg class="squid" viewBox="0 0 120 240" aria-hidden="true"><path d="M60 4 C80 30 86 80 82 120 L38 120 C34 80 40 30 60 4Z M60 8 L98 46 L70 58Z M60 8 L22 46 L50 58Z" fill="#9fd8e8"/><ellipse cx="60" cy="130" rx="24" ry="16" fill="#9fd8e8"/><g stroke="#9fd8e8" stroke-width="6" stroke-linecap="round" fill="none"><path d="M44 142 q-8 40 -16 86"/><path d="M54 145 q-3 40 -6 90"/><path d="M66 145 q3 40 6 90"/><path d="M76 142 q8 40 16 86"/></g></svg>
+    <div class="dep">480 m<small>Where squid spend the day</small></div>
+    <div><h2>Dosidicus gigas</h2><p>My thesis at Universidad Nacional Agraria La Molina studied how a clay-derived additive changes texture, gel strength and water-holding capacity in jumbo squid surimi gels: a way to turn an abundant Humboldt Current resource into a higher-value food.</p><p>The jumbo squid spends its days in the deep and rises to the surface at night. Good analysis makes the same trip, from raw records up to a decision.</p></div>
+  </section>
+  <section class="z" data-d="720" style="--fg:#d6e8ef">
+    <div class="dep">720 m<small>The long way down</small></div>
+    <div><h2>How I got here</h2><ul class="path"><li>Fisheries engineering at UNALM, Lima. B.S. 2022, fourth in my class.</li><li>Food-science exchange and lab internship in Orihuela, Spain, 2019–2020.</li><li>Business intelligence in Peru, 2021–2025.</li><li>M.S. in Computational Analysis and Public Policy, University of Chicago, 2025–2027.</li><li>Teaching programming to Spanish-speaking beginners since 2024.</li></ul></div>
+  </section>
+  <section class="z" data-d="1000" style="--fg:#d9f6fb">
+    <i class="glow" style="left:12%;top:22%"></i><i class="glow" style="left:78%;top:30%"></i><i class="glow" style="left:64%;top:72%"></i><i class="glow" style="left:30%;top:84%"></i>
+    <div class="dep">1,000 m<small>Midnight zone</small></div>
+    <div><h2>Down here, you make your own light</h2><p>I graduate in June 2027 and I’m looking for research, policy and data work in Chicago, especially on environmental enforcement, service access and administrative data.</p><a class="cta" href="https://github.com/gmedranotorres">Signal me on GitHub</a></div>
+  </section>
+</main>
+<script>
+const snow=document.getElementById('snow');
+for(let i=0;i<70;i++){const e=document.createElement('i'),s=1+Math.random()*2.4;e.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${s}px;height:${s}px;opacity:${.15+Math.random()*.45};animation-duration:${18+Math.random()*30}s;animation-delay:-${Math.random()*40}s`;snow.appendChild(e)}
+const secs=[...document.querySelectorAll('.z')],mk=document.getElementById('mk'),dv=document.getElementById('dv'),zn=document.getElementById('zn');
+function upd(){const mx=document.documentElement.scrollHeight-innerHeight,c=scrollY;const pts=secs.map(s=>[Math.min(s.offsetTop,mx),+s.dataset.d]);let d=pts[0][1];
+ if(c>=pts[pts.length-1][0])d=1000;else for(let i=0;i<pts.length-1;i++){if(c>=pts[i][0]&&c<pts[i+1][0]){d=pts[i][1]+(c-pts[i][0])/(pts[i+1][0]-pts[i][0])*(pts[i+1][1]-pts[i][1]);break}}
+ d=Math.max(0,Math.round(d));dv.textContent=d.toLocaleString('en-US')+' m';mk.style.top=(d/1000*100)+'%';zn.textContent=d<200?'Sunlight zone':d<1000?'Twilight zone':'Midnight zone'}
+addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+</script>
+</body>
+</html>

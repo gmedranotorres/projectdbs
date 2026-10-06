@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v02 · Ship’s log · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--chart:#eee6cf;--land:#e3cf96;--ink:#23323b;--magenta:#a3226b;--grid:rgba(60,90,100,.16);--log:#f8f3e3}
+*{box-sizing:border-box}
+html{background:var(--chart)}
+body{margin:0;color:var(--ink);font:16px/1.5 'Courier Prime','Courier New',monospace;position:relative;min-height:100vh;overflow-x:hidden;
+background:repeating-linear-gradient(90deg,transparent 0 159px,var(--grid) 159px 160px),repeating-linear-gradient(0deg,transparent 0 159px,var(--grid) 159px 160px),var(--chart)}
+a{color:var(--magenta)}
+a:focus-visible{outline:2px dashed var(--magenta);outline-offset:3px}
+.coast{position:absolute;left:0;top:0;width:16vw;min-width:90px;height:100%;pointer-events:none}
+#soundings{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#soundings span{position:absolute;font:italic 15px 'Cormorant Garamond',serif;color:#5d7782}
+.gbar{position:relative;z-index:3;display:flex;justify-content:space-between;padding:.7rem 1.2rem;font:italic 600 17px 'Cormorant Garamond',serif}
+.gbar a{color:var(--ink)}
+main{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:0 1.2rem 5rem}
+.top{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;margin:1.2rem 0 2.4rem}
+.cartouche{justify-self:center;text-align:center;font-family:'Cormorant Garamond',serif;padding:1.3rem 2.4rem 1.2rem;border:1.5px solid var(--ink);outline:5px double var(--ink);outline-offset:5px;background:rgba(248,243,227,.88);max-width:560px}
+.cartouche .sc{font-size:15px;letter-spacing:.32em;text-transform:uppercase;margin:0}
+.cartouche h1{font-style:italic;font-weight:600;font-size:clamp(2rem,4.6vw,3.2rem);line-height:1.02;margin:.35rem 0 .45rem}
+.cartouche p{margin:.15rem 0;font-size:1.12rem}
+.cartouche .small{font-size:.98rem;font-style:italic;color:#44545c}
+.rose{width:150px;height:150px}
+.note{font:italic 600 1.05rem 'Cormorant Garamond',serif;color:var(--magenta);max-width:24rem;margin:0 0 1.4rem 1rem}
+.log{background:var(--log);border:1px solid #b9ad8c;box-shadow:6px 8px 0 rgba(35,50,59,.12);padding:1.6rem 1.6rem 1.2rem}
+.log h2{font:600 1.5rem 'Cormorant Garamond',serif;margin:0 0 .2rem}
+.log .sub{margin:0 0 1rem;font-size:.9rem;color:#5a5446}
+table{width:100%;border-collapse:collapse;font-size:.92rem;line-height:1.42}
+th{font-weight:700;text-align:left;border-bottom:2px solid var(--ink);padding:.4rem .5rem;font-size:.82rem;letter-spacing:.06em}
+td{padding:.55rem .5rem;border-bottom:1px solid #d5c9a8;vertical-align:top}
+td:first-child{white-space:nowrap;font-weight:700}
+td.pos{white-space:nowrap;color:#3d5560}
+td.crs{text-align:center;color:var(--magenta);font-weight:700}
+tr.port td{background:rgba(163,34,107,.06)}
+em.sp{font-style:italic}
+.ports{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2.2rem 0}
+.port-card{background:rgba(248,243,227,.92);border:1px solid #b9ad8c;padding:1rem 1.1rem}
+.port-card h3{font:600 1.25rem/1.15 'Cormorant Garamond',serif;margin:0 0 .4rem}
+.port-card p{margin:0 0 .5rem;font-size:.9rem}
+.hail{display:flex;flex-wrap:wrap;gap:1.6rem;align-items:center;background:var(--ink);color:#f3ecd6;padding:1.4rem 1.6rem}
+.hail a{color:#ffd6ea;font-weight:700}
+.flags{display:flex;gap:.45rem}
+.flags svg{width:44px;height:31px;display:block}
+.flags figcaption{font-size:.75rem;text-align:center;margin-top:.15rem}
+.hail h2{font:italic 600 1.7rem 'Cormorant Garamond',serif;margin:0}
+.hail p{margin:.2rem 0 0}
+@media (max-width:760px){.top{grid-template-columns:1fr}.rose{justify-self:center;width:110px;height:110px}.cartouche{padding:1rem 1.2rem}
+ thead{display:none}table,tbody,tr,td{display:block;width:100%}tr{border-bottom:1px solid #d5c9a8;padding:.5rem 0}td{border:0;padding:.1rem 0}td.crs{text-align:left}td.crs::before{content:'Course: '}}
+</style>
+</head>
+<body>
+<svg class="coast" viewBox="0 0 200 1000" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,0 L118,0 C100,60 140,90 120,150 C100,210 70,230 95,300 C120,370 150,400 110,470 C80,530 60,560 85,640 C105,700 140,740 115,820 C95,880 70,930 90,1000 L0,1000 Z" fill="#e3cf96" stroke="#8a7a4e" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+  <path d="M143,0 C125,60 165,90 145,150 C125,210 95,230 120,300 C145,370 175,400 135,470 C105,530 85,560 110,640 C130,700 165,740 140,820 C120,880 95,930 115,1000" fill="none" stroke="#7a98a3" stroke-width="1" stroke-dasharray="3 4" vector-effect="non-scaling-stroke"/>
+  <path d="M175,0 C157,60 197,90 177,150 C157,210 127,230 152,300 C177,370 200,400 167,470 C137,530 117,560 142,640 C162,700 197,740 172,820 C152,880 127,930 147,1000" fill="none" stroke="#7a98a3" stroke-width="1" stroke-dasharray="1 5" vector-effect="non-scaling-stroke"/>
+</svg>
+<div id="soundings" aria-hidden="true"></div>
+
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v02 · Ship’s log</span></nav>
+
+<main>
+  <div class="top">
+    <header class="cartouche">
+      <p class="sc">The passage of</p>
+      <h1>Gabriela Medrano Torres</h1>
+      <p>from the Humboldt Current to Lake Michigan</p>
+      <p class="small">Fisheries engineer, data analyst and student of public policy. Surveyed 2018–2026.</p>
+    </header>
+    <svg class="rose" viewBox="-80 -80 160 160" role="img" aria-label="Compass rose">
+      <circle r="66" fill="none" stroke="#a3226b" stroke-width="1.2"/>
+      <circle r="58" fill="none" stroke="#a3226b" stroke-width="9" stroke-dasharray="1 9.12" opacity=".8"/>
+      <circle r="50" fill="none" stroke="#a3226b" stroke-width=".8"/>
+      <polygon points="0,-48 7,-7 48,0 7,7 0,48 -7,7 -48,0 -7,-7" fill="#a3226b" opacity=".9"/>
+      <polygon points="0,-30 4,-4 30,0 4,4 0,30 -4,4 -30,0 -4,-4" fill="#f8f3e3" transform="rotate(45)"/>
+      <circle r="3" fill="#f8f3e3"/>
+      <text y="-70" text-anchor="middle" font-family="Cormorant Garamond,serif" font-weight="700" font-size="14" fill="#a3226b">N</text>
+    </svg>
+  </div>
+
+  <p class="note">Caution: records in this area are messy. Clean, standardize and document before navigating.</p>
+
+  <section class="log" aria-labelledby="logh">
+    <h2 id="logh">Log of the voyage</h2>
+    <p class="sub">Kept by the navigator. Ports of call with positions; courses are true bearings from the previous port.</p>
+    <table>
+      <thead><tr><th>Date</th><th>Position</th><th>Course</th><th>Remarks</th></tr></thead>
+      <tbody>
+        <tr><td>2018</td><td class="pos">12°05′S 076°57′W<br>La Molina, Lima</td><td class="crs">·</td><td>Environmental Culture Volunteer: eco-efficiency outreach on campus.</td></tr>
+        <tr><td>2019</td><td class="pos">05°05′S 081°07′W<br>Paita</td><td class="crs">NW</td><td>Certified Qualified Fishing Sailor: first aid, survival at sea, firefighting, personal safety.</td></tr>
+        <tr><td>Fall 2019</td><td class="pos">38°05′N 000°57′W<br>Orihuela, Spain</td><td class="crs">NE</td><td>Exchange semester in Food Science &amp; Technology at Miguel Hernández University. Lab internship to Feb 2020: chemical, physicochemical and sensory analysis of meat products.</td></tr>
+        <tr><td>2020–21</td><td class="pos">Peru</td><td class="crs">SW</td><td>Volunteer teacher with Kuyayki Perú. Research on surimi gels with Andean cereals; DeFoPro-Gel Research Circle.</td></tr>
+        <tr><td>2021–25</td><td class="pos">Peru, ashore</td><td class="crs">·</td><td>Business intelligence analyst, Teleperformance Perú: large SQL datasets, DAX, 20+ Power BI dashboards.</td></tr>
+        <tr><td>2022</td><td class="pos">12°05′S 076°57′W<br>La Molina</td><td class="crs">·</td><td>B.S. Fisheries Engineering, 4th in class. Environmental Enforcement Certificate, OEFA.</td></tr>
+        <tr><td>2024</td><td class="pos">12°05′S 076°57′W<br>La Molina</td><td class="crs">·</td><td>Thesis research: clay-derived additive in jumbo squid (<em class="sp">Dosidicus gigas</em>) surimi gels. Began teaching programming to Spanish-speaking beginners.</td></tr>
+        <tr><td>2025</td><td class="pos">Remote</td><td class="crs">·</td><td>Data specialist, Baufest Perú: SQL cleaning, ETL, 10 dashboards.</td></tr>
+        <tr class="port"><td>Autumn 2025</td><td class="pos">41°47′N 087°36′W<br>Chicago</td><td class="crs">NNW</td><td>Made port at the University of Chicago: M.S. in Computational Analysis and Public Policy.</td></tr>
+        <tr class="port"><td>2026</td><td class="pos">41°47′N 087°36′W<br>Chicago</td><td class="crs">·</td><td>MortgageMatch, team dashboard of Illinois lending. Summer at COFI: outreach map by community area, documented in English and Spanish. K–8 tutor.</td></tr>
+        <tr class="port"><td>Jun 2027</td><td class="pos">Chicago</td><td class="crs">·</td><td>Expected graduation. Next port of call: a Chicago team that needs clearer decisions.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="ports" aria-label="Charted work">
+    <article class="port-card"><h3>COFI outreach dashboard</h3><p>Field records become a live map of doors knocked, conversations, flyers and referrals across Chicago neighborhoods.</p><a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the map</a></article>
+    <article class="port-card"><h3>MortgageMatch</h3><p>Team project merging HMDA, Census ACS and lender data to compare lending outcomes across Illinois.</p><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></article>
+    <article class="port-card"><h3>Squid surimi research</h3><p>How an abundant Humboldt Current species can become a higher-value food: texture, gel strength, water-holding capacity.</p></article>
+  </section>
+
+  <section class="hail" aria-labelledby="hailh">
+    <div class="flags" role="img" aria-label="Signal flags spelling HOLA">
+      <figure style="margin:0"><svg viewBox="0 0 40 28"><rect width="20" height="28" fill="#fff"/><rect x="20" width="20" height="28" fill="#c8102e"/></svg><figcaption>H</figcaption></figure>
+      <figure style="margin:0"><svg viewBox="0 0 40 28"><polygon points="0,0 0,28 40,28" fill="#f4c20d"/><polygon points="0,0 40,0 40,28" fill="#c8102e"/></svg><figcaption>O</figcaption></figure>
+      <figure style="margin:0"><svg viewBox="0 0 40 28"><rect width="40" height="28" fill="#111"/><rect width="20" height="14" fill="#f4c20d"/><rect x="20" y="14" width="20" height="14" fill="#f4c20d"/></svg><figcaption>L</figcaption></figure>
+      <figure style="margin:0"><svg viewBox="0 0 40 28"><rect width="20" height="28" fill="#fff"/><polygon points="20,0 40,0 30,14 40,28 20,28" fill="#1f4fa3"/></svg><figcaption>A</figcaption></figure>
+    </div>
+    <div>
+      <h2 id="hailh">Hail the navigator</h2>
+      <p>Graduating June 2027 and staying in Chicago. Signal on <a href="https://github.com/gmedranotorres">GitHub</a>.</p>
+    </div>
+  </section>
+</main>
+<script>
+(function(){var box=document.getElementById('soundings'),h=document.body.scrollHeight,w=document.body.clientWidth,s=7,n=Math.round(h/20);
+function r(){s=(s*16807)%2147483647;return s/2147483647}
+for(var i=0;i<n;i++){var e=document.createElement('span');var d=Math.round(8+r()*90);e.innerHTML=d+(r()>.6?'<sub>'+Math.round(r()*9)+'</sub>':'');e.style.left=(14+r()*84)+'%';e.style.top=Math.round(r()*h)+'px';box.appendChild(e)}})();
+</script>
+</body>
+</html>

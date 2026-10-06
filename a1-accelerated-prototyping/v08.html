@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v08 · Khipu · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--wall:#241e1a;--text:#efe7da;--mute:#b8a994;--red:#d0646d;--card:#f1ede5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--wall);color:var(--text);font:18px/1.6 'Fraunces',Georgia,serif;font-optical-sizing:auto;font-variation-settings:'SOFT' 50}
+a{color:#f2b9a0}
+:focus-visible{outline:2px solid #f2b9a0;outline-offset:3px}
+.gbar{display:flex;justify-content:space-between;padding:.6rem 1.4rem;color:var(--mute);font-size:15px}
+.gbar a{color:var(--text);text-decoration:none}
+.intro{max-width:1180px;margin:0 auto;padding:2rem 1.4rem .8rem;display:grid;grid-template-columns:1.15fr 1fr;gap:2.4rem;align-items:end}
+h1{font-size:clamp(2.6rem,5.4vw,4.5rem);line-height:.98;font-weight:560;margin:0;font-variation-settings:'SOFT' 100,'WONK' 1}
+.intro p{margin:0;color:#ddd2c2;max-width:38rem}
+.case{position:relative;max-width:1240px;margin:1.4rem auto 0;background:radial-gradient(ellipse at 50% 12%,#3e342d 0%,#1d1815 62%);border:1px solid #3a322c;box-shadow:inset 0 0 90px rgba(0,0,0,.65);padding-bottom:9.6rem}
+.scroll{overflow-x:auto}
+svg#k{display:block;width:100%;min-width:760px;height:auto}
+.pend{cursor:pointer}
+.pend .hit{fill:transparent}
+.pend:focus{outline:none}
+.pend:focus-visible .cord,.pend.on .cord{stroke-width:7}
+.pend.on text,.pend:focus-visible text{fill:#fff}
+.reading{position:absolute;left:1.4rem;bottom:1.3rem;max-width:520px;background:rgba(20,16,14,.86);border-left:4px solid var(--red);padding:.8rem 1rem;font-size:.95rem;line-height:1.45}
+.reading b.v{font-size:1.7rem;font-weight:650;display:block;line-height:1.1;margin-bottom:.15rem}
+.reading .how{display:block;color:var(--mute);font-size:.86rem;margin-top:.35rem}
+.label{position:absolute;right:1.4rem;bottom:1.3rem;width:290px;background:var(--card);color:#211b17;padding:.85rem 1rem;font-size:.82rem;line-height:1.42}
+.label b{display:block;font-size:.95rem}
+.legend{max-width:1180px;margin:1.6rem auto 0;padding:0 1.4rem;display:flex;flex-wrap:wrap;gap:1.4rem 2.6rem;color:#ddd2c2;font-size:.95rem}
+.legend div{display:flex;gap:.7rem;align-items:center}
+.legend svg{width:26px;height:40px;flex:none}
+.more{max-width:1180px;margin:2.6rem auto 0;padding:0 1.4rem 4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.more h2{font-size:1.45rem;font-weight:600;margin:0 0 .5rem;font-variation-settings:'SOFT' 100,'WONK' 1}
+.more p{margin:0 0 .7rem;color:#ddd2c2;font-size:1rem}
+.more ul{margin:0;padding:0;list-style:none}
+.more li{margin-bottom:.8rem;font-size:1rem;color:#ddd2c2}
+.more li b{display:block;color:var(--text)}
+@media (max-width:860px){.intro,.more{grid-template-columns:1fr}.case{padding-bottom:0}.reading,.label{position:static;max-width:none;width:auto;margin:0 1rem 1rem}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v08 · Khipu</span></nav>
+<header class="intro">
+  <h1>A khipu of a working life</h1>
+  <p>For centuries, record keepers in the Andes stored numbers on khipus: cords of cotton or camelid fiber, knotted in base ten. I’m Gabriela Medrano Torres, a Peruvian fisheries engineer turned data and policy analyst, and keeping records people can use is my work. This page is my record. Select a cord to read it.</p>
+</header>
+
+<section class="case" aria-label="Khipu display">
+  <div class="scroll"><svg id="k" viewBox="0 0 1000 600" role="group" aria-label="Khipu with eight pendant cords"></svg></div>
+  <div class="reading" id="reading" aria-live="polite"></div>
+  <div class="label"><b>Khipu of Gabriela Medrano Torres</b>Digital cords, 8 pendants. Peru, Spain and Chicago, 2018–2027. Knotted in the classic positional system: single knots for tens, hundreds and thousands; long knots for units; a figure-eight knot for one.</div>
+</section>
+
+<div class="legend" aria-label="How to read the knots">
+  <div><svg viewBox="0 0 26 40"><line x1="13" y1="0" x2="13" y2="40" stroke="#cbbd9f" stroke-width="3"/><ellipse cx="13" cy="20" rx="7" ry="5" fill="#8f7f63" stroke="#5e5240"/></svg><span>Single knot: one ten, hundred or thousand, depending on its height</span></div>
+  <div><svg viewBox="0 0 26 40"><line x1="13" y1="0" x2="13" y2="40" stroke="#cbbd9f" stroke-width="3"/><rect x="7" y="6" width="12" height="28" rx="6" fill="#8f7f63" stroke="#5e5240"/><path d="M8,13 L18,10 M8,19 L18,16 M8,25 L18,22 M8,31 L18,28" stroke="#5e5240"/></svg><span>Long knot: units from two to nine, counted by its turns</span></div>
+  <div><svg viewBox="0 0 26 40"><line x1="13" y1="0" x2="13" y2="40" stroke="#cbbd9f" stroke-width="3"/><circle cx="13" cy="15" r="5" fill="none" stroke="#8f7f63" stroke-width="3"/><circle cx="13" cy="25" r="5" fill="none" stroke="#8f7f63" stroke-width="3"/></svg><span>Figure-eight knot: a single unit</span></div>
+  <div><span>An empty stretch of cord is a zero.</span></div>
+</div>
+
+<section class="more">
+  <div><h2>Who kept this record</h2><p>Fisheries engineer from Universidad Nacional Agraria La Molina, food-science researcher in Spain, business intelligence analyst in Peru, and now a graduate student in Computational Analysis and Public Policy at the University of Chicago, graduating June 2027.</p><p>I care about the step before the chart: what the data means, and who will act on it.</p></div>
+  <div><h2>Records kept elsewhere</h2><ul>
+    <li><b>COFI outreach dashboard</b>A live map of neighborhood outreach in Chicago. <a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the map</a></li>
+    <li><b>MortgageMatch</b>Team dashboard of mortgage lending in Illinois. <a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></li>
+    <li><b>Squid surimi research</b>Thesis research on texture and gel strength in jumbo squid gels, UNALM, 2024.</li></ul></div>
+  <div><h2>Write to the keeper</h2><p>I’m looking for research, policy and data work in Chicago after June 2027, especially on environmental enforcement, service access and administrative data.</p><p><a href="https://github.com/gmedranotorres">Find me on GitHub</a></p></div>
+</section>
+
+<script>
+const P=[[30,'#b5434d','Power BI dashboards built','More than 20 at Teleperformance and 10 at Baufest Perú, 2021–2025.'],
+[3,'#e8dfcf','Countries studied and worked in','Peru, Spain and the United States.'],
+[2,'#4a5fa3','Working languages','English and Spanish. I document in both.'],
+[10,'#d0a845','Certifications','From Qualified Fishing Sailor (2019) to Statistics with SAS (2025).'],
+[4,'#7d8f55','Indicators on the COFI outreach map','Doors knocked, conversations, flyers and referrals, by Chicago community area.'],
+[3,'#9a7552','Public datasets merged in MortgageMatch','HMDA applications, Census ACS county indicators and HMDA lender data, in a team project.'],
+[1,'#d08a8e','Squid species studied','Dosidicus gigas, the jumbo squid of the Humboldt Current, for thesis research on surimi gels.'],
+[2027,'#6b5240','Graduation year','M.S. in Computational Analysis and Public Policy, University of Chicago, June 2027.']];
+const W=['zero','one','two','three','four','five','six','seven','eight','nine'],POS=['thousands','hundreds','tens'];
+const svg=document.getElementById('k'),NS='http://www.w3.org/2000/svg';
+function E(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
+function shade(h,f){const n=parseInt(h.slice(1),16);const c=[n>>16,n>>8&255,n&255].map(v=>Math.round(v*f));return '#'+c.map(v=>v.toString(16).padStart(2,'0')).join('')}
+function describe(v){const d=String(v).padStart(4,'0').split('').map(Number);const first=d.findIndex(x=>x>0);const out=[];
+ for(let i=0;i<3;i++){if(d[i])out.push(`${W[d[i]]} single knot${d[i]>1?'s':''} in the ${POS[i]}`);else if(i>first&&first>-1)out.push(`a blank stretch for zero ${POS[i]}`)}
+ out.push(d[3]===0?'no knot in the units':d[3]===1?'a figure-eight knot in the units':`a long knot of ${W[d[3]]} turns in the units`);return out.join(', ')}
+const primary='M60,74 Q500,98 940,74';
+E('path',{d:primary,stroke:'#cdbf9f','stroke-width':12,fill:'none','stroke-linecap':'round'});
+E('path',{d:primary,stroke:'#86775c','stroke-width':12,fill:'none','stroke-dasharray':'3 6',opacity:.75});
+P.forEach((p,i)=>{
+ const x=135+i*(730/7),t=(x-60)/880,ya=74+48*t*(1-t),L=400+((i*37)%5)*14,sx=((i%3)-1)*9,col=p[1],dk=shade(col,.62);
+ const c=[x,ya,x+8,ya+L*.33,x-8,ya+L*.66,x+sx,ya+L];
+ const pt=f=>{const u=1-f;return[u*u*u*c[0]+3*u*u*f*c[2]+3*u*f*f*c[4]+f*f*f*c[6],u*u*u*c[1]+3*u*u*f*c[3]+3*u*f*f*c[5]+f*f*f*c[7]]};
+ const g=E('g',{class:'pend',tabindex:0,role:'button','aria-label':`Cord ${i+1}: ${p[0]}, ${p[2]}`,'data-i':i});
+ E('rect',{class:'hit',x:x-24,y:ya,width:48,height:L+40},g);
+ const d=`M${c[0]},${c[1]} C${c[2]},${c[3]} ${c[4]},${c[5]} ${c[6]},${c[7]}`;
+ E('path',{class:'cord',d,stroke:col,'stroke-width':5,fill:'none','stroke-linecap':'round'},g);
+ E('path',{d,stroke:dk,'stroke-width':5,fill:'none','stroke-dasharray':'2 5',opacity:.55},g);
+ E('ellipse',{cx:x,cy:ya+2,rx:7,ry:5,fill:'none',stroke:col,'stroke-width':4},g);
+ const dg=String(p[0]).padStart(4,'0').split('').map(Number),F=[.16,.34,.53,.79];
+ for(let q=0;q<3;q++){const n=dg[q];for(let k=0;k<n;k++){const [kx,ky]=pt(F[q]+(k-(n-1)/2)*11/L);E('ellipse',{cx:kx,cy:ky,rx:7.5,ry:5.2,fill:dk,stroke:shade(col,.4),'stroke-width':1.2},g);E('path',{d:`M${kx-4},${ky-1.5} q4,-3 8,0`,stroke:col,'stroke-width':1.2,fill:'none'},g)}}
+ const u=dg[3],[ux,uy]=pt(F[3]);
+ if(u===1){E('circle',{cx:ux,cy:uy-6,r:5.5,fill:'none',stroke:dk,'stroke-width':3.5},g);E('circle',{cx:ux,cy:uy+6,r:5.5,fill:'none',stroke:dk,'stroke-width':3.5},g)}
+ else if(u>1){const h=8+u*5.5;E('rect',{x:ux-7,y:uy-h/2,width:14,height:h,rx:7,fill:dk,stroke:shade(col,.4),'stroke-width':1.2},g);for(let k=1;k<u;k++){const yy=uy-h/2+k*(h/u);E('path',{d:`M${ux-6},${yy+2} L${ux+6},${yy-2}`,stroke:col,'stroke-width':1.3},g)}}
+ const [ex,ey]=pt(1);for(const o of[-4,0,4])E('path',{d:`M${ex},${ey} l${o},12`,stroke:col,'stroke-width':2,'stroke-linecap':'round'},g);
+ const tx=E('text',{x:ex,y:ey+36,'text-anchor':'middle','font-size':15,fill:'#b8a994'},g);tx.textContent=i+1;
+});
+const rd=document.getElementById('reading');
+function show(i){const p=P[i];rd.innerHTML=`<b class="v">${p[0]}</b>${p[2]}. ${p[3]}<span class="how">Cord ${i+1}: ${describe(p[0])}.</span>`;document.querySelectorAll('.pend').forEach(e=>e.classList.toggle('on',+e.dataset.i===i))}
+svg.addEventListener('mouseover',e=>{const g=e.target.closest('.pend');if(g)show(+g.dataset.i)});
+svg.addEventListener('click',e=>{const g=e.target.closest('.pend');if(g)show(+g.dataset.i)});
+svg.addEventListener('focusin',e=>{const g=e.target.closest('.pend');if(g)show(+g.dataset.i)});
+show(0);
+</script>
+</body>
+</html>

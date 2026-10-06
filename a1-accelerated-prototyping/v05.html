@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v05 · Conserva label · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--red:#c4122f;--red2:#a80d27;--navy:#14325c;--gold:#d6a943;--cream:#f7ead0;--ink:#1c1b19}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:17px/1.45 'Oswald',sans-serif;background:#0f2643 radial-gradient(circle at 50% 30%,#1d4475,#0f2643 70%)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.gbar{display:flex;justify-content:space-between;padding:.6rem 1.2rem;color:#c9d6e6;font-size:15px;letter-spacing:.05em}
+.gbar a{color:#fff;text-decoration:none}
+main{max-width:1180px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.can{position:relative;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.rim{height:24px;border-radius:14px;background:linear-gradient(#fbfbfb,#aeb4ba 38%,#eef0f2 62%,#868c93)}
+.label{background:var(--red);border-top:6px solid var(--gold);border-bottom:6px solid var(--gold);margin:0 6px;position:relative;overflow:hidden}
+.band{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.55rem 1.4rem;background:var(--navy);color:var(--cream);text-transform:uppercase;letter-spacing:.22em;font-size:.82rem;font-weight:500}
+.band.bottom{letter-spacing:.12em;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:1fr minmax(320px,430px) 1fr;gap:1.4rem;align-items:center;padding:2rem 1.6rem;position:relative}
+.grid::before{content:'';position:absolute;left:50%;top:50%;width:1400px;height:1400px;transform:translate(-50%,-50%);background:repeating-conic-gradient(from 0deg,var(--red2) 0 5deg,var(--red) 5deg 10deg);opacity:.85}
+.side{position:relative;background:var(--cream);border:3px double var(--navy);padding:1.1rem 1.2rem;box-shadow:0 0 0 5px var(--cream),0 0 0 7px var(--gold)}
+.side h2{font-family:'Abril Fatface',serif;font-weight:400;font-size:1.45rem;color:var(--red);margin:0 0 .5rem;line-height:1.1}
+.side h2 small{display:block;font:500 .72rem 'Oswald',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--navy)}
+.side p{margin:0 0 .6rem;font-size:.98rem;font-weight:300;line-height:1.5}
+.side .warn{font-size:.82rem;font-weight:500;color:var(--navy);border-top:1px solid var(--navy);padding-top:.5rem}
+.var{list-style:none;margin:0;padding:0}
+.var li{border-bottom:1px dotted var(--navy);padding:.45rem 0}
+.var b{display:block;font-weight:600;font-size:1.02rem;color:var(--navy)}
+.var span{font-weight:300;font-size:.92rem}
+.var a{font-weight:500;color:var(--red)}
+.medal{position:relative;justify-self:center;width:100%;aspect-ratio:5/6;border-radius:50%;background:var(--cream);border:9px solid var(--gold);box-shadow:inset 0 0 0 4px var(--navy),inset 0 0 0 10px var(--cream),inset 0 0 0 12px var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.2rem 2rem}
+.medal .marca{font-size:.8rem;letter-spacing:.35em;text-transform:uppercase;color:var(--navy);margin:0}
+.medal svg{width:34%;height:auto;margin:.2rem 0 .1rem}
+.medal h1{font-family:'Abril Fatface',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.1rem);line-height:.95;margin:0;color:var(--navy);text-shadow:3px 3px 0 var(--gold);letter-spacing:.02em}
+.ribbon{background:var(--red);color:var(--cream);font-size:1.15rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:.35rem 2.2rem;margin:.5rem -2.6rem .55rem;clip-path:polygon(0 0,100% 0,94% 50%,100% 100%,0 100%,6% 50%)}
+.medal .tag{margin:0;font-size:1rem;color:var(--navy);font-weight:400;max-width:22ch}
+.barcode{display:flex;align-items:center;gap:.6rem;background:var(--cream);color:var(--ink);padding:.3rem .6rem;letter-spacing:.08em}
+.barcode i{width:130px;height:30px;background:repeating-linear-gradient(90deg,#111 0 2px,transparent 2px 3px,#111 3px 4px,transparent 4px 7px,#111 7px 10px,transparent 10px 11px,#111 11px 12px,transparent 12px 15px)}
+.pull{position:absolute;right:3.2rem;top:-14px;display:flex;align-items:center;gap:.6rem;text-decoration:none;z-index:2}
+.pull i{width:58px;height:58px;border-radius:50%;border:11px solid #c7ccd1;box-shadow:inset 0 0 0 2px #8b9197,0 0 0 2px #8b9197;background:transparent}
+.pull span{background:var(--gold);color:var(--navy);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.85rem;padding:.3rem .7rem}
+.pull:hover i{border-color:#e1e5e8}
+.back{margin-top:3rem;background:var(--cream);border:3px double var(--navy);padding:2rem 2.2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.back h2{font-family:'Abril Fatface',serif;font-weight:400;color:var(--red);font-size:1.6rem;margin:0 0 .6rem}
+.back ol{margin:0;padding-left:1.2rem;font-weight:300}
+.back li{margin-bottom:.35rem}
+.back p{margin:0 0 .6rem;font-weight:300}
+.back a{color:var(--red);font-weight:600}
+@media (max-width:900px){.grid{grid-template-columns:1fr}.medal{order:-1;max-width:400px}.back{grid-template-columns:1fr}.pull{right:1rem}.band{letter-spacing:.1em;font-size:.72rem}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v05 · Conserva label</span></nav>
+<main>
+  <div class="can">
+    <a class="pull" href="https://github.com/gmedranotorres"><i aria-hidden="true"></i><span>Open here: GitHub</span></a>
+    <div class="rim" aria-hidden="true"></div>
+    <div class="label">
+      <div class="band"><span>Producto del Perú</span><span>Conserva de datos</span><span>Packed in Chicago, Ill.</span></div>
+      <div class="grid">
+        <aside class="side">
+          <h2><small>Ingredientes</small>Ingredients</h2>
+          <p>Fisheries engineering (UNALM, 2022), food science (Orihuela, Spain), SQL, Python, R, DAX, Power BI, Leaflet maps, bilingual documentation in English and Spanish, and patience with messy spreadsheets.</p>
+          <p class="warn">Contains jumbo squid (<i>Dosidicus gigas</i>). May contain traces of econometrics.</p>
+        </aside>
+        <div class="medal">
+          <p class="marca">Marca registrada</p>
+          <svg viewBox="0 0 200 300" aria-hidden="true">
+            <g stroke="#14325c" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M100,8 L164,72 L112,98 Z M100,8 L36,72 L88,98 Z" fill="#f7ead0"/>
+              <path d="M100,12 C126,52 130,122 123,172 L77,172 C70,122 74,52 100,12 Z" fill="#d9573c"/>
+              <ellipse cx="100" cy="190" rx="27" ry="21" fill="#d9573c"/>
+              <g fill="none" stroke-width="6"><path d="M80,206 C70,232 84,250 70,282"/><path d="M90,210 C86,238 96,256 88,288"/><path d="M110,210 C114,238 104,256 112,288"/><path d="M120,206 C130,232 116,250 130,282"/><path d="M96,212 C96,250 92,268 98,296"/><path d="M104,212 C104,250 108,268 102,296"/></g>
+            </g>
+            <circle cx="88" cy="188" r="7" fill="#fff" stroke="#14325c" stroke-width="2.5"/><circle cx="112" cy="188" r="7" fill="#fff" stroke="#14325c" stroke-width="2.5"/>
+            <circle cx="89" cy="189" r="3" fill="#14325c"/><circle cx="111" cy="189" r="3" fill="#14325c"/>
+          </svg>
+          <h1>Gabriela</h1>
+          <div class="ribbon">Medrano Torres</div>
+          <p class="tag">Data, cleaned by hand. Packed for policy, communities and the environment.</p>
+        </div>
+        <aside class="side">
+          <h2><small>Variedades</small>Varieties</h2>
+          <ul class="var">
+            <li><b>Outreach map</b><span>COFI, Chicago, 2026. </span><a href="https://gmedranotorres.github.io/cofi-dashboard/">Open</a></li>
+            <li><b>Mortgage lending dashboard</b><span>MortgageMatch team project, 2026. </span><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">Open</a></li>
+            <li><b>Squid surimi gels</b><span>Thesis research, UNALM, 2024</span></li>
+            <li><b>Business intelligence</b><span>30+ Power BI dashboards, 2021–25</span></li>
+          </ul>
+        </aside>
+      </div>
+      <div class="band bottom"><span>Peso neto / Net wt. 30+ dashboards</span><span class="barcode"><i aria-hidden="true"></i>7 750 2027 06</span><span>Lote UNALM-22 / UCHI-27</span></div>
+    </div>
+    <div class="rim" aria-hidden="true"></div>
+  </div>
+
+  <section class="back" aria-label="Back of the can">
+    <div><h2>Preparation</h2><ol><li>Begin with the decision.</li><li>Examine the data honestly.</li><li>Build a traceable workflow.</li><li>Challenge the result.</li><li>Deliver for the audience.</li></ol></div>
+    <div><h2>Serving suggestion</h2><p>Pair with a messy, real-world question. Best enjoyed in Chicago from June 2027, when the M.S. in Computational Analysis and Public Policy at the University of Chicago is complete.</p><p>Also available in Spanish.</p></div>
+    <div><h2>Packed by</h2><p>Gabriela Medrano Torres: fisheries engineer, former business intelligence analyst, graduate student at the Harris School of Public Policy.</p><p>Questions or comments? Write via <a href="https://github.com/gmedranotorres">GitHub</a>.</p></div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v13 · Single column · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--bg:#f2f3f0;--ink:#1d2124;--mute:#5d6468;--link:#2b6b60;--rule:#d3d7d1}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;color:var(--ink);font:20px/1.68 'Literata',Georgia,serif;font-optical-sizing:auto}
+a{color:var(--link);text-underline-offset:.18em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--link);outline-offset:3px}
+.wrap{max-width:35rem;margin:0 auto;padding:2rem 1.4rem 5rem}
+.gal{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mute);margin-bottom:6rem}
+.gal a{color:var(--mute)}
+.name{font-size:1rem;font-weight:600;margin:0 0 1.3rem}
+.lede{font-size:1.68rem;line-height:1.36;font-weight:400;margin:0 0 1.7rem;letter-spacing:-.006em}
+p{margin:0 0 1.1rem}
+h2{font-size:1rem;font-weight:600;margin:3.8rem 0 1.1rem}
+.work{margin:0;display:grid;grid-template-columns:5.4rem 1fr;gap:.1rem 1rem}
+.work dt{color:var(--mute);font-size:.84rem;padding-top:.3rem;font-variant-numeric:oldstyle-nums}
+.work dd{margin:0 0 1.35rem}
+.work b{font-weight:600}
+ol{padding-left:1.3rem;margin:0}
+ol li{margin-bottom:.55rem;padding-left:.2rem}
+.foot{margin-top:4.5rem;padding-top:1rem;border-top:1px solid var(--rule);font-size:.84rem;color:var(--mute);display:flex;justify-content:space-between}
+@media (max-width:560px){body{font-size:18px}.lede{font-size:1.36rem}.work{grid-template-columns:1fr}.work dt{padding:0}.gal{margin-bottom:3.2rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="gal" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v13</span></nav>
+  <main>
+    <h1 class="name">Gabriela Medrano Torres</h1>
+    <p class="lede">I turn messy, real-world records into tools people can use to decide: for policy, for communities and for the environment.</p>
+    <p>I’m a fisheries engineer and former business intelligence analyst, now finishing an M.S. in Computational Analysis and Public Policy at the University of Chicago. I graduate in June 2027, and I’d like to keep working in Chicago.</p>
+
+    <h2>Recent work</h2>
+    <dl class="work">
+      <dt>2026</dt><dd><b>COFI outreach dashboard.</b> A live map of doors knocked, conversations, flyers and referrals across Chicago community areas, built for an organizing team and documented in English and Spanish. <a href="https://gmedranotorres.github.io/cofi-dashboard/">Open the map</a></dd>
+      <dt>2026</dt><dd><b>MortgageMatch.</b> A team dashboard of mortgage lending in Illinois. I helped clean and merge HMDA records, Census indicators and lender data. <a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">Read the code</a></dd>
+      <dt>2021–2025</dt><dd><b>Business intelligence.</b> More than thirty Power BI dashboards for operations teams at Teleperformance and Baufest in Peru, built on SQL, ETL and DAX.</dd>
+      <dt>2024</dt><dd><b>Squid surimi research.</b> My thesis measured how a clay-derived additive changes the texture, gel strength and water-holding capacity of jumbo squid gels.</dd>
+    </dl>
+
+    <h2>How I got here</h2>
+    <p>I studied fisheries engineering at Universidad Nacional Agraria La Molina in Lima and spent a semester in food-science labs in Orihuela, Spain. Then I spent nearly four years in business intelligence, where I learned that a dashboard is only as good as its definitions. In 2025 I came to the University of Chicago to connect that experience to public policy.</p>
+
+    <h2>What I want to work on</h2>
+    <p>Questions where data meets a decision someone has to make: how environmental monitoring can lead to stronger enforcement, where public services or outreach fail to reach the people who need them, and how administrative records can become evidence instead of disconnected files. I’m also interested in when machine learning can improve targeting while keeping decisions transparent.</p>
+
+    <h2>How I work</h2>
+    <ol>
+      <li>Begin with the decision: who needs this, and what will they do with it?</li>
+      <li>Examine the data honestly before modeling anything.</li>
+      <li>Build a workflow someone else can trace.</li>
+      <li>Challenge the result.</li>
+      <li>Deliver it in a form the audience can use.</li>
+    </ol>
+
+    <h2>Elsewhere</h2>
+    <p>I teach programming to Spanish-speaking beginners, and I work in English and Spanish. My code is on <a href="https://github.com/gmedranotorres">GitHub</a>. If you’re working on a question like these in Chicago, I’d like to hear about it.</p>
+  </main>
+  <footer class="foot"><span>Chicago, 2026</span><a href="index.html">Back to the gallery</a></footer>
+</div>
+</body>
+</html>

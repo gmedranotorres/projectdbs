@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v04 · The Gabriela Line · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--blue:#00a1de;--brown:#62361b;--green:#009b3a;--red:#c60c30;--ink:#121212;--lake:#d5eaf4;--grey:#f1f1ef}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:400 19px/1.4 'Big Shoulders',sans-serif;font-optical-sizing:auto}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.gbar{display:flex;justify-content:space-between;padding:.45rem 1.4rem;background:#2a2a2a;color:#ddd;font-size:16px;font-weight:600}
+.gbar a{color:#fff;text-decoration:none}
+.sign{background:var(--ink);color:#fff;padding:1.4rem 1.4rem 1.3rem;display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:flex-end;justify-content:space-between;border-bottom:8px solid var(--red)}
+.sign h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;line-height:.95;margin:0}
+.sign p{margin:.5rem 0 0;font-size:1.25rem;color:#d8d8d8;max-width:46ch}
+.bul{display:flex;gap:.45rem}
+.bul span{width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.95rem;color:#fff}
+.mapwrap{overflow-x:auto;padding:1rem 1rem 0}
+svg.map{display:block;width:100%;min-width:900px;max-width:1300px;margin:0 auto;height:auto}
+.st{cursor:pointer}
+.st:focus{outline:none}
+.st:focus-visible circle,.st:focus-visible rect{stroke:var(--blue);stroke-width:5}
+.st:hover circle,.st:hover rect{fill:#ffe9a8}
+.st.on circle,.st.on rect{fill:#ffd23f}
+.nm{font-weight:800;font-size:17px}.dt{font-size:13.5px;fill:#444}
+.below{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:1.6rem;max-width:1240px;margin:1.2rem auto 0;padding:0 1.4rem 3rem}
+.panel{border-left:12px solid var(--red);background:var(--grey);padding:1.2rem 1.4rem;min-height:12rem}
+.panel .ln{font-weight:700;font-size:1rem;margin:0}
+.panel h2{font-size:2.1rem;font-weight:800;margin:.1rem 0 .4rem;line-height:1}
+.panel p{margin:0 0 .6rem;max-width:58ch}
+.panel a{font-weight:700}
+.guide h2,.alert h2{font-size:1.5rem;margin:0 0 .5rem;font-weight:800}
+.guide ul{list-style:none;margin:0;padding:0}
+.guide li{display:grid;grid-template-columns:2.6rem 1fr;gap:.6rem;align-items:start;margin-bottom:.55rem}
+.guide li i{height:10px;margin-top:.55rem;border-radius:5px}
+.guide b{font-weight:800}
+.alert{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between;background:var(--ink);color:#fff;padding:1.1rem 1.4rem}
+.alert p{margin:0;font-size:1.2rem}
+.alert a{background:#ffd23f;color:var(--ink);font-weight:800;text-decoration:none;padding:.55rem 1.1rem;font-size:1.15rem}
+@media (max-width:820px){.below{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v04 · The Gabriela Line</span></nav>
+<header class="sign">
+  <div>
+    <h1>Gabriela Medrano Torres</h1>
+    <p>Four lines, one transfer point. Science, teaching, data and policy all run through Chicago.</p>
+  </div>
+  <div class="bul" aria-hidden="true"><span style="background:var(--blue)">S</span><span style="background:var(--green)">T</span><span style="background:var(--brown)">D</span><span style="background:var(--red)">P</span></div>
+</header>
+
+<div class="mapwrap">
+<svg class="map" viewBox="0 0 1240 640" role="group" aria-label="System map of Gabriela's career. Select a station for details.">
+  <path d="M1010,0 C990,60 1030,110 1000,170 C985,200 1010,215 1240,215 L1240,0 Z" fill="#d5eaf4"/>
+  <text x="1125" y="105" text-anchor="middle" font-style="italic" font-size="22" fill="#6aa6c4">Lake Michigan</text>
+  <rect x="726" y="250" width="290" height="160" rx="22" fill="#f1f1ef"/>
+  <text x="871" y="430" text-anchor="middle" font-size="14" fill="#777">Chicago, 2025–2027</text>
+  <g fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70,100 H491 L700,309 H980" stroke="#00a1de"/>
+    <path d="M200,190 H567 L700,323 H980" stroke="#009b3a"/>
+    <path d="M70,470 H567 L700,337 H980" stroke="#62361b"/>
+    <path d="M70,560 H491 L700,351 H980" stroke="#c60c30"/>
+    <g stroke-dasharray="2 14" stroke-linecap="round"><path d="M980,309 H1140" stroke="#00a1de"/><path d="M980,323 H1140" stroke="#009b3a"/><path d="M980,337 H1140" stroke="#62361b"/><path d="M980,351 H1140" stroke="#c60c30"/></g>
+  </g>
+  <g id="stations"></g>
+</svg>
+</div>
+
+<div class="below">
+  <section class="panel" id="panel" aria-live="polite"></section>
+  <section class="guide">
+    <h2>Line guide</h2>
+    <ul>
+      <li><i style="background:var(--blue)"></i><span><b>Science line.</b> Fisheries engineering, food-science labs in Peru and Spain, jumbo squid research.</span></li>
+      <li><i style="background:var(--green)"></i><span><b>Teaching line.</b> Volunteer teaching, programming for Spanish-speaking beginners, K–8 tutoring.</span></li>
+      <li><i style="background:var(--brown)"></i><span><b>Data line.</b> SQL, ETL and 30+ Power BI dashboards for operations teams.</span></li>
+      <li><i style="background:var(--red)"></i><span><b>Policy line.</b> Environmental enforcement training, student representation, computational public policy.</span></li>
+    </ul>
+  </section>
+  <section class="alert" aria-label="Service notice">
+    <div><h2>Service notice</h2><p>Extension under construction: all four lines continue past June 2027. Looking for research, policy and data work in Chicago.</p></div>
+    <a href="https://github.com/gmedranotorres">Plan a trip on GitHub</a>
+  </section>
+</div>
+
+<script>
+const L={b:['Science line','#00a1de'],g:['Teaching line','#009b3a'],d:['Data line','#62361b'],r:['Policy line','#c60c30'],x:['All lines','#121212']};
+// [id,line,x,y,labelSide(-1 above,1 below),name,detail,text,link,linkText,transfer]
+const S=[
+['lm','b',70,100,-1,'La Molina','B.S. Fisheries Eng., 2022','Bachelor of Science in Fisheries Engineering at Universidad Nacional Agraria La Molina. Finished 4th in class with a PRONABEC Permanency Grant.'],
+['pa','b',165,100,1,'Paita','Fishing sailor, 2019','Certified as a Qualified Fishing Sailor: first aid, survival at sea, firefighting and personal safety.'],
+['or','b',260,100,-1,'Orihuela','Exchange & lab, 2019–20','Exchange semester in Food Science and Technology at Miguel Hernández University, then a lab internship: chemical, physicochemical and sensory analysis of meat products.'],
+['ac','b',355,100,1,'Andean cereals','Surimi gels, 2021','Research on surimi gels incorporating Andean cereals, with the DeFoPro-Gel Research Circle.'],
+['sq','b',450,100,-1,'Squid thesis','Clay additive, 2024','Thesis research on a clay-derived additive with nanoscale crystalline domains in jumbo squid (Dosidicus gigas) surimi gels: texture, gel strength, water-holding capacity.'],
+['ku','g',200,190,1,'Kuyayki Perú','Volunteer teacher, 2020–21','Volunteer teaching, lesson adaptation and program coordination.'],
+['en','g',350,190,1,'English classes','Volunteer, 2023','Taught English to students with limited access to paid courses.'],
+['pi','g',500,190,1,'Code instructor','2024 to now','Teaches Spanish-speaking beginners logic, variables, conditionals and loops with block-based tools, as a bridge to Python.'],
+['co','d',70,470,-1,'COLCOM','Lima, 2016–18, 2021','Sales presentations, market information, financial data entry and discrepancy checks.'],
+['tp','d',230,470,-1,'Teleperformance','BI analyst, 2021–25','Large SQL datasets, DAX measures and more than 20 Power BI dashboards for operational reporting.'],
+['bf','d',400,470,-1,'Baufest','Data specialist, 2025','Remote. SQL data cleaning and ETL; built and maintained 10 dashboards.'],
+['ev','r',70,560,1,'Eco-efficiency','Campus volunteer, 2018','Environmental Culture Volunteer: outreach and graphics for the university’s Eco-Efficiency Plan.'],
+['fc','r',210,560,1,'Faculty Council','Student rep, 2019','Represented students on the Fisheries Faculty Council: collected feedback, joined policy discussions.'],
+['oe','r',350,560,1,'OEFA','Enforcement cert., 2022','Environmental Enforcement Certificate from Peru’s OEFA: monitoring of water, soil and air; sanctions and corporate obligations.'],
+['uc','x',760,330,-1,'UChicago','M.S. CAPP, 2025–27','M.S. in Computational Analysis and Public Policy at the Harris School. Causal inference, machine learning for policy, databases, geospatial analysis.','',''],
+['mm','x',870,330,1,'MortgageMatch','Team project, 2026','A team dashboard of mortgage lending in Illinois. I helped clean and merge HMDA records, Census ACS indicators and lender data into one analysis-ready dataset.','https://github.com/uchicago-2026-capp30122/project-data-4-decisions','See the repository'],
+['cf','x',980,330,-1,'COFI','Summer 2026','Built an outreach dashboard for Community Organizing and Family Issues: doors knocked, conversations, flyers and referrals mapped by community area, documented in English and Spanish.','https://gmedranotorres.github.io/cofi-dashboard/','Open the dashboard'],
+['gr','x',1090,330,1,'Graduation','June 2027','Expected completion of the M.S. The lines keep running in Chicago.'],
+];
+const g=document.getElementById('stations'),ns='http://www.w3.org/2000/svg';
+function el(t,a,p){const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);(p||g).appendChild(e);return e}
+S.forEach(s=>{const[id,l,x,y,side,n,d]=s;const grp=el('g',{class:'st',tabindex:0,role:'button','aria-label':n+', '+d,'data-id':id});
+ if(l==='x'){el('rect',{x:x-12,y:y-34,width:24,height:68,rx:12,fill:'#fff',stroke:'#121212','stroke-width':3.5},grp)}else{el('circle',{cx:x,cy:y,r:8,fill:'#fff',stroke:'#121212','stroke-width':3},grp)}
+ const ty=l==='x'?(side<0?y-58:y+62):(side<0?y-34:y+30);
+ const t1=el('text',{x:x,y:ty,'text-anchor':'middle',class:'nm'},grp);t1.textContent=n;
+ const t2=el('text',{x:x,y:ty+17,'text-anchor':'middle',class:'dt'},grp);t2.textContent=d;});
+el('rect',{x:1128,y:296,width:24,height:68,rx:12,fill:'#fff',stroke:'#121212','stroke-width':3,'stroke-dasharray':'5 4'});
+const tt=el('text',{x:1140,y:276,'text-anchor':'middle',class:'nm'});tt.textContent='Your team?';
+const panel=document.getElementById('panel');
+function show(id){const s=S.find(v=>v[0]===id);const[ ,l,,,,n,d,t,href,lt]=s;panel.style.borderLeftColor=L[l][1];
+ panel.innerHTML=`<p class="ln">${L[l][0]} · ${d}</p><h2>${n}</h2><p>${t}</p>${href?`<a href="${href}">${lt}</a>`:''}`;
+ document.querySelectorAll('.st').forEach(e=>e.classList.toggle('on',e.dataset.id===id));}
+g.addEventListener('click',e=>{const s=e.target.closest('.st');if(s)show(s.dataset.id)});
+g.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('.st')){e.preventDefault();show(e.target.closest('.st').dataset.id)}});
+show('cf');
+</script>
+</body>
+</html>

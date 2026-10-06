@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v11 · Bloques · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--area:#f9f9f9;--ui:#e9eef2;--txt:#575e75;--ev:#ffbf00;--evb:#cc9900;--lk:#9966ff;--lkb:#774dcb;--ct:#ffab19;--ctb:#cf8b17;--vr:#ff8c1a;--vrb:#db6e00;--mo:#4c97ff;--mob:#3373cc;--se:#5cb1d6;--seb:#2e8eb8;--op:#59c059;--opb:#389438;--my:#ff6680;--myb:#ff3355}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ui);color:var(--txt);font:16px/1.45 'Nunito',sans-serif}
+a{color:#3373cc}
+:focus-visible{outline:3px solid #ffbf00;outline-offset:2px}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;background:#4c97ff;color:#fff;padding:.5rem 1rem;font-weight:800}
+.top a{color:#fff;text-decoration:none}
+.top .name{font-size:1.15rem}
+.top .sp{flex:1}
+.run,.stop{border:0;border-radius:8px;padding:.4rem .7rem;font:800 15px 'Nunito';cursor:pointer;display:flex;align-items:center;gap:.35rem}
+.run{background:#fff;color:#0f8a2f}.stop{background:rgba(255,255,255,.2);color:#fff}
+.gui{display:grid;grid-template-columns:76px 250px 1fr 470px;height:calc(100vh - 52px);min-height:640px}
+.cats{background:#fff;border-right:1px solid #d9e1ea;padding-top:.6rem}
+.cats div{display:flex;flex-direction:column;align-items:center;font-size:12px;font-weight:700;margin:.5rem 0}
+.cats i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.15);margin-bottom:.2rem}
+.pal{background:var(--area);border-right:1px solid #d9e1ea;padding:1rem .8rem;overflow:auto}
+.pal h2{font-size:15px;font-weight:800;margin:.2rem 0 .7rem;color:var(--txt)}
+.pal .blk{margin-bottom:1.1rem}
+.area{position:relative;background:var(--area) radial-gradient(#d4d9e0 1px,transparent 1.2px) 0 0/24px 24px;overflow:auto;padding:1.6rem 1.4rem}
+.script{display:inline-flex;flex-direction:column;align-items:flex-start;margin:0 3rem 2rem 0;vertical-align:top}
+.blk{position:relative;display:inline-flex;align-items:center;flex-wrap:wrap;gap:.35rem;padding:.42rem .75rem;min-height:44px;color:#fff;font-weight:800;font-size:15px;background:var(--c);border:1px solid var(--b);border-radius:6px}
+.blk::after{content:'';position:absolute;left:14px;bottom:-8px;width:26px;height:8px;background:var(--c);border:1px solid var(--b);border-top:0;border-radius:0 0 6px 6px;z-index:3}
+.blk.end::after{display:none}
+.hat{border-radius:26px 26px 6px 6px/20px 20px 6px 6px;padding-top:1rem;min-width:190px}
+.in{background:#fff;color:var(--txt);border-radius:999px;padding:.1rem .6rem;font-weight:700}
+.num{background:#fff;color:var(--txt);border-radius:999px;padding:.1rem .55rem;min-width:2rem;text-align:center}
+.dd{background:rgba(0,0,0,.14);border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.08rem .6rem;font-weight:800}
+.dd::after{content:' ▾';font-size:.8em}
+.bool{background:var(--se);border:1px solid var(--seb);padding:.18rem 1rem;clip-path:polygon(11px 0,calc(100% - 11px) 0,100% 50%,calc(100% - 11px) 100%,11px 100%,0 50%)}
+.rep{background:var(--op);border:1px solid var(--opb);border-radius:999px;padding:.1rem .45rem;display:inline-flex;gap:.3rem;align-items:center}
+.cblk{position:relative;display:flex;flex-direction:column;align-items:flex-start;background:var(--c);border:1px solid var(--b);border-radius:6px;min-width:280px}
+.cblk>.blk{border:0;border-radius:6px 6px 0 0}
+.cblk .inner{align-self:stretch;margin-left:16px;background:var(--area);padding:.55rem 0 .7rem .1rem;display:flex;flex-direction:column;align-items:flex-start;border-radius:6px 0 0 6px;min-height:30px}
+.cblk .lab{padding:.35rem .75rem;color:#fff;font-weight:800}
+.cblk .foot{height:22px}
+.cblk::after{content:'';position:absolute;left:14px;bottom:-8px;width:26px;height:8px;background:var(--c);border:1px solid var(--b);border-top:0;border-radius:0 0 6px 6px;z-index:3}
+.flag{width:20px;height:20px;vertical-align:-4px}
+.ev{--c:var(--ev);--b:var(--evb)}.lk{--c:var(--lk);--b:var(--lkb)}.ct{--c:var(--ct);--b:var(--ctb)}.vr{--c:var(--vr);--b:var(--vrb)}.mo{--c:var(--mo);--b:var(--mob)}.se{--c:var(--se);--b:var(--seb)}.my{--c:var(--my);--b:var(--myb)}
+.blk.glow,.cblk.glow{box-shadow:0 0 0 4px #ffe066,0 0 14px 4px rgba(255,190,0,.7)}
+a.blk{text-decoration:none}
+a.blk:hover{filter:brightness(1.08)}
+.stagecol{background:var(--ui);padding:.8rem;display:flex;flex-direction:column;gap:.8rem;overflow:auto}
+.stage{position:relative;aspect-ratio:4/3;background:#fff;border:1px solid #d9e1ea;border-radius:8px;overflow:hidden;background-image:linear-gradient(#e9f6ff,#fff 60%)}
+.sprite{position:absolute;left:46%;top:44%;width:110px;transition:transform 1s ease-in-out}
+.bubble{position:absolute;left:8%;top:6%;max-width:66%;background:#fff;border:2px solid #c9d1dc;border-radius:16px;padding:.55rem .8rem;font-weight:800;color:#3c4559;font-size:15px;box-shadow:0 2px 0 #c9d1dc}
+.info{background:#fff;border:1px solid #d9e1ea;border-radius:8px;padding:.8rem 1rem;font-size:14.5px}
+.info h1{font-size:1.25rem;margin:0 0 .2rem;color:#3c4559}
+.info p{margin:.2rem 0 .5rem}
+.info dl{display:grid;grid-template-columns:auto 1fr;gap:.1rem .8rem;margin:0}
+.info dt{font-weight:800}.info dd{margin:0}
+.learn{max-width:1100px;margin:0 auto;padding:2.4rem 1.4rem 3.4rem;display:grid;grid-template-columns:1.2fr 1fr;gap:2.4rem}
+.learn h2{font-size:1.6rem;color:#3c4559;margin:0 0 .5rem}
+.learn p{margin:0 0 .8rem;font-size:1.05rem}
+.learn .blk{margin:0 0 1rem}
+@media (max-width:1100px){.gui{grid-template-columns:1fr;height:auto}.cats,.pal{display:none}.area{min-height:auto}.learn{grid-template-columns:1fr}}
+@media (max-width:560px){.top .name{display:none}}
+@media (prefers-reduced-motion:reduce){.sprite{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="index.html">← Gallery</a>
+  <span class="name">Bloques · gabriela.sb</span>
+  <span class="sp"></span>
+  <button class="run" id="run" type="button"><svg class="flag" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2v17" stroke="#0f8a2f" stroke-width="2.4" stroke-linecap="round"/><path d="M5 3c4-2 6 2 11 0v8c-5 2-7-2-11 0z" fill="#21b04b"/></svg>Run</button>
+  <button class="stop" id="stop" type="button">Stop</button>
+  <span>v11</span>
+</header>
+<div class="gui">
+  <nav class="cats" aria-hidden="true">
+    <div><i style="background:var(--mo)"></i>Motion</div><div><i style="background:var(--lk)"></i>Looks</div><div><i style="background:var(--ev)"></i>Events</div><div><i style="background:var(--ct)"></i>Control</div><div><i style="background:var(--se)"></i>Sensing</div><div><i style="background:var(--op)"></i>Operators</div><div><i style="background:var(--vr)"></i>Variables</div><div><i style="background:var(--my)"></i>My Blocks</div>
+  </nav>
+  <aside class="pal" aria-label="My blocks">
+    <h2>My Blocks</h2>
+    <a class="blk my" href="https://gmedranotorres.github.io/cofi-dashboard/">open <span class="in">COFI outreach map</span></a><br>
+    <a class="blk my" href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">open <span class="in">MortgageMatch</span></a><br>
+    <a class="blk my" href="https://github.com/gmedranotorres">say hello on <span class="in">GitHub</span></a>
+    <h2 style="margin-top:1.4rem">Variables</h2>
+    <span class="blk vr end">dashboards built <span class="num">30+</span></span><br><br>
+    <span class="blk vr end">languages <span class="num">2</span></span><br><br>
+    <span class="blk vr end">graduation <span class="in">June 2027</span></span>
+  </aside>
+  <main class="area" aria-label="Script">
+    <div class="script" id="script">
+      <span class="blk ev hat" data-s="0">when <svg class="flag" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2v17" stroke="#7a5c00" stroke-width="2.4" stroke-linecap="round"/><path d="M5 3c4-2 6 2 11 0v8c-5 2-7-2-11 0z" fill="#21b04b"/></svg> clicked</span>
+      <span class="blk lk" data-s="1">say <span class="in">¡Hola! I’m Gabriela.</span> for <span class="num">2</span> seconds</span>
+      <span class="blk vr" data-s="2">set <span class="dd">from</span> to <span class="in">Lima, Peru</span></span>
+      <div class="cblk ct" data-s="3"><span class="blk ct end">repeat <span class="num">3</span></span>
+        <div class="inner"><span class="blk mo end">glide to <span class="dd">Peru, then Spain, then Chicago</span></span></div><div class="foot"></div></div>
+      <span class="blk vr" data-s="4">change <span class="dd">dashboards built</span> by <span class="num">30</span></span>
+      <div class="cblk ct" data-s="5"><span class="blk ct end">if <span class="bool">data is messy?</span> then</span>
+        <div class="inner"><span class="blk my">clean and standardize names</span><span class="blk my end">build <span class="in">dashboard</span> for <span class="in">people who decide</span></span></div>
+        <span class="lab">else</span>
+        <div class="inner"><span class="blk se end">ask <span class="in">What decision is this for?</span> and wait</span></div><div class="foot"></div></div>
+      <span class="blk lk" data-s="6">say <span class="rep">join <span class="in">documented in English</span> <span class="in">y en español</span></span></span>
+      <span class="blk ev end" data-s="7">broadcast <span class="dd">graduating June 2027, staying in Chicago</span></span>
+    </div>
+    <div class="script">
+      <span class="blk ev hat">when this sprite clicked</span>
+      <a class="blk my end" href="https://github.com/gmedranotorres">open <span class="in">github.com/gmedranotorres</span></a>
+    </div>
+  </main>
+  <aside class="stagecol">
+    <div class="stage">
+      <p class="bubble" id="bubble" aria-live="polite">Press Run to meet me.</p>
+      <a class="sprite" id="sprite" href="https://github.com/gmedranotorres" aria-label="Gabriela's squid sprite, opens GitHub">
+        <svg viewBox="0 0 120 150"><path d="M60 6 C82 24 88 60 84 92 L36 92 C32 60 38 24 60 6Z" fill="#ff6680" stroke="#c9324f" stroke-width="3"/><path d="M60 8 L94 40 L70 48Z M60 8 L26 40 L50 48Z" fill="#ff8fa3" stroke="#c9324f" stroke-width="3" stroke-linejoin="round"/><ellipse cx="60" cy="98" rx="27" ry="16" fill="#ff6680" stroke="#c9324f" stroke-width="3"/><circle cx="49" cy="96" r="8" fill="#fff"/><circle cx="71" cy="96" r="8" fill="#fff"/><circle cx="51" cy="97" r="4" fill="#3c4559"/><circle cx="69" cy="97" r="4" fill="#3c4559"/><g fill="none" stroke="#ff6680" stroke-width="7" stroke-linecap="round"><path d="M40 110 q-6 16 -12 28"/><path d="M52 113 q-2 16 -6 30"/><path d="M68 113 q2 16 6 30"/><path d="M80 110 q6 16 12 28"/></g></svg>
+      </a>
+    </div>
+    <div class="info">
+      <h1>Gabriela Medrano Torres</h1>
+      <p>Fisheries engineer, former business intelligence analyst, M.S. candidate in Computational Analysis and Public Policy at the University of Chicago.</p>
+      <dl><dt>From</dt><dd>Lima, Peru</dd><dt>Now</dt><dd>Chicago</dd><dt>Languages</dt><dd>English, Spanish</dd><dt>Graduates</dt><dd>June 2027</dd></dl>
+    </div>
+  </aside>
+</div>
+<section class="learn">
+  <div>
+    <h2>Aprende a programar · Learn to code</h2>
+    <p>I teach programming to Spanish-speaking beginners. We start with blocks like these (logic, variables, conditionals, loops) and carry the same ideas into Python.</p>
+    <p>The same habit shapes my data work: break a messy problem into steps someone else can follow, and explain it in the language people actually speak.</p>
+  </div>
+  <div>
+    <h2>Projects</h2>
+    <a class="blk my" href="https://gmedranotorres.github.io/cofi-dashboard/">open <span class="in">COFI outreach map</span></a><br>
+    <a class="blk my" href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">open <span class="in">MortgageMatch (team)</span></a><br>
+    <span class="blk my end">read about <span class="in">squid surimi thesis, 2024</span></span>
+  </div>
+</section>
+<script>
+const steps=[[0,"¡Hola! I’m Gabriela.",[0,0]],[1,"I turn messy records into tools people use to decide.",[0,0]],[2,"I’m from Lima, Peru.",[-120,40]],[3,"Peru, then Spain, then Chicago.",[110,-30]],[4,"30+ dashboards so far.",[60,30]],[5,"First question: what decision is this for?",[-40,10]],[6,"Documented in English y en español.",[20,-20]],[7,"Graduating June 2027. Staying in Chicago!",[0,0]]];
+const bub=document.getElementById('bubble'),spr=document.getElementById('sprite');let timer=null;
+function clear(){document.querySelectorAll('.glow').forEach(e=>e.classList.remove('glow'))}
+function run(){stop();let i=0;(function next(){if(i>=steps.length){clear();timer=null;return}const[s,t,[x,y]]=steps[i];clear();const b=document.querySelector(`[data-s="${s}"]`);if(b)b.classList.add('glow');bub.textContent=t;spr.style.transform=`translate(${x}px,${y}px)`;i++;timer=setTimeout(next,1900)})()}
+function stop(){if(timer)clearTimeout(timer);timer=null;clear()}
+document.getElementById('run').addEventListener('click',run);
+document.getElementById('stop').addEventListener('click',()=>{stop();bub.textContent='Stopped. Press Run again.'});
+</script>
+</body>
+</html>

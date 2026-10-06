@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v03 · BI report · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--canvas:#e8e8e6;--line:#e1dfdd;--txt:#252423;--sub:#605e5c;--blue:#118dff;--navy:#12239e;--orange:#e66c37;--plum:#6b007b;--pink:#e044a7;--violet:#744ec2;--gold:#d9b300;--red:#d64550;--yellow:#f2c811}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);font:13px/1.4 'Open Sans',system-ui,sans-serif;color:var(--txt)}
+a{color:var(--navy)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.appbar{height:46px;background:#1d1c1b;color:#fff;display:flex;align-items:center;gap:1.1rem;padding:0 1rem;font-size:13.5px}
+.appbar a{color:#fff;text-decoration:none}.appbar a:hover{text-decoration:underline}
+.appbar .file{font-weight:600}.appbar .crumb{color:#bdbbb8}.appbar .grow{flex:1}
+.appbar .cta{background:var(--yellow);color:#1d1c1b;font-weight:700;padding:.42rem .9rem;border-radius:2px}
+.shell{display:grid;grid-template-columns:1fr 34px;min-height:calc(100vh - 46px - 38px)}
+.canvas{padding:18px;overflow:hidden}
+.page{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;align-items:start}
+.page[hidden]{display:none}
+.vis{background:#fff;border:1px solid var(--line);padding:11px 13px 13px;position:relative;min-width:0}
+.vis h2{font-size:14px;font-weight:600;margin:0 0 10px}
+.vis .more{position:absolute;right:10px;top:7px;color:#a19f9d;letter-spacing:1px}
+.title{grid-column:span 7;border:0;background:transparent;padding:4px 2px}
+.title h1{font-size:30px;font-weight:600;margin:0;letter-spacing:-.01em}
+.title p{margin:.2rem 0 0;font-size:14px;color:var(--sub)}
+.slicer{grid-column:span 5}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:12.5px;border:1px solid #c8c6c4;background:#fff;padding:5px 10px;cursor:pointer;border-radius:2px}
+.chips button[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.kpi{grid-column:span 3;padding-top:14px}
+.kpi b{display:block;font-size:40px;font-weight:300;line-height:1;letter-spacing:-.02em}
+.kpi span{display:block;color:var(--sub);margin-top:6px;font-size:12.5px}
+.gantt{grid-column:span 8}
+.bars{grid-column:span 4}
+.matrix{grid-column:span 12}
+.gaxis,.grow-row{display:grid;grid-template-columns:200px 1fr;align-items:center}
+.gaxis .yrs{position:relative;height:18px;font-size:11px;color:var(--sub)}
+.gaxis .yrs span{position:absolute;transform:translateX(-50%)}
+.track{position:relative;height:20px;background:repeating-linear-gradient(90deg,#f1f0ef 0 1px,transparent 1px calc(100%/12))}
+.grow-row{transition:opacity .15s}
+.grow-row.dim{opacity:.22}
+.grow-row .lab{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.bar{position:absolute;top:4px;height:12px;border-radius:1px}
+.bar.future{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.55) 0 3px,transparent 3px 6px)}
+.ms{position:absolute;top:3px;width:12px;height:12px;transform:rotate(45deg)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:11.5px;color:var(--sub)}
+.legend i{display:inline-block;width:9px;height:9px;margin-right:5px;vertical-align:-1px}
+.brow{display:grid;grid-template-columns:150px 1fr 24px;gap:8px;align-items:center;margin:9px 0;position:relative}
+.brow .bl{font-size:12px}
+.brow .bt{height:18px;background:var(--blue)}
+.brow .bn{font-size:12px;color:var(--sub)}
+.brow:hover .bt{background:var(--navy)}
+.brow .tip{display:none;position:absolute;left:150px;top:24px;z-index:3;background:#fff;border:1px solid #c8c6c4;box-shadow:0 2px 8px rgba(0,0,0,.15);padding:6px 9px;font-size:12px;max-width:260px}
+.brow:hover .tip,.brow:focus-within .tip{display:block}
+.mtable{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-weight:600;border-bottom:1px solid #8a8886;padding:6px 8px;white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid #edebe9;vertical-align:top}
+tbody tr:nth-child(even){background:#faf9f8}
+td.dom span{display:inline-block;padding:1px 6px;border-radius:2px;color:#fff;font-size:11px;margin:0 3px 3px 0}
+.qs{grid-column:span 7}.flow{grid-column:span 5}.note{grid-column:span 12}
+.qs ol{margin:0;padding-left:1.3rem;font-size:14px;line-height:1.55}.qs li{margin-bottom:.45rem}
+.steps{display:grid;gap:6px}
+.steps div{background:#f3f2f1;border-left:4px solid var(--blue);padding:8px 10px;font-size:13px}
+.steps div:nth-child(2){border-color:var(--navy)}.steps div:nth-child(3){border-color:var(--orange)}.steps div:nth-child(4){border-color:var(--plum)}.steps div:nth-child(5){border-color:var(--pink)}
+.steps b{display:block;font-size:13.5px}
+.filters{background:#f3f2f1;border-left:1px solid var(--line);display:flex;justify-content:center;padding-top:14px}
+.filters span{writing-mode:vertical-rl;font-size:12.5px;color:var(--sub)}
+.tabs{height:38px;background:#f3f2f1;border-top:1px solid var(--line);display:flex;align-items:stretch;gap:2px;padding:0 10px}
+.tabs button{border:0;border-top:3px solid transparent;background:transparent;padding:0 16px;font:inherit;font-size:13px;cursor:pointer;color:var(--sub)}
+.tabs button[aria-selected=true]{background:#fff;border-top-color:var(--yellow);color:var(--txt);font-weight:600}
+.tabs .gal{margin-left:auto;align-self:center;font-size:12.5px;color:var(--sub)}
+@media (max-width:980px){.title,.slicer,.gantt,.bars,.qs,.flow{grid-column:span 12}.kpi{grid-column:span 6}.shell{grid-template-columns:1fr}.filters{display:none}.gaxis,.grow-row{grid-template-columns:120px 1fr}.appbar .crumb{display:none}}
+</style>
+</head>
+<body>
+<header class="appbar">
+  <a href="index.html">← Gallery</a>
+  <span class="crumb">Workspace / Portfolio /</span>
+  <span class="file">Gabriela Medrano Torres.pbix</span>
+  <span class="grow"></span>
+  <span class="crumb">v03 · BI report</span>
+  <a class="cta" href="https://github.com/gmedranotorres">Contact on GitHub</a>
+</header>
+<div class="shell">
+<main class="canvas">
+  <section class="page" id="p1" aria-label="Overview">
+    <div class="vis title"><h1>Gabriela Medrano Torres</h1><p>Turning data into clearer decisions for policy, communities and the environment. Fisheries engineer, former BI analyst, M.S. candidate at the University of Chicago.</p></div>
+    <div class="vis slicer"><h2>Domain</h2><div class="chips" id="chips" role="group" aria-label="Filter by domain"></div></div>
+    <div class="vis kpi"><b>30+</b><span>Power BI dashboards built (20+ Teleperformance, 10 Baufest)</span></div>
+    <div class="vis kpi"><b>3</b><span>Countries studied and worked in: Peru, Spain, United States</span></div>
+    <div class="vis kpi"><b>2</b><span>Working languages: English and Spanish</span></div>
+    <div class="vis kpi"><b>Jun 2027</b><span>Expected graduation, M.S. Computational Analysis &amp; Public Policy</span></div>
+    <div class="vis gantt"><h2>Roles and projects, 2016–2027</h2><span class="more" aria-hidden="true">···</span>
+      <div class="gaxis"><span></span><div class="yrs" id="yrs"></div></div>
+      <div id="grows"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="vis bars"><h2>Toolkit by category (count of tools)</h2><span class="more" aria-hidden="true">···</span><div id="bars"></div></div>
+    <div class="vis matrix"><h2>Projects</h2><span class="more" aria-hidden="true">···</span><div class="mtable"><table><thead><tr><th>Project</th><th>Domain</th><th>Year</th><th>Tools and methods</th><th>Result</th><th>Link</th></tr></thead><tbody id="mbody"></tbody></table></div></div>
+  </section>
+  <section class="page" id="p2" aria-label="Questions and approach" hidden>
+    <div class="vis title"><h1>Questions and approach</h1><p>What I want to work on next, and how every project gets done.</p></div>
+    <div class="vis qs"><h2>Questions that motivate me</h2><ol>
+      <li>How can environmental monitoring data lead to stronger enforcement and better policy?</li>
+      <li>Where are public services or community outreach failing to reach the people who need them?</li>
+      <li>How can administrative records become evidence rather than disconnected files?</li>
+      <li>When can machine learning improve targeting while keeping decisions transparent?</li>
+      <li>How can maps make geographic inequality easier to see and address?</li>
+      <li>How can food and aquatic-resource systems become more sustainable without losing sight of local livelihoods?</li></ol></div>
+    <div class="vis flow"><h2>How I approach a project</h2><div class="steps">
+      <div><b>1. Begin with the decision</b>Who needs the analysis, and what should they be able to do with it?</div>
+      <div><b>2. Examine the data honestly</b>Missing values, inconsistent definitions, duplicates, limits.</div>
+      <div><b>3. Build a traceable workflow</b>Transformations someone else can follow.</div>
+      <div><b>4. Challenge the result</b>Is the interpretation supported by the evidence?</div>
+      <div><b>5. Deliver for the audience</b>Model, map, dashboard or plain explanation.</div></div></div>
+    <div class="vis note"><h2>Teaching and languages</h2><p style="margin:0;font-size:14px">I teach programming to Spanish-speaking beginners, using block-based tools as a bridge to Python, and tutored K–8 students with UChicago’s Neighborhood Schools Program. I document my work in English and Spanish so the people who inherit it can maintain it.</p></div>
+  </section>
+</main>
+<aside class="filters" aria-hidden="true"><span>Filters</span></aside>
+</div>
+<nav class="tabs" role="tablist" aria-label="Report pages">
+  <button role="tab" aria-selected="true" aria-controls="p1" data-p="p1">Overview</button>
+  <button role="tab" aria-selected="false" aria-controls="p2" data-p="p2">Questions &amp; approach</button>
+  <span class="gal">Data refreshed 5 Oct 2026</span>
+</nav>
+<script>
+const C={'Food science':'#e66c37','Business operations':'#118dff','Community':'#744ec2','Housing & lending':'#e044a7','Environment':'#1aab40'};
+const G=[['COLCOM, receptionist',2016.17,2018.0,['Business operations']],['Environmental culture volunteer',2018,2019,['Environment']],['Orihuela exchange & lab internship',2019.6,2020.15,['Food science']],['Kuyayki Perú, volunteer teacher',2020.75,2021.25,['Community']],['COLCOM, virtual office assistant',2021.42,2021.83,['Business operations']],['Teleperformance, BI analyst',2021.75,2025.33,['Business operations']],['English teaching volunteer',2023.75,2024,['Community']],['Squid surimi thesis research',2024,2025,['Food science','Environment']],['Programming instructor (ES)',2024,2026.77,['Community']],['Baufest, data specialist',2025.42,2025.67,['Business operations']],['UChicago M.S. (CAPP)',2025.7,2027.45,['Community','Housing & lending','Environment'],1],['MortgageMatch (team)',2026.3,2026.3,['Housing & lending']],['COFI, organizing intern',2026.42,2026.67,['Community']],['Neighborhood Schools tutor',2026.42,2026.58,['Community']]];
+const P=[['COFI Community Outreach Dashboard',['Community'],'2026','Sheets, Apps Script, Leaflet, GeoJSON','Live neighborhood map; bilingual docs','https://gmedranotorres.github.io/cofi-dashboard/'],['MortgageMatch (team project)',['Housing & lending'],'2026','Python, HMDA, ACS, lender data','Illinois lending dashboard','https://github.com/uchicago-2026-capp30122/project-data-4-decisions'],['Clay additive in squid surimi gels',['Food science','Environment'],'2024','Experimental design, lab analysis','Texture and gel-strength findings',''],['Business intelligence, Teleperformance',['Business operations'],'2021–25','SQL, DAX, Power BI','20+ dashboards',''],['Data specialist, Baufest',['Business operations'],'2025','SQL, ETL, Power BI','10 dashboards',''],['Surimi gels with Andean cereals',['Food science'],'2021','Lab research','UNALM R&D+i Week',''],['Programming for Spanish-speaking beginners',['Community'],'2024–','Block-based tools to Python','Ongoing classes',''],['Environmental Enforcement Certificate',['Environment'],'2022','OEFA: water, soil, air monitoring','Certificate','']];
+const B=[['Analysis & modeling','Python, R, Stata, pandas, NumPy, scikit-learn, statsmodels'],['Visualization & mapping','Power BI, Excel, Power Pivot, Leaflet, GeoJSON, ArcGIS, QGIS'],['Development & publishing','JavaScript, Google Apps Script, Flask, Git, GitHub, GitHub Pages'],['Data management','SQL, PostgreSQL, DuckDB, SQLite, ETL workflows'],['Policy research','Causal inference, program evaluation, econometrics, geospatial analysis'],['Search & retrieval','Elasticsearch, ChromaDB']];
+const x=y=>((y-2016)/12*100).toFixed(2)+'%';
+document.getElementById('yrs').innerHTML=[2016,2018,2020,2022,2024,2026,2028].map(y=>`<span style="left:${x(y)}">${y}</span>`).join('');
+document.getElementById('grows').innerHTML=G.map(g=>{const col=C[g[3][0]];const inner=g[1]===g[2]?`<i class="ms" style="left:calc(${x(g[1])} - 6px);background:${col}" title="2026"></i>`:`<i class="bar${g[4]?' future':''}" style="left:${x(g[1])};width:${((g[2]-g[1])/12*100).toFixed(2)}%;background:${col}"></i>`;return `<div class="grow-row" data-d="${g[3].join('|')}"><span class="lab" title="${g[0]}">${g[0]}</span><div class="track">${inner}</div></div>`}).join('');
+document.getElementById('legend').innerHTML=Object.entries(C).map(([k,v])=>`<span><i style="background:${v}"></i>${k}</span>`).join('');
+const max=7;document.getElementById('bars').innerHTML=B.map(b=>{const n=b[1].split(', ').length;return `<div class="brow" tabindex="0"><span class="bl">${b[0]}</span><span class="bt" style="width:${n/max*100}%"></span><span class="bn">${n}</span><span class="tip">${b[1]}</span></div>`}).join('');
+function render(dom){
+  document.getElementById('mbody').innerHTML=P.filter(p=>dom==='All'||p[1].includes(dom)).map(p=>`<tr><td>${p[0]}</td><td class="dom">${p[1].map(d=>`<span style="background:${C[d]}">${d}</span>`).join('')}</td><td>${p[2]}</td><td>${p[3]}</td><td>${p[4]}</td><td>${p[5]?`<a href="${p[5]}">Open</a>`:'—'}</td></tr>`).join('');
+  document.querySelectorAll('.grow-row').forEach(r=>r.classList.toggle('dim',dom!=='All'&&!r.dataset.d.split('|').includes(dom)));
+  document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',b.textContent===dom));
+}
+document.getElementById('chips').innerHTML=['All',...Object.keys(C)].map(d=>`<button type="button" aria-pressed="false">${d}</button>`).join('');
+document.getElementById('chips').addEventListener('click',e=>{if(e.target.tagName==='BUTTON')render(e.target.textContent)});
+render('All');
+document.querySelectorAll('.tabs button').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b===t));document.querySelectorAll('.page').forEach(p=>p.hidden=p.id!==t.dataset.p)}));
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v14 · Decision path · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Bricolage Grotesque',sans-serif;font-optical-sizing:auto;background:#11163a;color:#f4f1e8}
+.gbar{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;padding:.8rem 1.3rem;font-size:14px;font-weight:600;color:#fff;mix-blend-mode:difference}
+.gbar a{color:#fff}
+.screen{display:none;min-height:100vh;padding:5rem clamp(1.2rem,5vw,4.6rem) 3rem;flex-direction:column;justify-content:center;background:var(--bg);color:var(--fg)}
+.screen:target{display:flex}
+body:not(:has(.screen:target)) #start{display:flex}
+@supports not selector(:has(a)){.screen{display:flex}}
+:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+.q,.a{font-weight:800;font-stretch:78%;letter-spacing:-.02em;line-height:.92;margin:0 0 2.2rem;max-width:15ch}
+.q{font-size:clamp(2.7rem,7.6vw,6.8rem)}
+.a{font-size:clamp(2.4rem,6.4vw,5.6rem)}
+.kick{font-size:1.1rem;font-weight:600;margin:0 0 1rem;opacity:.85}
+.opts{list-style:none;margin:0;padding:0;border-top:2px solid currentColor;max-width:64rem}
+.opts a{display:flex;gap:1.1rem;align-items:baseline;padding:1rem .2rem;border-bottom:2px solid currentColor;color:inherit;text-decoration:none;font-size:clamp(1.2rem,2.3vw,1.9rem);font-weight:500;line-height:1.2;transition:padding .15s}
+.opts a b{font-weight:800;font-stretch:75%;min-width:1.3em}
+.opts a:hover,.opts a:focus-visible{padding-left:1rem;background:rgba(255,255,255,.08);outline:none}
+.all-link{margin-top:1.6rem;font-size:1.05rem}
+.all-link a,.acts a{color:inherit}
+.ev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6rem;max-width:72rem;border-top:2px solid currentColor;padding-top:1.2rem}
+.ev p{margin:0;font-size:1.12rem;line-height:1.45}
+.ev b{display:block;font-size:1.3rem;font-weight:700;margin-bottom:.3rem;line-height:1.15}
+.acts{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;margin-top:2.4rem;font-size:1.1rem;font-weight:600}
+.btn{background:var(--fg);color:var(--bg)!important;text-decoration:none;padding:.85rem 1.3rem;font-weight:700}
+.btn:hover{opacity:.9}
+.sum{max-width:58rem;font-size:1.15rem;line-height:1.55}
+.sum h3{font-size:1.4rem;margin:1.8rem 0 .4rem}
+.sum p{margin:0 0 .6rem}
+.sum a{color:inherit;font-weight:600}
+@media (max-width:760px){.ev{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.opts a{transition:none}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v14 · Decision path</span></nav>
+
+<section class="screen" id="start" style="--bg:#11163a;--fg:#f4f1e8" aria-labelledby="q1">
+  <p class="kick">Gabriela Medrano Torres turns messy records into tools for decisions. So, first:</p>
+  <h1 class="q" id="q1">What decision are you trying to make?</h1>
+  <ul class="opts">
+    <li><a href="#hire"><b>a</b>Who to hire to turn messy records into tools people use</a></li>
+    <li><a href="#reach"><b>b</b>Where a service or outreach isn’t reaching people</a></li>
+    <li><a href="#lending"><b>c</b>How lending differs across places and borrowers</a></li>
+    <li><a href="#teach"><b>d</b>How to teach data to beginners, in Spanish or English</a></li>
+    <li><a href="#squid"><b>e</b>None yet. I’m curious about the squid.</a></li>
+  </ul>
+  <p class="all-link">Rather skip the questions? <a href="#all">See everything at once</a>.</p>
+</section>
+
+<section class="screen" id="hire" style="--bg:#ff5b37;--fg:#1a0d08" aria-labelledby="a1">
+  <p class="kick">You’re deciding who to hire.</p>
+  <h2 class="a" id="a1">Then we should talk.</h2>
+  <div class="ev">
+    <p><b>Nearly four years of business intelligence.</b>SQL, ETL and DAX behind more than 30 Power BI dashboards for operations teams at Teleperformance and Baufest in Peru.</p>
+    <p><b>Tools built for real users.</b>The COFI outreach map turned field records into a live neighborhood map, documented in English and Spanish so staff could maintain it.</p>
+    <p><b>Policy training.</b>M.S. in Computational Analysis and Public Policy at the University of Chicago. Graduating June 2027 and staying in Chicago.</p>
+  </div>
+  <div class="acts"><a class="btn" href="https://github.com/gmedranotorres">Write to me on GitHub</a><a href="#start">Ask another question</a></div>
+</section>
+
+<section class="screen" id="reach" style="--bg:#00544f;--fg:#e9fbf6" aria-labelledby="a2">
+  <p class="kick">You’re deciding where outreach isn’t reaching people.</p>
+  <h2 class="a" id="a2">That’s what I mapped for COFI.</h2>
+  <div class="ev">
+    <p><b>The problem.</b>An organizing team’s field records sat in spreadsheets, with community names spelled a dozen ways.</p>
+    <p><b>What I built.</b>Standardized names, matched records to Chicago community areas, and published a live choropleth of doors knocked, conversations, flyers and referrals.</p>
+    <p><b>Why it lasts.</b>Updates flow automatically from Google Sheets, and the system is documented in both languages the team works in.</p>
+  </div>
+  <div class="acts"><a class="btn" href="https://gmedranotorres.github.io/cofi-dashboard/">Open the COFI map</a><a href="#start">Ask another question</a></div>
+</section>
+
+<section class="screen" id="lending" style="--bg:#ffd23f;--fg:#1d1a07" aria-labelledby="a3">
+  <p class="kick">You’re deciding how to look at lending.</p>
+  <h2 class="a" id="a3">MortgageMatch was built for that question.</h2>
+  <div class="ev">
+    <p><b>Three public sources.</b>HMDA application records, Census ACS county indicators and HMDA lender reference data.</p>
+    <p><b>One dataset.</b>As part of the team, I helped clean the files, standardize county and lender identifiers and build approval, income and loan-size variables.</p>
+    <p><b>A dashboard to compare.</b>Filter applicants, then compare outcomes across counties, lenders, income groups, loan purposes and loan sizes in Illinois.</p>
+  </div>
+  <div class="acts"><a class="btn" href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a><a href="#start">Ask another question</a></div>
+</section>
+
+<section class="screen" id="teach" style="--bg:#7c5cff;--fg:#ffffff" aria-labelledby="a4">
+  <p class="kick">You’re deciding how to teach data.</p>
+  <h2 class="a" id="a4">Start with blocks, end with Python.</h2>
+  <div class="ev">
+    <p><b>Programming instructor.</b>Since 2024 I’ve taught Spanish-speaking beginners logic, variables, conditionals and loops with block-based tools, as a bridge to Python.</p>
+    <p><b>K–8 tutor.</b>Individual and small-group support with UChicago’s Neighborhood Schools Program in 2026.</p>
+    <p><b>Volunteer teacher.</b>English classes for students without access to paid courses, and teaching with Kuyayki Perú.</p>
+  </div>
+  <div class="acts"><a class="btn" href="https://github.com/gmedranotorres">Write to me on GitHub</a><a href="#start">Ask another question</a></div>
+</section>
+
+<section class="screen" id="squid" style="--bg:#0b3d91;--fg:#f2f6ff" aria-labelledby="a5">
+  <p class="kick">You’re curious about the squid.</p>
+  <h2 class="a" id="a5">Dosidicus gigas, the jumbo squid.</h2>
+  <div class="ev">
+    <p><b>The thesis.</b>At Universidad Nacional Agraria La Molina I studied how a clay-derived additive changes texture, gel strength and water-holding capacity in squid surimi gels.</p>
+    <p><b>The question behind it.</b>How can an abundant marine resource from the Humboldt Current become a higher-value product?</p>
+    <p><b>The bridge.</b>Lab measurements taught me to distrust a result until the data behind it is clean. That habit carried me into data and policy.</p>
+  </div>
+  <div class="acts"><a class="btn" href="#all">See the rest of my work</a><a href="#start">Ask another question</a></div>
+</section>
+
+<section class="screen" id="all" style="--bg:#f4f1e8;--fg:#11163a" aria-labelledby="a6">
+  <h2 class="a" id="a6">Everything at once.</h2>
+  <div class="sum">
+    <p>Gabriela Medrano Torres: fisheries engineer, former business intelligence analyst, and M.S. candidate in Computational Analysis and Public Policy at the University of Chicago, graduating June 2027. Works in English and Spanish.</p>
+    <h3>Work</h3>
+    <p><a href="https://gmedranotorres.github.io/cofi-dashboard/">COFI outreach dashboard</a> (2026), <a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">MortgageMatch</a> (team, 2026), 30+ Power BI dashboards at Teleperformance and Baufest (2021–2025), and thesis research on jumbo squid surimi gels (2024).</p>
+    <h3>Path</h3>
+    <p>B.S. Fisheries Engineering, UNALM, Lima (2022, 4th in class). Food-science exchange and lab internship in Orihuela, Spain (2019–2020). Business intelligence in Peru (2021–2025). UChicago (2025–2027).</p>
+    <h3>Contact</h3>
+    <p><a href="https://github.com/gmedranotorres">github.com/gmedranotorres</a></p>
+  </div>
+  <div class="acts"><a class="btn" href="https://github.com/gmedranotorres">Write to me on GitHub</a><a href="#start">Start over</a></div>
+</section>
+</body>
+</html>

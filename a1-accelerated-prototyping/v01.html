@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v01 · Research preprint · Gabriela Medrano Torres</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--ink:#1b1b1b;--bg:#d6d7d2;--link:#1f4e8c;--mute:#5b5b5b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 'Source Serif 4',Georgia,serif;font-optical-sizing:auto}
+a{color:var(--link)}
+a:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.gbar{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;padding:.55rem 1rem;background:#3a3c39;color:#d9dad4;font:500 13px/1 'Source Sans 3',sans-serif}
+.gbar a{color:#fff;text-decoration:none}.gbar a:hover{text-decoration:underline}
+.viewer{padding:2.5rem 1rem 4rem}
+.paper{position:relative;max-width:880px;margin:0 auto;background:#fff;padding:3.2rem 4.4rem 2.6rem;box-shadow:0 1px 3px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.12)}
+.stamp{position:absolute;left:1.15rem;top:6rem;writing-mode:vertical-rl;transform:rotate(180deg);font-size:15px;color:#a0a0a0;letter-spacing:.02em}
+.runhead{display:flex;justify-content:space-between;gap:1rem;font-size:13px;color:var(--mute);border-bottom:.6px solid #999;padding-bottom:.35rem;margin-bottom:2.4rem;font-variant:small-caps;letter-spacing:.03em}
+h1{font-size:1.9rem;line-height:1.18;font-weight:600;text-align:center;margin:0 auto 1rem;max-width:28ch}
+.authors{text-align:center;font-size:1.1rem;margin:.2rem 0}
+.affil,.corr{text-align:center;font-size:.86rem;color:var(--mute);margin:.15rem 0}
+.corr{margin-bottom:1.9rem}
+.abstract{margin:0 3rem 1.9rem;font-size:.93rem;line-height:1.46;text-align:justify;hyphens:auto}
+.abstract p{margin:0 0 .5rem}
+.cols{columns:2;column-gap:2.3rem;text-align:justify;hyphens:auto;font-size:.95rem;line-height:1.47}
+.cols h2{font-size:.98rem;font-weight:700;margin:1.15rem 0 .35rem;break-after:avoid}
+.cols h2:first-child{margin-top:0}
+.cols p{margin:0 0 .45rem;text-indent:1.3em}
+.cols h2+p{text-indent:0}
+.cols ol{margin:.2rem 0 .6rem;padding-left:1.4em;text-align:left}
+.cols li{margin-bottom:.25rem}
+figure{margin:1.6rem 0 1.4rem}
+figure svg{width:100%;height:auto;display:block}
+figcaption,caption{font:13.5px/1.42 'Source Sans 3',sans-serif;color:#2b2b2b}
+figcaption{margin-top:.5rem}
+.tablewrap{overflow-x:auto;margin:0 0 1.6rem}
+table{width:100%;border-collapse:collapse;font-size:.83rem;line-height:1.36}
+caption{caption-side:top;text-align:left;margin-bottom:.45rem}
+th,td{text-align:left;vertical-align:top;padding:.36rem .45rem}
+thead th{border-top:1.4px solid #000;border-bottom:.7px solid #000;font-weight:600}
+tbody tr:last-child td{border-bottom:1.4px solid #000}
+.refs{padding-left:1.5em;font-size:.84rem;text-align:left;hyphens:none}
+.refs li{margin-bottom:.4rem;word-break:break-word}
+.cite{margin:1.6rem 0 0;padding:.8rem 1rem;border:.6px solid #999;font-size:.85rem}
+.pagenum{text-align:center;font-size:.85rem;margin-top:2rem;color:var(--mute)}
+@media (max-width:760px){.paper{padding:2rem 1.3rem}.stamp{display:none}.cols{columns:1}.abstract{margin:0 0 1.5rem}h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v01 · Research preprint</span></nav>
+<div class="viewer">
+<article class="paper">
+  <div class="stamp" aria-hidden="true">preprint gmt:2610.00001v1 [policy.data] 5 Oct 2026</div>
+  <div class="runhead"><span>Medrano Torres</span><span>Turning data into clearer decisions</span><span>Preprint</span></div>
+
+  <h1>From surimi gels to public policy: turning messy records into decisions people can use</h1>
+  <p class="authors">Gabriela Medrano Torres<sup>1,2</sup></p>
+  <p class="affil"><sup>1</sup> Harris School of Public Policy, University of Chicago &nbsp;&nbsp; <sup>2</sup> Universidad Nacional Agraria La Molina, Lima, Peru</p>
+  <p class="corr">Correspondence: <a href="https://github.com/gmedranotorres">github.com/gmedranotorres</a></p>
+
+  <div class="abstract">
+    <p><b>Abstract.</b> This paper reports on one analyst’s attempt to connect three fields that rarely share a desk: fisheries and food science, business intelligence, and computational public policy. Across work in Peru, Spain and the United States, the author built more than 30 Power BI dashboards, a neighborhood outreach map for a Chicago organizing group, part of a team dashboard on Illinois mortgage lending, and thesis research on jumbo squid surimi gels. In each case the decisive step was not the model or the chart but the one before it: defining what the data means and who will act on it. The author completes an M.S. in Computational Analysis and Public Policy in June 2027 and is looking for research, policy and data work in Chicago.</p>
+    <p><b>Keywords:</b> administrative data; dashboards; geospatial analysis; environmental policy; bilingual documentation; <i>Dosidicus gigas</i></p>
+  </div>
+
+  <div class="cols">
+    <h2>1&ensp;Introduction</h2>
+    <p>Good decisions depend on reliable data and clear communication. The author began in fisheries engineering at Universidad Nacional Agraria La Molina, finished fourth in her class, and spent an exchange semester and a laboratory internship in food science at Miguel Hernández University in Orihuela, Spain. She then spent nearly four years in business intelligence in Peru before starting graduate study at the University of Chicago in 2025.</p>
+    <p>The common thread is practical: understand a real problem, organize imperfect evidence, and build something people can use. Her favorite projects “begin with a messy, real-world question and end with a useful, understandable tool.”</p>
+    <h2>2&ensp;Methods</h2>
+    <p>Every project in this paper followed the same five steps:</p>
+    <ol>
+      <li><b>Begin with the decision.</b> Clarify who needs the analysis and what they should be able to do with it.</li>
+      <li><b>Examine the data honestly.</b> Look for missing values, inconsistent definitions and duplicates before modeling.</li>
+      <li><b>Build a traceable workflow.</b> Organize transformations and assumptions so someone else can follow them.</li>
+      <li><b>Challenge the result.</b> Validate outputs and ask whether the evidence supports the interpretation.</li>
+      <li><b>Deliver for the audience.</b> A model, notebook, map, dashboard or written explanation, as long as its users can use it.</li>
+    </ol>
+    <h2>3&ensp;Results</h2>
+    <p>Table 1 summarizes four bodies of work. In Chicago, field outreach records were turned into a live neighborhood map for an organizing team, with community names standardized and the system documented in English and Spanish so staff could maintain it. In a team project, three public datasets were merged into an interactive view of mortgage lending across Illinois. In Lima, the author’s thesis research measured how a clay-derived additive changes texture, gel strength and water-holding capacity in squid surimi. Figure 1 places these results on a single timeline.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 800 250" role="img" aria-labelledby="f1">
+      <title id="f1">Timeline of the author’s work in three fields, 2018 to 2027</title>
+      <g font-family="Source Sans 3, sans-serif" font-size="12.5" fill="#222">
+        <text x="0" y="54">Fisheries &amp; food science</text><text x="0" y="124">Business intelligence</text><text x="0" y="194">Computational policy</text>
+      </g>
+      <g stroke="#d4d4d4"><line x1="160" y1="50" x2="770" y2="50"/><line x1="160" y1="120" x2="770" y2="120"/><line x1="160" y1="190" x2="770" y2="190"/></g>
+      <g stroke="#000" stroke-width="1"><line x1="160" y1="226" x2="770" y2="226"/>
+        <line x1="160" y1="226" x2="160" y2="231"/><line x1="220" y1="226" x2="220" y2="231"/><line x1="280" y1="226" x2="280" y2="231"/><line x1="340" y1="226" x2="340" y2="231"/><line x1="400" y1="226" x2="400" y2="231"/><line x1="460" y1="226" x2="460" y2="231"/><line x1="520" y1="226" x2="520" y2="231"/><line x1="580" y1="226" x2="580" y2="231"/><line x1="640" y1="226" x2="640" y2="231"/><line x1="700" y1="226" x2="700" y2="231"/><line x1="760" y1="226" x2="760" y2="231"/></g>
+      <g font-family="Source Sans 3, sans-serif" font-size="11.5" fill="#333" text-anchor="middle">
+        <text x="160" y="245">2018</text><text x="220" y="245">2019</text><text x="280" y="245">2020</text><text x="340" y="245">2021</text><text x="400" y="245">2022</text><text x="460" y="245">2023</text><text x="520" y="245">2024</text><text x="580" y="245">2025</text><text x="640" y="245">2026</text><text x="700" y="245">2027</text><text x="760" y="245">2028</text>
+      </g>
+      <polyline points="265,50 358,50 388,120 424,50 550,50 598,120 613,120 625,190 652,190 670,190 727,190" fill="none" stroke="#777" stroke-width="1.2" stroke-dasharray="4 3"/>
+      <rect x="388" y="117" width="210" height="6" fill="#555"/><rect x="607" y="117" width="12" height="6" fill="#555"/>
+      <rect x="625" y="187" width="61" height="6" fill="#555"/><rect x="686" y="187" width="41" height="6" fill="#fff" stroke="#555"/>
+      <g fill="#000"><circle cx="265" cy="50" r="5"/><circle cx="358" cy="50" r="5"/><circle cx="424" cy="50" r="5"/><circle cx="550" cy="50" r="5"/><circle cx="652" cy="190" r="5"/><circle cx="670" cy="190" r="5"/></g>
+      <circle cx="727" cy="190" r="5.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <g font-family="Source Sans 3, sans-serif" font-size="11.5" fill="#222">
+        <text x="265" y="72" text-anchor="middle">Orihuela exchange</text>
+        <text x="358" y="37" text-anchor="middle">Andean cereal gels</text>
+        <text x="424" y="72" text-anchor="middle">B.S.</text>
+        <text x="550" y="37" text-anchor="middle">Squid surimi thesis</text>
+        <text x="493" y="108" text-anchor="middle">Teleperformance (20+ dashboards)</text>
+        <text x="606" y="108">Baufest (10)</text>
+        <text x="655" y="176" text-anchor="end">MortgageMatch</text>
+        <text x="667" y="176">COFI</text>
+        <text x="625" y="211" text-anchor="middle">M.S. begins</text>
+        <text x="727" y="211" text-anchor="middle">Graduation</text>
+      </g>
+    </svg>
+    <figcaption><b>Figure 1.</b> Trajectory of the author across three fields, 2018–2027. Bars show employment and study periods; filled markers show completed projects; the open marker shows expected graduation (June 2027).</figcaption>
+  </figure>
+
+  <div class="tablewrap">
+  <table>
+    <caption><b>Table 1.</b> Selected results.</caption>
+    <thead><tr><th>Project</th><th>Setting</th><th>Data</th><th>What the author did</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://gmedranotorres.github.io/cofi-dashboard/">COFI Community Outreach Dashboard</a></td><td>Chicago, 2026</td><td>Field outreach records</td><td>Automated updates; standardized community names; designed indicators</td><td>Interactive choropleth map; bilingual documentation</td></tr>
+      <tr><td><a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">MortgageMatch</a> (team)</td><td>UChicago, 2026</td><td>HMDA applications; ACS county indicators; lender data</td><td>Helped clean and merge sources, standardize identifiers and build variables</td><td>Interactive dashboard of Illinois lending</td></tr>
+      <tr><td>Clay additive in squid surimi gels</td><td>UNALM, 2024</td><td>Laboratory measurements</td><td>Analyzed texture, gel strength, water-holding capacity and color</td><td>Thesis research</td></tr>
+      <tr><td>Business intelligence</td><td>Teleperformance and Baufest Perú, 2021–2025</td><td>Operational SQL databases</td><td>SQL extraction, ETL, DAX measures, KPI definitions</td><td>20+ and 10 Power BI dashboards</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="cols">
+    <h2>4&ensp;Discussion</h2>
+    <p>Several questions remain open and motivate the author’s next work. How can environmental monitoring data lead to stronger enforcement? Where are public services or community outreach failing to reach the people who need them? How can administrative records become evidence rather than disconnected files? When can machine learning improve targeting while keeping decisions transparent? And how can food and aquatic-resource systems become more sustainable without losing sight of local livelihoods?</p>
+    <p>The author works in English and Spanish and has taught programming to Spanish-speaking beginners, using block-based tools as a bridge to Python. Explaining a result is treated as part of the result.</p>
+    <h2>5&ensp;Conclusion</h2>
+    <p>A dashboard is only valuable when its definitions are trustworthy and its audience knows what to do with the information. The author completes her M.S. in June 2027 and welcomes collaboration with Chicago teams in policy research, civic technology and environmental data. Correspondence via <a href="https://github.com/gmedranotorres">GitHub</a>.</p>
+    <h2>Acknowledgments</h2>
+    <p>Thanks to the COFI organizing team, the MortgageMatch project team and the DeFoPro-Gel Research Circle.</p>
+    <h2>References</h2>
+    <ol class="refs">
+      <li>Medrano Torres, G. (2026). <i>COFI Community Outreach Dashboard</i> [Interactive map]. <a href="https://gmedranotorres.github.io/cofi-dashboard/">gmedranotorres.github.io/cofi-dashboard</a></li>
+      <li>MortgageMatch team (2026). <i>MortgageMatch: mortgage lending in Illinois</i> [Software]. <a href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">github.com/uchicago-2026-capp30122</a></li>
+      <li>Medrano Torres, G. (2024). Clay-derived additive in jumbo squid (<i>Dosidicus gigas</i>) surimi gels [Thesis research]. UNALM.</li>
+      <li>Medrano Torres, G. (2021). Surimi gels incorporating Andean cereals. UNALM Research, Development, Innovation and Entrepreneurship Week.</li>
+    </ol>
+  </div>
+  <p class="cite"><b>Cite as:</b> Medrano Torres, G. (2026). From surimi gels to public policy: turning messy records into decisions people can use. Preprint, v1.</p>
+  <div class="pagenum">1</div>
+</article>
+</div>
+</body>
+</html>
