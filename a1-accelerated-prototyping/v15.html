@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-l="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,8 +11,13 @@ html{background:#01070d}
 body{margin:0;font:19px/1.6 'Instrument Sans',sans-serif;color:#0b2633;background:linear-gradient(180deg,#bfe6ee 0%,#6fbad1 8%,#2f86ad 18%,#15608a 31%,#0b3d60 46%,#06263f 62%,#03131f 80%,#01070d 100%)}
 a{color:inherit}
 :focus-visible{outline:2px solid #9ff3ff;outline-offset:3px}
-.gbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;padding:.7rem 1.2rem;font-size:14px;font-weight:600;color:#fff;mix-blend-mode:difference}
+.gbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;align-items:center;padding:.7rem 1.2rem;font-size:14px;font-weight:600;color:#fff;mix-blend-mode:difference}
 .gbar a{color:#fff}
+.gbar>div{display:flex;align-items:center;gap:1rem}
+html[data-l="en"] .es,html[data-l="es"] .en{display:none}
+.lang{display:flex;border:1px solid #fff;border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;font:600 12.5px 'Instrument Sans',sans-serif;padding:.2rem .7rem;cursor:pointer;color:#fff}
+.lang button[aria-pressed=true]{background:#fff;color:#000}
 #snow{position:fixed;inset:0;pointer-events:none;z-index:1}
 #snow i{position:absolute;border-radius:50%;background:#fff;animation:fall linear infinite}
 @keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
@@ -41,49 +46,52 @@ p{margin:0 0 1rem;max-width:38rem}
 </style>
 </head>
 <body>
-<nav class="gbar" aria-label="Gallery navigation"><a href="index.html">← Gallery</a><span>v15 · Descent</span></nav>
+<nav class="gbar" aria-label="Gallery navigation"><div><a href="index.html">← <span class="en">Gallery</span><span class="es" lang="es">Galería</span></a><div class="lang" role="group" aria-label="Language / Idioma"><button type="button" data-set="en" aria-pressed="true">English</button><button type="button" data-set="es" aria-pressed="false">Español</button></div></div><span>v15 · <span class="en">Descent</span><span class="es" lang="es">Descenso</span></span></nav>
 <div id="snow" aria-hidden="true"></div>
-<div class="gauge" aria-hidden="true"><span>Depth</span><div class="track"><i id="mk"></i></div><b id="dv">0 m</b><span id="zn">Sunlight zone</span></div>
+<div class="gauge" aria-hidden="true"><span><span class="en">Depth</span><span class="es" lang="es">Profundidad</span></span><div class="track"><i id="mk"></i></div><b id="dv">0 m</b><span id="zn">Sunlight zone</span></div>
 <main>
   <section class="z" data-d="0" style="--fg:#06212d">
-    <div class="dep">0 m<small>Surface</small></div>
-    <div><h1>Gabriela Medrano Torres</h1><p class="lead">Fisheries engineer turned data and policy analyst. I turn messy, real-world records into tools people use to decide, for policy, communities and the environment.</p><p>Scroll to descend. The work goes deeper than it looks.</p></div>
+    <div class="dep">0 m<small><span class="en">Surface</span><span class="es" lang="es">Superficie</span></small></div>
+    <div><h1>Gabriela Medrano Torres</h1><p class="lead"><span class="en">Fisheries engineer turned data and policy analyst. I turn messy, real-world records into tools people use to decide, for policy, communities and the environment.</span><span class="es" lang="es">Ingeniera pesquera que pasó al análisis de datos y de políticas públicas. Convierto registros reales y desordenados en herramientas que la gente usa para decidir, al servicio de las políticas públicas, las comunidades y el medio ambiente.</span></p><p><span class="en">Scroll to descend. The work goes deeper than it looks.</span><span class="es" lang="es">Desplázate hacia abajo para descender. El trabajo es más profundo de lo que parece.</span></p></div>
   </section>
   <section class="z" data-d="30" style="--fg:#041b26">
-    <div class="dep">30 m<small>Sunlit shallows</small></div>
-    <div><h2>The work people see</h2><p>For Community Organizing and Family Issues (COFI) in Chicago, I turned field outreach records into a live neighborhood map: doors knocked, conversations, flyers and referrals by community area. Updates flow from Google Sheets through Apps Script to a Leaflet map, documented in English and Spanish so staff can maintain it.</p><a class="btn" href="https://gmedranotorres.github.io/cofi-dashboard/">Open the COFI map</a></div>
+    <div class="dep">30 m<small><span class="en">Sunlit shallows</span><span class="es" lang="es">Aguas someras iluminadas</span></small></div>
+    <div><h2><span class="en">The work people see</span><span class="es" lang="es">El trabajo que se ve</span></h2><p><span class="en">For Community Organizing and Family Issues (COFI) in Chicago, I turned field outreach records into a live neighborhood map: doors knocked, conversations, flyers and referrals by community area. Updates flow from Google Sheets through Apps Script to a Leaflet map, documented in English and Spanish so staff can maintain it.</span><span class="es" lang="es">Para Community Organizing and Family Issues (COFI), en Chicago, convertí los registros de alcance comunitario en un mapa vecinal en vivo: puertas tocadas, conversaciones, volantes y derivaciones por área comunitaria. Las actualizaciones pasan de Google Sheets a un mapa de Leaflet a través de Apps Script, con documentación en inglés y en español para que el equipo pueda mantenerlo.</span></p><a class="btn" href="https://gmedranotorres.github.io/cofi-dashboard/"><span class="en">Open the COFI map</span><span class="es" lang="es">Abrir el mapa de COFI</span></a></div>
   </section>
   <section class="z" data-d="120" style="--fg:#eaf7fb">
-    <div class="dep">120 m<small>Still lit</small></div>
-    <div><h2>Lending, county by county</h2><p>MortgageMatch is a team dashboard of mortgage approvals and denials across Illinois. I helped clean and merge HMDA application records, Census ACS county indicators and lender reference data into one analysis-ready dataset.</p><a class="btn" href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions">See the repository</a></div>
+    <div class="dep">120 m<small><span class="en">Still lit</span><span class="es" lang="es">Todavía hay luz</span></small></div>
+    <div><h2><span class="en">Lending, county by county</span><span class="es" lang="es">Préstamos, condado por condado</span></h2><p><span class="en">MortgageMatch is a team dashboard of mortgage approvals and denials across Illinois. I helped clean and merge HMDA application records, Census ACS county indicators and lender reference data into one analysis-ready dataset.</span><span class="es" lang="es">MortgageMatch es un tablero, hecho en equipo, de aprobaciones y rechazos de hipotecas en Illinois. Ayudé a limpiar y unir los registros de solicitudes de HMDA, los indicadores por condado del censo (ACS) y los datos de referencia de prestamistas en un solo conjunto de datos listo para el análisis.</span></p><a class="btn" href="https://github.com/uchicago-2026-capp30122/project-data-4-decisions"><span class="en">See the repository</span><span class="es" lang="es">Ver el repositorio</span></a></div>
   </section>
   <section class="z" data-d="250" style="--fg:#e3f3f8">
-    <div class="dep">250 m<small>Twilight zone</small></div>
-    <div><h2>Below every dashboard</h2><p>Before graduate school I spent nearly four years in business intelligence in Peru: SQL extraction, ETL and DAX measures behind more than 30 Power BI dashboards at Teleperformance and Baufest. Most of the work happens where nobody looks: definitions, joins, duplicates.</p></div>
+    <div class="dep">250 m<small><span class="en">Twilight zone</span><span class="es" lang="es">Zona crepuscular</span></small></div>
+    <div><h2><span class="en">Below every dashboard</span><span class="es" lang="es">Debajo de cada tablero</span></h2><p><span class="en">Before graduate school I spent nearly four years in business intelligence in Peru: SQL extraction, ETL and DAX measures behind more than 30 Power BI dashboards at Teleperformance and Baufest. Most of the work happens where nobody looks: definitions, joins, duplicates.</span><span class="es" lang="es">Antes del posgrado trabajé casi cuatro años en inteligencia de negocios en Perú: extracción SQL, ETL y medidas DAX detrás de más de 30 tableros de Power BI en Teleperformance y Baufest. Casi todo el trabajo ocurre donde nadie mira: definiciones, cruces de tablas, duplicados.</span></p></div>
   </section>
   <section class="z" data-d="480" style="--fg:#dcecf2">
     <svg class="squid" viewBox="0 0 120 240" aria-hidden="true"><path d="M60 4 C80 30 86 80 82 120 L38 120 C34 80 40 30 60 4Z M60 8 L98 46 L70 58Z M60 8 L22 46 L50 58Z" fill="#9fd8e8"/><ellipse cx="60" cy="130" rx="24" ry="16" fill="#9fd8e8"/><g stroke="#9fd8e8" stroke-width="6" stroke-linecap="round" fill="none"><path d="M44 142 q-8 40 -16 86"/><path d="M54 145 q-3 40 -6 90"/><path d="M66 145 q3 40 6 90"/><path d="M76 142 q8 40 16 86"/></g></svg>
-    <div class="dep">480 m<small>Where squid spend the day</small></div>
-    <div><h2>Dosidicus gigas</h2><p>My thesis at Universidad Nacional Agraria La Molina studied how a clay-derived additive changes texture, gel strength and water-holding capacity in jumbo squid surimi gels: a way to turn an abundant Humboldt Current resource into a higher-value food.</p><p>The jumbo squid spends its days in the deep and rises to the surface at night. Good analysis makes the same trip, from raw records up to a decision.</p></div>
+    <div class="dep">480 m<small><span class="en">Where squid spend the day</span><span class="es" lang="es">Donde la pota pasa el día</span></small></div>
+    <div><h2>Dosidicus gigas</h2><p><span class="en">My thesis at Universidad Nacional Agraria La Molina studied how a clay-derived additive changes texture, gel strength and water-holding capacity in jumbo squid surimi gels: a way to turn an abundant Humboldt Current resource into a higher-value food.</span><span class="es" lang="es">Mi tesis en la Universidad Nacional Agraria La Molina estudió cómo un aditivo derivado de arcilla cambia la textura, la fuerza de gel y la capacidad de retención de agua en geles de surimi de pota: una forma de convertir un recurso abundante de la corriente de Humboldt en un alimento de mayor valor.</span></p><p><span class="en">The jumbo squid spends its days in the deep and rises to the surface at night. Good analysis makes the same trip, from raw records up to a decision.</span><span class="es" lang="es">La pota pasa el día en las profundidades y sube a la superficie de noche. Un buen análisis hace el mismo viaje: de los registros crudos hasta una decisión.</span></p></div>
   </section>
   <section class="z" data-d="720" style="--fg:#d6e8ef">
-    <div class="dep">720 m<small>The long way down</small></div>
-    <div><h2>How I got here</h2><ul class="path"><li>Fisheries engineering at UNALM, Lima. B.S. 2022, fourth in my class.</li><li>Food-science exchange and lab internship in Orihuela, Spain, 2019–2020.</li><li>Business intelligence in Peru, 2021–2025.</li><li>M.S. in Computational Analysis and Public Policy, University of Chicago, 2025–2027.</li><li>Teaching programming to Spanish-speaking beginners since 2024.</li></ul></div>
+    <div class="dep">720 m<small><span class="en">The long way down</span><span class="es" lang="es">El largo descenso</span></small></div>
+    <div><h2><span class="en">How I got here</span><span class="es" lang="es">Cómo llegué aquí</span></h2><ul class="path"><li><span class="en">Fisheries engineering at UNALM, Lima. B.S. 2022, fourth in my class.</span><span class="es" lang="es">Ingeniería pesquera en la UNALM, Lima. Me gradué en 2022, cuarta de mi promoción.</span></li><li><span class="en">Food-science exchange and lab internship in Orihuela, Spain, 2019–2020.</span><span class="es" lang="es">Intercambio y prácticas de laboratorio en ciencia de los alimentos en Orihuela, España, 2019–2020.</span></li><li><span class="en">Business intelligence in Peru, 2021–2025.</span><span class="es" lang="es">Inteligencia de negocios en Perú, 2021–2025.</span></li><li><span class="en">M.S. in Computational Analysis and Public Policy, University of Chicago, 2025–2027.</span><span class="es" lang="es">Maestría en Análisis Computacional y Políticas Públicas, Universidad de Chicago, 2025–2027.</span></li><li><span class="en">Teaching programming to Spanish-speaking beginners since 2024.</span><span class="es" lang="es">Enseño programación a principiantes hispanohablantes desde 2024.</span></li></ul></div>
   </section>
   <section class="z" data-d="1000" style="--fg:#d9f6fb">
     <i class="glow" style="left:12%;top:22%"></i><i class="glow" style="left:78%;top:30%"></i><i class="glow" style="left:64%;top:72%"></i><i class="glow" style="left:30%;top:84%"></i>
-    <div class="dep">1,000 m<small>Midnight zone</small></div>
-    <div><h2>Down here, you make your own light</h2><p>I graduate in June 2027 and I’m looking for research, policy and data work in Chicago, especially on environmental enforcement, service access and administrative data.</p><a class="cta" href="https://github.com/gmedranotorres">Signal me on GitHub</a></div>
+    <div class="dep"><span class="en">1,000 m</span><span class="es" lang="es">1000 m</span><small><span class="en">Midnight zone</span><span class="es" lang="es">Zona de medianoche</span></small></div>
+    <div><h2><span class="en">Down here, you make your own light</span><span class="es" lang="es">Aquí abajo, la luz la creas tú</span></h2><p><span class="en">I graduate in June 2027 and I’m looking for research, policy and data work in Chicago, especially on environmental enforcement, service access and administrative data.</span><span class="es" lang="es">Me gradúo en junio de 2027 y busco trabajo en investigación, políticas públicas y datos en Chicago, sobre todo en fiscalización ambiental, acceso a servicios y datos administrativos.</span></p><a class="cta" href="https://github.com/gmedranotorres"><span class="en">Signal me on GitHub</span><span class="es" lang="es">Hazme una señal en GitHub</span></a></div>
   </section>
 </main>
 <script>
 const snow=document.getElementById('snow');
 for(let i=0;i<70;i++){const e=document.createElement('i'),s=1+Math.random()*2.4;e.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${s}px;height:${s}px;opacity:${.15+Math.random()*.45};animation-duration:${18+Math.random()*30}s;animation-delay:-${Math.random()*40}s`;snow.appendChild(e)}
+let L='en';
+const Z={en:['Sunlight zone','Twilight zone','Midnight zone'],es:['Zona iluminada','Zona crepuscular','Zona de medianoche']};
 const secs=[...document.querySelectorAll('.z')],mk=document.getElementById('mk'),dv=document.getElementById('dv'),zn=document.getElementById('zn');
 function upd(){const mx=document.documentElement.scrollHeight-innerHeight,c=scrollY;const pts=secs.map(s=>[Math.min(s.offsetTop,mx),+s.dataset.d]);let d=pts[0][1];
  if(c>=pts[pts.length-1][0])d=1000;else for(let i=0;i<pts.length-1;i++){if(c>=pts[i][0]&&c<pts[i+1][0]){d=pts[i][1]+(c-pts[i][0])/(pts[i+1][0]-pts[i][0])*(pts[i+1][1]-pts[i][1]);break}}
- d=Math.max(0,Math.round(d));dv.textContent=d.toLocaleString('en-US')+' m';mk.style.top=(d/1000*100)+'%';zn.textContent=d<200?'Sunlight zone':d<1000?'Twilight zone':'Midnight zone'}
+ d=Math.max(0,Math.round(d));dv.textContent=(L==='en'?d.toLocaleString('en-US'):String(d))+' m';mk.style.top=(d/1000*100)+'%';zn.textContent=Z[L][d<200?0:d<1000?1:2]}
 addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{L=b.dataset.set;document.documentElement.dataset.l=L;document.documentElement.lang=L;document.querySelectorAll('.lang button').forEach(x=>x.setAttribute('aria-pressed',x===b));upd()}));
 </script>
 </body>
 </html>
