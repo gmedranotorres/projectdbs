@@ -46,7 +46,9 @@ export function LinenTexture() {
 }
 
 // Light through a paned window, falling slanted on a wall.
-export function WindowLight() {
+// `id` names the blur; the Calm design system page, which shows this texture
+// too, passes its own (see LongTable in scenes.tsx).
+export function WindowLight({ id = "calm-window-blur" }: { id?: string }) {
   return (
     <svg
       viewBox="0 0 200 200"
@@ -54,11 +56,11 @@ export function WindowLight() {
       className="h-full w-full bg-(--oat)"
       aria-hidden="true"
     >
-      <filter id="calm-window-blur" x="-20%" y="-20%" width="140%" height="140%">
+      <filter id={id} x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="3.5" />
       </filter>
       <g
-        filter="url(#calm-window-blur)"
+        filter={`url(#${id})`}
         fill="var(--warm-white)"
         transform="translate(18 -6) skewX(-16) rotate(8)"
       >

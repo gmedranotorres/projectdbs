@@ -88,3 +88,38 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - The map uses short names (Harper, Regenstein, Ida Noyes, Mansueto, Crerar, Keller, Plein Air, Build) and dots with names instead of numbers, so it does not suggest a ranking. The eight addresses were looked up online on 2026-10-13. West to east is to scale; north to south is squeezed to fit the strip.
 - Still unchecked on the boards: the sample ratings on the cards, the "No. 3" rank and the one-line description of Mansueto, and the hours that appear outside the cards on Calm and Arcade (the "11 PM" type tiles from my brief, "Calm until 4 PM", and Arcade's body text saying the Reg "stays open late").
 - The animations loop with no pause button; the device's reduce-motion setting is the only switch.
+
+## Round 4 · 2026-10-13 · Calm design system
+
+**What I asked.** Build `/design-systems/calm` as a UI library made from the Calm mood board, with every component my site could use, in every state, using my real content: my eight spots and my three filters (Quiet & views, Big tables, Coworking), with no invented hours, distances or ratings. Six numbered sections: color roles with hex and contrast computed in code, flagging any text pair under 4.5:1 and suggesting a fix without changing a color; type roles; spacing and shape; components, including a detail panel that opens from the card and closes with Escape or ×; control states side by side, forced with a data-state attribute, with the live components taking the same styles on real hover, focus and press; and UI states. Build the components once, shared, reading tokens from CSS variables. Every control needs a visible keyboard focus.
+
+**What changed.**
+- `/design-systems/calm` is the UI library, in the six sections I asked for. Checked in Chrome at 390px, 768px, 1024px and 1440px, with the keyboard, and with reduced motion on.
+- A shared component library in `components/ui/`: button, link, text input, select, checkbox, radios, toggle, tabs, filter chip, spot card, list row, badge, detail panel, and the empty, loading, error and success states. One stylesheet (`ui.css`) styles them all and names no color or font: it reads tokens, CSS variables that start with `--ui-`.
+- A theme supplies the tokens. Calm's is `themes/calm.ts`, and its colors come straight from the mood board's palette file, so a hex changed there changes the board, the design system and the site together.
+- The six sections are shared components too (`components/design-system/`), so the Arcade and Editorial design systems need a theme, not a new page.
+- My eight spots and three filters now live in one file, `content/spots.ts`. The Editorial mood board reads its names from it.
+- Contrast is computed with the WCAG formula (`lib/color.ts`). Every text pair the components use passes 4.5:1, and every mark and outline a control needs passes 3:1. One pair is flagged: sage as a text color on the background is 2.24:1. The library never uses it that way. The page suggests a darker version, `#646752` (4.53:1). No color was changed.
+- Each state is one rule in the stylesheet with two triggers, the real one and the forced one, so the specimens in section 5 and the live components in section 4 cannot drift apart.
+- The detail panel is a real modal dialog: Escape and × close it, the keyboard stays inside it while it is open, and the focus goes back to the button that opened it.
+
+**What I decided myself.**
+- Calm is the style for my site.
+- The content: my eight spots and my three filters.
+- No invented hours, distances or ratings.
+- No color changes without asking me.
+
+**What I rejected.** Nothing new this round.
+
+**Choices Claude made that I have not reviewed yet.**
+- The border role is `#C8BDAD`: the board's thin line (brown ink at 20%) as a solid color on oat paper.
+- Two supporting colors beside the six roles, both from the board: sage mist as the accent tint, and the deeper sage `#747E65` for marks that must be seen.
+- Where the library departs from the board for contrast: fields, checkboxes, radios and the switch are outlined in the muted text color, because the border role is only 1.44:1; the switch, the checks and the selected tab use the deeper sage (3.3:1) instead of sage (2.24:1); and the primary button gets lighter on hover, not darker, so its label stays readable.
+- Type sizes: display 40 to 64px, heading 24px, body 16px, label 13px. Corners 6, 12, 16px and full. Lines 1px and 2px. No shadow.
+- Each spot has a one-word "kind" taken from its name (Reading room, Library, Campus hall, Campus building, Café). I should check them.
+- Spots are not tagged with my filters yet, because I have not said which spot belongs to which filter. The card and the panel show little for the same reason.
+- Interface words that are not from my brief: "Find a spot", "Save" and "Saved", "View details", "Search spots", "Saved only", "A to Z" and "Z to A", "All spots", "Clear filters", "Try again", "Loading spots…".
+- The card's picture is the window scene from the mood board. The detail panel is a sheet on the right on wide screens and at the bottom on phones.
+- The error state uses an icon and words, not red: Calm has one accent, and adding a color is my call.
+- Section 5 shows the secondary button as well as the primary one.
+- A short index of the six sections at the top of the page.

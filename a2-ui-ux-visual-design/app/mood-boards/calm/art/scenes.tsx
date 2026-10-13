@@ -14,17 +14,21 @@ const chairs = [160, 320, 480, 640];
 
 // A row of arched windows, a long table with reading lamps, and the light
 // slanting across them. Drawn wide: a narrow tile keeps the middle window.
-export function LongTable() {
+//
+// `id` names the scene's clip and blur. The Calm design system page shows
+// this scene too and passes its own id: Next.js can keep both pages in the
+// document at once, and two copies must not point at each other's parts.
+export function LongTable({ id = "calm-table" }: { id?: string }) {
   const light = windows.map((x) => (
     <path key={x} d={`M${x - 44} 242H${x + 44}L${x + 186} 420H${x + 98}Z`} />
   ));
   return (
     <svg viewBox="0 0 800 420" preserveAspectRatio={slice} className={svg} aria-hidden="true">
       <defs>
-        <clipPath id="calm-table-window">
+        <clipPath id={`${id}-window`}>
           <path d="M0 236V92Q0 54 44 30Q88 54 88 92V236Z" />
         </clipPath>
-        <filter id="calm-table-blur" x="-10%" y="-10%" width="120%" height="120%">
+        <filter id={`${id}-blur`} x="-10%" y="-10%" width="120%" height="120%">
           <feGaussianBlur stdDeviation="2.5" />
         </filter>
       </defs>
@@ -35,7 +39,7 @@ export function LongTable() {
       {windows.map((x) => (
         <g key={x} transform={`translate(${x - 44} 0)`} stroke="var(--line)">
           <path d="M0 236V92Q0 54 44 30Q88 54 88 92V236Z" fill="var(--warm-white)" />
-          <g clipPath="url(#calm-table-window)" stroke="none">
+          <g clipPath={`url(#${id}-window)`} stroke="none">
             <circle cx="14" cy="238" r="46" fill="var(--sage-mist)" />
             <circle cx="74" cy="250" r="40" fill="var(--sage-mist)" />
           </g>
@@ -44,7 +48,7 @@ export function LongTable() {
         </g>
       ))}
 
-      <g filter="url(#calm-table-blur)" fill="var(--warm-white)" opacity="0.8">
+      <g filter={`url(#${id}-blur)`} fill="var(--warm-white)" opacity="0.8">
         {light}
       </g>
 
@@ -96,7 +100,7 @@ export function LongTable() {
       ))}
 
       {/* the same light again, faintly, over the furniture it crosses */}
-      <g filter="url(#calm-table-blur)" fill="var(--warm-white)" opacity="0.3">
+      <g filter={`url(#${id}-blur)`} fill="var(--warm-white)" opacity="0.3">
         {light}
       </g>
     </svg>
