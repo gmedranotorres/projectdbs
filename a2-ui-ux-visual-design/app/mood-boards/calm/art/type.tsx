@@ -5,7 +5,7 @@ const note = "text-[11px] leading-4 text-(--walnut)";
 export function Aa() {
   return (
     <div className="flex h-full flex-col justify-between bg-(--warm-white) p-3">
-      <p className="font-newsreader text-[50cqmin] leading-none">Aa</p>
+      <p className="font-(family-name:--newsreader) text-[50cqmin] leading-none">Aa</p>
       <p className={note}>Newsreader</p>
     </div>
   );
@@ -14,7 +14,7 @@ export function Aa() {
 export function Headline() {
   return (
     <div className="flex h-full flex-col justify-center gap-2 bg-(--warm-white) p-4">
-      <p className="font-newsreader text-[clamp(1.5rem,8.8cqi,2.625rem)] leading-[1.06] tracking-[-0.01em] text-balance">
+      <p className="font-(family-name:--newsreader) text-[clamp(1.5rem,8.8cqi,2.625rem)] leading-[1.06] tracking-[-0.01em] text-balance">
         A quiet table, good light, and nowhere to be.
       </p>
       <p className={note}>Headline · Newsreader</p>
@@ -26,7 +26,7 @@ export function BigNumber() {
   return (
     <div className="flex h-full flex-col justify-between bg-(--ink) p-4 text-(--warm-white)">
       <p className="text-[11px] leading-4 text-(--oat)">Open until</p>
-      <p className="font-newsreader text-[58cqb] leading-[0.8] font-light tracking-[-0.02em]">
+      <p className="font-(family-name:--newsreader) text-[58cqb] leading-[0.8] font-light tracking-[-0.02em]">
         11
         <span className="ml-[0.1em] text-[0.34em] tracking-normal">PM</span>
       </p>

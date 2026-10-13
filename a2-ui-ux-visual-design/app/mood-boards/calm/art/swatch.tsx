@@ -15,7 +15,7 @@ export function Swatch({ color }: { color: PaletteColor }) {
       }}
     >
       <p className="text-[11px] leading-4">{color.role}</p>
-      <p className="font-newsreader text-[clamp(1.125rem,13cqi,1.625rem)] leading-tight">
+      <p className="font-(family-name:--newsreader) text-[clamp(1.125rem,13cqi,1.625rem)] leading-tight">
         {color.hex}
       </p>
     </div>

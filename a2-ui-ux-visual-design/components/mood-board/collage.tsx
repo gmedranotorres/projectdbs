@@ -39,7 +39,10 @@ export function Collage({
             key={`${artifact.kind} ${artifact.name}`}
             data-size={artifact.size}
           >
-            <figure className={`flex h-full flex-col ${tileClassName}`}>
+            <figure
+              data-kind={artifact.kind}
+              className={`flex h-full flex-col ${tileClassName}`}
+            >
               <div className={`collage-art ${artClassName}`}>
                 {artifact.art}
               </div>

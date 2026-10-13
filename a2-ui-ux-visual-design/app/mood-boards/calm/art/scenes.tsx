@@ -238,7 +238,7 @@ export function Clock() {
           fill="none"
         />
       ))}
-      <g className="font-newsreader" fontSize="15" textAnchor="middle" fill="var(--ink)">
+      <g className="font-(family-name:--newsreader)" fontSize="15" textAnchor="middle" fill="var(--ink)">
         <text x="100" y="74">12</text>
         <text x="137" y="105">3</text>
         <text x="100" y="138">6</text>

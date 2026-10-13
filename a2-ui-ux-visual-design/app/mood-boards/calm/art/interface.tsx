@@ -106,7 +106,7 @@ export function SpotCard() {
     <div className="flex h-full items-center justify-center bg-(--sage-mist) p-[5cqi]">
       <div className="w-full rounded-2xl border border-(--line) bg-(--warm-white) p-4 text-[13px] leading-5">
         <p className="text-xs text-(--walnut)">Library · 4 min walk</p>
-        <p className="mt-1 font-newsreader text-[clamp(1.375rem,7.4cqi,1.875rem)] leading-[1.1]">
+        <p className="mt-1 font-(family-name:--newsreader) text-[clamp(1.375rem,7.4cqi,1.875rem)] leading-[1.1]">
           Harper Reading Room
         </p>
         <dl className="mt-3 divide-y divide-(--line) border-y border-(--line)">
@@ -167,7 +167,7 @@ export function ProgressBar() {
     <div className="flex h-full flex-col justify-center gap-2 bg-(--warm-white) p-3">
       <p className="flex items-baseline justify-between text-[13px]">
         Seats taken
-        <span className="font-newsreader text-xl leading-none">40%</span>
+        <span className="font-(family-name:--newsreader) text-xl leading-none">40%</span>
       </p>
       <div className="h-2.5 rounded-full border border-(--sage-deep) p-px">
         <div className="h-full w-2/5 rounded-full bg-(--sage)" />

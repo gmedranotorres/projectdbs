@@ -35,6 +35,7 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - A shared collage (`components/mood-board/`): the grid, the tile numbers and the captions are the same on every board; each board passes its own look. Six tile sizes (small, wide, tall, large, banner, hero). 2 columns on a phone, 4 on a tablet, 6 from 1280px. Checked at 390px, 768px, 1024px and 1440px.
 - Each board is one list (`artifacts.tsx`), one line per tile, plus small drawing components in `art/` and its six colors in `palette.ts`. Deleting a line removes a tile, changing `size` resizes it, and the other tiles move to fill the space.
 - Calm, "Quiet Hours" (`/mood-boards/calm`): oat paper with a fine grain, Newsreader and Inter, rounded tiles with 1px lines and no shadows. Mood words: Matte, Warm, Unhurried.
+- Arcade, "Late-Night Level Up" (`/mood-boards/arcade`): near-black navy with faint scanlines, Press Start 2P and Space Mono, square tiles with thick white borders and a hard offset shadow. The shadow color shows the kind of tile: magenta for scenes, yellow for type, cyan for textures, lime for UI, white for colors. Mood words: Loud, Playful, Electric. The pixel art is original, typed out as grids of characters in the code.
 
 **What I decided myself.**
 - The starting direction for each board: its name, mood, palette, fonts, textures, corners and shadows, and seven of its scenes.
@@ -47,5 +48,6 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - Captions use short kind names: Color, Type, Texture, UI, Scene ("UI" for interface pieces, so captions fit on one line on a phone).
 - The interface pieces are pictures of controls, not working ones; working states belong to the design systems.
 - Calm: the exact hex values (oat `#EBE2D0`, warm white `#FBF7EE`, brown ink `#3A2B21`, walnut `#6B5848`, sage `#8A9E80`, sage mist `#DDE4D4`); the two colors I did not name (walnut for quiet text, sage mist as the tint of the accent); the fourth texture (oak grain); the eighth scene (a wall outlet with a charger); and the sample text, such as "Harper Reading Room" on the card.
-- The line under the mood words ("Like a reading room at 4 PM.") comes from my brief.
-- All text and control colors on Calm pass WCAG AA contrast.
+- Arcade: the exact hex values (navy `#0B0B27`, magenta `#FF2BD6`, cyan `#22E5FF`, lime `#B8FF3C`, yellow `#FFE83D`, white `#F5F2FF`); white as the sixth color, for text; the fourth texture (a starfield); the eighth scene (a pixel wifi signal); the study spot card as a character-select card with stats out of ten; and the made-up initials and hours on the high-score table.
+- The line under each board's mood words ("Like a reading room at 4 PM.", "Studying as a game: outlets are power-ups, and coffee restores health.") comes from my brief.
+- All text and control colors on Calm and Arcade pass WCAG AA contrast.

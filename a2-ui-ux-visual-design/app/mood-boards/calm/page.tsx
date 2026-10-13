@@ -16,7 +16,7 @@ const moodWords = ["Matte", "Warm", "Unhurried"];
 export default function Page() {
   return (
     <main
-      className={`${newsreader.variable} ${inter.variable} flex-1 bg-(--oat) font-inter text-(--ink)`}
+      className={`${newsreader.variable} ${inter.variable} flex-1 bg-(--oat) font-(family-name:--inter) text-(--ink)`}
       style={{
         ...calmVars,
         backgroundImage: grain({
@@ -41,7 +41,7 @@ export default function Page() {
           </div>
 
           <div className="mt-14 sm:mt-24 lg:flex lg:items-end lg:justify-between lg:gap-12">
-            <h1 className="font-newsreader text-[clamp(4rem,13vw,10rem)] leading-[0.9] font-light tracking-[-0.03em]">
+            <h1 className="font-(family-name:--newsreader) text-[clamp(4rem,13vw,10rem)] leading-[0.9] font-light tracking-[-0.03em]">
               Quiet Hours
             </h1>
             <div className="mt-8 lg:mt-0 lg:pb-3 lg:text-right">
@@ -61,7 +61,7 @@ export default function Page() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-3 font-newsreader text-xl text-(--walnut) italic sm:text-2xl">
+              <p className="mt-3 font-(family-name:--newsreader) text-xl text-(--walnut) italic sm:text-2xl">
                 Like a reading room at 4 PM.
               </p>
             </div>
