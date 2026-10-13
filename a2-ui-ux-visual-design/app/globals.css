@@ -8,6 +8,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Fonts for the three styles. Each page loads its own with next/font
+     (see fonts/), which sets the variable on the right-hand side. */
+  --font-newsreader: var(--newsreader), ui-serif, Georgia, serif;
+  --font-inter: var(--inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {

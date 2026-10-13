@@ -1,0 +1,62 @@
+/* The collage grid. Cells are as tall as they are wide, plus room for the
+   caption. `dense` lets later tiles fill gaps, so removing or resizing one
+   tile never leaves a hole.
+
+   Plain CSS with prefixed class names: this project's Tailwind loader turns
+   every .css file into global CSS, so CSS Modules are not available. */
+.collage-frame {
+  container-type: inline-size;
+}
+
+.collage {
+  --cols: 2;
+  --gap: var(--collage-gap, 0.75rem);
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-auto-rows: 13rem;
+  grid-auto-rows: calc(
+    (100cqi - (var(--cols) - 1) * var(--gap)) / var(--cols) +
+      var(--collage-caption, 1.75rem)
+  );
+  grid-auto-flow: dense;
+  gap: var(--gap);
+}
+
+@media (min-width: 48rem) {
+  .collage {
+    --cols: 4;
+    --gap: var(--collage-gap-wide, 1rem);
+  }
+}
+
+@media (min-width: 80rem) {
+  .collage {
+    --cols: 6;
+  }
+}
+
+/* Tile sizes, in cells: small 1×1, wide 2×1, tall 1×2, large 2×2,
+   banner 4×1, hero 4×2. With 2 columns, banner and hero are 2 wide. */
+.collage > :is([data-size="wide"], [data-size="large"], [data-size="banner"], [data-size="hero"]) {
+  grid-column: span 2;
+}
+
+.collage > :is([data-size="tall"], [data-size="large"], [data-size="hero"]) {
+  grid-row: span 2;
+}
+
+@media (min-width: 48rem) {
+  .collage > :is([data-size="banner"], [data-size="hero"]) {
+    grid-column: span 4;
+  }
+}
+
+/* The art area is a size container, so art can scale with its tile
+   (cqi, cqb, cqmin units) and survive a resize. */
+.collage-art {
+  container-type: size;
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
