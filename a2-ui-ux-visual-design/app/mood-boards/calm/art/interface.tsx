@@ -98,14 +98,13 @@ const facts = [
   ["Outlets", "Most seats"],
   ["Wifi", "Strong"],
   ["Coffee", "Downstairs"],
-  ["Open until", "11 PM"],
 ];
 
 export function SpotCard() {
   return (
     <div className="flex h-full items-center justify-center bg-(--sage-mist) p-[5cqi]">
       <div className="w-full rounded-2xl border border-(--line) bg-(--warm-white) p-4 text-[13px] leading-5">
-        <p className="text-xs text-(--walnut)">Library · 4 min walk</p>
+        <p className="text-xs text-(--walnut)">Library</p>
         <p className="mt-1 font-(family-name:--newsreader) text-[clamp(1.375rem,7.4cqi,1.875rem)] leading-[1.1]">
           Harper Reading Room
         </p>
@@ -131,11 +130,7 @@ export function SpotCard() {
             </div>
           ))}
         </dl>
-        <div className="mt-3 flex items-center justify-between">
-          <span className="inline-flex items-center gap-1.5 text-xs">
-            <span className="size-1.5 rounded-full bg-(--sage-deep)" />
-            Open now
-          </span>
+        <div className="mt-3 flex justify-end">
           <span className="inline-flex h-8 items-center rounded-lg border border-(--line) px-3 text-xs font-medium">
             View spot
           </span>

@@ -101,7 +101,7 @@ export function SpotCard() {
           </span>
         </p>
         <p className="mt-1.5 font-(family-name:--playfair) text-[clamp(1.375rem,7.4cqi,1.875rem)] leading-[1.05] font-bold">
-          Mansueto Reading Room
+          Mansueto Grand Reading Room
         </p>
         <p className="mt-2 text-sm leading-snug italic">
           A glass dome, long tables, and a hush you can hear.
@@ -124,8 +124,7 @@ export function SpotCard() {
             </div>
           ))}
         </dl>
-        <p className={`${label} mt-3 flex items-center justify-between`}>
-          Open until 11 PM
+        <p className={`${label} mt-3 text-right`}>
           <span className="text-(--maroon) underline underline-offset-4">
             Read more
           </span>

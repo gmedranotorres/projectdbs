@@ -55,3 +55,36 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - Scenes that are mostly words (the Arcade title screen, the Editorial masthead, pull quote, drop cap, numbered pick and byline) are set in live text over or beside SVG drawings, so the words stay sharp and readable at every tile size.
 - The line under each board's mood words ("Like a reading room at 4 PM.", "Studying as a game: outlets are power-ups, and coffee restores health.", "Like a city magazine's weekend guide.") comes from my brief.
 - All text and control colors on the three boards pass WCAG AA contrast.
+
+## Round 3 · 2026-10-13 · Mood boards after my review
+
+**What I asked.** Keep Calm as it is. Make Arcade feel alive: keep 28 tiles but animate several of them (twinkling stars in the title screen, a grid floor that scrolls toward you, steam rising from the coffee cup, an XP bar that fills and resets, a blinking "INSERT COFFEE TO CONTINUE", flickering scanlines, and one generative tile drawn on a canvas), with CSS animations or a small canvas, no new packages, and still frames when prefers-reduced-motion is on. On Editorial, mention only my eight spots, remove the made-up details and any opening hours, use my own line as the pull quote, and keep the Midway map only if the pins can sit roughly where my spots are. On all boards, take hours and walking times off the sample spot cards.
+
+**What changed.**
+- Calm: only the spot card changed. It no longer shows a walking time, an "open until" row or "Open now".
+- Arcade: seven pieces now move. The stars on the title screen twinkle, its last line blinks, and its floor scrolls; the grid floor tile scrolls toward you; steam rises off the coffee cup; the XP bar fills one segment at a time, flashes "LEVEL UP!" and starts over; the scanlines roll and flicker. Tile 28 is now a maze drawn on a canvas, different on every visit.
+- All of Arcade's CSS animation is in one file (`art/motion.css`) and runs only when the visitor has not asked their device to reduce motion. With reduced motion on, every tile shows a still frame and the canvas draws one finished maze.
+- Editorial: the pull quote is my line, with no source under it. The card and the numbered pick say "Mansueto Grand Reading Room". The drop cap paragraph now lists my eight spots, and the big number is "8" for those eight spots. Nothing on the board states an hour any more.
+- Editorial map: kept. The avenues are spaced by their real street numbers, and each of my eight spots has a dot and its name where its street address puts it.
+- Spot cards on Arcade and Editorial: no hours.
+
+**What I decided myself.**
+- Calm stays as it is.
+- The guide covers eight spots: Harper Reading Room, Regenstein, Ida Noyes Hall, Mansueto Grand Reading Room, Crerar Library, Keller Center, Plein Air Café and Build Coffee & Books.
+- The pull quote: "A relaxing and comfortable spot is a good way to focus on your work".
+- No hours or walking times on the cards until we have checked them.
+
+**What I rejected.**
+- Arcade as a board of still pictures.
+- On Editorial: "twelve tables", "six of our twelve picks", the "Overheard at the Reg" quote, opening hours, and any spot that is not on my list.
+- Hours and walking times on the sample spot cards.
+
+**Choices Claude made that I have not reviewed yet.**
+- The generative tile is a random maze, and it took the place of the starfield (the texture Claude had added), so each board still has 6 colors, 4 type, 4 textures, 6 UI pieces and 8 scenes.
+- The title screen's floor scrolls as well as the grid floor tile.
+- The XP bar lost its "2340/3000" readout, because a moving bar would contradict a fixed number. It now says "NEXT: LVL 4".
+- On the cards, "Open now" (Calm, Arcade) and "Open late" (Arcade) went too, because they are also claims about hours.
+- Editorial, beyond what I listed: the body text and the old drop cap paragraph were rewritten because they described a place that does not exist (and one said "until six"); the tiny filler text in the column rules tile is now my list of spots; "Our pick for late nights" became "Our pick for deep focus".
+- The map uses short names (Harper, Regenstein, Ida Noyes, Mansueto, Crerar, Keller, Plein Air, Build) and dots with names instead of numbers, so it does not suggest a ranking. The eight addresses were looked up online on 2026-10-13. West to east is to scale; north to south is squeezed to fit the strip.
+- Still unchecked on the boards: the sample ratings on the cards, the "No. 3" rank and the one-line description of Mansueto, and the hours that appear outside the cards on Calm and Arcade (the "11 PM" type tiles from my brief, "Calm until 4 PM", and Arcade's body text saying the Reg "stays open late").
+- The animations loop with no pause button; the device's reduce-motion setting is the only switch.

@@ -1,0 +1,175 @@
+/* Motion for the Arcade board.
+
+   Every animation is switched on inside the "no-preference" query, so when
+   a visitor has asked their device to reduce motion, each tile shows its
+   still frame instead. The still frames are the rules just below. */
+
+/* Floor lines rest on their rows. */
+.arcade-floor-line {
+  transform: translateY(var(--y4));
+}
+
+/* The XP bar rests at 15 of 20 segments, with no "LEVEL UP!". */
+.arcade-xp-fill {
+  clip-path: inset(0 25% 0 0);
+}
+
+.arcade-xp-flash {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Stars blink off and back on. Each star sets its own pace inline. */
+  .arcade-twinkle {
+    animation: arcade-twinkle 2.6s steps(1, end) infinite;
+  }
+
+  /* "INSERT COFFEE TO CONTINUE" */
+  .arcade-blink {
+    animation: arcade-blink 1.2s steps(1, end) infinite;
+  }
+
+  /* Each floor line travels from its row to the next one, so the loop has
+     no seam and the floor seems to scroll toward you. */
+  .arcade-floor-line {
+    animation: arcade-floor 0.9s linear infinite;
+  }
+
+  /* Steam climbs one pixel row at a time and fades. */
+  .arcade-steam {
+    animation: arcade-steam 1.6s steps(4, end) infinite;
+  }
+
+  /* The XP bar fills one segment at a time, flashes, and starts over. */
+  .arcade-xp-fill {
+    animation: arcade-xp-fill 7s infinite;
+  }
+
+  .arcade-xp-flash {
+    animation: arcade-xp-flash 7s steps(1, end) infinite;
+  }
+
+  /* The old screen: dark rows roll down, a bright band sweeps through, and
+     the picture dips slightly now and then. The dips are small and slower
+     than one a second, well under the limit for flashing content. */
+  .arcade-scan-roll {
+    animation: arcade-scan-roll 0.7s linear infinite;
+  }
+
+  .arcade-scan-sweep {
+    animation: arcade-scan-sweep 4.5s linear infinite;
+  }
+
+  .arcade-scan-flicker {
+    animation: arcade-scan-flicker 3.3s steps(1, end) infinite;
+  }
+}
+
+@keyframes arcade-twinkle {
+  0% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 0.15;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+
+@keyframes arcade-blink {
+  0% {
+    opacity: 1;
+  }
+  58% {
+    opacity: 0;
+  }
+}
+
+/* A floor line's path between two rows is a curve (lines speed up as they
+   come closer), so each line passes five points along it, set inline. */
+@keyframes arcade-floor {
+  0% {
+    transform: translateY(var(--y0));
+  }
+  25% {
+    transform: translateY(var(--y1));
+  }
+  50% {
+    transform: translateY(var(--y2));
+  }
+  75% {
+    transform: translateY(var(--y3));
+  }
+  100% {
+    transform: translateY(var(--y4));
+  }
+}
+
+@keyframes arcade-steam {
+  from {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-24px);
+    opacity: 0;
+  }
+}
+
+/* 21 steps: from no segments to all 20. Then it holds while the flash shows. */
+@keyframes arcade-xp-fill {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    animation-timing-function: steps(21, jump-none);
+  }
+  85%,
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes arcade-xp-flash {
+  0% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 1;
+  }
+}
+
+@keyframes arcade-scan-roll {
+  to {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes arcade-scan-sweep {
+  to {
+    transform: translateY(500%);
+  }
+}
+
+@keyframes arcade-scan-flicker {
+  0% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0.86;
+  }
+  11% {
+    opacity: 1;
+  }
+  43% {
+    opacity: 0.9;
+  }
+  46% {
+    opacity: 1;
+  }
+  71% {
+    opacity: 0.84;
+  }
+  74% {
+    opacity: 1;
+  }
+}

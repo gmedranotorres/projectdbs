@@ -1,5 +1,6 @@
 import { grain } from "@/components/mood-board/grain";
 import { palette } from "../palette";
+import { spots } from "../spots";
 import { halftone } from "./halftone";
 
 // Cheap paper up close: ink specks and a few long fibers.
@@ -44,15 +45,15 @@ export function HalftoneDots() {
 }
 
 // Three narrow columns of small type with a hairline between them. The
-// words are filler: the tile is about the rules and the rhythm.
-const filler =
-  "The quiet floors fill first. By nine the long tables by the windows are gone, and by ten so are the outlets. Regulars know the second staircase, the corner with the good lamp, and which café stays open after the library closes. ";
+// words are filler, made from the guide's own list: the tile is about the
+// rules and the rhythm.
+const filler = `${spots.join(". ")}. Quiet, outlets, wifi, open late, coffee. `;
 
 export function ColumnRules() {
   return (
     <div className="h-full overflow-hidden bg-(--paper) p-3" aria-hidden="true">
       <p className="columns-3 gap-4 text-justify text-[7px] leading-[1.55] hyphens-auto [column-rule:1px_solid_var(--ink)]">
-        {filler.repeat(6)}
+        {filler.repeat(8)}
       </p>
     </div>
   );

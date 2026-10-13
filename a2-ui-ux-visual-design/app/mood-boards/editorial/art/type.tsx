@@ -26,27 +26,25 @@ export function Headline() {
         Where Hyde Park goes to get things done
       </p>
       <p className="text-[clamp(0.8125rem,3.6cqi,0.9375rem)] leading-snug italic">
-        Twelve tables, ranked by how quiet they stay.
+        Eight places to sit down and get to work.
       </p>
     </div>
   );
 }
 
+// The guide covers eight spots, so the big number is a true one.
 export function BigNumber() {
   return (
     <div className="flex h-full flex-col justify-between bg-(--paper) p-4">
       <p className={`${label} border-b border-(--ink) pb-1.5 text-(--gray)`}>
-        Open until
+        In this guide
       </p>
       <div className="flex items-end justify-between gap-4">
-        <p className={`${display} text-[58cqb] leading-[0.8] font-black lining-nums`}>
-          11
-          <span className="ml-[0.08em] text-[0.3em] font-normal tracking-[0.04em]">
-            PM
-          </span>
+        <p className={`${display} text-[66cqb] leading-[0.8] font-black lining-nums`}>
+          8
         </p>
-        <p className="max-w-[9.5rem] text-right text-[clamp(0.75rem,3.4cqi,0.875rem)] leading-snug italic">
-          Six of our twelve picks stay open this late.
+        <p className="max-w-[10rem] text-right text-[clamp(0.75rem,3.4cqi,0.875rem)] leading-snug italic">
+          places to study in Hyde Park, from reading rooms to cafés.
         </p>
       </div>
     </div>
@@ -57,9 +55,9 @@ export function BodyText() {
   return (
     <div className="flex h-full flex-col justify-center gap-2 bg-(--paper) p-4">
       <p className="text-[clamp(0.8125rem,3.6cqi,0.9375rem)] leading-[1.55]">
-        The third floor is the quiet one. Bring a charger, because the
-        outlets run along the east wall only, and plan on coffee from the
-        cart downstairs until six.
+        Every spot in this guide is rated on what students ask about first:
+        how quiet it is, where the outlets are, how well the wifi holds, how
+        late it stays open, and how close the coffee is.
       </p>
       <p className={`${label} text-(--gray)`}>Body · Source Serif 4</p>
     </div>

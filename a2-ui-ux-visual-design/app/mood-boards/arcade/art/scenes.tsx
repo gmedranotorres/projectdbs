@@ -1,8 +1,10 @@
 // Scenes drawn in SVG as original pixel art: sprites typed out as text (see
-// pixels.tsx) and screens set in Press Start 2P.
+// pixels.tsx) and screens set in Press Start 2P. Some of them move; each has
+// a still frame for reduced motion (see motion.css).
 
+import { FloorGrid } from "./floor";
+import "./motion.css";
 import { neon, Pixels } from "./pixels";
-import { gridLines } from "./textures";
 
 const fill = "h-full w-full";
 const slice = "xMidYMid slice";
@@ -24,9 +26,9 @@ const titleStars: [number, number, string][] = [
 ];
 
 // The title screen. The skyline, stars and floor are one wide drawing that
-// crops from the center; the words sit on top and scale with the tile.
+// crops from the center; the words sit on top and scale with the tile. The
+// stars twinkle, the floor scrolls toward you and the last line blinks.
 export function PressStart() {
-  const floor = gridLines({ horizon: 320, width: 800, height: 420, rows: 6, fan: 20, near: 130 });
   return (
     <div className="relative h-full bg-(--navy)">
       <svg
@@ -35,11 +37,6 @@ export function PressStart() {
         className={`absolute inset-0 ${fill}`}
         aria-hidden="true"
       >
-        <defs>
-          <filter id="arcade-title-glow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="3" />
-          </filter>
-        </defs>
         <g shapeRendering="crispEdges">
           {[0.06, 0.1, 0.16, 0.24, 0.34, 0.46].map((opacity, band) => (
             <rect
@@ -51,6 +48,7 @@ export function PressStart() {
               opacity={opacity}
             />
           ))}
+          {/* two stars in three twinkle, each at its own pace */}
           {titleStars.map(([column, row, color], index) => (
             <rect
               key={index}
@@ -59,6 +57,11 @@ export function PressStart() {
               width="5"
               height="5"
               fill={neon[color as keyof typeof neon]}
+              className={index % 3 === 2 ? undefined : "arcade-twinkle"}
+              style={{
+                animationDuration: `${1.9 + (index % 5) * 0.45}s`,
+                animationDelay: `${-(index % 7) * 0.4}s`,
+              }}
             />
           ))}
           {skyline.map(([column, width, height]) => (
@@ -117,11 +120,15 @@ export function PressStart() {
           ))}
           <rect y="320" width="800" height="100" className={dark} />
         </g>
-        <g fill="none" stroke="var(--magenta)">
-          <path d={floor} strokeWidth="5" opacity="0.7" filter="url(#arcade-title-glow)" />
-          <path d={floor} strokeWidth="1.5" />
-          <path d="M0 320H800" strokeWidth="3" />
-        </g>
+        <FloorGrid
+          horizon={320}
+          width={800}
+          height={420}
+          rows={6}
+          fan={20}
+          near={130}
+          color="var(--magenta)"
+        />
       </svg>
 
       <div className="absolute inset-0 flex flex-col items-center px-[3cqi] pt-[9cqb] pb-[5cqb] text-center font-(family-name:--press-start) uppercase">
@@ -131,7 +138,7 @@ export function PressStart() {
         <p className="text-[7cqi] leading-[1.4] text-(--cyan) [text-shadow:0.08em_0.08em_0_var(--magenta)]">
           to study
         </p>
-        <p className="mt-auto bg-(--navy) px-2 py-1.5 text-[clamp(0.5rem,1.8cqi,0.875rem)] leading-none">
+        <p className="arcade-blink mt-auto bg-(--navy) px-2 py-1.5 text-[clamp(0.5rem,1.8cqi,0.875rem)] leading-none">
           Insert coffee to continue
         </p>
       </div>
@@ -240,12 +247,10 @@ export function LevelThree() {
   );
 }
 
+// One wisp of steam. The cup has two, rising out of step.
+const steam = [".c", "c.", ".c", "c."];
+
 const cup = [
-  "...c.....c......",
-  "..c.....c.......",
-  "...c.....c......",
-  "..c.....c.......",
-  "................",
   "wwwwwwwwwwww....",
   "wmmmmmmmmmmwww..",
   "wmmmmmmmmmmw.ww.",
@@ -261,7 +266,8 @@ const cup = [
 const heart = [".mm.mm.", "mmmmmmm", "mmmmmmm", ".mmmmm.", "..mmm..", "...m..."];
 const emptyHeart = [".ww.ww.", "w..w..w", "w.....w", ".w...w.", "..w.w..", "...w..."];
 
-// Coffee restores health: two hearts full, the third about to fill.
+// Coffee restores health: two hearts full, the third about to fill, and
+// steam rising off the cup.
 export function CoffeeCup() {
   return (
     <svg
@@ -280,7 +286,13 @@ export function CoffeeCup() {
       <text x="182" y="38" fontSize="10" textAnchor="end" fill="var(--lime)">
         +1
       </text>
-      <Pixels rows={cup} x={38} y={60} size={8} />
+      <g className="arcade-steam">
+        <Pixels rows={steam} x={54} y={60} size={8} />
+      </g>
+      <g className="arcade-steam" style={{ animationDelay: "-0.8s" }}>
+        <Pixels rows={steam} x={102} y={60} size={8} />
+      </g>
+      <Pixels rows={cup} x={38} y={100} size={8} />
     </svg>
   );
 }
@@ -326,41 +338,53 @@ export function PlugPowerUp() {
   );
 }
 
+// The bar fills a segment at a time, flashes "LEVEL UP!" and starts over.
+// Its still frame is 15 of 20 segments.
 export function XpBar() {
+  const segments = (color: string) =>
+    Array.from({ length: 20 }, (_, segment) => (
+      <rect
+        key={segment}
+        x={32 + segment * 17.9}
+        y="88"
+        width="15"
+        height="30"
+        fill={color}
+      />
+    ));
   return (
     <svg
       viewBox="0 0 420 200"
       className={`${fill} bg-(--navy) font-(family-name:--press-start)`}
       role="img"
-      aria-label="Study experience bar: 2,340 of 3,000 points, level 3."
+      aria-label="A study experience bar filling up toward level 4."
     >
-      <text x="24" y="50" fontSize="14" fill="var(--yellow)">
+      <text x="24" y="60" fontSize="14" fill="var(--yellow)">
         STUDY XP
       </text>
-      <text x="396" y="50" fontSize="14" textAnchor="end" fill="var(--white)">
+      <text x="396" y="60" fontSize="14" textAnchor="end" fill="var(--white)">
         LVL 3
       </text>
-      <rect x="24" y="70" width="372" height="46" fill="none" stroke="var(--white)" strokeWidth="4" />
+      <rect x="24" y="80" width="372" height="46" fill="none" stroke="var(--white)" strokeWidth="4" />
       <g shapeRendering="crispEdges">
-        {Array.from({ length: 20 }, (_, segment) => (
-          <rect
-            key={segment}
-            x={32 + segment * 17.9}
-            y="78"
-            width="15"
-            height="30"
-            fill={segment < 15 ? "var(--lime)" : "var(--panel)"}
-          />
-        ))}
+        {segments("var(--panel)")}
+        <g className="arcade-xp-fill">{segments("var(--lime)")}</g>
       </g>
-      <text x="24" y="150" fontSize="11" fill="var(--cyan)">
-        2340/3000
+      <text
+        x="210"
+        y="111"
+        fontSize="16"
+        textAnchor="middle"
+        fill="var(--navy)"
+        className="arcade-xp-flash"
+      >
+        LEVEL UP!
       </text>
-      <text x="396" y="150" fontSize="11" textAnchor="end" fill="var(--lime)">
+      <text x="24" y="160" fontSize="11" fill="var(--cyan)">
+        NEXT: LVL 4
+      </text>
+      <text x="396" y="160" fontSize="11" textAnchor="end" fill="var(--lime)">
         +120 XP
-      </text>
-      <text x="24" y="178" fontSize="9" fill="var(--white)">
-        660 XP TO LEVEL 4
       </text>
     </svg>
   );

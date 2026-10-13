@@ -2,6 +2,7 @@
 // pull quote, drop cap, numbered pick, byline) are set in live text with
 // small SVG ornaments; the pictures (arch, map, key) are drawn in SVG.
 
+import { spots } from "../spots";
 import { halftone } from "./halftone";
 
 const label =
@@ -52,14 +53,11 @@ export function PullQuote() {
       >
         “
       </span>
-      <div>
-        <blockquote
-          className={`${display} text-[clamp(1.125rem,5.6cqi,1.5rem)] leading-[1.15] italic`}
-        >
-          The best seat in Hyde Park is the one next to an outlet.
-        </blockquote>
-        <p className={`${label} mt-2 text-(--gray)`}>Overheard at the Reg</p>
-      </div>
+      <blockquote
+        className={`${display} text-[clamp(1.125rem,5.6cqi,1.5rem)] leading-[1.15] text-balance italic`}
+      >
+        A relaxing and comfortable spot is a good way to focus on your work
+      </blockquote>
     </div>
   );
 }
@@ -73,9 +71,8 @@ export function DropCap() {
         >
           T
         </span>
-        here is a table by the east windows that the regulars never
-        mention. It gets the last light of the afternoon, two outlets, and
-        nobody else’s phone calls.
+        his guide covers eight places to study in Hyde Park:{" "}
+        {spots.slice(0, -1).join(", ")} and {spots.at(-1)}.
       </p>
     </div>
   );
@@ -89,9 +86,9 @@ export function NumberedPick() {
         3
       </p>
       <div className="mt-auto border-t border-(--ink) pt-2">
-        <p className={`${label} text-(--gray)`}>Our pick for late nights</p>
+        <p className={`${label} text-(--gray)`}>Our pick for deep focus</p>
         <p className={`${display} mt-1 text-[clamp(1.125rem,11cqi,1.375rem)] leading-[1.1] font-bold`}>
-          Mansueto Reading Room
+          Mansueto Grand Reading Room
         </p>
       </div>
     </div>
@@ -142,30 +139,51 @@ export function HalftoneArch() {
   );
 }
 
-// North-south streets on the map, west to east.
+// The map runs one mile west to east, from Cottage Grove (800 East in
+// Chicago's street numbering) to Stony Island (1600 East). A street
+// number becomes a position with `east`, so avenues and spots sit where
+// their addresses put them. North to south is squeezed to fit the strip.
+const east = (number: number) => 170 + (number - 800) * 0.7125;
+
 const avenues = [
-  { x: 170, name: "Cottage Grove" },
-  { x: 330, name: "Ellis" },
-  { x: 440, name: "University" },
-  { x: 550, name: "Woodlawn" },
-  { x: 640, name: "Dorchester" },
-  { x: 740, name: "Stony Island" },
+  { name: "Cottage Grove", x: east(800), labelY: 190 },
+  { name: "Ellis", x: east(1000), labelY: 200 },
+  { name: "University", x: east(1144), labelY: 190 },
+  { name: "Woodlawn", x: east(1200), labelY: 200 },
+  { name: "Dorchester", x: east(1400), labelY: 200 },
+  // its name sits beside the line, clear of Jackson Park's tint
+  { name: "Stony Island", x: east(1600), labelY: 190, beside: true },
 ];
 const streets = [
-  { y: 44, name: "57th" },
-  { y: 100, name: "59th" },
-  { y: 150, name: "60th" },
-];
-const pins = [
-  { x: 398, y: 30 },
-  { x: 356, y: 30 },
-  { x: 392, y: 84 },
-  { x: 590, y: 58 },
-  { x: 495, y: 176 },
+  { name: "57th", y: 40 },
+  { name: "59th", y: 90 },
+  { name: "60th", y: 132 },
+  { name: "61st", y: 168 },
 ];
 
-// The Midway Plaisance and the streets around it, as a line map. It is
-// drawn wide: a narrow tile keeps the campus blocks in the middle.
+// Each spot by its street address. `side` is where its name goes.
+const places = [
+  // 1100 E 57th St, at Ellis
+  { name: "Mansueto", x: east(1028), y: 22, side: "left" },
+  // 1100 E 57th St
+  { name: "Regenstein", x: east(1084), y: 22, side: "right" },
+  // 5730 S Ellis Ave, west side
+  { name: "Crerar", x: east(984), y: 51, side: "left" },
+  // 1116 E 59th St
+  { name: "Harper", x: east(1116), y: 76, side: "left" },
+  // 5751 S Woodlawn Ave, east side
+  { name: "Plein Air", x: east(1212), y: 54, side: "right" },
+  // 1212 E 59th St
+  { name: "Ida Noyes", x: east(1212), y: 80, side: "right" },
+  // 1307 E 60th St
+  { name: "Keller", x: east(1307), y: 142, side: "right" },
+  // 6100 S Blackstone Ave
+  { name: "Build", x: east(1436), y: 178, side: "left" },
+];
+
+// The Midway Plaisance and the streets around it, as a line map with the
+// guide's eight spots. It is drawn wide: a narrow tile keeps the middle,
+// which holds every spot.
 export function MidwayMap() {
   return (
     <svg
@@ -173,7 +191,7 @@ export function MidwayMap() {
       preserveAspectRatio="xMidYMid slice"
       className={`h-full w-full bg-(--paper) font-(family-name:--inter) ${hairlines}`}
       role="img"
-      aria-label="A line map of the Midway Plaisance between 59th and 60th Streets, from Washington Park to Jackson Park, with five numbered study spots."
+      aria-label={`A line map of the Midway Plaisance between 59th and 60th Streets, from Washington Park to Jackson Park, marking the guide's eight spots: ${spots.join(", ")}.`}
     >
       <defs>
         <pattern
@@ -188,17 +206,17 @@ export function MidwayMap() {
       </defs>
 
       {/* the Midway, between 59th and 60th */}
-      <rect x="170" y="100" width="570" height="50" fill="var(--fog)" />
-      <rect x="170" y="100" width="570" height="50" fill="url(#editorial-map-hatch)" opacity="0.5" />
-      {/* the parks at either end, and the lake */}
-      <rect x="20" y="44" width="150" height="141" fill="var(--fog)" />
-      <rect x="740" y="60" width="96" height="140" fill="var(--fog)" />
+      <rect x="170" y="90" width="570" height="42" fill="var(--fog)" />
+      <rect x="170" y="90" width="570" height="42" fill="url(#editorial-map-hatch)" opacity="0.5" />
+      {/* Washington Park to the west, Jackson Park and the lake to the east */}
+      <rect x="20" width="150" height="132" fill="var(--fog)" />
+      <rect x="740" width="96" height="210" fill="var(--fog)" />
       <g fill="none" stroke="var(--gray)">
         <path d="M848 20q8 12 0 24t0 24 0 24 0 24 0 24 0 24 0 24M864 20q8 12 0 24t0 24 0 24 0 24 0 24 0 24 0 24" />
       </g>
-      {/* campus blocks north of the Midway */}
+      {/* the library block north of 57th and the main quadrangles south of it */}
       <g fill="var(--paper)" stroke="var(--ink)">
-        <path d="M340 54H430V92H340ZM450 54H540V92H450ZM340 10H430V36H340Z" />
+        <path d="M319 8H409V34H319ZM319 46H409V84H319Z" />
       </g>
 
       <g fill="none" stroke="var(--ink)">
@@ -208,18 +226,18 @@ export function MidwayMap() {
         {avenues.map((avenue) => (
           <path key={avenue.name} d={`M${avenue.x} 0V210`} />
         ))}
-        <path d="M0 185H836" strokeDasharray="3 3" />
       </g>
 
       <g fontSize="8" fontWeight="500" letterSpacing="0.9" fill="var(--gray)">
-        {/* avenue names sit on their lines; the paper-colored outline
-            breaks the line behind each name */}
+        {/* avenue names sit on their lines, on two rows so that close
+            neighbors don't collide; the paper-colored outline breaks the
+            line behind each name */}
         {avenues.map((avenue) => (
           <text
             key={avenue.name}
-            x={avenue.x}
-            y="201"
-            textAnchor="middle"
+            x={avenue.beside ? avenue.x - 6 : avenue.x}
+            y={avenue.labelY}
+            textAnchor={avenue.beside ? "end" : "middle"}
             stroke="var(--paper)"
             strokeWidth="5"
             paintOrder="stroke"
@@ -228,52 +246,65 @@ export function MidwayMap() {
           </text>
         ))}
         {streets.map((street) => (
-          <text key={street.name} x="238" y={street.y - 4}>
+          <text key={street.name} x="226" y={street.y - 4}>
             {street.name.toUpperCase()}
           </text>
         ))}
       </g>
-      {/* park names sit on the gray tint, so they are set in ink */}
+      {/* names on the gray tint are set in ink, to stay readable */}
       <g fontSize="8" fontWeight="500" letterSpacing="0.9" fill="var(--ink)">
-        <text x="52" y="118">WASHINGTON</text>
-        <text x="76" y="130">PARK</text>
-        <text x="762" y="130">JACKSON</text>
-        <text x="772" y="142">PARK</text>
+        <text x="52" y="72">WASHINGTON</text>
+        <text x="76" y="84">PARK</text>
+        <text x="762" y="108">JACKSON</text>
+        <text x="772" y="120">PARK</text>
       </g>
       <text
         x="455"
-        y="129"
+        y="115"
         textAnchor="middle"
         fontSize="10"
         fontWeight="600"
         letterSpacing="5"
         fill="var(--ink)"
+        stroke="var(--fog)"
+        strokeWidth="4"
+        paintOrder="stroke"
       >
         MIDWAY PLAISANCE
       </text>
 
-      {/* the picks */}
-      {pins.map((pin, index) => (
-        <g key={index}>
-          <circle cx={pin.x} cy={pin.y} r="9" fill="var(--maroon)" />
+      {/* the eight spots */}
+      {places.map((place) => (
+        <g key={place.name}>
+          <circle
+            cx={place.x}
+            cy={place.y}
+            r="5"
+            fill="var(--maroon)"
+            stroke="var(--paper)"
+            strokeWidth="1.5"
+          />
           <text
-            x={pin.x}
-            y={pin.y + 3.5}
-            textAnchor="middle"
+            x={place.x + (place.side === "left" ? -9 : 9)}
+            y={place.y + 3.5}
+            textAnchor={place.side === "left" ? "end" : "start"}
             fontSize="10"
-            fontWeight="700"
-            fill="var(--paper)"
+            fontWeight="600"
+            fill="var(--ink)"
+            stroke="var(--paper)"
+            strokeWidth="4"
+            paintOrder="stroke"
           >
-            {index + 1}
+            {place.name}
           </text>
         </g>
       ))}
 
       {/* north arrow */}
-      <g transform="translate(622 20)" stroke="var(--ink)" fill="none">
-        <path d="M0 16V-8M-5 -2L0 -9L5 -2" />
+      <g transform="translate(640 22)" stroke="var(--ink)" fill="none">
+        <path d="M0 14V-8M-5 -2L0 -9L5 -2" />
       </g>
-      <text x="630" y="26" fontSize="8" fontWeight="600" fill="var(--ink)">
+      <text x="648" y="27" fontSize="8" fontWeight="600" fill="var(--ink)">
         N
       </text>
     </svg>

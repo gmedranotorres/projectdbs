@@ -8,6 +8,7 @@ import {
   SpotCard,
   Toggle,
 } from "./art/interface";
+import { Maze } from "./art/maze";
 import {
   CoffeeCup,
   HighScores,
@@ -19,7 +20,7 @@ import {
   XpBar,
 } from "./art/scenes";
 import { Swatch } from "./art/swatch";
-import { Dither, GridFloor, Scanlines, Starfield } from "./art/textures";
+import { Dither, GridFloor, Scanlines } from "./art/textures";
 import { Aa, BigNumber, BodyText, Headline } from "./art/type";
 
 const swatch = (color: (typeof palette)[keyof typeof palette]): Artifact => ({
@@ -61,5 +62,5 @@ export const artifacts: Artifact[] = [
   { kind: "Scene", name: "wifi signal", size: "small", art: <WifiSignal /> },
   { kind: "UI", name: "progress bar", size: "small", art: <ProgressBar /> },
   { kind: "Type", name: "body text", size: "wide", art: <BodyText /> },
-  { kind: "Texture", name: "starfield", size: "small", art: <Starfield /> },
+  { kind: "Texture", name: "generative maze", size: "small", art: <Maze /> },
 ];

@@ -107,7 +107,7 @@ export function SpotCard() {
           <span className="text-[0.55em] text-(--white)">LVL 3</span>
         </p>
         <p className="mt-2.5 text-xs font-bold text-(--cyan) uppercase">
-          Library · Open late
+          Library
         </p>
         <dl className="mt-4 space-y-2.5">
           {stats.map((stat) => (
@@ -132,13 +132,12 @@ export function SpotCard() {
             </div>
           ))}
         </dl>
-        <p className="mt-4 flex items-center justify-between">
+        <p className="mt-4">
           <span
             className={`${label} inline-flex h-9 items-center border-[3px] border-(--white) bg-(--yellow) px-3 text-(--navy)`}
           >
             Select
           </span>
-          <span className={`${label} text-(--lime)`}>Open now</span>
         </p>
       </div>
     </div>
