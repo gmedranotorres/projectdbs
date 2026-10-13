@@ -181,7 +181,9 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - Calm did not change. Its design system page and the site were compared before and after this work, at 1440px and 390px: every element's computed styles are the same and the pictures are identical pixel for pixel.
 - Arcade (`/design-systems/arcade`, theme in `themes/arcade.ts`), from the Late-Night Level Up board: Press Start 2P and Space Mono; labels and headings in capitals; square corners; 3px white edges; a hard magenta shadow under the primary button, cards and selected chips, which they sink into under the pointer and when pressed; a 3px cyan focus ring set 4px away from the control. Yellow is the one main action, lime is whatever is switched on.
 - Arcade's contrast: all 15 listed pairs pass, and a check of every piece of text on the page found none under 4.5:1. Nothing is flagged.
-- Checked in Chrome at 390px, 768px, 1024px and 1440px, with the keyboard, and with reduced motion on.
+- Editorial (`/design-systems/editorial`, theme in `themes/editorial.ts`), from The Hyde Park Study Guide board: Playfair Display over Source Serif 4; small uppercase Inter labels with wide spacing; square corners; 1px black hairlines and no shadow; a maroon focus ring drawn as a double rule, like the one under the masthead. The primary button is maroon, darker under the pointer and black when pressed.
+- Editorial's contrast: all 15 listed pairs pass, and no text on the page is under 4.5:1. Nothing is flagged.
+- Both checked in Chrome at 390px, 768px, 1024px and 1440px, with the keyboard, and with reduced motion on. Measured in the browser, the three systems differ in display, body and button fonts, label casing, corners, edge width, shadow, focus ring and what a press does.
 
 **What I decided myself.**
 - The two new design systems use the same six sections and the same components as Calm.
@@ -199,3 +201,11 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - The card picture on the Arcade page is the mood board's grid floor, which moves; the panel picture is its scanlines. Both are still with reduced motion.
 - The corner radii box in section 3 shows one box when every corner is the same, as in Arcade.
 - A page's rules and frames now follow the theme's line width, so they are 3px on Arcade.
+- Editorial's roles: newsprint background; paper white for surfaces; black ink for text and for borders; warm gray for muted text; deep maroon as the accent. Pale gray is listed beside the six as "Tint".
+- Editorial's primary button is maroon. On the mood board it was black; maroon is the accent, and the shared primary button uses the accent.
+- Editorial's selected chips are pale gray with a check and a maroon hairline, not filled maroon as on the mood board, so "selected" works the same way in all three systems.
+- Warm gray would be 3.78:1 on the pale gray tint, so quiet text that lands on the tint (the note in a list row under the pointer) turns black there.
+- Editorial's sizes: display 40 to 72px, heading 24px, body 17px, label 11px, button text 12px.
+- The card picture on the Editorial page is the mood board's Midway map; the panel picture is its halftone dots.
+- Section numbers use lining figures, because Playfair Display's old-style 1 reads as a capital I. Calm and Arcade look the same as before.
+- Arcade and Editorial both have square corners, as my mood board brief said. They differ from each other in fonts, edge width, shadow, focus ring and color.

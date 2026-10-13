@@ -21,7 +21,9 @@ export function Section({
       className="ui-rule-top scroll-mt-6 py-12"
     >
       <h2 id={`${id}-title`} className="ui-heading flex items-baseline gap-3">
-        <span className="ui-muted tabular-nums">{number}</span>
+        {/* lining figures: some display fonts draw an old-style 1 that
+            reads as a capital I */}
+        <span className="ui-muted tabular-nums lining-nums">{number}</span>
         {title}
       </h2>
       {intro && <p className="ui-muted mt-2 max-w-2xl">{intro}</p>}

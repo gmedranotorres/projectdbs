@@ -184,7 +184,11 @@ const places = [
 // The Midway Plaisance and the streets around it, as a line map with the
 // guide's eight spots. It is drawn wide: a narrow tile keeps the middle,
 // which holds every spot.
-export function MidwayMap() {
+//
+// `id` names the hatch pattern. The Editorial design system page shows this
+// map too and passes its own id: Next.js can keep both pages in the
+// document at once, and two copies must not point at each other's parts.
+export function MidwayMap({ id = "editorial-map-hatch" }: { id?: string }) {
   return (
     <svg
       viewBox="0 0 880 210"
@@ -195,7 +199,7 @@ export function MidwayMap() {
     >
       <defs>
         <pattern
-          id="editorial-map-hatch"
+          id={id}
           width="5"
           height="5"
           patternUnits="userSpaceOnUse"
@@ -207,7 +211,7 @@ export function MidwayMap() {
 
       {/* the Midway, between 59th and 60th */}
       <rect x="170" y="90" width="570" height="42" fill="var(--fog)" />
-      <rect x="170" y="90" width="570" height="42" fill="url(#editorial-map-hatch)" opacity="0.5" />
+      <rect x="170" y="90" width="570" height="42" fill={`url(#${id})`} opacity="0.5" />
       {/* Washington Park to the west, Jackson Park and the lake to the east */}
       <rect x="20" width="150" height="132" fill="var(--fog)" />
       <rect x="740" width="96" height="210" fill="var(--fog)" />
