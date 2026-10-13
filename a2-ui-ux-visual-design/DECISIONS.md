@@ -170,3 +170,32 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - The card has four states, not six, because a card is never selected or disabled.
 - The examples use Plein Air Café for the card and Harper Reading Room's address for "Get directions".
 - The two example cards' names are now one heading level lower, so they sit under their labels in the page outline. Nothing looks different.
+
+## Round 7 · 2026-10-13 · Arcade and Editorial design systems
+
+**What I asked.** Build `/design-systems/arcade` and `/design-systems/editorial` with the same six sections and the same shared components, each dressed from its own mood board. They must differ in more than color: fonts, corners, border weights, shadows, label casing and focus style (Arcade: thick borders and hard offset shadows; Editorial: hairlines, square corners and small uppercase labels). Same content rules and contrast checks as Calm. Commit and push after each one.
+
+**What changed.**
+- The three design systems are now one page component (`components/design-system/design-system-page.tsx`) given a different theme. Nothing in the components or the sections is written per style.
+- A theme now carries more than colors and fonts: its corner radii, line widths, the shadow of raised things at rest, under the pointer and pressed, how things move when pressed, the casing and font of labels and button text, and the keyboard focus ring's color, width, style and distance. It also says which color sits on which fill, so text stays readable on bright fills.
+- Calm did not change. Its design system page and the site were compared before and after this work, at 1440px and 390px: every element's computed styles are the same and the pictures are identical pixel for pixel.
+- Arcade (`/design-systems/arcade`, theme in `themes/arcade.ts`), from the Late-Night Level Up board: Press Start 2P and Space Mono; labels and headings in capitals; square corners; 3px white edges; a hard magenta shadow under the primary button, cards and selected chips, which they sink into under the pointer and when pressed; a 3px cyan focus ring set 4px away from the control. Yellow is the one main action, lime is whatever is switched on.
+- Arcade's contrast: all 15 listed pairs pass, and a check of every piece of text on the page found none under 4.5:1. Nothing is flagged.
+- Checked in Chrome at 390px, 768px, 1024px and 1440px, with the keyboard, and with reduced motion on.
+
+**What I decided myself.**
+- The two new design systems use the same six sections and the same components as Calm.
+- What must differ between the styles: fonts, corners, border weights, shadows, label casing and focus style.
+- Arcade gets thick borders and hard offset shadows; Editorial gets hairlines, square corners and small uppercase labels.
+
+**What I rejected.** Design systems that differ only in color.
+
+**Choices Claude made that I have not reviewed yet.**
+- Arcade's roles: navy background; a slightly lighter navy (12% white) for surfaces; white text; cyan for muted text; white for borders; yellow as the accent. Lime and magenta are listed beside the six as "Highlight" and "Shadow".
+- On Arcade's bright fills (yellow, lime) the text is navy, not white.
+- Radios stay round in every style, including the square-cornered ones, so they never look like checkboxes.
+- Under the pointer: Calm darkens an edge, Arcade turns it lime and moves raised things halfway into their shadow.
+- Arcade's sizes: display 24 to 40px, heading 16px, body 15px, label 12px, button text 10px.
+- The card picture on the Arcade page is the mood board's grid floor, which moves; the panel picture is its scanlines. Both are still with reduced motion.
+- The corner radii box in section 3 shows one box when every corner is the same, as in Arcade.
+- A page's rules and frames now follow the theme's line width, so they are 3px on Arcade.

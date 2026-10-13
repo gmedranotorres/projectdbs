@@ -107,7 +107,11 @@ export function Dither() {
 }
 
 // A floor grid under a glowing horizon, scrolling toward you.
-export function GridFloor() {
+//
+// `id` names the sky's gradient. The Arcade design system page shows this
+// floor too and passes its own id: Next.js can keep both pages in the
+// document at once, and two copies must not point at each other's parts.
+export function GridFloor({ id = "arcade-floor-sky" }: { id?: string }) {
   return (
     <svg
       viewBox="0 0 420 200"
@@ -116,13 +120,13 @@ export function GridFloor() {
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="arcade-floor-sky" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0.35" style={{ stopColor: "var(--navy)" }} />
           <stop offset="1" style={{ stopColor: "var(--magenta)" }} />
         </linearGradient>
       </defs>
       <rect width="420" height="200" fill="var(--navy)" />
-      <rect width="420" height="74" fill="url(#arcade-floor-sky)" opacity="0.7" />
+      <rect width="420" height="74" fill={`url(#${id})`} opacity="0.7" />
       <FloorGrid
         horizon={74}
         width={420}

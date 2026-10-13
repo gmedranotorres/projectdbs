@@ -11,10 +11,16 @@ import { Specimen } from "./section";
 import { SpotDemo } from "./spot-demo";
 
 // Section 4. Every component, live, filled with the site's own content.
+//
+// `slug` names the style. It goes into the names of the radio groups: the
+// browser treats radios with one name as one group across the whole
+// document, and Next.js can keep two design system pages in it at once.
 export function Gallery({
+  slug,
   cardMedia,
   panelMedia,
 }: {
+  slug: string;
   cardMedia: ReactNode;
   panelMedia: ReactNode;
 }) {
@@ -93,10 +99,10 @@ export function Gallery({
 
       <Specimen title="Radios">
         <Choices legend="Order">
-          <Radio name="order" value="a-z" defaultChecked>
+          <Radio name={`${slug}-order`} value="a-z" defaultChecked>
             A to Z
           </Radio>
-          <Radio name="order" value="z-a">
+          <Radio name={`${slug}-order`} value="z-a">
             Z to A
           </Radio>
         </Choices>
@@ -123,7 +129,7 @@ export function Gallery({
               <FilterChip
                 key={option}
                 single
-                name="one-filter"
+                name={`${slug}-one-filter`}
                 value={option}
                 defaultChecked={index === 0}
               >

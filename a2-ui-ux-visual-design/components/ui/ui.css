@@ -3,7 +3,9 @@
    Nothing here names a color, a font or a size. Every value is a token, a
    CSS variable that starts with --ui-, and a theme supplies the values (see
    themes/ and theme.tsx). Give the same components another theme and they
-   take on another style.
+   take on another style: other colors and fonts, but also other corners,
+   line weights, shadows, label casing and focus ring, and another way of
+   moving when pressed.
 
    Each state is written once, for two triggers: the real one (:hover,
    :focus-visible, :active, checked, disabled) and a forced one
@@ -21,14 +23,9 @@
 
 @layer components {
   .ui-theme {
-    /* tokens the themes share, built from the ones they set */
-    --ui-on-accent: var(--ui-text);
-    --ui-control-line: var(--ui-muted);
-    --ui-focus: var(--ui-text);
-    --ui-backdrop: color-mix(in srgb, var(--ui-text) 35%, transparent);
+    /* the two sizes every theme shares */
     --ui-control-height: 2.75rem;
     --ui-duration: 150ms;
-    --ui-press-shift: 1px;
 
     /* icons, as shapes: each is painted with whatever color its user sets */
     --ui-icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5 5 9.5 10 3' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -36,6 +33,7 @@
     --ui-icon-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4.5 2.5 8 6l-3.5 3.5' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 
     color: var(--ui-text);
+    color-scheme: var(--ui-scheme);
     font-family: var(--ui-body-font);
     font-size: var(--ui-body-size);
     font-weight: var(--ui-body-weight);
@@ -54,6 +52,7 @@
     line-height: var(--_leading);
     letter-spacing: var(--_tracking);
     text-transform: var(--_transform);
+    text-shadow: var(--_shadow);
   }
 
   .ui-display {
@@ -63,6 +62,7 @@
     --_leading: var(--ui-display-leading);
     --_tracking: var(--ui-display-tracking);
     --_transform: var(--ui-display-transform);
+    --_shadow: var(--ui-display-shadow);
   }
 
   .ui-heading {
@@ -72,6 +72,7 @@
     --_leading: var(--ui-heading-leading);
     --_tracking: var(--ui-heading-tracking);
     --_transform: var(--ui-heading-transform);
+    --_shadow: var(--ui-heading-shadow);
   }
 
   .ui-body {
@@ -81,6 +82,7 @@
     --_leading: var(--ui-body-leading);
     --_tracking: var(--ui-body-tracking);
     --_transform: var(--ui-body-transform);
+    --_shadow: var(--ui-body-shadow);
   }
 
   .ui-label {
@@ -90,6 +92,7 @@
     --_leading: var(--ui-label-leading);
     --_tracking: var(--ui-label-tracking);
     --_transform: var(--ui-label-transform);
+    --_shadow: var(--ui-label-shadow);
   }
 
   .ui-muted {
@@ -111,18 +114,26 @@
   .ui-chip:where(:has(input:focus-visible), [data-state="focus"]),
   .ui-toggle:where(:has(input:focus-visible), [data-state="focus"])
     .ui-toggle-track {
-    outline: var(--ui-line-thick) solid var(--ui-focus);
-    outline-offset: 2px;
+    outline: var(--ui-focus-width) var(--ui-focus-style) var(--ui-focus);
+    outline-offset: var(--ui-focus-offset);
   }
 
   /* ---------- Button ---------- */
 
   .ui-button {
-    /* the primary button; "secondary" swaps these four */
+    /* the primary button, which is raised: it has the theme's shadow and
+       moves into it. "secondary" swaps all of these. */
     --_fill: var(--ui-accent);
     --_fill-hover: var(--ui-accent-hover);
-    --_fill-pressed: var(--ui-accent);
-    --_edge: transparent;
+    --_fill-pressed: var(--ui-accent-pressed);
+    --_edge: var(--ui-accent-edge);
+    --_ink: var(--ui-on-accent);
+    --_ink-hover: var(--ui-on-accent);
+    --_shadow: var(--ui-shadow);
+    --_shadow-hover: var(--ui-shadow-hover);
+    --_shadow-pressed: var(--ui-shadow-pressed);
+    --_move-hover: var(--ui-lift-hover);
+    --_move-pressed: var(--ui-lift-pressed);
 
     display: inline-flex;
     align-items: center;
@@ -133,11 +144,11 @@
     border: var(--ui-line) solid var(--_edge);
     border-radius: var(--ui-radius-md);
     background: var(--_fill);
-    box-shadow: var(--ui-shadow);
-    color: var(--ui-on-accent);
-    font-family: var(--ui-label-font);
-    font-size: 0.9375rem;
-    font-weight: var(--ui-label-weight);
+    box-shadow: var(--_shadow);
+    color: var(--_ink);
+    font-family: var(--ui-button-font);
+    font-size: var(--ui-button-size);
+    font-weight: var(--ui-button-weight);
     line-height: 1;
     letter-spacing: var(--ui-label-tracking);
     text-transform: var(--ui-label-transform);
@@ -145,28 +156,41 @@
     cursor: pointer;
   }
 
+  /* the secondary button is flat: an outline, no shadow */
   .ui-button:where([data-variant="secondary"]) {
     --_fill: transparent;
     --_fill-hover: var(--ui-accent-tint);
     --_fill-pressed: var(--ui-accent-tint);
     --_edge: var(--ui-control-line);
+    --_ink: var(--ui-text);
+    --_ink-hover: var(--ui-on-tint);
+    --_shadow: none;
+    --_shadow-hover: none;
+    --_shadow-pressed: none;
+    --_move-hover: none;
+    --_move-pressed: var(--ui-press);
   }
 
   .ui-button:where(:hover, [data-state="hover"]) {
     background: var(--_fill-hover);
+    box-shadow: var(--_shadow-hover);
+    color: var(--_ink-hover);
+    transform: var(--_move-hover);
   }
 
   .ui-button:where(:active, [data-state="pressed"]) {
     border-color: var(--ui-text);
     background: var(--_fill-pressed);
-    transform: translateY(var(--ui-press-shift));
+    box-shadow: var(--_shadow-pressed);
+    color: var(--_ink-hover);
+    transform: var(--_move-pressed);
   }
 
   /* selected: a button that stays on, such as "Saved" */
   .ui-button:where([aria-pressed="true"], [data-state="selected"]) {
     border-color: var(--ui-accent-strong);
     background: var(--ui-accent-tint);
-    color: var(--ui-text);
+    color: var(--ui-on-tint);
   }
 
   .ui-button:where([aria-pressed="true"], [data-state="selected"])::before {
@@ -204,11 +228,13 @@
 
   .ui-icon-button:where(:hover, [data-state="hover"]) {
     background: var(--ui-accent-tint);
+    color: var(--ui-on-tint);
   }
 
   .ui-icon-button:where(:active, [data-state="pressed"]) {
     border-color: var(--ui-text);
     background: var(--ui-accent-tint);
+    color: var(--ui-on-tint);
   }
 
   /* ---------- Link ---------- */
@@ -230,6 +256,7 @@
 
   .ui-link:where(:active, [data-state="pressed"]) {
     background: var(--ui-accent-tint);
+    color: var(--ui-on-tint);
   }
 
   /* ---------- Text input and select ---------- */
@@ -253,7 +280,6 @@
     border: var(--ui-line) solid var(--ui-control-line);
     border-radius: var(--ui-radius-md);
     background: var(--ui-surface);
-    box-shadow: var(--ui-shadow);
     color: var(--ui-text);
     font: inherit;
   }
@@ -288,7 +314,7 @@
   }
 
   :where(.ui-input, .ui-select):where(:hover, [data-state="hover"]) {
-    border-color: var(--ui-text);
+    border-color: var(--ui-control-line-hover);
   }
 
   :where(.ui-input, .ui-select):where(:disabled, [data-state="disabled"]) {
@@ -324,15 +350,17 @@
     cursor: pointer;
   }
 
+  /* A radio is round in every style, square-cornered ones too: the shape
+     is how it differs from a checkbox. */
   .ui-check-input:where([type="radio"]) {
-    border-radius: var(--ui-radius-full);
+    border-radius: 999px;
   }
 
   .ui-check-input::before {
     content: "";
     width: 0.75rem;
     height: 0.75rem;
-    background: var(--ui-surface);
+    background: var(--ui-on-strong);
     mask: var(--ui-icon-check) center / contain no-repeat;
     opacity: 0;
   }
@@ -340,12 +368,12 @@
   .ui-check-input:where([type="radio"])::before {
     width: 0.5rem;
     height: 0.5rem;
-    border-radius: var(--ui-radius-full);
+    border-radius: 999px;
     mask: none;
   }
 
   .ui-check-input:where(:hover, [data-state="hover"]) {
-    border-color: var(--ui-text);
+    border-color: var(--ui-control-line-hover);
   }
 
   .ui-check-input:where(:checked, [data-state="selected"]) {
@@ -410,8 +438,9 @@
     display: flex;
     align-items: center;
     flex: none;
-    width: 2.75rem;
-    height: 1.5rem;
+    /* room for the knob to travel, the gap around it, and the two edges */
+    width: calc(2.375rem + 4px + 2 * var(--ui-line));
+    height: calc(1.125rem + 4px + 2 * var(--ui-line));
     padding: 2px;
     border: var(--ui-line) solid var(--ui-control-line);
     border-radius: var(--ui-radius-full);
@@ -426,7 +455,7 @@
   }
 
   .ui-toggle:where(:hover, [data-state="hover"]) .ui-toggle-track {
-    border-color: var(--ui-text);
+    border-color: var(--ui-control-line-hover);
   }
 
   .ui-toggle:where(:active, [data-state="pressed"]) .ui-toggle-thumb {
@@ -440,7 +469,7 @@
   }
 
   .ui-toggle:where(:has(input:checked), [data-state="selected"]) .ui-toggle-thumb {
-    background: var(--ui-surface);
+    background: var(--ui-on-strong);
   }
 
   .ui-toggle:where(:has(input:disabled), [data-state="disabled"]) {
@@ -465,9 +494,8 @@
     border: var(--ui-line) solid var(--ui-border);
     border-radius: var(--ui-radius-full);
     background: var(--ui-surface);
-    box-shadow: var(--ui-shadow);
     font-family: var(--ui-label-font);
-    font-size: 0.875rem;
+    font-size: var(--ui-chip-size);
     font-weight: var(--ui-label-weight);
     line-height: 1;
     letter-spacing: var(--ui-label-tracking);
@@ -486,18 +514,21 @@
   }
 
   .ui-chip:where(:hover, [data-state="hover"]) {
-    border-color: var(--ui-control-line);
+    border-color: var(--ui-line-hover);
   }
 
   .ui-chip:where(:active, [data-state="pressed"]) {
     border-color: var(--ui-text);
     background: var(--ui-accent-tint);
-    transform: translateY(var(--ui-press-shift));
+    color: var(--ui-on-tint);
+    transform: var(--ui-press);
   }
 
   .ui-chip:where(:has(input:checked), [data-state="selected"]) {
     border-color: var(--ui-accent-strong);
     background: var(--ui-accent-tint);
+    box-shadow: var(--ui-shadow);
+    color: var(--ui-on-tint);
   }
 
   .ui-chip:where(:has(input:checked), [data-state="selected"]) .ui-chip-mark {
@@ -538,9 +569,9 @@
     border-radius: var(--ui-radius-sm) var(--ui-radius-sm) 0 0;
     background: transparent;
     color: var(--ui-muted);
-    font-family: var(--ui-label-font);
-    font-size: 0.9375rem;
-    font-weight: var(--ui-label-weight);
+    font-family: var(--ui-button-font);
+    font-size: var(--ui-button-size);
+    font-weight: var(--ui-button-weight);
     letter-spacing: var(--ui-label-tracking);
     text-transform: var(--ui-label-transform);
     white-space: nowrap;
@@ -609,6 +640,7 @@
     color: inherit;
     font: inherit;
     letter-spacing: inherit;
+    text-transform: inherit;
     text-align: left;
     cursor: pointer;
   }
@@ -636,17 +668,20 @@
   }
 
   .ui-card:where(:has(.ui-card-trigger:hover), [data-state="hover"]) {
-    border-color: var(--ui-control-line);
+    border-color: var(--ui-line-hover);
+    box-shadow: var(--ui-shadow-hover);
+    transform: var(--ui-lift-hover);
   }
 
   .ui-card:where(:has(.ui-card-trigger:focus-visible), [data-state="focus"]) {
-    outline: var(--ui-line-thick) solid var(--ui-focus);
-    outline-offset: 2px;
+    outline: var(--ui-focus-width) var(--ui-focus-style) var(--ui-focus);
+    outline-offset: var(--ui-focus-offset);
   }
 
   .ui-card:where(:has(.ui-card-trigger:active), [data-state="pressed"]) {
     border-color: var(--ui-text);
-    transform: translateY(var(--ui-press-shift));
+    box-shadow: var(--ui-shadow-pressed);
+    transform: var(--ui-lift-pressed);
   }
 
   /* ---------- List rows ---------- */
@@ -656,7 +691,7 @@
   }
 
   .ui-list > li + li {
-    border-top: var(--ui-line) solid var(--ui-border);
+    border-top: var(--ui-line) solid var(--ui-divider);
   }
 
   .ui-row {
@@ -691,15 +726,33 @@
 
   .ui-row:where(:hover, [data-state="hover"]) {
     background: var(--ui-accent-tint);
+    color: var(--ui-on-tint);
   }
 
+  /* the ring sits inside the row, so it never covers the rows next to it */
   .ui-row:where(:focus-visible, [data-state="focus"]) {
-    outline-offset: -2px;
+    outline-offset: calc(-1 * var(--ui-focus-width));
   }
 
   .ui-row:where(:active, [data-state="pressed"]) {
     background: var(--ui-accent-tint);
     box-shadow: inset 0 0 0 var(--ui-line) var(--ui-text);
+    color: var(--ui-on-tint);
+  }
+
+  /* the quieter parts of a row, once it sits on the tint */
+  .ui-row:where(:hover, :active, [data-state="hover"], [data-state="pressed"])
+    :where(.ui-muted) {
+    color: var(--ui-on-tint-muted);
+  }
+
+  .ui-row:where(
+      :hover,
+      :active,
+      [data-state="hover"],
+      [data-state="pressed"]
+    )::after {
+    background: var(--ui-on-tint-muted);
   }
 
   /* ---------- Badge ---------- */
@@ -713,7 +766,7 @@
     border: var(--ui-line) solid transparent;
     border-radius: var(--ui-radius-sm);
     background: var(--ui-accent-tint);
-    color: var(--ui-text);
+    color: var(--ui-on-tint);
     font-family: var(--ui-label-font);
     font-size: var(--ui-label-size);
     font-weight: var(--ui-label-weight);
@@ -726,6 +779,7 @@
   .ui-badge:where([data-tone="outline"]) {
     border-color: var(--ui-control-line);
     background: transparent;
+    color: var(--ui-text);
   }
 
   .ui-badge:where([data-tone="strong"]) {
@@ -749,7 +803,6 @@
     border: 0;
     border-left: var(--ui-line) solid var(--ui-border);
     background: var(--ui-surface);
-    box-shadow: var(--ui-shadow);
     color: var(--ui-text);
   }
 
@@ -816,7 +869,7 @@
     height: 2.5rem;
     border-radius: var(--ui-radius-full);
     background: var(--ui-accent-tint);
-    color: var(--ui-text);
+    color: var(--ui-on-tint);
   }
 
   /* An error is marked by its icon and its words, not by a new color. */
@@ -839,6 +892,7 @@
     border-radius: var(--ui-radius-md);
     background: var(--ui-accent-tint);
     box-shadow: var(--ui-shadow);
+    color: var(--ui-on-tint);
     font-weight: var(--ui-label-weight);
   }
 
@@ -850,11 +904,36 @@
   .ui-skeleton {
     height: var(--ui-space-7);
     border-radius: var(--ui-radius-md);
-    background: var(--ui-border);
+    background: var(--ui-divider);
   }
 
   .ui-skeleton:nth-child(odd) {
     width: 82%;
+  }
+
+  /* ---------- Lines for laying out a page ---------- */
+
+  /* Rules and frames that follow the theme's line width and color, for the
+     parts of a page that are not components. */
+  .ui-rule-top {
+    border-top: var(--ui-line) solid var(--ui-border);
+  }
+
+  .ui-rule-bottom {
+    border-bottom: var(--ui-line) solid var(--ui-border);
+  }
+
+  .ui-frame {
+    border: var(--ui-line) solid var(--ui-border);
+  }
+
+  /* a list with a rule above, below and between its items */
+  .ui-ruled {
+    border-block: var(--ui-line) solid var(--ui-border);
+  }
+
+  .ui-ruled > :not(:last-child) {
+    border-bottom: var(--ui-line) solid var(--ui-divider);
   }
 
   /* ---------- Motion: only when the visitor has not asked for less ---------- */

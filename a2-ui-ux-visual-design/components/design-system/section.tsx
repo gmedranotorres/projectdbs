@@ -18,7 +18,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="scroll-mt-6 border-t border-(--ui-border) py-12"
+      className="ui-rule-top scroll-mt-6 py-12"
     >
       <h2 id={`${id}-title`} className="ui-heading flex items-baseline gap-3">
         <span className="ui-muted tabular-nums">{number}</span>

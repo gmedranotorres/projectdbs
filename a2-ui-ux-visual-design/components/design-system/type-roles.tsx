@@ -10,7 +10,7 @@ export function TypeRoles({ theme }: { theme: Theme }) {
     label: filters.join(" · "),
   };
   return (
-    <dl className="divide-y divide-(--ui-border) border-y border-(--ui-border)">
+    <dl className="ui-ruled">
       {(Object.keys(theme.type) as (keyof Theme["type"])[]).map((key) => {
         const role = theme.type[key];
         return (
@@ -19,6 +19,7 @@ export function TypeRoles({ theme }: { theme: Theme }) {
               <p className="font-medium">{role.label}</p>
               <p className="ui-label ui-muted mt-1 font-normal">
                 {role.font} · {role.sizeLabel} · weight {role.weight}
+                {role.transform === "uppercase" && " · uppercase"}
               </p>
             </dt>
             <dd className={`ui-${key} min-w-0`}>{samples[key]}</dd>

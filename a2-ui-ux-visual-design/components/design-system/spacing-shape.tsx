@@ -3,6 +3,20 @@ import { Specimen } from "./section";
 
 // Section 3. Spacing, corners, line widths and shadow.
 export function SpacingShape({ theme }: { theme: Theme }) {
+  // A style whose corners are all the same shows one box, not four alike.
+  const radii = Object.entries(theme.radii);
+  const oneRadius = new Set(radii.map(([, radius]) => radius.value)).size === 1;
+  const corners = oneRadius
+    ? [
+        {
+          size: "md",
+          name: "Every corner",
+          value: radii[0][1].value,
+          use: "Buttons, fields, cards, chips and switches. Only the radio is round.",
+        },
+      ]
+    : radii.map(([size, radius]) => ({ size, ...radius }));
+
   return (
     <div className="grid gap-x-12 gap-y-10 lg:grid-cols-2">
       <Specimen title="Spacing scale">
@@ -22,16 +36,19 @@ export function SpacingShape({ theme }: { theme: Theme }) {
 
       <Specimen title="Corner radii">
         <ul role="list" className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {Object.entries(theme.radii).map(([size, radius]) => (
-            <li key={size}>
+          {corners.map((corner) => (
+            <li key={corner.size} className={oneRadius ? "col-span-2" : undefined}>
               <div
-                className="h-16 border border-(--ui-muted) bg-(--ui-surface)"
-                style={{ borderRadius: `var(--ui-radius-${size})` }}
+                className="h-16 bg-(--ui-surface)"
+                style={{
+                  border: "var(--ui-line) solid var(--ui-control-line)",
+                  borderRadius: `var(--ui-radius-${corner.size})`,
+                }}
               />
               <p className="mt-2 font-medium">
-                {radius.name} <span className="ui-muted font-normal tabular-nums">{radius.value}</span>
+                {corner.name} <span className="ui-muted font-normal tabular-nums">{corner.value}</span>
               </p>
-              <p className="ui-label ui-muted font-normal">{radius.use}</p>
+              <p className="ui-label ui-muted font-normal">{corner.use}</p>
             </li>
           ))}
         </ul>
@@ -56,7 +73,7 @@ export function SpacingShape({ theme }: { theme: Theme }) {
 
       <Specimen title="Shadow">
         <div
-          className="rounded-(--ui-radius-lg) border border-(--ui-border) bg-(--ui-surface) p-6"
+          className="ui-frame rounded-(--ui-radius-lg) bg-(--ui-surface) p-6"
           style={{ boxShadow: "var(--ui-shadow)" }}
         >
           <p className="font-medium">{theme.shadow.use}</p>

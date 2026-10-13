@@ -107,7 +107,7 @@ export function SpotDemo({
           title={spot.name}
           type={spot.type}
         >
-          <div className="h-28 overflow-hidden rounded-(--ui-radius-md) border border-(--ui-border)">
+          <div className="ui-frame h-28 overflow-hidden rounded-(--ui-radius-md)">
             {panelMedia}
           </div>
           <p>{guideLine}.</p>
