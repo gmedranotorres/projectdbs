@@ -23,7 +23,7 @@ export function Headline() {
       <p
         className={`font-(family-name:--press-start) text-[clamp(1rem,7.6cqi,2.125rem)] leading-[1.35] uppercase ${hardShadow}`}
       >
-        Choose your
+        Choose your{" "}
         <br />
         <span className="text-(--yellow)">study spot</span>
       </p>

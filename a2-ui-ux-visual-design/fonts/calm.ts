@@ -1,4 +1,4 @@
-import { Inter, Newsreader } from "next/font/google";
+import { Newsreader } from "next/font/google";
 
 // Calm: Newsreader for headlines, Inter for the interface.
 // A page sets both variables on its <main>; text then picks a font with
@@ -10,7 +10,4 @@ export const newsreader = Newsreader({
   variable: "--newsreader",
 });
 
-export const inter = Inter({
-  subsets: ["latin"],
-  variable: "--inter",
-});
+export { inter } from "./inter";

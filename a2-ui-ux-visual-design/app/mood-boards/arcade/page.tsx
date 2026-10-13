@@ -48,7 +48,7 @@ export default function Page() {
           </div>
 
           <h1 className="mt-12 font-(family-name:--press-start) text-[clamp(1.75rem,8.2vw,6rem)] leading-[1.25] uppercase [text-shadow:0.06em_0.06em_0_var(--magenta),0.12em_0.12em_0_var(--cyan)] sm:mt-20">
-            Late-night
+            Late-night{" "}
             <br />
             <span className="text-(--yellow)">level up</span>
           </h1>
