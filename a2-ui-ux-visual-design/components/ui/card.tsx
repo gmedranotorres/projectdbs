@@ -9,7 +9,8 @@ import "./ui.css";
 // With `onOpen`, the whole card opens something: its name becomes a button
 // stretched over the card, so a click anywhere on it, or Enter or Space
 // while it has the focus, calls `onOpen`. The card is then the thing that
-// shows hover, focus and press.
+// shows hover, focus and press. `data-state` forces one of those looks
+// ("hover", "focus", "pressed") for the design system pages.
 export function SpotCard({
   name,
   type,
@@ -18,6 +19,7 @@ export function SpotCard({
   children,
   onOpen,
   headingLevel = 3,
+  "data-state": forced,
 }: {
   name: string;
   // a small label above the name, such as "Library"
@@ -30,6 +32,7 @@ export function SpotCard({
   children?: ReactNode;
   onOpen?: () => void;
   headingLevel?: 2 | 3 | 4;
+  "data-state"?: string;
 }) {
   const Heading = `h${headingLevel}` as const;
   const open = (event: MouseEvent<HTMLButtonElement>) => {
@@ -39,7 +42,11 @@ export function SpotCard({
     onOpen?.();
   };
   return (
-    <article className="ui-card" data-interactive={onOpen ? "" : undefined}>
+    <article
+      className="ui-card"
+      data-interactive={onOpen ? "" : undefined}
+      data-state={forced}
+    >
       {media && <div className="ui-card-media">{media}</div>}
       <div className="ui-card-body">
         {type && <p className="ui-label ui-muted">{type}</p>}

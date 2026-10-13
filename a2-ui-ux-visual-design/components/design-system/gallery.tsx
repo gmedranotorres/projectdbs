@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { Checkbox, Choices, FilterChip, Radio, Toggle } from "@/components/ui/choice";
 import { SelectField, TextField } from "@/components/ui/field";
+import { ExternalIcon } from "@/components/ui/icons";
 import { InlineLink } from "@/components/ui/link";
 import { Tabs } from "@/components/ui/tabs";
-import { filters, siteName, spots } from "@/content/spots";
+import { directionsUrl, filters, siteName, spots } from "@/content/spots";
 import { Specimen } from "./section";
 import { SpotDemo } from "./spot-demo";
 
@@ -24,6 +25,21 @@ export function Gallery({
           <Button>Find a spot</Button>
           <Button variant="secondary">Save</Button>
         </div>
+      </Specimen>
+
+      <Specimen
+        title="Button that is a link"
+        note="For an action that goes somewhere else. The small arrow says it opens in a new tab."
+      >
+        <ButtonLink
+          href={directionsUrl(spots[0])}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Get directions
+          <ExternalIcon />
+          <span className="sr-only"> (opens Google Maps in a new tab)</span>
+        </ButtonLink>
       </Specimen>
 
       <Specimen title="Link">
@@ -94,6 +110,28 @@ export function Gallery({
             </FilterChip>
           ))}
         </div>
+      </Specimen>
+
+      <Specimen
+        title="Filter chips, one choice"
+        note="Picking one unpicks the others, and the arrow keys move between them. These are the site’s filters."
+      >
+        <fieldset>
+          <legend className="sr-only">Filter the spots</legend>
+          <div className="ui-chip-row">
+            {["All", ...filters].map((option, index) => (
+              <FilterChip
+                key={option}
+                single
+                name="one-filter"
+                value={option}
+                defaultChecked={index === 0}
+              >
+                {option}
+              </FilterChip>
+            ))}
+          </div>
+        </fieldset>
       </Specimen>
 
       <Specimen title="Tabs" note="The arrow keys change tab.">

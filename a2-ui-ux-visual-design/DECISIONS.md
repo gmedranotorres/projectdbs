@@ -151,3 +151,22 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - Mansueto and Regenstein share the address 1100 E 57th St, so both get the same directions.
 - The Editorial mood board keeps "Regenstein", the name I gave for that board; the site says "Regenstein Library".
 - Nothing is stored: a reload goes back to All.
+
+## Round 6 · 2026-10-13 · The site's pieces on the Calm design system page
+
+**What I asked.** Add the clickable card and the single-choice chips to the Calm design system page, so it documents everything the site uses.
+
+**What changed.**
+- Section 4 has three new working examples: "Card that opens" (the whole card is one button and opens the detail panel), "Filter chips, one choice" (All plus my three filters; picking one unpicks the others) and "Button that is a link" ("Get directions", with the small arrow).
+- Section 5 shows the card that opens in its four states: rest, hover, focus and pressed. The live card matches those pictures on real hover and press.
+- Checked in Chrome at 390px, 768px, 1024px and 1440px and with the keyboard. The site still passes the same checks as in Round 5.
+
+**What I decided myself.** The design system page should show everything the site uses.
+
+**What I rejected.** Nothing this round.
+
+**Choices Claude made that I have not reviewed yet.**
+- "Button that is a link" was added too. I named only the card and the chips, but it was the third piece the site uses that the page did not show.
+- The card has four states, not six, because a card is never selected or disabled.
+- The examples use Plein Air Café for the card and Harper Reading Room's address for "Get directions".
+- The two example cards' names are now one heading level lower, so they sit under their labels in the page outline. Nothing looks different.

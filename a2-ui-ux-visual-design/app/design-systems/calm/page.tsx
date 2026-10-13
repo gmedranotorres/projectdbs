@@ -129,7 +129,7 @@ export default function Page() {
         <Section
           number={5}
           {...sections[4]}
-          intro="The button, the chip and the toggle in each of their six states, side by side. These are pictures of the states and do not respond; the live components in section 4 take the same looks on real hover, keyboard focus and press."
+          intro="The button, the chip and the toggle in each of their six states, and the card that opens in its four, side by side. These are pictures of the states and do not respond; the live components in section 4 take the same looks on real hover, keyboard focus and press."
         >
           <ControlStates />
         </Section>

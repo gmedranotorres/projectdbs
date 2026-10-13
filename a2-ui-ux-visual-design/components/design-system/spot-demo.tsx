@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SpotCard } from "@/components/ui/card";
 import { List, ListRow } from "@/components/ui/list";
@@ -8,10 +9,10 @@ import { DetailPanel } from "@/components/ui/panel";
 import { guideLine, spots, type Spot } from "@/content/spots";
 import { Specimen } from "./section";
 
-// The card, the list rows and the detail panel, working together the way
-// they will on the site: the card's button or any row opens the panel for
-// that spot, and "Save" remembers the spot until the page is reloaded.
-// Nothing is stored anywhere.
+// The cards, the list rows and the detail panel, working together the way
+// they do on the site: a card or any row opens the panel for that spot, and
+// "Save" remembers the spot until the page is reloaded. Nothing is stored
+// anywhere.
 export function SpotDemo({
   cardMedia,
   panelMedia,
@@ -53,6 +54,7 @@ export function SpotDemo({
         <SpotCard
           name={spots[0].name}
           type={spots[0].type}
+          headingLevel={4}
           media={cardMedia}
           actions={
             <>
@@ -61,6 +63,22 @@ export function SpotDemo({
             </>
           }
         />
+      </Specimen>
+
+      <Specimen
+        title="Card that opens"
+        note="The whole card is one button: click anywhere on it, or press Enter. This is the card the site uses."
+      >
+        <SpotCard
+          name={spots[6].name}
+          type={spots[6].type}
+          headingLevel={4}
+          onOpen={() => show(spots[6])}
+        >
+          <p>
+            <Badge>{spots[6].filter}</Badge>
+          </p>
+        </SpotCard>
       </Specimen>
 
       <Specimen title="List rows" note="Each row opens the detail panel.">
