@@ -33,7 +33,7 @@ export function Gallery({
       <Specimen title="Badge">
         <div className="flex flex-wrap gap-2">
           <Badge>Saved</Badge>
-          <Badge tone="outline">{spots[6].kind}</Badge>
+          <Badge tone="outline">{spots[6].type}</Badge>
           <Badge tone="strong">{spots.length} spots</Badge>
         </div>
       </Specimen>

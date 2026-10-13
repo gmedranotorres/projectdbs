@@ -24,6 +24,18 @@ export function Button({
   );
 }
 
+// The same button, as a link: for an action that goes somewhere, such as
+// "Get directions".
+export function ButtonLink({
+  variant = "primary",
+  className = "",
+  ...props
+}: ComponentProps<"a"> & { variant?: "primary" | "secondary" }) {
+  return (
+    <a className={`ui-button ${className}`} data-variant={variant} {...props} />
+  );
+}
+
 // A square button that shows only an icon. `label` is what it is called,
 // for screen readers and as a tooltip.
 export function IconButton({

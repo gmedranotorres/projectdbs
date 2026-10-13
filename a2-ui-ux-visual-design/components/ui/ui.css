@@ -591,6 +591,64 @@
     margin-top: var(--ui-space-2);
   }
 
+  /* A card that opens something. Its name is a button stretched over the
+     whole card, so the hover, focus and pressed states below belong to the
+     card. A small arrow in the corner says it opens. */
+  .ui-card:where([data-interactive]) {
+    position: relative;
+  }
+
+  .ui-card:where([data-interactive]) .ui-card-body {
+    padding-right: var(--ui-space-6);
+  }
+
+  .ui-card-trigger {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .ui-card-trigger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  /* the ring goes around the card, not around the name inside it */
+  .ui-card-trigger:focus-visible {
+    outline: none;
+  }
+
+  .ui-card-arrow {
+    position: absolute;
+    top: var(--ui-space-4);
+    right: var(--ui-space-4);
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--ui-muted);
+    mask: var(--ui-icon-right) center / contain no-repeat;
+    pointer-events: none;
+  }
+
+  .ui-card:where(:has(.ui-card-trigger:hover), [data-state="hover"]) {
+    border-color: var(--ui-control-line);
+  }
+
+  .ui-card:where(:has(.ui-card-trigger:focus-visible), [data-state="focus"]) {
+    outline: var(--ui-line-thick) solid var(--ui-focus);
+    outline-offset: 2px;
+  }
+
+  .ui-card:where(:has(.ui-card-trigger:active), [data-state="pressed"]) {
+    border-color: var(--ui-text);
+    transform: translateY(var(--ui-press-shift));
+  }
+
   /* ---------- List rows ---------- */
 
   .ui-list {
@@ -804,6 +862,7 @@
   @media (prefers-reduced-motion: no-preference) {
     .ui-button,
     .ui-icon-button,
+    .ui-card,
     .ui-chip,
     .ui-input,
     .ui-select,

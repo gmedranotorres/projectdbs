@@ -123,3 +123,31 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - The error state uses an icon and words, not red: Calm has one accent, and adding a color is my call.
 - Section 5 shows the secondary button as well as the primary one.
 - A short index of the six sections at the top of the page.
+
+## Round 5 · 2026-10-13 · The site, Hyde Park Study Spots
+
+**What I asked.** Build my site at `/study-spots` in the Calm style, using the Calm design system's tokens and components without restyling them. It is for UChicago students choosing where to study today, so the first thing they see is the spots and the filters. A header with "← Hub", the title and one line; filter chips (All, Quiet & views, Big tables, Coworking) with a count of matching spots; a card for each spot with its name, type and filter; a detail panel that opens from a card by click or Enter (on the right at desktop, a bottom sheet on mobile) with why I go, the note, the address and a "Get directions" button that opens Google Maps in a new tab; Escape or × closes it and returns focus to the card. The accent green only on "Get directions"; selected chips in the sage tint with a check. 1 column at 390px, 2 or 3 at 1440px. Nothing else on the page. Use exactly my spot content.
+
+**What changed.**
+- `/study-spots` is the site: the header, four filter chips, the count ("8 spots", or "4 of 8 spots" with a filter on), eight cards and the detail panel. Checked in Chrome at 390px (1 column), 768px and 1024px (2 columns) and 1440px (3 columns), with the mouse, with the keyboard, and with reduced motion on.
+- My spot content is in `content/spots.ts`, word for word: each spot's name, type, filter, address and note, and my three "why I go" lines. A test compared every card and every panel on the page with my brief, and they match.
+- "Get directions" opens Google Maps directions to the spot's street address in a new tab. It is the only thing on the page in the accent green.
+- The page uses the Calm theme and the shared components as they are. It adds only layout.
+- The Calm design system page now shows my real types and "Regenstein Library" in its list rows, because it reads the same content file.
+
+**What I decided myself.**
+- All the content: the eight spots with their types, filters, addresses and notes, the three "why I go" lines, the title and the line under it.
+- The page has nothing but the header, the filters and the spots.
+- The accent green is for "Get directions" only.
+
+**What I rejected.** A hero image and extra sections. Hours, distances and ratings that are not in my own notes.
+
+**Choices Claude made that I have not reviewed yet.**
+- Four additions to the shared library, which the site needed and the design system page does not show yet: a card that opens as a whole (with its own hover, focus and pressed looks and a small arrow in the corner); filter chips that work as one choice, so picking one unpicks the others and the arrow keys move between them; a button that is a link, for "Get directions"; and a small "opens elsewhere" arrow icon on that button.
+- Cards have no picture, because I asked for name, type and filter only.
+- The count reads "8 spots" for All and "4 of 8 spots" with a filter on.
+- The panel labels its three parts "Why I go", "Note" and "Address".
+- The map link adds "Chicago, IL" to the street address so Google finds the right place; the page shows only my address. Mansueto's "beside the Reg" is shown but not sent to the map.
+- Mansueto and Regenstein share the address 1100 E 57th St, so both get the same directions.
+- The Editorial mood board keeps "Regenstein", the name I gave for that board; the site says "Regenstein Library".
+- Nothing is stored: a reload goes back to All.

@@ -1,36 +1,61 @@
-import type { ReactNode } from "react";
+"use client";
+
+import type { MouseEvent, ReactNode } from "react";
 import "./ui.css";
 
 // A card for one study spot: an optional picture, a small label, the
-// spot's name, and its actions.
+// spot's name, and whatever else it needs.
+//
+// With `onOpen`, the whole card opens something: its name becomes a button
+// stretched over the card, so a click anywhere on it, or Enter or Space
+// while it has the focus, calls `onOpen`. The card is then the thing that
+// shows hover, focus and press.
 export function SpotCard({
   name,
-  kind,
+  type,
   media,
   actions,
   children,
+  onOpen,
   headingLevel = 3,
 }: {
   name: string;
-  kind?: string;
+  // a small label above the name, such as "Library"
+  type?: string;
   // a picture drawn in code, or a photo
   media?: ReactNode;
-  // the card's buttons
+  // the card's buttons, for a card that does not open as a whole
   actions?: ReactNode;
-  // any text about the spot
+  // anything else about the spot, such as a badge
   children?: ReactNode;
+  onOpen?: () => void;
   headingLevel?: 2 | 3 | 4;
 }) {
   const Heading = `h${headingLevel}` as const;
+  const open = (event: MouseEvent<HTMLButtonElement>) => {
+    // Some browsers do not focus a button when it is clicked. Focusing it
+    // here means the focus has somewhere to return to when the panel closes.
+    event.currentTarget.focus();
+    onOpen?.();
+  };
   return (
-    <article className="ui-card">
+    <article className="ui-card" data-interactive={onOpen ? "" : undefined}>
       {media && <div className="ui-card-media">{media}</div>}
       <div className="ui-card-body">
-        {kind && <p className="ui-label ui-muted">{kind}</p>}
-        <Heading className="ui-heading">{name}</Heading>
+        {type && <p className="ui-label ui-muted">{type}</p>}
+        <Heading className="ui-heading">
+          {onOpen ? (
+            <button type="button" className="ui-card-trigger" onClick={open}>
+              {name}
+            </button>
+          ) : (
+            name
+          )}
+        </Heading>
         {children}
         {actions && <div className="ui-card-actions">{actions}</div>}
       </div>
+      {onOpen && <span className="ui-card-arrow" aria-hidden="true" />}
     </article>
   );
 }

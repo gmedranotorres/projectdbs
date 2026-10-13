@@ -70,15 +70,18 @@ export function Toggle({
 }
 
 // A filter that can be switched on and off. A check appears when it is on,
-// so color is not the only sign.
+// so color is not the only sign. With `single`, chips that share a `name`
+// work as one choice: switching one on switches the others off, and the
+// arrow keys move between them.
 export function FilterChip({
   children,
+  single = false,
   "data-state": forced,
   ...props
-}: InputProps & Forced & { children: ReactNode }) {
+}: InputProps & Forced & { children: ReactNode; single?: boolean }) {
   return (
     <label className="ui-chip" data-state={forced}>
-      <input type="checkbox" {...props} />
+      <input type={single ? "radio" : "checkbox"} {...props} />
       <span className="ui-chip-mark" aria-hidden="true" />
       {children}
     </label>

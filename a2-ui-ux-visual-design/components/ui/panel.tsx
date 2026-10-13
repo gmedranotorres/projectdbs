@@ -15,13 +15,14 @@ export function DetailPanel({
   open,
   onClose,
   title,
-  kind,
+  type,
   children,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
-  kind?: string;
+  // a small label above the title, such as "Library"
+  type?: string;
   children: ReactNode;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -46,7 +47,7 @@ export function DetailPanel({
     >
       <div className="ui-panel-header">
         <div className="ui-panel-title">
-          {kind && <p className="ui-label ui-muted">{kind}</p>}
+          {type && <p className="ui-label ui-muted">{type}</p>}
           <h2 className="ui-heading" id={titleId}>
             {title}
           </h2>

@@ -52,7 +52,7 @@ export function SpotDemo({
       <Specimen title="Card for a spot">
         <SpotCard
           name={spots[0].name}
-          kind={spots[0].kind}
+          type={spots[0].type}
           media={cardMedia}
           actions={
             <>
@@ -69,7 +69,7 @@ export function SpotDemo({
             <ListRow
               key={item.id}
               title={item.name}
-              note={item.kind}
+              note={item.type}
               onClick={() => show(item)}
             />
           ))}
@@ -87,7 +87,7 @@ export function SpotDemo({
           open={open}
           onClose={() => setOpen(false)}
           title={spot.name}
-          kind={spot.kind}
+          type={spot.type}
         >
           <div className="h-28 overflow-hidden rounded-(--ui-radius-md) border border-(--ui-border)">
             {panelMedia}
