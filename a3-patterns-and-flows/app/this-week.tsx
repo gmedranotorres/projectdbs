@@ -18,7 +18,7 @@ import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday 
 import { saveApplication, useStore } from "@/lib/store";
 import { ArrivalMessage } from "@/components/arrival-message";
 import { FirstVisit } from "@/components/first-visit";
-import { Button, ButtonLink, Card, Loading, Notice, Tag, TextLink } from "@/components/ui";
+import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, Tag, TextLink } from "@/components/ui";
 
 // The Monday check-in. Every follow-up can be handled right here, so the
 // ritual doesn't mean opening each application.
@@ -45,9 +45,18 @@ export function ThisWeek() {
     requestAnimationFrame(() => document.getElementById("week-message")?.focus());
   }
 
+  // If the save fails, the change stays and Undo stays offered to try again.
   function undo(previous: Application) {
-    saveApplication(previous);
-    setMessage({ text: `Undone. ${previous.company} is back where it was.` });
+    if (saveApplication(previous)) {
+      setMessage({ text: `Undone. ${previous.company} is back where it was.` });
+    } else {
+      setMessage({
+        text: `Couldn't undo, so the change to ${previous.company} is still saved. This browser's storage may be full; try again.`,
+        undo: previous,
+        tone: "error",
+      });
+    }
+    requestAnimationFrame(() => document.getElementById("week-message")?.focus());
   }
 
   return (
@@ -60,7 +69,10 @@ export function ThisWeek() {
       {message ? (
         <Notice id="week-message" tone={message.tone}>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p>{message.text}</p>
+            <p className="flex gap-2">
+              {message.tone === "error" && <ErrorIcon />}
+              <span>{message.text}</span>
+            </p>
             {message.undo && (
               <Button variant="secondary" onClick={() => undo(message.undo!)}>
                 Undo
