@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
+/* Colors are roles, not hues. Warnings and errors always come with words
+   and an icon, so nothing depends on telling red from green. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --subtle: #efede7;
+  --ink: #1c1c1f;
+  --muted: #5a5c63;
+  --line: #dddad2;
+  --line-strong: #8d8f96;
+  --accent: #2b4eb3;
+  --accent-strong: #213d8f;
+  --accent-ink: #ffffff;
+  --accent-soft: #e5ebf9;
+  --late: #7a4300;
+  --late-soft: #fbecd2;
+  --error: #b02a1f;
+  --error-soft: #fbe9e6;
+  --focus: #2b4eb3;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #131417;
+    --surface: #1c1d21;
+    --subtle: #24262b;
+    --ink: #ededf0;
+    --muted: #a6a9b0;
+    --line: #34363c;
+    --line-strong: #6f727a;
+    --accent: #9db6ff;
+    --accent-strong: #c0d0ff;
+    --accent-ink: #0f1a3d;
+    --accent-soft: #1f2a48;
+    --late: #f5c77e;
+    --late-soft: #3a2b12;
+    --error: #ffa197;
+    --error-soft: #3c1814;
+    --focus: #9db6ff;
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-late: var(--late);
+  --color-late-soft: var(--late-soft);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Native date inputs pick up the page's light or dark scheme. */
+:root {
+  color-scheme: light dark;
 }
