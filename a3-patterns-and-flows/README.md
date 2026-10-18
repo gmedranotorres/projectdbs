@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Seguimiento
 
-## Getting Started
+A weekly check-in for a job search: it tells you who to follow up with.
 
-First, run the development server:
+## Who it's for
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+A second-year grad student applying to jobs in Chicago. They apply in bursts between classes, on a phone and a laptop, and lose track of who to follow up with. It's a weekly ritual, not a CRM.
+
+## The main task
+
+Log an application → it's on my list with a follow-up date → on Monday, Seguimiento tells me who to follow up with.
+
+## The flows
+
+The steps, states and errors behind this diagram are in [flows.md](flows.md).
+
+```mermaid
+flowchart TD
+  subgraph first["First visit"]
+    open(["Open Seguimiento"]) --> home["/"]
+    home --> anything{"Anything saved?"}
+    anything -- No --> empty["Ritual + example Monday"]
+  end
+
+  subgraph main["Main task"]
+    add["/add"] --> valid{"Valid?"}
+    valid -- "No: errors by field,<br/>typing kept" --> add
+    valid -- Yes --> saved["Saved: follow-up date"]
+    saved -- "Add another" --> add
+    saved -- "See it in list" --> list["/applications"]
+    list -- Update --> edit["/applications/edit?id=…"]
+    edit -- "Save or I followed up" --> list
+  end
+
+  subgraph back["Coming back"]
+    monday(["Monday"]) --> checkin["/ (check-in)"]
+    checkin --> due{"Follow-ups due?"}
+    due -- Yes --> act["I followed up · Not yet"]
+    act -- "Undo or next one" --> checkin
+    due -- No --> caught["All caught up: next date"]
+    checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
+  end
+
+  empty -- "Log your first application" --> add
+  anything -- Yes --> checkin
+  act -- Details --> edit
+  caught -- "Log an application" --> add
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Onboarding research
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+_To fill in._
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## First visit
 
-## Learn More
+_To fill in._
 
-To learn more about Next.js, take a look at the following resources:
+## Coming back
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+_To fill in._
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## What it remembers
 
-## Deploy on Vercel
+_To fill in._
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Accessibility
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+_To fill in._
+
+## First-run check
+
+_To fill in._
+
+## Running locally
+
+_To fill in._

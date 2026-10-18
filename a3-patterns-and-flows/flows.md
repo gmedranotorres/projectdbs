@@ -1,5 +1,38 @@
 # Seguimiento: user flows
 
+```mermaid
+flowchart TD
+  subgraph first["First visit"]
+    open(["Open Seguimiento"]) --> home["/"]
+    home --> anything{"Anything saved?"}
+    anything -- No --> empty["Ritual + example Monday"]
+  end
+
+  subgraph main["Main task"]
+    add["/add"] --> valid{"Valid?"}
+    valid -- "No: errors by field,<br/>typing kept" --> add
+    valid -- Yes --> saved["Saved: follow-up date"]
+    saved -- "Add another" --> add
+    saved -- "See it in list" --> list["/applications"]
+    list -- Update --> edit["/applications/edit?id=…"]
+    edit -- "Save or I followed up" --> list
+  end
+
+  subgraph back["Coming back"]
+    monday(["Monday"]) --> checkin["/ (check-in)"]
+    checkin --> due{"Follow-ups due?"}
+    due -- Yes --> act["I followed up · Not yet"]
+    act -- "Undo or next one" --> checkin
+    due -- No --> caught["All caught up: next date"]
+    checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
+  end
+
+  empty -- "Log your first application" --> add
+  anything -- Yes --> checkin
+  act -- Details --> edit
+  caught -- "Log an application" --> add
+```
+
 Seguimiento is a weekly ritual for one person: a second-year grad student applying to jobs in Chicago, usually in bursts between classes, on both a phone and a laptop. The main task in one sentence: I log an application, it goes on my list with a follow-up date, and when I come back on Monday it tells me who to follow up with.
 
 Everything is saved in the browser's localStorage. There are no accounts, database or APIs. Every step is its own page, and the same navigation sits on all of them: **This week** (`/`), **Add** (`/add`), **All** (`/applications`) and **Move data** (`/move`). On a phone the navigation is a bar at the bottom, within reach of a thumb. On a laptop it sits in the header. Updating one application happens on its own page, `/applications/edit`, reached from a list.
