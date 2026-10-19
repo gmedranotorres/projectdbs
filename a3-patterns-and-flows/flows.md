@@ -5,7 +5,8 @@ flowchart TD
   subgraph first["First visit"]
     open(["Open Seguimiento"]) --> home["/"]
     home --> anything{"Anything saved?"}
-    anything -- No --> empty["Ritual + example Monday"]
+    anything -- No --> empty["Ritual + example Monday<br/>+ the follow-up rules"]
+    empty -. "Add Monday check-in" .-> ics(["Calendar file:<br/>Mondays at 9:00"])
   end
 
   subgraph main["Main task"]
@@ -27,7 +28,9 @@ flowchart TD
     checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
   end
 
-  empty -- "Log your first application" --> add
+  empty -- "Log your first application<br/>(or ones already sent)" --> add
+  saved -. "First save only" .-> ics
+  ics -. "Reminder" .-> monday
   anything -- Yes --> checkin
   act -- Details --> edit
   caught -- "Log an application" --> add
@@ -56,9 +59,11 @@ An open application goes quiet when there has been no news for 21 days. News mea
 
 You open Seguimiento for the first time, with nothing saved. For a moment, while the browser reads saved data, the page shows a neutral placeholder with no words in it. That way, someone who does have data never sees the empty screen flash first.
 
-Then the page shows what the ritual is and where it leads, instead of an empty list. A heading and one line explain it: log each application as you send it, Seguimiento picks a follow-up date, and on Monday it tells you who to follow up with. One main button, **Log your first application**, opens the Add page. Below it, a clearly labeled example shows what a Monday looks like: "Email Priya at Morningstar, 2 days late" and "Grubhub, due Thursday". The example isn't data, and nothing has to be cleared later. A last line, for someone who already uses Seguimiento on another device, links to loading a backup.
+Then the page shows what the ritual is and where it leads, instead of an empty list. A heading and one line explain it: log each application as you send it, Seguimiento picks a follow-up date, and on Monday it tells you who to follow up with. One main button, **Log your first application**, opens the Add page. Under it, a line speaks to someone already in the middle of a search: log the applications you've already sent, with the day you applied, and anything from a week ago or more shows up right away in This week, ready to follow up. Below that, a clearly labeled example shows what a Monday looks like: "Email Priya at Morningstar, 2 days late" and "Grubhub, due Thursday". The example isn't data, and nothing has to be cleared later. Under the example, one line states the rules: a follow-up a week after you apply, which you can always change, and after 3 weeks with no news, an application is marked gone quiet.
 
-After the first save, the Add page says when the follow-up is ("Saved. Follow up with Priya at Morningstar on Mon, Oct 26"). From there you can add another or go to This week. Your first visit ends with a date to come back to.
+Seguimiento has no account, so it can't email anyone. Instead, the page offers **Add Monday check-in to my calendar**. It downloads `seguimiento-monday-check-in.ics`, a weekly event on Mondays at 9:00 starting next Monday, which the person adds to their own calendar. The page then says the file was downloaded and to open it. A last line, for someone who already uses Seguimiento on another device, links to loading a backup.
+
+After the first save, the Add page says when the follow-up is ("Saved. Follow up with Priya at Morningstar on Mon, Oct 26"). When an application sent a while ago is already due, it says so instead: "It's on This week now, ready to follow up." From there you can add another or go to This week. After the very first save only, the Monday calendar reminder is offered again. Your first visit ends with a date to come back to, and a way to be reminded of it.
 
 **Error: the browser won't save.** This happens in a private window, or when site data is blocked. A banner on every page says so: anything you add will be gone when you close the tab, so open Seguimiento in a regular window or allow this site to store data. The app still works for that tab, so you can see what it does.
 

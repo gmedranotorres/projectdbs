@@ -1,3 +1,4 @@
+import { CalendarReminder } from "./calendar-reminder";
 import { ButtonLink, PageHeader, Tag, TextLink } from "./ui";
 
 // What someone sees before they've saved anything: what the ritual is, a
@@ -15,9 +16,15 @@ export function FirstVisit() {
         }
       />
 
-      <ButtonLink href="/add" className="w-full sm:w-auto">
-        Log your first application
-      </ButtonLink>
+      <div className="space-y-3">
+        <ButtonLink href="/add" className="w-full sm:w-auto">
+          Log your first application
+        </ButtonLink>
+        <p className="text-muted">
+          Already applied somewhere? Log those too, with the day you applied. Anything from a
+          week ago or more shows up right away in This week, ready to follow up.
+        </p>
+      </div>
 
       <figure className="rounded-xl border border-dashed border-line-strong bg-surface p-4">
         <figcaption className="mb-3 text-sm font-medium text-muted">
@@ -40,7 +47,13 @@ export function FirstVisit() {
             <Tag>Due Thu, Oct 22</Tag>
           </li>
         </ul>
+        <p className="mt-3 border-t border-line pt-3 text-sm text-muted">
+          Seguimiento suggests a follow-up a week after you apply, and you can always change it.
+          After 3 weeks with no news, an application is marked gone quiet.
+        </p>
       </figure>
+
+      <CalendarReminder />
 
       <p className="text-muted">
         Already using Seguimiento on another device?{" "}

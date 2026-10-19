@@ -51,3 +51,21 @@ Shared on every page:
 - All three tools hide their first screen behind sign-up, so the research uses public sources only, and the file says so. Teal's site refused automated access, so its help pages were read as Wayback Machine snapshots, linked as such.
 - When a source was out of date, contradicted itself, or came from a competitor, the file keeps the fact and flags it. When nothing was found, it says "not found" rather than guessing.
 - Lessons for Seguimiento are left out because they aren't citable facts. They're for the README's "Onboarding research" section, when I ask for it.
+
+## 2026-10-18 · Onboarding decisions
+
+**What I asked.** Implement the three ideas Claude proposed from the onboarding research. Borrow all five "borrow" points and avoid all five "avoid" points. Write my decisions into README.md under "Onboarding research", and update flows.md and its diagram if the first visit changed.
+
+**What changed.**
+- **Calendar reminder.** A new `CalendarReminder` component, on the first visit and in the confirmation after the very first save. **Add Monday check-in to my calendar** downloads `seguimiento-monday-check-in.ics`: a weekly event on Mondays at 9:00, starting next Monday (or today, if it's Monday). 9:00 is in the person's own time zone, like the stored dates. After the download, a status line says to open the file.
+- **"Already applied somewhere?"** A line under **Log your first application** says that past applications logged with the day you applied show up right away in This week.
+- **The rules, under the example.** A follow-up a week after you apply, which you can change, and gone quiet after 3 weeks with no news.
+- **Confirmation for an already-due application.** When the saved application is due this week or earlier, the confirmation now says "It's on This week now, ready to follow up." It used to say "It will be on your list that week", even for a date already past.
+- flows.md (Flow 1 and the diagram), the README diagram, and the README's "Onboarding research" section are updated.
+
+**What I rejected or decided myself.**
+- The five "avoid" points were already true of Seguimiento: no sign-up, no questionnaire, no sample data, no streaks or quotas, no setup score or install prompt. So nothing in the app changed for them. They're recorded in the README as decisions.
+- The calendar file is built by hand as plain text, with no package and no external service, following AGENTS.md.
+- The reminder is offered after the first save only, not after every save, so it doesn't nag.
+- I fixed the confirmation wording myself. Without the fix, the "Already applied" line would be contradicted by the very next screen.
+- Still open: the example on the first visit names real companies (Morningstar, Grubhub), but AGENTS.md asks for openly fictional sample content. I didn't change them, because I haven't decided yet and flows.md uses the same names.
