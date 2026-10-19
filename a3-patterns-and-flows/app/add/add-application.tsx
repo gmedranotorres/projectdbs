@@ -5,7 +5,7 @@ import { emptyForm, type Application } from "@/lib/applications";
 import { formatDay, today as getToday } from "@/lib/dates";
 import { useStore } from "@/lib/store";
 import { ApplicationForm } from "@/components/application-form";
-import { Button, ButtonLink, Loading, TextLink } from "@/components/ui";
+import { Button, ButtonLink, Loading, PageHeader, TextLink } from "@/components/ui";
 
 // Log an application. After saving, the page says when the follow-up is
 // and offers "Add another" first, for logging several between classes.
@@ -20,7 +20,7 @@ export function AddApplication() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-semibold tracking-tight">Log an application</h1>
+      <PageHeader title="Log an application" back={{ href: "/", label: "This week" }} />
       {saved ? (
         <Saved
           app={saved}

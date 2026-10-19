@@ -6,11 +6,14 @@ import { addDays, formatDay, today as getToday } from "@/lib/dates";
 import { formFrom, isOpen, markFollowedUp } from "@/lib/applications";
 import { deleteApplication, saveApplication, useStore } from "@/lib/store";
 import { ApplicationForm } from "@/components/application-form";
-import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, TextLink } from "@/components/ui";
+import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader } from "@/components/ui";
 
 // Update one application. The usual update is one tap ("I followed up
 // today"); everything else is the same form as Add, plus status and delete.
-// Saving goes back to the page you came from, which says what changed.
+// Saving goes back to the page you came from, which says what changed;
+// "← Back" always goes to the list, the page's parent.
+const PARENT = { href: "/applications", label: "All applications" };
+
 export function EditApplication() {
   const store = useStore();
   const params = useSearchParams();
@@ -22,7 +25,6 @@ export function EditApplication() {
 
   const id = params.get("id");
   const back = params.get("from") === "week" ? "/" : "/applications";
-  const backLabel = back === "/" ? "This week" : "All applications";
 
   if (!store) return <Loading />;
   const today = getToday();
@@ -32,7 +34,7 @@ export function EditApplication() {
   if (!app) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-semibold tracking-tight">Application not found</h1>
+        <PageHeader title="Application not found" back={PARENT} />
         <Notice tone="error">
           <p className="flex gap-2">
             <ErrorIcon />
@@ -72,13 +74,7 @@ export function EditApplication() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <TextLink href={back} className="text-sm">
-          &larr; {backLabel}
-        </TextLink>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight">{app.company}</h1>
-        <p className="mt-1 text-muted">{app.role}</p>
-      </div>
+      <PageHeader title={app.company} description={app.role} back={PARENT} />
 
       {problem && (
         <Notice tone="error">

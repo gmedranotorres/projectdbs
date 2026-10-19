@@ -13,7 +13,7 @@ import {
 import { formatDay, today as getToday, type Day } from "@/lib/dates";
 import { useStore } from "@/lib/store";
 import { ArrivalMessage, useHighlightId } from "@/components/arrival-message";
-import { ButtonLink, Loading, Tag } from "@/components/ui";
+import { ButtonLink, Loading, PageHeader, Tag } from "@/components/ui";
 
 // Every application, sorted by follow-up date, in the order you'd act on
 // them. Closed ones are folded away.
@@ -35,17 +35,16 @@ export function ApplicationList() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">All applications</h1>
-          <p className="mt-1 text-muted">
-            {apps.length === 0
-              ? "Nothing logged yet."
-              : `${plural(apps.length, "application")}, ${groups.closed.length} closed`}
-          </p>
-        </div>
-        <ButtonLink href="/add">Log an application</ButtonLink>
-      </div>
+      <PageHeader
+        title="All applications"
+        description={
+          apps.length === 0
+            ? "Nothing logged yet."
+            : `${plural(apps.length, "application")}, ${groups.closed.length} closed`
+        }
+        back={{ href: "/", label: "This week" }}
+        action={<ButtonLink href="/add">Log an application</ButtonLink>}
+      />
 
       <ArrivalMessage apps={apps} />
 

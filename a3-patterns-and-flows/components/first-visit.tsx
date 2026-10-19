@@ -1,19 +1,19 @@
-import { ButtonLink, Tag, TextLink } from "./ui";
+import { ButtonLink, PageHeader, Tag, TextLink } from "./ui";
 
 // What someone sees before they've saved anything: what the ritual is, a
 // picture of where it leads, and one thing to do.
 export function FirstVisit() {
   return (
     <div className="space-y-8">
-      <div className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-balance">
-          Know who to follow up with, every Monday
-        </h1>
-        <p className="text-lg text-muted">
-          Log each application as you send it. Seguimiento picks a follow-up date, and on
-          Monday it tells you who to follow up with.
-        </p>
-      </div>
+      <PageHeader
+        title="Know who to follow up with, every Monday"
+        description={
+          <p className="text-lg">
+            Log each application as you send it. Seguimiento picks a follow-up date, and on
+            Monday it tells you who to follow up with.
+          </p>
+        }
+      />
 
       <ButtonLink href="/add" className="w-full sm:w-auto">
         Log your first application

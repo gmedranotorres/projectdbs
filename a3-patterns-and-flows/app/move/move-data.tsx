@@ -4,7 +4,7 @@ import { useId, useState, type FormEvent } from "react";
 import { combine, plural, readBackup, toBackup, type Application } from "@/lib/applications";
 import { today as getToday } from "@/lib/dates";
 import { replaceApplications, useStore } from "@/lib/store";
-import { Button, ButtonLink, Card, ErrorIcon, Field, Loading, Notice, describedBy, inputClass } from "@/components/ui";
+import { Button, ButtonLink, Card, ErrorIcon, Field, Loading, Notice, PageHeader, describedBy, inputClass } from "@/components/ui";
 
 // localStorage stays on one browser, so moving between the phone and the
 // laptop is a file: download it on one, load it on the other. Loading
@@ -78,14 +78,11 @@ export function MoveData() {
 
   return (
     <div className="space-y-8">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Move data</h1>
-        <p className="text-muted">
-          Your applications are saved only in this browser. To use Seguimiento on your phone
-          and your laptop, download a backup on one and load it on the other. Do it before
-          your Monday check-in.
-        </p>
-      </div>
+      <PageHeader
+        title="Move data"
+        description="Your applications are saved only in this browser. To use Seguimiento on your phone and your laptop, download a backup on one and load it on the other. Do it before your Monday check-in."
+        back={{ href: "/", label: "This week" }}
+      />
 
       {done !== null && (
         <Notice id="move-done">

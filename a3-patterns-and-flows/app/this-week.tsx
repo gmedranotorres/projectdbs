@@ -18,7 +18,7 @@ import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday 
 import { saveApplication, useStore } from "@/lib/store";
 import { ArrivalMessage } from "@/components/arrival-message";
 import { FirstVisit } from "@/components/first-visit";
-import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, Tag, TextLink } from "@/components/ui";
+import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Tag, TextLink } from "@/components/ui";
 
 // The Monday check-in. Every follow-up can be handled right here, so the
 // ritual doesn't mean opening each application.
@@ -61,10 +61,7 @@ export function ThisWeek() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-semibold tracking-tight">This week</h1>
-        <p className="mt-1 text-muted">Week of {formatShortDay(startOfWeek(today))}</p>
-      </div>
+      <PageHeader title="This week" description={`Week of ${formatShortDay(startOfWeek(today))}`} />
 
       {message ? (
         <Notice id="week-message" tone={message.tone}>
