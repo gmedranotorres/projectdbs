@@ -40,3 +40,14 @@ Shared on every page:
 **What I rejected or decided myself.**
 - Rejected rebuilding a skeleton on a separate branch for screenshots. It would be a stage made up after the fact, and the table above already maps the pages.
 - Left for a later round: AGENTS.md also lists Chip, ListRow, Badge, EmptyState, Toast, and separate Select and Textarea components, which don't exist yet. For now Tag and Notice cover some of those jobs. They're shared components, not part of the skeleton.
+
+## 2026-10-18 · Onboarding research
+
+**What I asked.** Research how Huntr, Teal (its job tracker) and Simplify welcome someone new, using one researcher per tool in parallel. For each one, report the first screen, what it asks for, time to value, sample data or empty state, and what brings you back. Use only facts with a link, and write it up in `docs/onboarding-research.md` with a comparison table. Don't change the app.
+
+**What changed.** New `docs/onboarding-research.md`, with a comparison table and one section per tool. Every fact links to its source. The app is unchanged.
+
+**What I rejected or decided myself.**
+- All three tools hide their first screen behind sign-up, so the research uses public sources only, and the file says so. Teal's site refused automated access, so its help pages were read as Wayback Machine snapshots, linked as such.
+- When a source was out of date, contradicted itself, or came from a competitor, the file keeps the fact and flags it. When nothing was found, it says "not found" rather than guessing.
+- Lessons for Seguimiento are left out because they aren't citable facts. They're for the README's "Onboarding research" section, when I ask for it.
