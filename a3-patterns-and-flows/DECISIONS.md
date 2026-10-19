@@ -17,3 +17,26 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - Kept the routes and nav from flows.md: This week, Add, All and Move data. Kept `/applications/edit?id=…`. Didn't add `/check-in` (the check-in is `/`).
 - Back from Update always goes to All applications, even when you opened it from This week. Saving still returns to the page you came from, as flows.md says.
 - The nav already had the name linking home, `aria-current`, a visible current style and the skip link, so it wasn't changed.
+
+## 2026-10-18 · Where the skeleton is
+
+**What I asked.** What it would take to create the skeleton in flows.md, and then to record the answer here.
+
+**What changed.** Only this note. The skeleton flows.md describes, a page per step with the same navigation on every page, already exists. It was never committed on its own: the history goes from the empty Next.js app (`e76172c`) straight to all three flows working (`d42fcfb`). The skeleton and the flows were built in one round.
+
+| Step in flows.md | Route | Notes |
+|---|---|---|
+| This week (check-in) and first visit | `/` | The first-visit screen shows when nothing is saved |
+| Add an application | `/add` | The "Saved" confirmation appears on this page |
+| All applications | `/applications` | |
+| Update one application | `/applications/edit?id=…` | Includes "Application not found" |
+| Move data | `/move` | |
+
+Shared on every page:
+- **Navigation:** This week, Add, All and Move data. It's a bottom bar on phones and sits in the header on laptops, with `aria-current="page"` on the current page.
+- **Skip link:** the first Tab stop.
+- **PageHeader:** on every page, with "← Back" to the parent page everywhere except `/`.
+
+**What I rejected or decided myself.**
+- Rejected rebuilding a skeleton on a separate branch for screenshots. It would be a stage made up after the fact, and the table above already maps the pages.
+- Left for a later round: AGENTS.md also lists Chip, ListRow, Badge, EmptyState, Toast, and separate Select and Textarea components, which don't exist yet. For now Tag and Notice cover some of those jobs. They're shared components, not part of the skeleton.
