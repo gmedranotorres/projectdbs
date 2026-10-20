@@ -27,7 +27,8 @@ export function List({ className = "", ...props }: ComponentProps<"ul">) {
 
 // One application in a list: company, role, status, follow-up date, and an
 // "Open" link that names the application for screen readers. `hint` sits
-// beside the follow-up date.
+// beside the follow-up date. `highlight` tints the row (it fades out when
+// turned off), and `rowId` lets a page move focus to it.
 export function ListRow({
   company,
   role,
@@ -35,6 +36,8 @@ export function ListRow({
   followUpOn,
   href,
   hint,
+  highlight = false,
+  rowId,
 }: {
   company: string;
   role: string;
@@ -42,9 +45,15 @@ export function ListRow({
   followUpOn?: Day;
   href: string;
   hint?: ReactNode;
+  highlight?: boolean;
+  rowId?: string;
 }) {
   return (
-    <li className="flex items-start gap-4 px-4 py-3">
+    <li
+      id={rowId}
+      tabIndex={rowId ? -1 : undefined}
+      className={`flex items-start gap-4 px-4 py-3 transition-colors duration-700 motion-reduce:transition-none ${highlight ? "bg-accent-soft" : ""}`}
+    >
       <div className="min-w-0 flex-1 space-y-1.5">
         <div>
           <p className="font-medium">{company}</p>

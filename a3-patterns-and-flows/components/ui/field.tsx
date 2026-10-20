@@ -87,12 +87,12 @@ export function ErrorIcon() {
 const control =
   "block w-full rounded-control border border-line-strong bg-surface px-4 py-2.5 text-base text-ink placeholder:text-muted state-hover:border-ink aria-[invalid=true]:border-2 aria-[invalid=true]:border-error disabled:cursor-not-allowed disabled:border-dashed disabled:border-line disabled:bg-transparent disabled:text-muted";
 
-// "file" is for loading a backup on Move data.
+// "file" is for loading a backup on Move data; "search" for the list search.
 export function Input({
   type = "text",
   className = "",
   ...props
-}: Omit<ComponentProps<"input">, "type"> & { type?: "text" | "url" | "date" | "file" }) {
+}: Omit<ComponentProps<"input">, "type"> & { type?: "text" | "search" | "url" | "date" | "file" }) {
   const field = useContext(FieldContext);
   return (
     <input

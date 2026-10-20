@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ButtonLink } from "./button";
 
 // The top of every page. "← Back" goes to the page's parent, not browser
 // history, so it still works when the page was opened from a bookmark.
@@ -37,24 +36,23 @@ export function PageHeader({
   );
 }
 
-// What a page shows when there's nothing in it yet: a headline, one
-// sentence on what will appear, and the one action that fills it.
+// What a page or a filtered list shows when there's nothing in it: an
+// optional headline, one sentence, and the one way forward (a ButtonLink,
+// a TextLink or a Button), so it's never a dead end.
 export function EmptyState({
   title,
   children,
   action,
 }: {
-  title: string;
+  title?: string;
   children: ReactNode;
-  action: { href: string; label: string };
+  action: ReactNode;
 }) {
   return (
     <div className="rounded-card border border-dashed border-line-strong bg-surface p-5">
-      <h2 className="font-serif text-heading">{title}</h2>
-      <p className="mt-2 text-muted">{children}</p>
-      <ButtonLink href={action.href} className="mt-4">
-        {action.label}
-      </ButtonLink>
+      {title && <h2 className="mb-2 font-serif text-heading">{title}</h2>}
+      <p className={title ? "text-muted" : undefined}>{children}</p>
+      <div className="mt-4">{action}</div>
     </div>
   );
 }

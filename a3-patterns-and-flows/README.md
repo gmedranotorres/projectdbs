@@ -31,7 +31,7 @@ flowchart TD
     valid -- Yes --> saved["Toast: Added Company — Role"]
     saved -- "Save and add another:<br/>empty form" --> add
     saved -- "Save application:<br/>new one on top" --> list["/applications"]
-    list -- Update --> edit["/applications/edit?id=…"]
+    list -- Open --> edit["/applications/edit?id=…"]
     edit -- "Save or I followed up" --> list
   end
 

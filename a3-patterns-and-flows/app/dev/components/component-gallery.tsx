@@ -7,6 +7,7 @@ import { useApplications } from "@/hooks/useApplications";
 import {
   Badge,
   Button,
+  ButtonLink,
   Card,
   Chip,
   ChipGroup,
@@ -18,6 +19,7 @@ import {
   PageHeader,
   Select,
   Textarea,
+  TextLink,
   useToast,
   type BadgeTone,
   type ButtonSize,
@@ -282,9 +284,14 @@ export function ComponentGallery() {
       </Section>
 
       <Section title="EmptyState">
-        <EmptyState title="Nothing logged yet" action={{ href: "/add", label: "Log an application" }}>
+        <EmptyState title="Nothing logged yet" action={<ButtonLink href="/">Log your first application</ButtonLink>}>
           Log each application as you send it, and it shows up here sorted by follow-up date.
         </EmptyState>
+        <Example label="A filter with nothing in it: one sentence and a link back">
+          <EmptyState action={<TextLink href="/dev/components">Show all applications</TextLink>}>
+            No offers yet.
+          </EmptyState>
+        </Example>
       </Section>
 
       <Section title="Toast">

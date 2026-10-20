@@ -1,188 +1,209 @@
 "use client";
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import {
-  STATUS_LABELS,
-  daysQuiet,
-  dueLabel,
-  groupAll,
-  groupOf,
-  plural,
-  type Application,
-  type Group,
-} from "@/lib/applications";
-import { formatDay, today as getToday, type Day } from "@/lib/dates";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useId, useState } from "react";
+import { daysQuiet, dueLabel, groupOf, plural, type Application } from "@/lib/applications";
+import { today as getToday, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { ArrivalMessage, useHighlightId } from "@/components/arrival-message";
-import { Badge, ButtonLink, EmptyState, Loading, PageHeader } from "@/components/ui";
+import {
+  Badge,
+  Button,
+  ButtonLink,
+  Chip,
+  ChipGroup,
+  EmptyState,
+  Field,
+  Input,
+  List,
+  ListRow,
+  Loading,
+  PageHeader,
+  TextLink,
+  statusTone,
+} from "@/components/ui";
 
-// Every application, sorted by follow-up date, in the order you'd act on
-// them. Closed ones are folded away. Coming from Add (?new=), the new one
-// sits on top under "Just added", highlighted for a few seconds, with
-// focus on it.
+// Every application as a ListRow, soonest follow-up first and those without
+// one last. Filter chips (with counts) narrow it by status, and the search
+// narrows it by company or role as you type. Every empty result says why
+// and offers a way back, so the page is never blank. The filter lives in
+// the address (?status=), so a link can open it and Back keeps it.
+//
+// Coming from Add (?new=), the new one sits on top, highlighted for a few
+// seconds, with focus on it. After an update (?updated=), that row is
+// highlighted where it belongs.
+
+type Filter = "all" | "applied" | "interviewing" | "offer" | "closed";
+
+// The same four looks as the status badges: Followed up counts as Applied;
+// Rejected, Withdrawn and No response as Closed.
+const FILTERS: { id: Filter; label: string; empty: string }[] = [
+  { id: "all", label: "All", empty: "" },
+  { id: "applied", label: "Applied", empty: "Nothing in Applied right now." },
+  { id: "interviewing", label: "Interviewing", empty: "No interviews yet." },
+  { id: "offer", label: "Offer", empty: "No offers yet." },
+  { id: "closed", label: "Closed", empty: "Nothing closed yet." },
+];
 
 const GLOW_MS = 3000;
 
-const SECTIONS: { group: Group; title: string }[] = [
-  { group: "due", title: "Due this week" },
-  { group: "upcoming", title: "Upcoming" },
-  { group: "quiet", title: "Gone quiet" },
-];
+function inFilter(app: Application, filter: Filter) {
+  return filter === "all" || statusTone(app.status) === filter;
+}
+
+// Soonest follow-up first; no follow-up date last; then by company.
+function byFollowUp(a: Application, b: Application) {
+  if (a.followUpOn !== b.followUpOn) {
+    if (!a.followUpOn) return 1;
+    if (!b.followUpOn) return -1;
+    return a.followUpOn.localeCompare(b.followUpOn);
+  }
+  return a.company.localeCompare(b.company);
+}
+
+// Words beside the date when it needs attention, so late and gone quiet
+// never depend on color: "5 days late", "No news for 22 days".
+function attention(app: Application, today: Day) {
+  if (groupOf(app, today) === "quiet") {
+    return <Badge tone="quiet">No news for {plural(daysQuiet(app, today), "day")}</Badge>;
+  }
+  if (app.followUpOn && app.followUpOn < today) {
+    return <Badge tone="due">{dueLabel(app, today)}</Badge>;
+  }
+  return undefined;
+}
 
 export function ApplicationList() {
   const store = useApplications();
+  const router = useRouter();
+  const params = useSearchParams();
+  const searchId = useId();
   const highlight = useHighlightId();
-  const newId = useSearchParams().get("new");
+  const newId = params.get("new");
+  const [query, setQuery] = useState("");
   const [glow, setGlow] = useState(true);
 
   useEffect(() => {
-    if (!newId || !store.hydrated) return;
-    document.getElementById(`row-${newId}`)?.focus();
+    if (!highlight || !store.hydrated) return;
+    if (newId) document.getElementById(`row-${newId}`)?.focus();
     const timer = setTimeout(() => setGlow(false), GLOW_MS);
     return () => clearTimeout(timer);
-  }, [newId, store.hydrated]);
+  }, [highlight, newId, store.hydrated]);
 
   if (!store.hydrated) return <Loading />;
   const today = getToday();
   const apps = store.applications;
-  const added = newId ? apps.find((a) => a.id === newId) : undefined;
-  const closedCount = groupAll(apps, today).closed.length;
-  // The new one shows once, on top, not again in its section.
-  const groups = groupAll(added ? apps.filter((a) => a.id !== added.id) : apps, today);
+
+  const asked = params.get("status");
+  const filter: Filter = FILTERS.some((f) => f.id === asked) ? (asked as Filter) : "all";
+  const current = FILTERS.find((f) => f.id === filter)!;
+
+  const q = query.trim().toLowerCase();
+  const found = q
+    ? apps.filter((a) => a.company.toLowerCase().includes(q) || a.role.toLowerCase().includes(q))
+    : apps;
+  const shown = found.filter((a) => inFilter(a, filter)).sort(byFollowUp);
+  const added = shown.find((a) => a.id === newId);
+  const ordered = added ? [added, ...shown.filter((a) => a !== added)] : shown;
+
+  function choose(next: Filter) {
+    // replace: a filter is a view of this page, not a new page in the history.
+    router.replace(next === "all" ? "/applications" : `/applications?status=${next}`, { scroll: false });
+  }
+
+  function clearSearch() {
+    setQuery("");
+    document.getElementById(searchId)?.focus();
+  }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <PageHeader
         title="All applications"
-        description={
-          apps.length === 0
-            ? undefined
-            : `${plural(apps.length, "application")}, ${closedCount} closed`
-        }
+        description={apps.length > 0 ? plural(apps.length, "application") : undefined}
         back={{ href: "/", label: "Home" }}
         action={apps.length > 0 && <ButtonLink href="/add">Log an application</ButtonLink>}
       />
 
       {/* After Add, the toast has already said what happened. */}
-      {!added && <ArrivalMessage apps={apps} />}
+      {!newId && <ArrivalMessage apps={apps} />}
 
-      {added && (
-        <section aria-labelledby="added-heading" className="space-y-3">
-          <h2 id="added-heading" className="text-xl font-semibold">
-            Just added
-          </h2>
-          <Rows
-            apps={[added]}
-            group={groupOf(added, today)}
-            today={today}
-            highlight={glow ? added.id : null}
-            badge={false}
-          />
-        </section>
-      )}
-
-      {apps.length === 0 && (
-        <EmptyState title="Nothing logged yet" action={{ href: "/add", label: "Log an application" }}>
+      {apps.length === 0 ? (
+        <EmptyState
+          title="Nothing logged yet"
+          action={<ButtonLink href="/">Log your first application</ButtonLink>}
+        >
           Log each application as you send it, and it shows up here sorted by follow-up date.
         </EmptyState>
-      )}
-
-      {SECTIONS.map(({ group, title }) =>
-        groups[group].length > 0 ? (
-          <section key={group} aria-labelledby={`${group}-heading`} className="space-y-3">
-            <h2 id={`${group}-heading`} className="text-xl font-semibold">
-              {title} <span className="font-normal text-muted">({groups[group].length})</span>
-            </h2>
-            <Rows apps={groups[group]} group={group} today={today} highlight={highlight} />
-          </section>
-        ) : null,
-      )}
-
-      {groups.closed.length > 0 && (
-        <details
-          // Open when the closed one is the one just changed.
-          open={groups.closed.some((a) => a.id === highlight) || undefined}
-          className="rounded-xl border border-line bg-surface"
-        >
-          <summary className="flex min-h-12 cursor-pointer items-center px-4 text-xl font-semibold">
-            Closed <span className="ml-1.5 font-normal text-muted">({groups.closed.length})</span>
-          </summary>
-          <div className="border-t border-line p-3">
-            <Rows apps={groups.closed} group="closed" today={today} highlight={highlight} />
+      ) : (
+        <>
+          <div className="space-y-4">
+            <Field id={searchId} label="Search by company or role">
+              <Input
+                type="search"
+                name="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                autoComplete="off"
+              />
+            </Field>
+            <ChipGroup label="Filter by status">
+              {FILTERS.map((f) => (
+                <Chip
+                  key={f.id}
+                  pressed={filter === f.id}
+                  // Pressing the chip that's on goes back to All.
+                  onClick={() => choose(filter === f.id ? "all" : f.id)}
+                >
+                  {f.label}{" "}
+                  <span className="font-normal text-muted">
+                    ({found.filter((a) => inFilter(a, f.id)).length})
+                  </span>
+                </Chip>
+              ))}
+            </ChipGroup>
+            <p role="status" className="text-sm text-muted">
+              {(q || filter !== "all") && `Showing ${shown.length} of ${apps.length}.`}
+            </p>
           </div>
-        </details>
+
+          {ordered.length > 0 ? (
+            <List>
+              {ordered.map((app) => (
+                <ListRow
+                  key={app.id}
+                  rowId={`row-${app.id}`}
+                  company={app.company}
+                  role={app.role}
+                  status={app.status}
+                  followUpOn={app.followUpOn ?? undefined}
+                  href={`/applications/edit?id=${app.id}&from=list`}
+                  hint={attention(app, today)}
+                  highlight={glow && app.id === highlight}
+                />
+              ))}
+            </List>
+          ) : !apps.some((a) => inFilter(a, filter)) ? (
+            // Nothing with this status at all.
+            <EmptyState action={<TextLink href="/applications">Show all applications</TextLink>}>
+              {current.empty}
+            </EmptyState>
+          ) : (
+            // Some, but the search leaves none.
+            <EmptyState
+              action={
+                <Button variant="secondary" onClick={clearSearch}>
+                  Clear search
+                </Button>
+              }
+            >
+              {filter === "all"
+                ? `Nothing matches “${query.trim()}”.`
+                : `Nothing in ${current.label} matches “${query.trim()}”.`}
+            </EmptyState>
+          )}
+        </>
       )}
     </div>
-  );
-}
-
-function when(app: Application, group: Group, today: Day) {
-  switch (group) {
-    case "due":
-      return (
-        <Badge tone={app.followUpOn && app.followUpOn < today ? "due" : "neutral"}>
-          {dueLabel(app, today)}
-        </Badge>
-      );
-    case "upcoming":
-      return <Badge>Follow up {formatDay(app.followUpOn!)}</Badge>;
-    case "quiet":
-      return <Badge tone="quiet">No news for {plural(daysQuiet(app, today), "day")}</Badge>;
-    case "closed":
-      return null;
-  }
-}
-
-function Rows({
-  apps,
-  group,
-  today,
-  highlight,
-  badge = true,
-}: {
-  apps: Application[];
-  group: Group;
-  today: Day;
-  highlight: string | null;
-  // The "Just changed" badge on the highlighted row.
-  badge?: boolean;
-}) {
-  return (
-    <ul className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
-      {apps.map((app) => {
-        const isNew = app.id === highlight;
-        return (
-          <li
-            key={app.id}
-            id={`row-${app.id}`}
-            tabIndex={-1}
-            className={`flex items-start gap-4 px-4 py-3 transition-colors duration-700 motion-reduce:transition-none ${isNew ? "bg-accent-soft" : ""}`}
-          >
-            <div className="min-w-0 flex-1 space-y-1.5">
-              <div>
-                <p className="font-semibold">{app.company}</p>
-                <p className="text-muted">
-                  {app.role} · {STATUS_LABELS[app.status]}
-                </p>
-              </div>
-              {((isNew && badge) || group !== "closed") && (
-                <div className="flex flex-wrap gap-2">
-                  {when(app, group, today)}
-                  {isNew && badge && <Badge tone="new">Just changed</Badge>}
-                </div>
-              )}
-            </div>
-            <Link
-              href={`/applications/edit?id=${app.id}&from=list`}
-              className="inline-flex min-h-11 items-center font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2"
-            >
-              Update<span className="sr-only"> {app.company}</span>
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
   );
 }

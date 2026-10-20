@@ -17,7 +17,7 @@ flowchart TD
     valid -- Yes --> saved["Toast: Added Company — Role"]
     saved -- "Save and add another:<br/>empty form" --> add
     saved -- "Save application:<br/>new one on top" --> list["/applications"]
-    list -- Update --> edit["/applications/edit?id=…"]
+    list -- Open --> edit["/applications/edit?id=…"]
     edit -- "Save or I followed up" --> list
   end
 
@@ -79,7 +79,7 @@ If the first save happens on the full Add page instead, a toast says "Added Exam
 
 ## Flow 2: The main task (add, list, update)
 
-**Add.** The Add page is one column, in this order: Company, Role, Applied on (today is filled in), Follow up on (a week later is filled in, and it follows Applied on until you type your own), then Link, Notes and Who to follow up with, all three optional. There's no status: a new application starts as Applied. Pressing **Save application** saves it, a toast says "Added Example Co — Data Analyst.", and the All page opens with the new application on top under "Just added", highlighted for a few seconds and focused for keyboard and screen reader users. The list replaces the form in the browser's history, so **Back** goes to where you were before Add, not to a filled form. Because applications come in bursts, **Save and add another** saves, shows the same toast, and gives an empty form with the cursor in Company. After a duplicate warning, **Save anyway** does whatever the button you pressed would have done.
+**Add.** The Add page is one column, in this order: Company, Role, Applied on (today is filled in), Follow up on (a week later is filled in, and it follows Applied on until you type your own), then Link, Notes and Who to follow up with, all three optional. There's no status: a new application starts as Applied. Pressing **Save application** saves it, a toast says "Added Example Co — Data Analyst.", and the All page opens with the new application on top, highlighted for a few seconds and focused for keyboard and screen reader users. The list replaces the form in the browser's history, so **Back** goes to where you were before Add, not to a filled form. Because applications come in bursts, **Save and add another** saves, shows the same toast, and gives an empty form with the cursor in Company. After a duplicate warning, **Save anyway** does whatever the button you pressed would have done.
 
 **Errors when adding.** Fields are checked when you save. Every problem is shown at once, next to its field, what you typed stays, and the cursor moves to the first one. From then on, a field with an error is checked again as you change it: the error goes as soon as it's fixed, and fixing Applied on can also clear Follow up on.
 
@@ -92,7 +92,9 @@ If the first save happens on the full Add page instead, a toast says "Added Exam
 
 Logging the same company and role twice is a warning, not an error: "You already logged Data Analyst at Morningstar on Oct 3." It offers **Save anyway** or **Open that one**. If the browser refuses to save, usually because its storage is full, a message above the button says so. The form stays filled in so you can try again.
 
-**List.** The All page shows every application, sorted by follow-up date, in the order you'd act on them: Due this week (late ones first), Upcoming, Gone quiet, and Closed (folded away). Each row shows the company, role and status, a tag saying when (such as "4 days late", "Follow up Thu, Oct 22" or "No news for 26 days"), and an **Update** link. After you add one, it sits on top under "Just added"; after you change one, the page says what happened and marks that row "Just changed". Late items carry a clock icon and the words "days late", so nothing depends on color alone. With nothing saved, the page explains what will appear there and offers Log an application.
+**List.** The All page shows every application as one list, sorted by follow-up date, soonest first, with those without a follow-up date last. Each row shows the company, role, status and follow-up date, and an **Open** link. Late ones also say "7 days late" with a clock icon, and gone-quiet ones "No news for 35 days", so nothing depends on color alone. At the top, a search field labelled "Search by company or role" narrows the list as you type, and filter chips (All, Applied, Interviewing, Offer, Closed) show how many each holds. Followed up counts as Applied; Rejected, Withdrawn and No response count as Closed. The chosen filter is in the address (`?status=offer`), so Back and a shared link keep it; pressing the chip that's on goes back to All. While filtering or searching, a line says "Showing 3 of 5."
+
+**Never a blank page.** With nothing saved, the page says "Nothing logged yet" and offers **Log your first application**, which goes to Home. A filter with nothing in it says so in one sentence ("No offers yet.") with a link, **Show all applications**. A search with no results says "Nothing matches “zzz”." with **Clear search**, which puts the cursor back in the search field. After you add one, it sits on top, highlighted for a few seconds; after you change one, the page says what happened and that row is highlighted where it belongs.
 
 **Update.** The Update page leads with the most common change. **I followed up today** marks the application as Followed up and moves the next follow-up two weeks out, in one tap. An application that's Interviewing stays Interviewing. Below it is the same form as Add, plus the status: Applied, Followed up and Interviewing, then the closed ones, Offer, Rejected, Withdrawn and No response. Choosing Interviewing adds the interview date. Choosing a closed status hides the follow-up date. Saving takes you back to the page you came from, which says what changed ("Updated Morningstar. Next follow-up Mon, Nov 2"). **Delete application** asks first, says it can't be undone, and points out that a closed status keeps the record instead.
 
@@ -123,7 +125,7 @@ localStorage stays in one browser, so the phone and the laptop each have their o
 ## Cut for simplicity
 
 - **Saving a half-finished form automatically:** the form is short, and errors already keep what you typed.
-- **Search, filters and tags:** the list is sorted by what to do next, and a few dozen applications don't need searching.
+- **Tags:** status and the search by company or role are enough to find an application among a few dozen.
 - **A separate contacts list:** one optional "who to follow up with" field per application is enough to say "Email Priya at Morningstar."
 - **Weekly stats** ("you logged 4, followed up 2"): they're nice to see but don't help decide who to contact.
 - **Syncing between open tabs:** it's one person in one tab at a time, and each page reads fresh data when opened.

@@ -399,3 +399,40 @@ Keep what the person typed, move focus to the first invalid field, and clear a f
 - What the old "Saved" panel did is gone from `/add`: the follow-up date in the confirmation, the "It's on This week now" note for an older application, and the calendar reminder after the very first save. The toast follows my wording exactly, and the new row shows its follow-up tag. The calendar reminder is still on Home.
 - The list keeps its **Update** links; this round didn't touch Open vs Update.
 - Note for testing: this Next.js version keeps visited pages mounted but hidden, so a page can contain hidden forms from other pages. Tests must pick visible elements.
+
+## 2026-10-20 · Applications list with filters
+
+**What I asked.** Build `/applications`: every application as a ListRow, sorted by follow-up date, soonest first, with those without one last. Filter chips at the top (All, Applied, Interviewing, Offer, Closed) with counts, using the Chip component and aria-pressed. A search field with a real label that filters by company or role as you type. Each filter has its own EmptyState: All with nothing saved points to `/`; a status with no items says so in one sentence ("No offers yet.") with a link back to All. Never a blank page.
+
+**What changed.**
+- `app/applications/application-list.tsx` is rewritten:
+  - One list, sorted by follow-up date, with no date last, then by company.
+  - A ChipGroup of five Chips with counts and aria-pressed. The filter is in the address (`?status=`) and changes with `router.replace`, so it doesn't pile up history. Pressing the chip that's on goes back to All.
+  - A Field "Search by company or role" with `Input type="search"`, filtering as you type. A `role=status` line says "Showing X of Y." while filtering or searching.
+  - Empty states:
+    - Nothing saved: "Nothing logged yet" and **Log your first application** → `/`.
+    - A status with nothing: "Nothing in Applied right now.", "No interviews yet.", "No offers yet." or "Nothing closed yet.", with **Show all applications**.
+    - A search with no results: "Nothing matches “…”." (or "Nothing in Closed matches “…”.") with **Clear search**, which refocuses the search.
+  - From Add (`?new=`), the new one is still on top, highlighted and focused. After an update, its row is highlighted in place.
+- `components/ui/page-header.tsx`: EmptyState takes any action (a button, a link or a text link) and an optional title, so a one-sentence state has no heading.
+- `components/ui/field.tsx`: Input accepts `type="search"`.
+- `components/ui/card.tsx`: ListRow takes `highlight` and `rowId`, so the list can mark and focus a row.
+- `app/dev/components/component-gallery.tsx`: shows both EmptyState forms.
+- Updated flows.md (List, Never a blank page, Cut for simplicity, the diagram) and the README diagram.
+- Checked in Chrome at 390px and 1440px with fictional data (Example Co, Sample Institute, Demo City Office, Placeholder Labs, Fictional Inc):
+  - The order was Sep 22, Oct 13, Oct 25, Nov 3, then no date.
+  - The counts were All 5, Applied 3, Interviewing 1, Offer 0 and Closed 1, with aria-pressed following the chosen chip.
+  - Offer → "No offers yet." → Show all applications → All with 5 rows.
+  - "analyst" → 3 rows, with the counts following the search. "zzz" → Clear search, with focus back in the search.
+  - Nothing saved → the link goes to `/`, with no search or chips.
+  - `?new=` → on top, highlighted and focused.
+  - No horizontal scroll at 1440px and no console errors.
+
+**What I rejected or decided myself.**
+- The Due / Upcoming / Gone quiet / Closed sections are gone; the request asked for one list sorted by follow-up date. Late and gone-quiet items keep their words ("7 days late", "No news for 35 days") as a badge beside the date.
+- Rows link with **Open**, the same word as the ListRow on Home, settling the Open vs Update question from the last round.
+- Five chips for seven statuses: Followed up counts as Applied, and Rejected, Withdrawn and No response as Closed. That matches the four badge looks.
+- Counts follow the search, so a chip never promises items the search then hides.
+- The filter lives in the address, so Back and a shared link keep it. The search doesn't, so it resets when you leave the page.
+- A search with no matches gets its own empty state with Clear search; the request didn't name one, but without it the page would be blank.
+- "Search, filters and tags" came off the Cut list in flows.md; only tags stay cut.
