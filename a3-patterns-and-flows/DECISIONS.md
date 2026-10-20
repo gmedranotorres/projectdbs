@@ -120,7 +120,7 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - Controls: a muted 1px outline that darkens under the pointer, 2px red with an error, and dashed when disabled. Select draws its own arrow.
 - Chip: 36px tall, with a 44px tap area. When on, it has the sage tint, a deeper-sage edge and a check mark, so color isn't the only sign.
 - Two new Tailwind variants, `state-hover` and `state-active`, fire on the real state or on a forced `data-state`, and never on a disabled control. `data-state="focus"` draws the focus ring. `/dev/components` uses them to show every state side by side.
-- `/dev/components` shows each Button variant and size in every state. It also shows Input (text, url, date and file-free states), Select and Textarea at rest, with a hint, optional, hover, focus, error and disabled. Chip appears off and on in every state, plus a working group to try. It isn't in the navigation, and it's marked `noindex, nofollow`.
+- `/dev/components` shows each Button variant and size in every state. It also shows Input (text, url and date), Select and Textarea at rest, with a hint, optional, hover, focus, error and disabled. Chip appears off and on in every state, plus a working group to try. It isn't in the navigation, and it's marked `noindex, nofollow`.
 - The pages now use the new components. The application form and Move data use `Input` and `Textarea` in place of `<input className={inputClass} {...describedBy(...)}>`, and the "Use" suggestion button is `size="sm"`. `inputClass` and `describedBy` are gone.
 
 **What I rejected or decided myself.**
