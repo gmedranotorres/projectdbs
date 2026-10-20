@@ -918,3 +918,4 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
   - The section heading is now "Applications this week", so it no longer repeats the page title "This week".
   - Until a goal is saved, the card says "Suggested goal: 3 a week"; after Change goal, "Weekly goal: N applications". That needed one new setting, `goalChosen` (set on saving a goal). Older data and exports without it read as not chosen, and backups carry it. Added to README's "What it remembers".
   - I kept the "0 of 3" bar and counted only since Monday: the week's count is what the goal measures. The problem was the wording that made 3 look like the person's own goal.
+- **7. The same "Added" toast.** Save application and Save and add another on Add now say "Added {Company} — {Role}. Follow up on {date}.", the same words as Home's quick add. flows.md is updated in both places it quoted the old toast.

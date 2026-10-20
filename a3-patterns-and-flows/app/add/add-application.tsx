@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { emptyForm, type Application, type FormValues } from "@/lib/applications";
 import { clearAddDraft, hasAddDraft, readAddDraft, saveAddDraft } from "@/lib/remember";
-import { today as getToday } from "@/lib/dates";
+import { formatDay, today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink } from "@/hooks/useBackLink";
 import { ApplicationForm } from "@/components/application-form";
@@ -55,7 +55,12 @@ export function AddApplication() {
     clearAddDraft();
     setDraft(null);
     setShowRestored(false);
-    toast(`Added ${app.company} — ${app.role}.`);
+    // The same words as the quick add on Home, date included.
+    toast(
+      app.followUpOn
+        ? `Added ${app.company} — ${app.role}. Follow up on ${formatDay(app.followUpOn)}.`
+        : `Added ${app.company} — ${app.role}.`,
+    );
     if (another) {
       setRound((r) => r + 1);
     } else {
