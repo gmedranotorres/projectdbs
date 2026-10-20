@@ -65,8 +65,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={toast}>
       {children}
-      {/* Above the phone's bottom navigation; near the bottom on laptops. */}
-      <div className="pointer-events-none fixed inset-x-0 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-30 flex justify-center px-4 md:bottom-6">
+      {/* At the top on phones, where it can't cover what was just added
+          or the bottom navigation; near the bottom on laptops. */}
+      <div className="pointer-events-none fixed inset-x-0 top-[calc(0.75rem+env(safe-area-inset-top))] z-30 flex justify-center px-4 md:top-auto md:bottom-6">
         <div
           onPointerEnter={() => setPaused(true)}
           onPointerLeave={() => setPaused(false)}

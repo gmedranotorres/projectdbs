@@ -12,12 +12,11 @@ const icon = "size-6 md:hidden";
 const ITEMS: { href: string; label: string; icon: ReactNode; matches: (p: string) => boolean }[] = [
   {
     href: "/",
-    label: "This week",
+    label: "Home",
     matches: (p) => p === "/",
     icon: (
       <svg aria-hidden="true" viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
-        <rect x="3.5" y="5" width="17" height="15" rx="2" />
-        <path d="M3.5 10h17M8 3v4M16 3v4" strokeLinecap="round" />
+        <path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1v-8.5Z" />
       </svg>
     ),
   },

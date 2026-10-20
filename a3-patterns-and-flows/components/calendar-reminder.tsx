@@ -63,8 +63,8 @@ export function CalendarReminder() {
   return (
     <div className="space-y-3">
       <p>
-        Seguimiento has no account, so it can&rsquo;t email you. Add a weekly check-in to your
-        own calendar instead: Mondays at 9:00, starting {formatDay(firstMonday)}.
+        Get a Monday reminder in your own calendar: a weekly check-in at 9:00, starting{" "}
+        {formatDay(firstMonday)}.
       </p>
       <Button variant="secondary" onClick={download}>
         Add Monday check-in to my calendar

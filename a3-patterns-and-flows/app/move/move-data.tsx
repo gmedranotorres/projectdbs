@@ -81,7 +81,7 @@ export function MoveData() {
       <PageHeader
         title="Move data"
         description="Your applications are saved only in this browser. To use Seguimiento on your phone and your laptop, download a backup on one and load it on the other. Do it before your Monday check-in."
-        back={{ href: "/", label: "This week" }}
+        back={{ href: "/", label: "Home" }}
       />
 
       {done !== null && (
@@ -91,7 +91,7 @@ export function MoveData() {
               <strong>Combined.</strong> You now have {plural(done, "application")} on this
               device.
             </p>
-            <ButtonLink href="/">See this week</ButtonLink>
+            <ButtonLink href="/">Go to Home</ButtonLink>
           </div>
         </Notice>
       )}

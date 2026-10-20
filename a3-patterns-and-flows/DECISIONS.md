@@ -298,3 +298,45 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - Claude showed the newest five, with See all for the rest, so `/` stays short after many applications.
 - Once the list exists, Claude replaced "Applied earlier…? Use the full form" with **Add details**, since both open `/add`. The follow-up rules line now shows only before the first save, because the tip does its job after that. The calendar reminder shows on the first visit and right after the first save, and the backup line only when nothing is saved.
 - The "All caught up" card now only appears for a moment, right after the last due item is handled.
+
+## 2026-10-20 · First-visit fixes
+
+**What I asked.** Review the first visit as a demanding reviewer, against the brief: someone new must understand what the tool is for, do something useful right away, learn by doing, and never land on an empty dead end. Walk through `/` with nothing saved at 390px and 1440px, check the keyboard path from the skip link to the submit button, list every problem with a fix ordered by impact, wait for my choice, then apply it.
+
+**What the review found.**
+- Passed:
+  - The skip link is the first Tab stop and leads to Company.
+  - All 13 stops on the path had a visible 2px focus ring.
+  - Every control has a name.
+  - **Add application** is above the fold at both sizes.
+  - No dead ends.
+- Problems, by impact:
+  1. On a phone, the toast covered the new item's tip and **Got it**.
+  2. Company and Role weren't announced as required.
+  3. "Applied earlier…? Use the full form" came after the button, so older applications got today's date.
+  4. Four chip Tab stops sat between Role and the button.
+  5. Too much small print after the form, with "no account" said twice.
+  6. The page title was only "Seguimiento".
+  7. The nav said "This week" on a page with no week.
+
+**What changed (I picked all seven, and "Home" for #7).**
+1. The toast sits at the top of the screen on phones and stays at the bottom on laptops. After a quick add, focus returns to Company without scrolling, so the new item stays in view.
+2. Company and Role have `aria-required="true"`.
+3. The full-form line sits above **Add application**.
+4. New `ChipGroup` in `components/ui/chip.tsx` (toolbar pattern): one Tab stop; the arrow keys, Home and End move between chips. It's used for "Common roles" and on `/dev/components`.
+5. The calendar text is now "Get a Monday reminder in your own calendar: a weekly check-in at 9:00, starting Mon, Oct 26." The page says "no account" once.
+6. `/` is titled "Home · Seguimiento", set with `absolute`, because the layout's title template doesn't reach a page in the same folder.
+7. The nav item is **Home**, with a house icon. Back links say "Back to Home", and Add and Move data say **Go to Home**. flows.md is updated.
+
+- Checked in Chrome:
+  - The Tab path is skip link, site name, 4 nav links, Company (required), Role (required), one chip, Use the full form, **Add application**: 11 stops, down from 13.
+  - The arrow keys move between chips and wrap around; Home and End work; Enter on a chip fills Role and moves to Company.
+  - After a first add at 390px, the tip and **Got it** are clear of the toast; at 1440px nothing overlaps.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- Claude said fix 4 would bring the path to 10 stops. Moving the full-form link above the button (fix 3) adds one stop back, so it's 11.
+- Known trade-off: on a phone, the top toast can overlap the upper edge of Company for its 5 seconds, when Company is near the top of the screen. The form is about 600px tall, so the toast can't avoid both Company and the new item. × or Escape closes it.
+- The calendar text also changed on the Add page, which uses the same CalendarReminder after a first save.
+- Claude added `aria-required` only on the quick add. The full Add form doesn't have it yet.
+- The check-in's own heading stays "This week", and so does the field hint "It shows up under This week…", which refers to that section.

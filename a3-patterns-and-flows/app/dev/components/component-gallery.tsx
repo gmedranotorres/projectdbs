@@ -9,6 +9,7 @@ import {
   Button,
   Card,
   Chip,
+  ChipGroup,
   EmptyState,
   Field,
   Input,
@@ -382,13 +383,13 @@ function RoleChips() {
   const toggle = (role: string) =>
     setPicked((p) => (p.includes(role) ? p.filter((r) => r !== role) : [...p, role]));
   return (
-    <div role="group" aria-label="Role suggestions" className="flex flex-wrap gap-2">
+    <ChipGroup label="Role suggestions">
       {ROLES.map((role) => (
         <Chip key={role} pressed={picked.includes(role)} onClick={() => toggle(role)}>
           {role}
         </Chip>
       ))}
-    </div>
+    </ChipGroup>
   );
 }
 

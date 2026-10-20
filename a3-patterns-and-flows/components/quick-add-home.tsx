@@ -10,6 +10,7 @@ import { CalendarReminder } from "./calendar-reminder";
 import {
   Button,
   Chip,
+  ChipGroup,
   ErrorIcon,
   Field,
   Input,
@@ -46,7 +47,8 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
   const [errors, setErrors] = useState<{ company?: string; role?: string }>({});
   const [saveFailed, setSaveFailed] = useState(false);
 
-  const focus = (id: string) => requestAnimationFrame(() => document.getElementById(id)?.focus());
+  const focus = (id: string, options?: FocusOptions) =>
+    requestAnimationFrame(() => document.getElementById(id)?.focus(options));
 
   const newest = [...applications].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const shown = newest.slice(0, LIST_LIMIT);
@@ -89,7 +91,9 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
     setCompany("");
     setRole("");
     setSaveFailed(false);
-    focus(companyId);
+    // Ready for the next one, without scrolling: the page stays put, so the
+    // new item stays in view below the form.
+    focus(companyId, { preventScroll: true });
   }
 
   function dismissHint() {
@@ -119,6 +123,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
             }}
             autoComplete="organization"
             autoCapitalize="words"
+            aria-required="true"
           />
         </Field>
 
@@ -133,16 +138,26 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
                 setErrors((prev) => ({ ...prev, role: undefined }));
               }}
               autoComplete="off"
+              aria-required="true"
             />
           </Field>
-          <div role="group" aria-label="Common roles" className="flex flex-wrap gap-2">
+          <ChipGroup label="Common roles">
             {ROLE_CHIPS.map((chip) => (
               <Chip key={chip} pressed={role === chip} onClick={() => pickRole(chip)}>
                 {chip}
               </Chip>
             ))}
-          </div>
+          </ChipGroup>
         </div>
+
+        {/* Before the button, so it's read before an older application is
+            saved with today's date. */}
+        {applications.length === 0 && (
+          <p className="text-muted">
+            Applied earlier, or want to add a contact?{" "}
+            <TextLink href="/add">Use the full form</TextLink>.
+          </p>
+        )}
 
         {saveFailed && (
           <p className="flex gap-2 rounded-lg border border-error bg-error-soft p-4 text-sm">
@@ -159,12 +174,6 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
             Add application
           </Button>
           <p className="text-sm text-muted">Saved on this device. No account.</p>
-          {applications.length === 0 && (
-            <p className="text-muted">
-              Applied earlier, or want to add a contact?{" "}
-              <TextLink href="/add">Use the full form</TextLink>.
-            </p>
-          )}
         </div>
       </form>
 

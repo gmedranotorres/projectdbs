@@ -21,7 +21,7 @@ export function AddApplication() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Log an application" back={{ href: "/", label: "This week" }} />
+      <PageHeader title="Log an application" back={{ href: "/", label: "Home" }} />
       {saved ? (
         <Saved
           app={saved}
@@ -78,7 +78,7 @@ function Saved({
       <div className="flex flex-col gap-3 sm:flex-row">
         <Button onClick={onAddAnother}>Add another</Button>
         <ButtonLink variant="secondary" href="/">
-          See this week
+          Go to Home
         </ButtonLink>
       </div>
       <p>

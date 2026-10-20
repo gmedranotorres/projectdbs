@@ -42,7 +42,7 @@ export function ApplicationList() {
             ? undefined
             : `${plural(apps.length, "application")}, ${groups.closed.length} closed`
         }
-        back={{ href: "/", label: "This week" }}
+        back={{ href: "/", label: "Home" }}
         action={apps.length > 0 && <ButtonLink href="/add">Log an application</ButtonLink>}
       />
 
