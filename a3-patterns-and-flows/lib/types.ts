@@ -5,8 +5,10 @@ import type { Day } from "./dates";
 
 export type { Day };
 
-export const OPEN_STATUSES = ["applied", "followed-up", "interviewing"] as const;
-export const CLOSED_STATUSES = ["offer", "rejected", "withdrawn", "no-response"] as const;
+// Open ones have a follow-up date. An offer is open: answering it is the
+// next step.
+export const OPEN_STATUSES = ["applied", "followed-up", "interviewing", "offer"] as const;
+export const CLOSED_STATUSES = ["rejected", "withdrawn", "no-response"] as const;
 
 export type OpenStatus = (typeof OPEN_STATUSES)[number];
 export type ClosedStatus = (typeof CLOSED_STATUSES)[number];
@@ -19,7 +21,7 @@ export type Application = {
   status: Status;
   // Calendar days, "2026-10-19", in the person's own time zone.
   appliedOn: Day;
-  // Only while Interviewing.
+  // Only while Interviewing, and only if given.
   interviewOn: Day | null;
   // Empty once the application is closed.
   followUpOn: Day | null;

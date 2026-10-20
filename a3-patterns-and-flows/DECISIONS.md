@@ -436,3 +436,50 @@ Keep what the person typed, move focus to the first invalid field, and clear a f
 - The filter lives in the address, so Back and a shared link keep it. The search doesn't, so it resets when you leave the page.
 - A search with no matches gets its own empty state with Clear search; the request didn't name one, but without it the page would be blank.
 - "Search, filters and tags" came off the Cut list in flows.md; only tags stay cut.
+
+## 2026-10-20 · Application detail and status updates
+
+**What I asked.** Build `/applications/[id]`. If the id doesn't exist, show an EmptyState "This application isn't on this device." with a link to `/applications`. Otherwise show the details and let me edit every field, with the same Field components and rules as `/add`, plus Status (Applied, Interviewing, Offer, Closed). A status change suggests a next follow-up only where it makes sense: Interviewing suggests today + 3; Closed clears the follow-up. Save with a "Saved" toast. Put Delete behind an inline confirmation (no browser confirm dialog), then return to `/applications` with the toast "Deleted {Company} — {Role}."
+
+**What I decided when Claude asked** (the request conflicted with earlier choices):
+- **Status:** four choices plus a closed reason. The Status Select has Applied, Interviewing, Offer and Closed. Closed adds a "Why it closed" Select (Rejected, Withdrawn, No response). Followed up stays in the data and shows as Applied, so This week and saved data keep working.
+- **Interviewing:** today + 3, with the interview date kept as an optional field, so an interview still ahead keeps the application from going quiet.
+- **Offer:** it keeps its follow-up date and becomes an open status, so answering an offer comes up in This week.
+
+**What changed.**
+- `app/applications/[id]/` is the new page, replacing `app/applications/edit/`:
+  - The header shows the company, role, status badge, applied date and next follow-up.
+  - "I followed up today" stays, and now gives a toast and stays on the page.
+  - The form shows every field in Add's order plus Status. Save changes shows the toast "Saved" and stays.
+  - Delete asks inline (Delete it / Keep it). Keep it returns focus to Delete application. Delete it shows the toast and `router.replace("/applications")`.
+  - An unknown id shows the EmptyState with "See all applications".
+- `components/application-form.tsx`:
+  - Status is a Select. "Why it closed" appears for Closed, and its error is "Choose why it closed."
+  - Choosing Interviewing fills in today + 3, and choosing another status right after restores the earlier date. Applied and Offer keep the date. Closed hides it, and saving clears it.
+  - "More details" is gone, so every field shows, as on Add. The custom radio list for status is gone too.
+  - An empty follow-up date with no suggestion on screen says "Pick a follow-up date."
+- `lib/`:
+  - Offer moved from closed to open. Offers don't go quiet, and an offer saved earlier without a date isn't due.
+  - "I followed up" keeps Interviewing and Offer.
+  - The Interviewing suggestion is today + 3, and the interview date is optional.
+  - The form's status can be "closed" until a reason is chosen.
+- Links from the list, Home, This week, the duplicate warning and the gallery now go to `/applications/<id>`.
+- `components/arrival-message.tsx` is removed. The edit page was the last thing that sent `?updated=` and `?deleted=`, and toasts say it now.
+- `components/site-nav.tsx`: only the "current page" marker sits in Suspense. `usePathname` can't be known while prerendering a page with an id, and this keeps the nav itself in the static shell, as the Next docs recommend.
+- Updated flows.md (the follow-up rules, One application, Errors on an application's page, the diagram) and the README diagram.
+- Checked in Chrome at 390px and 1440px with fictional data:
+  - Unknown id → the EmptyState and a link to `/applications`, with All marked in the nav.
+  - Interviewing → Oct 23 (today + 3), "Suggested: 3 days from today.", and the optional interview date. Back to Applied → Oct 13 again.
+  - Save → the toast "Saved", the header updates, and focus stays on Save changes.
+  - Closed with no reason → "Choose why it closed." with focus on it. Rejected → the follow-up is cleared.
+  - Followed up → Offer keeps Nov 3. Back to Applied stays Followed up.
+  - An empty company or follow-up shows its error with focus on it, and what was typed is kept.
+  - Delete: the inline question, `window.confirm` never called, Keep it → focus on Delete application. Delete it → `/applications`, the toast "Deleted Example Co — Data Analyst.", and history didn't grow.
+  - This week: an offer due this week is listed; an older offer with no date isn't.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- Claude chose to remove `/applications/edit` instead of keeping a redirect; only the app linked to it.
+- Claude chose to auto-fill today + 3 for Interviewing instead of offering a "Use" button, to match Closed clearing the date on its own. The hint says it's a suggestion.
+- Saving stays on the page, as the toast implies, instead of returning to the list. "Cancel" still goes to the list.
+- The follow-up date stays required for Offer, the same rule as the other open statuses. An older offer without a date asks for one only when it's next saved.

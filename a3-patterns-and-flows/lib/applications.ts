@@ -25,7 +25,7 @@ export const STATUS_LABELS: Record<Status, string> = {
   "no-response": "No response",
 };
 
-export function isOpen(status: Status): status is OpenStatus {
+export function isOpen(status: Status | "closed"): status is OpenStatus {
   return (OPEN_STATUSES as readonly string[]).includes(status);
 }
 
@@ -33,10 +33,29 @@ export function isOpen(status: Status): status is OpenStatus {
 
 export const QUIET_AFTER_DAYS = 21;
 
-// The follow-up date Seguimiento suggests for a status, and why.
+// What the Status field offers. Followed up shows as Applied, and the
+// three closed statuses as Closed, with the reason chosen separately.
+export const STAGES = ["applied", "interviewing", "offer", "closed"] as const;
+export type Stage = (typeof STAGES)[number];
+
+export const STAGE_LABELS: Record<Stage, string> = {
+  applied: "Applied",
+  interviewing: "Interviewing",
+  offer: "Offer",
+  closed: "Closed",
+};
+
+export function stageOf(status: Status | "closed"): Stage {
+  if (status === "followed-up") return "applied";
+  return isOpen(status) ? status : "closed";
+}
+
+// The follow-up date Seguimiento suggests for a status, and why. Offer and
+// the closed ones get none: an offer keeps the date it had, and a closed
+// application has no follow-up.
 export function suggestFollowUp(
-  status: Status,
-  dates: { appliedOn: Day; interviewOn: Day | null; today: Day },
+  status: Status | "closed",
+  dates: { appliedOn: Day; today: Day },
 ): { day: Day | null; reason: string } {
   switch (status) {
     case "applied":
@@ -46,20 +65,18 @@ export function suggestFollowUp(
     case "followed-up":
       return { day: addDays(dates.today, 14), reason: "2 weeks after following up" };
     case "interviewing":
-      return dates.interviewOn && isDay(dates.interviewOn)
-        ? { day: addDays(dates.interviewOn, 3), reason: "3 days after the interview" }
-        : { day: null, reason: "3 days after the interview" };
+      return { day: addDays(dates.today, 3), reason: "3 days from today" };
     default:
       return { day: null, reason: "" };
   }
 }
 
-// "I followed up today." An application that's Interviewing stays
-// Interviewing; anything else becomes Followed up.
+// "I followed up today." An application that's Interviewing or has an
+// offer keeps its status; anything else becomes Followed up.
 export function markFollowedUp(app: Application, today: Day): Application {
   return {
     ...app,
-    status: app.status === "interviewing" ? "interviewing" : "followed-up",
+    status: app.status === "interviewing" || app.status === "offer" ? app.status : "followed-up",
     followUpOn: addDays(today, 14),
     lastTouchedOn: today,
     updatedAt: new Date().toISOString(),
@@ -108,7 +125,13 @@ export function daysQuiet(app: Application, today: Day): number {
 
 export function groupOf(app: Application, today: Day): Group {
   if (!isOpen(app.status)) return "closed";
-  if (daysQuiet(app, today) >= QUIET_AFTER_DAYS) return "quiet";
+  if (app.status === "offer") {
+    // The next move on an offer is yours, so it doesn't go quiet. An offer
+    // saved before offers had follow-up dates has nothing to remind about.
+    if (!app.followUpOn) return "closed";
+  } else if (daysQuiet(app, today) >= QUIET_AFTER_DAYS) {
+    return "quiet";
+  }
   if (!app.followUpOn || app.followUpOn <= endOfWeek(today)) return "due";
   return "upcoming";
 }
@@ -156,7 +179,8 @@ export function whoToContact(app: Application): string {
 export type FormValues = {
   company: string;
   role: string;
-  status: Status;
+  // "closed" while Closed is chosen but not yet why.
+  status: Status | "closed";
   appliedOn: string;
   interviewOn: string;
   followUpOn: string;
@@ -176,9 +200,9 @@ export const FIELD_ORDER: FieldName[] = [
   "status",
   "interviewOn",
   "followUpOn",
-  "contact",
   "link",
   "notes",
+  "contact",
 ];
 
 export function emptyForm(today: Day): FormValues {
@@ -235,10 +259,13 @@ export function validate(values: FormValues, today: Day): FormErrors {
     ? `Pick a date on or after ${formatShortDay(applied)}, the day you applied.`
     : null;
 
-  if (values.status === "interviewing") {
-    if (!isDay(values.interviewOn)) {
-      errors.interviewOn = "Enter the interview date. A best guess is fine; you can change it later.";
-    } else if (afterApplied && values.interviewOn < applied) {
+  if (values.status === "closed") {
+    errors.status = "Choose why it closed.";
+  }
+
+  // The interview date is optional; if given, it can't be before applying.
+  if (values.status === "interviewing" && isDay(values.interviewOn)) {
+    if (afterApplied && values.interviewOn < applied) {
       errors.interviewOn = afterApplied;
     }
   }
@@ -274,7 +301,8 @@ export function findDuplicate(
 }
 
 // Turns a valid form into a record. `before` is the saved version when
-// editing.
+// editing. Only call it once validate() finds nothing, so a closed status
+// has its reason.
 export function toApplication(
   values: FormValues,
   today: Day,
@@ -287,9 +315,9 @@ export function toApplication(
     id: before?.id ?? newId(),
     company: values.company.trim(),
     role: values.role.trim(),
-    status: values.status,
+    status: values.status as Status,
     appliedOn: values.appliedOn,
-    interviewOn: values.status === "interviewing" ? values.interviewOn : null,
+    interviewOn: values.status === "interviewing" && values.interviewOn ? values.interviewOn : null,
     followUpOn: open ? values.followUpOn : null,
     contact: values.contact.trim(),
     link: values.link.trim(),

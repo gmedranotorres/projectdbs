@@ -1,30 +1,44 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
-import { formFrom, isOpen, markFollowedUp } from "@/lib/applications";
+import { STATUS_LABELS, formFrom, isOpen, markFollowedUp } from "@/lib/applications";
 import { useApplications } from "@/hooks/useApplications";
 import { ApplicationForm } from "@/components/application-form";
-import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader } from "@/components/ui";
+import {
+  Badge,
+  Button,
+  ButtonLink,
+  Card,
+  EmptyState,
+  Loading,
+  Notice,
+  PageHeader,
+  TextLink,
+  statusTone,
+  useToast,
+} from "@/components/ui";
 
-// Update one application. The usual update is one tap ("I followed up
-// today"); everything else is the same form as Add, plus status and delete.
-// Saving goes back to the page you came from, which says what changed;
-// "← Back" always goes to the list, the page's parent.
+// One application: what's saved, then every field to change, the same as
+// Add plus Status. The usual change is one tap ("I followed up today").
+// Saving stays here and says "Saved"; deleting asks first, on the page,
+// then goes to the list. "← Back" always goes to the list.
 const PARENT = { href: "/applications", label: "All applications" };
 
-export function EditApplication() {
+export function ApplicationDetail() {
   const store = useApplications();
-  const params = useSearchParams();
   const router = useRouter();
+  const toast = useToast();
+  const { id } = useParams<{ id: string }>();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
-  // Set while deleting, so the page doesn't flash "not found" on its way out.
+  // Set while deleting, so the page doesn't flash "not on this device" on
+  // its way out.
   const [leaving, setLeaving] = useState(false);
-
-  const id = params.get("id");
-  const back = params.get("from") === "week" ? "/" : "/applications";
+  // A new key refills the form after "I followed up today" changes the
+  // saved dates.
+  const [round, setRound] = useState(0);
 
   if (!store.hydrated) return <Loading />;
   const today = getToday();
@@ -34,22 +48,10 @@ export function EditApplication() {
   if (!app) {
     return (
       <div className="space-y-6">
-        <PageHeader title="Application not found" back={PARENT} />
-        <Notice tone="error">
-          <p className="flex gap-2">
-            <ErrorIcon />
-            <span>
-              We can&rsquo;t find this application. It may have been deleted, or saved in a
-              different browser. To bring it over from another device, use Move data.
-            </span>
-          </p>
-        </Notice>
-        <div className="flex flex-wrap gap-3">
-          <ButtonLink href="/applications">Back to your list</ButtonLink>
-          <ButtonLink variant="secondary" href="/move">
-            Move data
-          </ButtonLink>
-        </div>
+        <PageHeader title="Not found" back={PARENT} />
+        <EmptyState action={<TextLink href="/applications">See all applications</TextLink>}>
+          This application isn&rsquo;t on this device.
+        </EmptyState>
       </div>
     );
   }
@@ -57,15 +59,22 @@ export function EditApplication() {
   function followedUp() {
     if (!app) return;
     const next = markFollowedUp(app, today);
-    if (store.update(next)) router.push(`${back}?updated=${next.id}`);
-    else setProblem("Couldn't save. This browser's storage may be full.");
+    if (store.update(next)) {
+      setProblem(null);
+      setRound((r) => r + 1);
+      toast(`Saved. Next follow-up ${formatDay(next.followUpOn!)}.`);
+    } else {
+      setProblem("Couldn't save. This browser's storage may be full.");
+    }
   }
 
   function remove() {
     if (!app) return;
     setLeaving(true);
     if (store.remove(app.id)) {
-      router.push(`${back}?deleted=${encodeURIComponent(app.company)}`);
+      toast(`Deleted ${app.company} — ${app.role}.`);
+      // replace: Back from the list shouldn't open a page that's gone.
+      router.replace("/applications");
     } else {
       setLeaving(false);
       setProblem("Couldn't delete. This browser's storage may be full or blocked.");
@@ -74,7 +83,20 @@ export function EditApplication() {
 
   return (
     <div className="space-y-8">
-      <PageHeader title={app.company} description={app.role} back={PARENT} />
+      <PageHeader
+        title={app.company}
+        description={
+          <div className="space-y-2">
+            <p>{app.role}</p>
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm">
+              <Badge tone={statusTone(app.status)}>{STATUS_LABELS[app.status]}</Badge>
+              <span>Applied {formatDay(app.appliedOn)}</span>
+              <span>{app.followUpOn ? `Follow up ${formatDay(app.followUpOn)}` : "No follow-up"}</span>
+            </p>
+          </div>
+        }
+        back={PARENT}
+      />
 
       {problem && (
         <Notice tone="error">
@@ -100,6 +122,7 @@ export function EditApplication() {
           Change details or status
         </h2>
         <ApplicationForm
+          key={`${app.id}-${round}`}
           mode="edit"
           initial={formFrom(app)}
           before={app}
@@ -107,11 +130,14 @@ export function EditApplication() {
           today={today}
           submitLabel="Save changes"
           afterSubmit={
-            <ButtonLink variant="secondary" href={back}>
+            <ButtonLink variant="secondary" href="/applications">
               Cancel
             </ButtonLink>
           }
-          onSaved={(saved) => router.push(`${back}?updated=${saved.id}`)}
+          onSaved={() => {
+            setProblem(null);
+            toast("Saved");
+          }}
         />
       </section>
 
@@ -126,19 +152,26 @@ export function EditApplication() {
                 Delete {app.role} at {app.company}?
               </strong>{" "}
               This can&rsquo;t be undone. If you just heard back, closing it keeps the record:
-              pick a closed status above instead.
+              choose Closed under Status instead.
             </p>
             <div className="flex flex-wrap gap-2">
               <Button variant="danger" onClick={remove} autoFocus>
                 Delete it
               </Button>
-              <Button variant="secondary" onClick={() => setConfirmingDelete(false)}>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setConfirmingDelete(false);
+                  // Back where you were, now that the question is gone.
+                  requestAnimationFrame(() => document.getElementById("delete-application")?.focus());
+                }}
+              >
                 Keep it
               </Button>
             </div>
           </div>
         ) : (
-          <Button variant="danger" onClick={() => setConfirmingDelete(true)}>
+          <Button id="delete-application" variant="danger" onClick={() => setConfirmingDelete(true)}>
             Delete application
           </Button>
         )}

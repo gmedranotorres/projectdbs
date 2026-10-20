@@ -17,8 +17,9 @@ flowchart TD
     valid -- Yes --> saved["Toast: Added Company — Role"]
     saved -- "Save and add another:<br/>empty form" --> add
     saved -- "Save application:<br/>new one on top" --> list["/applications"]
-    list -- Open --> edit["/applications/edit?id=…"]
-    edit -- "Save or I followed up" --> list
+    list -- Open --> edit["/applications/[id]"]
+    edit -- "Save or I followed up:<br/>toast, stay" --> edit
+    edit -- "Delete, confirmed inline:<br/>toast" --> list
   end
 
   subgraph back["Coming back"]
@@ -40,20 +41,21 @@ flowchart TD
 
 Seguimiento is a weekly ritual for one person: a second-year grad student applying to jobs in Chicago, usually in bursts between classes, on both a phone and a laptop. The main task in one sentence: I log an application, it goes on my list with a follow-up date, and when I come back on Monday it tells me who to follow up with.
 
-Everything is saved in the browser's localStorage. There are no accounts, database or APIs. Every step is its own page, and the same navigation sits on all of them: **Home** (`/`), **Add** (`/add`), **All** (`/applications`) and **Move data** (`/move`). On a phone the navigation is a bar at the bottom, within reach of a thumb. On a laptop it sits in the header. Updating one application happens on its own page, `/applications/edit`, reached from a list.
+Everything is saved in the browser's localStorage. There are no accounts, database or APIs. Every step is its own page, and the same navigation sits on all of them: **Home** (`/`), **Add** (`/add`), **All** (`/applications`) and **Move data** (`/move`). On a phone the navigation is a bar at the bottom, within reach of a thumb. On a laptop it sits in the header. Each application has its own page, `/applications/<id>`, reached from a list.
 
 Forms are one column with a label on every field. Errors appear when you save. Each one sits next to its field, says what to do next, and keeps what you typed.
 
 ## The follow-up rules
 
-The follow-up date is always filled in for you, and you can always change it. It depends on the status:
+The follow-up date is filled in for you where a rule makes sense, and you can always change it:
 
 - **Applied:** one week after the day you applied.
-- **Followed up:** two weeks after today.
-- **Interviewing:** the form asks for the interview date and suggests three days after it.
-- **Closed** (Offer, Rejected, Withdrawn or No response): there's no follow-up date.
+- **Followed up** (shown as Applied in the Status field): two weeks after the day you press I followed up.
+- **Interviewing:** choosing it fills in three days from today. The interview date is optional.
+- **Offer:** keeps the date it had. Answering the offer is the next step, so it still comes up in This week, but it never goes quiet.
+- **Closed** (Rejected, Withdrawn or No response): there's no follow-up date.
 
-The date follows the rule until you type your own. After that, changing the status or another date doesn't overwrite yours. A suggestion appears under the field with a "Use" button, and the date only changes if you press it.
+On Add, the date follows Applied on until you type your own. After that, a suggestion appears under the field with a "Use" button, and the date only changes if you press it. On an application's page, choosing Interviewing fills in its date, and choosing another status right after puts the earlier date back.
 
 An open application goes quiet when there has been no news for 21 days. News means applying, following up or a change of status; an interview still to come also counts. Pressing "Not yet" isn't news, so an application you keep postponing still goes quiet on schedule.
 
@@ -65,7 +67,7 @@ Then the page says what Seguimiento is for and lets you start right there. The h
 
 Pressing **Add application** with a field empty gives "Enter the company name." or "Enter the role title." next to the field, keeps what you typed, and moves you to the first one. A quick add saves today as the day you applied and a follow-up a week later. A short message says so ("Added Example Co — Data Analyst. Follow up on Tue, Oct 27."), announced politely to screen readers. On a phone it appears at the top of the screen, so it doesn't cover the new item below the form. You stay on the page: the form empties for the next one, and what you added appears below it under "Your list", newest first, each row with **Open**. The list shows the newest five; **See all** goes to the All page, and **Add details** opens the full Add form, so it's always within reach but never required.
 
-Beside the newest item's follow-up date, a one-time tip says "We suggested a follow-up a week out. Change it anytime." It stays, visit after visit, until you press **Got it** or type a follow-up date of your own on Add or Update. Either one closes it for good on this device. The tip only appears beside a date Seguimiento suggested.
+Beside the newest item's follow-up date, a one-time tip says "We suggested a follow-up a week out. Change it anytime." It stays, visit after visit, until you press **Got it** or type a follow-up date of your own on Add or an application's page. Either one closes it for good on this device. The tip only appears beside a date Seguimiento suggested.
 
 Before anything is saved, a line under the form states the rules: a follow-up a week after you apply, which you can always change, and after 3 weeks with no news, an application is marked gone quiet. Once the list appears, the tip does that job. The Monday calendar reminder is offered on the first visit and right after the first save.
 
@@ -94,11 +96,11 @@ Logging the same company and role twice is a warning, not an error: "You already
 
 **List.** The All page shows every application as one list, sorted by follow-up date, soonest first, with those without a follow-up date last. Each row shows the company, role, status and follow-up date, and an **Open** link. Late ones also say "7 days late" with a clock icon, and gone-quiet ones "No news for 35 days", so nothing depends on color alone. At the top, a search field labelled "Search by company or role" narrows the list as you type, and filter chips (All, Applied, Interviewing, Offer, Closed) show how many each holds. Followed up counts as Applied; Rejected, Withdrawn and No response count as Closed. The chosen filter is in the address (`?status=offer`), so Back and a shared link keep it; pressing the chip that's on goes back to All. While filtering or searching, a line says "Showing 3 of 5."
 
-**Never a blank page.** With nothing saved, the page says "Nothing logged yet" and offers **Log your first application**, which goes to Home. A filter with nothing in it says so in one sentence ("No offers yet.") with a link, **Show all applications**. A search with no results says "Nothing matches “zzz”." with **Clear search**, which puts the cursor back in the search field. After you add one, it sits on top, highlighted for a few seconds; after you change one, the page says what happened and that row is highlighted where it belongs.
+**Never a blank page.** With nothing saved, the page says "Nothing logged yet" and offers **Log your first application**, which goes to Home. A filter with nothing in it says so in one sentence ("No offers yet.") with a link, **Show all applications**. A search with no results says "Nothing matches “zzz”." with **Clear search**, which puts the cursor back in the search field. After you add one, it sits on top, highlighted for a few seconds.
 
-**Update.** The Update page leads with the most common change. **I followed up today** marks the application as Followed up and moves the next follow-up two weeks out, in one tap. An application that's Interviewing stays Interviewing. Below it is the same form as Add, plus the status: Applied, Followed up and Interviewing, then the closed ones, Offer, Rejected, Withdrawn and No response. Choosing Interviewing adds the interview date. Choosing a closed status hides the follow-up date. Saving takes you back to the page you came from, which says what changed ("Updated Morningstar. Next follow-up Mon, Nov 2"). **Delete application** asks first, says it can't be undone, and points out that a closed status keeps the record instead.
+**One application.** Open on any list goes to the application's own page. At the top, what's saved: company, role, status, the day you applied and the next follow-up. Then the most common change, **I followed up today**, which moves the next follow-up two weeks out in one tap and says so in a toast. An application that's Interviewing or has an offer keeps its status. Below it, every field, with the same fields and rules as Add, plus **Status**: Applied, Interviewing, Offer or Closed. Choosing Closed asks **Why it closed** (Rejected, Withdrawn or No response) and hides the follow-up date. **Save changes** stays on the page and says "Saved" in a toast. **Delete application** asks first, on the page, not in a browser dialog: it says it can't be undone and that closing keeps the record instead. **Delete it** goes to the list with "Deleted Example Co — Data Analyst." in a toast, and **Keep it** puts you back on Delete application. The list replaces the page in the history, so Back can't open what was deleted.
 
-**Errors when updating.** The form has the same errors as Add, plus one more: when the interview date is missing, "Enter the interview date. A best guess is fine; you can change it later." If the application can't be found, it may have been deleted or saved in another browser. The page says so and links back to the list and to Move data.
+**Errors on an application's page.** The same errors as Add, plus "Choose why it closed." when Closed has no reason, and "Pick a follow-up date." when a reopened application has none. An interview date, if given, can't be before the day you applied. If the address doesn't match anything saved here, perhaps because it was deleted or saved in another browser, the page says "This application isn't on this device." with a link to all applications.
 
 ## Flow 3: Coming back (the Monday check-in)
 

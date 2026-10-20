@@ -5,7 +5,6 @@ import { useEffect, useId, useState } from "react";
 import { daysQuiet, dueLabel, groupOf, plural, type Application } from "@/lib/applications";
 import { today as getToday, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
-import { ArrivalMessage, useHighlightId } from "@/components/arrival-message";
 import {
   Badge,
   Button,
@@ -30,8 +29,7 @@ import {
 // the address (?status=), so a link can open it and Back keeps it.
 //
 // Coming from Add (?new=), the new one sits on top, highlighted for a few
-// seconds, with focus on it. After an update (?updated=), that row is
-// highlighted where it belongs.
+// seconds, with focus on it.
 
 type Filter = "all" | "applied" | "interviewing" | "offer" | "closed";
 
@@ -78,17 +76,16 @@ export function ApplicationList() {
   const router = useRouter();
   const params = useSearchParams();
   const searchId = useId();
-  const highlight = useHighlightId();
   const newId = params.get("new");
   const [query, setQuery] = useState("");
   const [glow, setGlow] = useState(true);
 
   useEffect(() => {
-    if (!highlight || !store.hydrated) return;
-    if (newId) document.getElementById(`row-${newId}`)?.focus();
+    if (!newId || !store.hydrated) return;
+    document.getElementById(`row-${newId}`)?.focus();
     const timer = setTimeout(() => setGlow(false), GLOW_MS);
     return () => clearTimeout(timer);
-  }, [highlight, newId, store.hydrated]);
+  }, [newId, store.hydrated]);
 
   if (!store.hydrated) return <Loading />;
   const today = getToday();
@@ -124,9 +121,6 @@ export function ApplicationList() {
         back={{ href: "/", label: "Home" }}
         action={apps.length > 0 && <ButtonLink href="/add">Log an application</ButtonLink>}
       />
-
-      {/* After Add, the toast has already said what happened. */}
-      {!newId && <ArrivalMessage apps={apps} />}
 
       {apps.length === 0 ? (
         <EmptyState
@@ -177,9 +171,9 @@ export function ApplicationList() {
                   role={app.role}
                   status={app.status}
                   followUpOn={app.followUpOn ?? undefined}
-                  href={`/applications/edit?id=${app.id}&from=list`}
+                  href={`/applications/${app.id}`}
                   hint={attention(app, today)}
-                  highlight={glow && app.id === highlight}
+                  highlight={glow && app.id === newId}
                 />
               ))}
             </List>

@@ -5,7 +5,6 @@ import { emptyForm, toApplication, validate, type Application } from "@/lib/appl
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
 import { FOLLOW_UP_HINT } from "@/lib/types";
 import { useApplications } from "@/hooks/useApplications";
-import { ArrivalMessage } from "./arrival-message";
 import { CalendarReminder } from "./calendar-reminder";
 import {
   Button,
@@ -109,8 +108,6 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
         description="Log what you applied to, and come back on Monday to see who to follow up with."
       />
 
-      <ArrivalMessage apps={applications} />
-
       <form noValidate onSubmit={submit} className="space-y-6">
         <Field id={companyId} label="Company" error={errors.company}>
           <Input
@@ -190,7 +187,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
                 role={app.role}
                 status={app.status}
                 followUpOn={app.followUpOn ?? undefined}
-                href={`/applications/edit?id=${app.id}&from=week`}
+                href={`/applications/${app.id}`}
                 hint={
                   showHint && app.id === first.id ? (
                     <span className="inline-flex flex-wrap items-center gap-x-2 rounded-badge bg-accent-soft py-0.5 pr-0.5 pl-2 text-sm text-ink">

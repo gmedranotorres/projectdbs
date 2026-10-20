@@ -362,7 +362,7 @@ function DataDemo() {
               role={a.role}
               status={a.status}
               followUpOn={a.followUpOn ?? undefined}
-              href={`/applications/edit?id=${a.id}&from=list`}
+              href={`/applications/${a.id}`}
             />
           ))}
         </List>

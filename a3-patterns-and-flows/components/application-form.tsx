@@ -4,10 +4,12 @@ import { useId, useState, type FormEvent, type ReactNode } from "react";
 import {
   CLOSED_STATUSES,
   FIELD_ORDER,
-  OPEN_STATUSES,
+  STAGES,
+  STAGE_LABELS,
   STATUS_LABELS,
   findDuplicate,
   isOpen,
+  stageOf,
   suggestFollowUp,
   toApplication,
   validate,
@@ -15,17 +17,19 @@ import {
   type FieldName,
   type FormErrors,
   type FormValues,
-  type Status,
+  type Stage,
 } from "@/lib/applications";
-import { formatDay, formatShortDay, type Day } from "@/lib/dates";
+import { addDays, formatDay, formatShortDay, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { FOLLOW_UP_HINT } from "@/lib/types";
-import { Button, ButtonLink, ErrorIcon, Field, Input, Textarea } from "./ui";
+import { Button, ButtonLink, ErrorIcon, Field, Input, Select, Textarea } from "./ui";
 
-// The one form behind Add and Update. Errors appear when you save, next to
-// the field, and what you typed stays. The follow-up date fills itself in
-// from the status rule until you type your own; after that a new suggestion
-// only replaces it if you press "Use".
+// The one form behind Add and an application's page. Errors appear when you
+// save, next to the field, and what you typed stays. On Add, the follow-up
+// date follows Applied on until you type your own; after that a new
+// suggestion only replaces it if you press "Use". On an application's page,
+// a status change suggests a date only where it makes sense: Interviewing
+// fills in today + 3, Closed clears it, Applied and Offer keep it.
 
 type Props = {
   mode: "add" | "edit";
@@ -72,30 +76,23 @@ export function ApplicationForm({
   // Whether the person typed a follow-up date here, for closing the tip.
   const [typedFollowUp, setTypedFollowUp] = useState(false);
   const [suggestionMatters, setSuggestionMatters] = useState(mode === "add");
-  const [moreOpen, setMoreOpen] = useState(
-    Boolean(initial.contact || initial.link || initial.notes),
-  );
+  // The date before Interviewing filled one in, so choosing another status
+  // right after puts it back.
+  const [dateBeforeSuggestion, setDateBeforeSuggestion] = useState<string | null>(null);
   const [duplicate, setDuplicate] = useState<Application | null>(null);
   // Which save button led to the duplicate warning, for "Save anyway".
   const [pendingAnother, setPendingAnother] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
 
-  const suggestion = suggestFollowUp(values.status, {
-    appliedOn: values.appliedOn,
-    interviewOn: values.interviewOn || null,
-    today,
-  });
+  const suggestion = suggestFollowUp(values.status, { appliedOn: values.appliedOn, today });
 
   function update(field: FieldName, value: string) {
     const next = { ...values, [field]: value } as FormValues;
 
-    if (field === "status" || field === "appliedOn" || field === "interviewOn") {
+    // Only Applied's suggestion depends on Applied on.
+    if (field === "appliedOn" && next.status === "applied") {
       setSuggestionMatters(true);
-      const s = suggestFollowUp(next.status, {
-        appliedOn: next.appliedOn,
-        interviewOn: next.interviewOn || null,
-        today,
-      });
+      const s = suggestFollowUp(next.status, { appliedOn: next.appliedOn, today });
       // An empty date is filled in even if earlier dates were typed by hand.
       if ((!followUpIsMine || !next.followUpOn) && s.day) {
         next.followUpOn = s.day;
@@ -104,6 +101,7 @@ export function ApplicationForm({
     if (field === "followUpOn") {
       setFollowUpIsMine(true);
       setTypedFollowUp(true);
+      setDateBeforeSuggestion(null);
     }
     if (field === "company" || field === "role") setDuplicate(null);
 
@@ -125,6 +123,29 @@ export function ApplicationForm({
     });
   }
 
+  // The Status field. Followed up stays Followed up under Applied, and a
+  // closed application keeps its reason under Closed.
+  function chooseStage(stage: Stage) {
+    const was = before?.status;
+    const status: FormValues["status"] =
+      stage === "applied" ? (was === "followed-up" ? was : "applied")
+      : stage === "closed" ? (was && !isOpen(was) ? was : "closed")
+      : stage;
+    const next = { ...values, status };
+    if (stage === "interviewing") {
+      if (followUpIsMine) setDateBeforeSuggestion(values.followUpOn);
+      next.followUpOn = addDays(today, 3);
+      setFollowUpIsMine(false);
+    } else if (dateBeforeSuggestion !== null) {
+      next.followUpOn = dateBeforeSuggestion;
+      setDateBeforeSuggestion(null);
+      setFollowUpIsMine(true);
+    }
+    setValues(next);
+    setSaveFailed(false);
+    recheck(next);
+  }
+
   function applySuggestion() {
     if (!suggestion.day) return;
     const next = { ...values, followUpOn: suggestion.day };
@@ -139,7 +160,6 @@ export function ApplicationForm({
     const first = FIELD_ORDER.find((f) => found[f]);
     setErrors(found);
     if (first) {
-      if (found.contact || found.link || found.notes) setMoreOpen(true);
       focusSoon(fid(first));
       return;
     }
@@ -163,6 +183,11 @@ export function ApplicationForm({
     if (typedFollowUp && app.followUpOn && app.followUpOn !== before?.followUpOn) {
       saved.dismissHint(FOLLOW_UP_HINT);
     }
+    // Once saved, the date is the one on record, not a suggestion to undo.
+    if (before) {
+      setFollowUpIsMine(true);
+      setDateBeforeSuggestion(null);
+    }
     onSaved(app, another);
   }
 
@@ -180,36 +205,18 @@ export function ApplicationForm({
     </Field>
   );
 
-  const contactField = text("contact", "Who to follow up with", {
-    hint: "A name or email, e.g. Priya Shah. Monday will say who to contact.",
-    optional: true,
-  });
-
-  const linkField = (
-    <Field id={fid("link")} label="Link" optional error={errors.link}>
-      <Input
-        name="link"
-        type="url"
-        inputMode="url"
-        value={values.link}
-        onChange={(e) => update("link", e.target.value)}
-        placeholder="https://"
-        autoComplete="off"
-      />
-    </Field>
-  );
-
-  const notesField = (
-    <Field id={fid("notes")} label="Notes" optional>
-      <Textarea name="notes" value={values.notes} onChange={(e) => update("notes", e.target.value)} />
-    </Field>
-  );
-
   const showSuggestion =
     suggestionMatters &&
     followUpIsMine &&
     suggestion.day &&
     suggestion.day !== values.followUpOn;
+
+  // Without a suggestion on screen, an empty date just needs one.
+  const followUpError =
+    errors.followUpOn && !values.followUpOn && !showSuggestion
+      ? "Pick a follow-up date."
+      : errors.followUpOn;
+  const stage = stageOf(values.status);
 
   return (
     <form noValidate onSubmit={submit} className="space-y-6">
@@ -240,25 +247,46 @@ export function ApplicationForm({
       </Field>
 
       {mode === "edit" && (
-        <fieldset>
-          <legend className="font-medium">Status</legend>
-          <div className="mt-2 space-y-2">
-            {OPEN_STATUSES.map((s) => (
-              <StatusOption key={s} name={`${formId}-status`} status={s} checked={values.status === s} onChange={(v) => update("status", v)} />
+        <Field id={`${formId}-stage`} label="Status">
+          <Select
+            name="stage"
+            value={stage}
+            onChange={(e) => chooseStage(e.target.value as Stage)}
+          >
+            {STAGES.map((s) => (
+              <option key={s} value={s}>
+                {STAGE_LABELS[s]}
+              </option>
             ))}
-            <p className="pt-2 text-sm font-medium text-muted">Closed</p>
+          </Select>
+        </Field>
+      )}
+
+      {/* The error for a missing reason is the status's, so it lands here. */}
+      {stage === "closed" && (
+        <Field id={fid("status")} label="Why it closed" error={errors.status}>
+          <Select
+            name="status"
+            value={values.status === "closed" ? "" : values.status}
+            onChange={(e) => update("status", e.target.value || "closed")}
+            aria-required="true"
+          >
+            <option value="">Choose one</option>
             {CLOSED_STATUSES.map((s) => (
-              <StatusOption key={s} name={`${formId}-status`} status={s} checked={values.status === s} onChange={(v) => update("status", v)} />
+              <option key={s} value={s}>
+                {STATUS_LABELS[s]}
+              </option>
             ))}
-          </div>
-        </fieldset>
+          </Select>
+        </Field>
       )}
 
       {values.status === "interviewing" && (
         <Field
           id={fid("interviewOn")}
           label="Interview date"
-          hint="Your follow-up is suggested for 3 days after it."
+          optional
+          hint="While it's ahead, the application isn't marked gone quiet."
           error={errors.interviewOn}
         >
           <Input
@@ -280,7 +308,7 @@ export function ApplicationForm({
               ? `Suggested: ${suggestion.reason}. It shows up under This week in the week it's due.`
               : "It shows up under This week in the week it's due."
           }
-          error={errors.followUpOn}
+          error={followUpError}
         >
           <Input
             name="followUpOn"
@@ -308,29 +336,26 @@ export function ApplicationForm({
         </p>
       )}
 
-      {mode === "add" ? (
-        // On Add, every field shows, one column, in order.
-        <>
-          {linkField}
-          {notesField}
-          {contactField}
-        </>
-      ) : (
-        <details
-          open={moreOpen}
-          onToggle={(e) => setMoreOpen(e.currentTarget.open)}
-          className="rounded-xl border border-line bg-surface"
-        >
-          <summary className="flex min-h-12 cursor-pointer items-center px-4 font-medium">
-            More details <span className="ml-1 font-normal text-muted">(optional)</span>
-          </summary>
-          <div className="space-y-6 border-t border-line p-4">
-            {contactField}
-            {linkField}
-            {notesField}
-          </div>
-        </details>
-      )}
+      <Field id={fid("link")} label="Link" optional error={errors.link}>
+        <Input
+          name="link"
+          type="url"
+          inputMode="url"
+          value={values.link}
+          onChange={(e) => update("link", e.target.value)}
+          placeholder="https://"
+          autoComplete="off"
+        />
+      </Field>
+
+      <Field id={fid("notes")} label="Notes" optional>
+        <Textarea name="notes" value={values.notes} onChange={(e) => update("notes", e.target.value)} />
+      </Field>
+
+      {text("contact", "Who to follow up with", {
+        hint: "A name or email, e.g. Priya Shah. Monday will say who to contact.",
+        optional: true,
+      })}
 
       {duplicate && (
         <div
@@ -347,7 +372,7 @@ export function ApplicationForm({
           </p>
           <div className="flex flex-wrap gap-2">
             <Button onClick={() => submit(undefined, true, pendingAnother)}>Save anyway</Button>
-            <ButtonLink variant="secondary" href={`/applications/edit?id=${duplicate.id}`}>
+            <ButtonLink variant="secondary" href={`/applications/${duplicate.id}`}>
               Open that one
             </ButtonLink>
           </div>
@@ -380,35 +405,5 @@ export function ApplicationForm({
         {afterSubmit}
       </div>
     </form>
-  );
-}
-
-function StatusOption({
-  name,
-  status,
-  checked,
-  onChange,
-}: {
-  name: string;
-  status: Status;
-  checked: boolean;
-  onChange: (status: Status) => void;
-}) {
-  return (
-    <label
-      className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-3 ${
-        checked ? "border-accent bg-accent-soft font-medium" : "border-line bg-surface"
-      }`}
-    >
-      <input
-        type="radio"
-        name={name}
-        value={status}
-        checked={checked}
-        onChange={() => onChange(status)}
-        className="size-5 accent-[var(--accent)]"
-      />
-      {STATUS_LABELS[status]}
-    </label>
   );
 }

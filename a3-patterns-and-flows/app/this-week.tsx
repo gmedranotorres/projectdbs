@@ -16,7 +16,6 @@ import {
 } from "@/lib/applications";
 import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
-import { ArrivalMessage } from "@/components/arrival-message";
 import { QuickAddHome } from "@/components/quick-add-home";
 import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Badge, TextLink } from "@/components/ui";
 
@@ -70,7 +69,7 @@ export function ThisWeek() {
     <div className="space-y-8">
       <PageHeader title="This week" description={`Week of ${formatShortDay(startOfWeek(today))}`} />
 
-      {message ? (
+      {message && (
         <Notice id="week-message" tone={message.tone}>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="flex gap-2">
@@ -84,8 +83,6 @@ export function ThisWeek() {
             )}
           </div>
         </Notice>
-      ) : (
-        <ArrivalMessage apps={store.applications} />
       )}
 
       {groups.due.length > 0 && (
@@ -225,7 +222,7 @@ function AppHeading({ app, children }: { app: Application; children: ReactNode }
 function DetailsLink({ app }: { app: Application }) {
   return (
     <Link
-      href={`/applications/edit?id=${app.id}&from=week`}
+      href={`/applications/${app.id}`}
       className="inline-flex min-h-11 items-center px-2 font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2"
     >
       Details<span className="sr-only"> for {app.company}</span>
