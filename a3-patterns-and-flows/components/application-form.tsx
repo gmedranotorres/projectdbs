@@ -396,7 +396,7 @@ export function ApplicationForm({
       </Field>
 
       {text("contact", "Who to follow up with", {
-        hint: "A name or email, e.g. Priya Shah. Monday will say who to contact.",
+        hint: "A name or email, e.g. Sam Example. Monday will say who to contact.",
         optional: true,
       })}
 

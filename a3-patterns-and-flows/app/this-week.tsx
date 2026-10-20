@@ -294,7 +294,7 @@ export function ThisWeek() {
   );
 }
 
-// "Follow up with Priya at Example Co" on top, then the role and status.
+// "Follow up with Sam at Example Co" on top, then the role and status.
 function AppHeading({ app, children }: { app: Application; children: ReactNode }) {
   return (
     <div className="flex flex-wrap items-start justify-between gap-2">

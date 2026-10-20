@@ -120,7 +120,7 @@ If the browser refuses to save, usually because its storage is full, a message a
 
 The check-in is the reason to come back. It lives at `/check-in`, reached from Home's numbers, the "Start your check-in?" line, and every page's footer. It works on any day, but it's built for Monday. It opens with "Week of Oct 19", and every decision can be made right there without opening each application. Four parts, in this order:
 
-**1. Follow-ups due.** Every open application (Applied, Followed up, Interviewing or Offer) whose follow-up date is today or earlier, soonest first. Each one names the person when you gave one ("Follow up with Priya at Example Co"), shows the role and status, and says how late it is ("7 days late", "Due today"). Each has three actions:
+**1. Follow-ups due.** Every open application (Applied, Followed up, Interviewing or Offer) whose follow-up date is today or earlier, soonest first. Each one names the person when you gave one ("Follow up with Sam at Example Co"), shows the role and status, and says how late it is ("7 days late", "Due today"). Each has three actions:
 - **Followed up** moves the next follow-up to a week from today. Applied becomes Followed up; Interviewing and Offer keep their status.
 - **Snooze a week** moves it to a week from today. A week after the old date could still be in the past for a late one.
 - **Open** goes to the application's page.
@@ -152,7 +152,7 @@ localStorage stays in one browser, so the phone and the laptop each have their o
 ## Cut for simplicity
 
 - **Tags:** status and the search by company or role are enough to find an application among a few dozen.
-- **A separate contacts list:** one optional "who to follow up with" field per application is enough to say "Email Priya at Morningstar."
+- **A separate contacts list:** one optional "who to follow up with" field per application is enough to say "Email Sam at Example Co."
 - **Weekly stats** ("you logged 4, followed up 2"): they're nice to see but don't help decide who to contact.
 - **Syncing between open tabs:** it's one person in one tab at a time, and each page reads fresh data when opened.
 - **Recovering damaged saved data:** the raw copy is kept under another key and the list carries on, which is enough for a rare problem.

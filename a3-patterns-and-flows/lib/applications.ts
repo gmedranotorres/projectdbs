@@ -199,7 +199,7 @@ export function dueLabel(app: Application, today: Day): string {
   return `Due ${formatDay(app.followUpOn)}`;
 }
 
-// "Email Priya at Morningstar" when there's a contact, else the company.
+// "Email Sam at Example Co" when there's a contact, else the company.
 export function whoToContact(app: Application): string {
   return app.contact ? `${app.contact} at ${app.company}` : app.company;
 }
