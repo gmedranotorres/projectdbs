@@ -691,3 +691,47 @@ If nothing is due and nothing is quiet: "Nothing due. Add an application or come
 - **"Returning" is decided when the page opens.** Saving your very first application doesn't switch the headline mid-visit, which would also push the form down under the cursor. The welcome shows from the next visit.
 - **The "added this week" number** shows "2 of 3" as the figure, with "added this week" as the label.
 - **The week counts from the check-in day:** "It's been a week" appears at 7 days or more since the last check-in, by calendar days, not since the last Monday.
+
+## 2026-10-20 · Remember filters and drafts
+
+**What I asked.** Finish what the app remembers between visits:
+- applications;
+- settings (weekly goal, lastCheckInOn, dismissed hints);
+- the last filter chosen on `/applications`;
+- the draft of `/add` if the person leaves the page by mistake: restore it on return with a small "Restored your draft" line, and clear it on save.
+
+Then write a table in README.md under "What it remembers": what is stored, under which key, and why.
+
+**What changed.**
+- **Already in place:** applications and settings were already saved under `seguimiento:v1`, and the check-in and Home already use them.
+- `lib/remember.ts` (new) holds the two conveniences, each under its own key, read and written with `try`/`catch` so a blocked or full storage just means "not remembered":
+  - **`seguimiento:list-filter`:** the last status chip chosen. Choosing All removes it.
+  - **`seguimiento:add-draft`:** only what was typed: text fields, plus dates that differ from the defaults. A follow-up that's just Applied on + 7 isn't kept. Fields with only spaces count as no draft, and a damaged draft is dropped.
+- `app/applications/application-list.tsx`:
+  - **Which filter shows:** the address wins, then the remembered chip. Right after Add (`?new=`) it shows All, so the new one is in view.
+  - **Choosing a chip** remembers it.
+  - **"Show all applications"** in a filter's empty state also forgets the filter, so it doesn't lead back to the same empty view.
+- `app/add/add-application.tsx` and `components/application-form.tsx`:
+  - The form reports each change, and Add saves the draft from it.
+  - On opening, a draft starts the form with "Restored your draft" and **Start over**.
+  - Save application and Save and add another clear it.
+  - A restored follow-up date that's the person's own isn't overwritten when Applied on changes.
+- **Kept pages:** Next keeps a visited page and shows it again with its state. Following Next's "Preserving UI state" guide, a `useLayoutEffect` cleanup runs as the page is hidden:
+  - With a draft left behind, the line shows on return too, the same as after a reload.
+  - After Save application, the form resets, so coming back never shows what was just saved.
+- README: the "What it remembers" table (applications; the weekly goal, last check-in and dismissed hints in `settings`; the filter; the draft; the damaged-copy key). It also covers why applications and settings share one key, what a backup holds, and what isn't remembered.
+- flows.md: Add and List describe the draft and the remembered filter. "Saving a half-finished form automatically" is off the Cut list.
+- Checked in Chrome at 390px:
+  - **Filter:** choosing Interviewing → Home → nav All shows Interviewing ("Showing 2 of 7."), and so does a reload. `?status=closed` in the address shows Closed without changing what's remembered. `?new=` shows All. An empty Offer → Show all applications → All, and the key is removed. Pressing a chip twice → All, and the key is removed.
+  - **Draft:** "Example Co", Applied on Oct 12 and notes were saved without the follow-up date.
+    - Nav away and back, and a reload, both show the line with everything restored. After changing Applied on, the follow-up still follows it; a typed Oct 30 survives a restore plus a date change.
+    - Start over → empty, no line, key removed, focus on Company.
+    - Save application, and Save and add another, remove the key. Nav Add after saving shows an empty form.
+    - Typing then erasing, or changing only a date, saves no draft. A draft from another day gets today's dates. A damaged draft is dropped.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- Claude added **Start over** next to "Restored your draft", so a restored draft is never something you have to clear field by field.
+- Only choosing a chip is remembered. A filter that arrives in the address (a link, Back) shows but doesn't replace your choice.
+- The search text isn't remembered; the request named the filter only.
+- The filter and the draft stay out of `seguimiento:v1` and out of backups. They belong to this device and this moment, not to your list.

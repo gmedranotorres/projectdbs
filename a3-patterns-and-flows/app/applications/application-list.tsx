@@ -6,6 +6,7 @@ import { daysQuiet, dueLabel, groupOf, plural, type Application } from "@/lib/ap
 import { today as getToday, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
+import { readListFilter, rememberListFilter } from "@/lib/remember";
 import {
   Badge,
   Button,
@@ -27,7 +28,9 @@ import {
 // one last. Filter chips (with counts) narrow it by status, and the search
 // narrows it by company or role as you type. Every empty result says why
 // and offers a way back, so the page is never blank. The filter lives in
-// the address (?status=), so a link can open it and Back keeps it.
+// the address (?status=), so a link can open it and Back keeps it. The last
+// chip chosen is also remembered (lib/remember.ts): opening All without a
+// filter in the address shows that one again.
 //
 // Coming from Add (?new=), the new one sits on top, highlighted for a few
 // seconds, with focus on it.
@@ -82,6 +85,10 @@ export function ApplicationList() {
   const here = useFromHere();
   const [query, setQuery] = useState("");
   const [glow, setGlow] = useState(true);
+  // Read once, in the browser; the server only draws the loading state.
+  const [remembered, setRemembered] = useState<Filter | null>(() =>
+    typeof window === "undefined" ? null : readListFilter(FILTERS.map((f) => f.id)),
+  );
 
   useEffect(() => {
     if (!newId || !store.hydrated) return;
@@ -95,7 +102,13 @@ export function ApplicationList() {
   const apps = store.applications;
 
   const asked = params.get("status");
-  const filter: Filter = FILTERS.some((f) => f.id === asked) ? (asked as Filter) : "all";
+  // The address wins; then the remembered chip, except right after Add,
+  // where the new one must be in view.
+  const filter: Filter = FILTERS.some((f) => f.id === asked)
+    ? (asked as Filter)
+    : newId
+      ? "all"
+      : (remembered ?? "all");
   const current = FILTERS.find((f) => f.id === filter)!;
 
   const q = query.trim().toLowerCase();
@@ -107,6 +120,8 @@ export function ApplicationList() {
   const ordered = added ? [added, ...shown.filter((a) => a !== added)] : shown;
 
   function choose(next: Filter) {
+    rememberListFilter(next);
+    setRemembered(next === "all" ? null : next);
     // replace: a filter is a view of this page, not a new page in the history.
     router.replace(next === "all" ? "/applications" : `/applications?status=${next}`, { scroll: false });
   }
@@ -186,7 +201,20 @@ export function ApplicationList() {
             </List>
           ) : !apps.some((a) => inFilter(a, filter)) ? (
             // Nothing with this status at all.
-            <EmptyState action={<TextLink href="/applications">Show all applications</TextLink>}>
+            <EmptyState
+              action={
+                <TextLink
+                  href="/applications"
+                  onClick={() => {
+                    // The link shows All; remember that, too.
+                    rememberListFilter("all");
+                    setRemembered(null);
+                  }}
+                >
+                  Show all applications
+                </TextLink>
+              }
+            >
               {current.empty}
             </EmptyState>
           ) : (

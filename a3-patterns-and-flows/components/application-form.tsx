@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
 import {
   CLOSED_STATUSES,
   FIELD_ORDER,
@@ -21,7 +21,7 @@ import {
   type FormValues,
   type Stage,
 } from "@/lib/applications";
-import { addDays, formatDay, formatShortDay, type Day } from "@/lib/dates";
+import { addDays, formatDay, formatShortDay, isDay, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { FOLLOW_UP_HINT } from "@/lib/types";
 import { DuplicateNotice } from "./duplicate-notice";
@@ -49,6 +49,8 @@ type Props = {
   afterSubmit?: ReactNode;
   // `another` is true when the second button was used.
   onSaved: (app: Application, another: boolean) => void;
+  // Every change, as typed: Add keeps a draft with it.
+  onChange?: (values: FormValues) => void;
 };
 
 // Focus after React has drawn the change, such as a newly opened section.
@@ -67,6 +69,7 @@ export function ApplicationForm({
   autoFocus,
   afterSubmit,
   onSaved,
+  onChange,
 }: Props) {
   const formId = useId();
   const fid = (field: FieldName) => `${formId}-${field}`;
@@ -74,8 +77,12 @@ export function ApplicationForm({
 
   const [values, setValues] = useState(initial);
   const [errors, setErrors] = useState<FormErrors>({});
-  // A date already saved counts as the person's own.
-  const [followUpIsMine, setFollowUpIsMine] = useState(mode === "edit");
+  // A date already saved counts as the person's own, and so does one in a
+  // restored draft that isn't simply Applied on + 7.
+  const [followUpIsMine, setFollowUpIsMine] = useState(
+    mode === "edit" ||
+      (isDay(initial.appliedOn) && initial.followUpOn !== addDays(initial.appliedOn, 7)),
+  );
   // Whether the person typed a follow-up date here, for closing the tip.
   const [typedFollowUp, setTypedFollowUp] = useState(false);
   const [suggestionMatters, setSuggestionMatters] = useState(mode === "add");
@@ -87,6 +94,10 @@ export function ApplicationForm({
   const [saveFailed, setSaveFailed] = useState(false);
 
   const suggestion = suggestFollowUp(values.status, { appliedOn: values.appliedOn, today });
+
+  useEffect(() => {
+    onChange?.(values);
+  }, [values, onChange]);
 
   function update(field: FieldName, value: string) {
     const next = { ...values, [field]: value } as FormValues;

@@ -94,7 +94,21 @@ _To fill in._
 
 ## What it remembers
 
-_To fill in._
+Everything stays in this browser's `localStorage`. There's no account and no server, so nothing leaves the device unless you download a backup on Move data. Each key starts with `seguimiento:`.
+
+| What | Key | Why |
+| --- | --- | --- |
+| Applications: company, role, status, dates, link, notes, who to follow up with | `seguimiento:v1` → `applications` | It's the whole point: your list, kept from one visit to the next. `v1` leaves room to change the shape later without misreading old data. |
+| Weekly goal (3 to start) | `seguimiento:v1` → `settings.weeklyGoal` | The check-in's "This week" bar and Home's "2 of 3" measure against it; you set it once with Change goal. |
+| Last check-in | `seguimiento:v1` → `settings.lastCheckInOn` | "Done for this week" saves the day (as `2026-10-19`, your own calendar day), so the check-in stays done until Monday and Home can say "Last check-in" and, after a week, "It's been a week. Start your check-in?" |
+| Dismissed hints | `seguimiento:v1` → `settings.dismissedHints` | Once you press Got it (or type your own follow-up date), the tip about the suggested date stays closed on every page and visit. |
+| Last filter on All applications | `seguimiento:list-filter` | Coming back to All shows the status chip you chose last, such as Interviewing. Choosing All forgets it. The address still wins, so a link like `?status=offer` opens that filter. |
+| Draft of the Add form | `seguimiento:add-draft` | If you leave Add by mistake (a tap on the nav, a closed tab), what you typed comes back with "Restored your draft". Only what you typed is kept: dates left at their defaults are worked out again on the day you return. Saving clears it, and so does Start over. |
+| A damaged copy, if one is ever found | `seguimiento:v1:unreadable:<time>` | If saved data can't be read, the original text is set aside under this key instead of being lost, and the app carries on with whatever could be read. |
+
+The applications and settings live under one key, so they're written together and can't get out of step. The filter and the draft each have their own key: they're conveniences, so a broken one is simply forgotten without touching your list. A backup from Move data holds the applications only. Your goal, last check-in, hints, filter and draft stay on each device.
+
+It doesn't remember the search text on All, which messages were shown, or where you scrolled. Each visit starts from your list as it is.
 
 ## Accessibility
 
