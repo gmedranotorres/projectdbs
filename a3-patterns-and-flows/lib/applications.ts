@@ -227,10 +227,10 @@ export function validate(values: FormValues, today: Day): FormErrors {
   const applied = values.appliedOn;
 
   if (!values.company.trim()) {
-    errors.company = "Enter the company name, e.g. Morningstar.";
+    errors.company = "Enter the company name.";
   }
   if (!values.role.trim()) {
-    errors.role = "Enter the role, e.g. Data Analyst.";
+    errors.role = "Enter the role title.";
   }
 
   if (!isDay(applied)) {

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Newsreader } from "next/font/google";
 import { SiteNav } from "@/components/site-nav";
 import { StorageBanner } from "@/components/storage-banner";
+import { ToastProvider } from "@/components/ui";
 import "./globals.css";
 
 // Calm's fonts, set up as in A2: Newsreader for headlines, Inter for the
@@ -38,20 +39,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${newsreader.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-30 focus:rounded-control focus:bg-surface focus:px-4 focus:py-2"
-        >
-          Skip to content
-        </a>
-        <SiteNav />
-        <StorageBanner />
-        <main
-          id="main"
-          className="mx-auto w-full max-w-3xl flex-1 px-4 pb-32 pt-6 md:pb-16 md:pt-10"
-        >
-          {children}
-        </main>
+        {/* One toast region for the whole site. */}
+        <ToastProvider>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-30 focus:rounded-control focus:bg-surface focus:px-4 focus:py-2"
+          >
+            Skip to content
+          </a>
+          <SiteNav />
+          <StorageBanner />
+          <main
+            id="main"
+            className="mx-auto w-full max-w-3xl flex-1 px-4 pb-32 pt-6 md:pb-16 md:pt-10"
+          >
+            {children}
+          </main>
+        </ToastProvider>
       </body>
     </html>
   );

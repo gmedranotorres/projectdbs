@@ -210,3 +210,40 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - Claude kept two existing protections the request didn't mention: the corrupt original is set aside rather than overwritten, and a private window that can't save gets a banner instead of silently losing changes.
 - Claude kept a fallback id for when `crypto.randomUUID()` doesn't exist (plain http on a phone testing over the local network).
 - Still open: `weeklyGoal` (default 3) is stored but shown nowhere except `/dev/components`. The onboarding decisions rejected streaks and quotas, so how a weekly goal appears should be decided before any page uses it.
+
+## 2026-10-20 · First visit with quick add
+
+**What I asked.** Build the first visit on `/`, the state when nothing is saved:
+- The headline "Keep every application moving." and the line "Log what you applied to, and come back on Monday to see who to follow up with."
+- A two-field quick add, Company and Role, both required, using the shared Field and the same errors as everywhere ("Enter the company name.", "Enter the role title.").
+- Under Role, Chips for Data Analyst, Research Assistant, Policy Analyst and Associate Consultant. Tapping one fills Role and moves focus to Company if it's empty.
+- The line "Saved on this device. No account."
+- On submit: save with `appliedOn` today and `followUpOn` a week later, show the toast "Added {Company} — {Role}. Follow up on {date}.", and stay on `/` so the first item appears below the form.
+- No tour, no modal, no sample data.
+
+**What changed.**
+- `components/first-visit.tsx` is the new first visit: the heading and line, the quick add (Field + Input, Chip, the primary Button), "Saved on this device. No account.", and "Applied earlier, or want to add a contact? Use the full form." It's followed by "Your list" (a List of ListRows), the follow-up rules line, the calendar reminder and the backup link.
+  - The chips are one group, "Common roles". A chip is pressed when Role matches it, and tapping it again clears Role. Focus moves to Company only when Company is empty.
+  - The quick add uses `validate()` and `toApplication()`, the same as the Add page, so today becomes the date applied and the follow-up comes from the 1-week rule.
+  - With a field empty, the errors appear next to the fields, what you typed stays, and focus goes to the first error.
+  - After a save, the toast confirms it ("Follow up on Tue, Oct 27"), the form empties, focus returns to Company, and the item appears under "Your list".
+- `app/this-week.tsx` keeps showing the first visit after a quick add, so the new item appears under the form. Opening `/` again later shows This week.
+- `validate()` now says "Enter the company name." and "Enter the role title." on the Add page too, so the words are the same everywhere. The old ones named Morningstar.
+- ToastProvider moved to the root layout, one region for the whole site, and out of `/dev/components`.
+- Updated flows.md (Flow 1, the error list, the diagram, and the example-data line under "Cut for simplicity") and the diagram in the README.
+- Checked in Chrome at 390px and 1440px:
+  - Both errors with focus on Company, then Role alone with focus on Role.
+  - A chip with Company empty moves focus to Company; tapping it again clears Role; with Company filled, focus stays on the chip.
+  - Saving stores today and a week later, shows the toast, and lists the row.
+  - A reload shows This week.
+  - The Add page shows the new errors.
+  - No console errors and no sideways scroll.
+
+**What I rejected or decided myself.**
+- I chose to keep the calendar reminder and the follow-up rules line from the onboarding round, and to add the link to the full form, so someone partway through their search can log an earlier date or a contact.
+- Removed: the example Monday (it was sample data, and named real companies) and the "Already applied somewhere?" line (a quick add always uses today as the date applied, so the line would mislead).
+- Claude kept the "Load a backup" line, for someone who already uses Seguimiento on another device.
+- Claude used ListRow under the form, so these rows say **Open**. The All page still says **Update** until that's decided.
+- Claude didn't add a duplicate warning to the quick add; the full Add form still has one.
+- Known: on a laptop, the toast sits at the bottom of the screen and can cover the date on the row just added for its 5 seconds. It says the same date, so the toast's position is unchanged for now.
+- Still open: the README's "Onboarding research → What I took" still describes the example Monday and the "Already applied" line. That's my write-up to revise.

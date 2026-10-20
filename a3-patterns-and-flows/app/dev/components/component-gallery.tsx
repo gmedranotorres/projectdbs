@@ -17,7 +17,6 @@ import {
   PageHeader,
   Select,
   Textarea,
-  ToastProvider,
   useToast,
   type BadgeTone,
   type ButtonSize,
@@ -59,14 +58,6 @@ const TAGS: { tone: BadgeTone; text?: string; note: string }[] = [
 ];
 
 export function ComponentGallery() {
-  return (
-    <ToastProvider>
-      <Gallery />
-    </ToastProvider>
-  );
-}
-
-function Gallery() {
   return (
     <div className="space-y-12">
       {/* This header is also the PageHeader example. */}

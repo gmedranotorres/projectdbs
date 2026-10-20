@@ -5,7 +5,9 @@ flowchart TD
   subgraph first["First visit"]
     open(["Open Seguimiento"]) --> home["/"]
     home --> anything{"Anything saved?"}
-    anything -- No --> empty["Ritual + example Monday<br/>+ the follow-up rules"]
+    anything -- No --> empty["Quick add: Company + Role<br/>+ the follow-up rules"]
+    empty -- "Add application" --> listed["Stays on /: message<br/>+ your list below"]
+    listed -- "Add another" --> empty
     empty -. "Add Monday check-in" .-> ics(["Calendar file:<br/>Mondays at 9:00"])
   end
 
@@ -28,7 +30,8 @@ flowchart TD
     checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
   end
 
-  empty -- "Log your first application<br/>(or ones already sent)" --> add
+  empty -- "Use the full form<br/>(earlier date, contact)" --> add
+  listed -. "Next visit" .-> checkin
   saved -. "First save only" .-> ics
   ics -. "Reminder" .-> monday
   anything -- Yes --> checkin
@@ -59,11 +62,15 @@ An open application goes quiet when there has been no news for 21 days. News mea
 
 You open Seguimiento for the first time, with nothing saved. For a moment, while the browser reads saved data, the page shows a neutral placeholder with no words in it. That way, someone who does have data never sees the empty screen flash first.
 
-Then the page shows what the ritual is and where it leads, instead of an empty list. A heading and one line explain it: log each application as you send it, Seguimiento picks a follow-up date, and on Monday it tells you who to follow up with. One main button, **Log your first application**, opens the Add page. Under it, a line speaks to someone already in the middle of a search: log the applications you've already sent, with the day you applied, and anything from a week ago or more shows up right away in This week, ready to follow up. Below that, a clearly labeled example shows what a Monday looks like: "Email Priya at Morningstar, 2 days late" and "Grubhub, due Thursday". The example isn't data, and nothing has to be cleared later. Under the example, one line states the rules: a follow-up a week after you apply, which you can always change, and after 3 weeks with no news, an application is marked gone quiet.
+Then the page says what Seguimiento is for and lets you start right there. The heading is "Keep every application moving.", and one line under it says: log what you applied to, and come back on Monday to see who to follow up with. Below is a quick add with two fields, **Company** and **Role**. Under Role, chips offer roles you're likely to type: Data Analyst, Research Assistant, Policy Analyst and Associate Consultant. Tapping one fills in Role and, if Company is still empty, moves you there; tapping it again clears Role. A small line says "Saved on this device. No account." Another links to the full Add form, for an application sent on an earlier day or one with a contact to follow up with. There's no tour, no pop-up and no sample data.
+
+Pressing **Add application** with a field empty gives "Enter the company name." or "Enter the role title." next to the field, keeps what you typed, and moves you to the first one. A quick add saves today as the day you applied and a follow-up a week later. A short message says so ("Added Example Co — Data Analyst. Follow up on Tue, Oct 27."), announced politely to screen readers. You stay on the page: the form empties for the next one, and what you added appears below it under "Your list", each row with **Open**. The next time you open Seguimiento, `/` is This week.
+
+Under that, one line states the rules: a follow-up a week after you apply, which you can always change, and after 3 weeks with no news, an application is marked gone quiet.
 
 Seguimiento has no account, so it can't email anyone. Instead, the page offers **Add Monday check-in to my calendar**. It downloads `seguimiento-monday-check-in.ics`, a weekly event on Mondays at 9:00 starting next Monday, which the person adds to their own calendar. The page then says the file was downloaded and to open it. A last line, for someone who already uses Seguimiento on another device, links to loading a backup.
 
-After the first save, the Add page says when the follow-up is ("Saved. Follow up with Priya at Morningstar on Mon, Oct 26"). When an application sent a while ago is already due, it says so instead: "It's on This week now, ready to follow up." From there you can add another or go to This week. After the very first save only, the Monday calendar reminder is offered again. Your first visit ends with a date to come back to, and a way to be reminded of it.
+If the first save happens on the full Add page instead, it says when the follow-up is ("Saved. Follow up with Priya at Morningstar on Mon, Oct 26"). When an application sent a while ago is already due, it says so instead: "It's on This week now, ready to follow up." From there you can add another or go to This week. After the very first save only, the Monday calendar reminder is offered again. Your first visit ends with a date to come back to, and a way to be reminded of it.
 
 **Error: the browser won't save.** This happens in a private window, or when site data is blocked. A banner on every page says so: anything you add will be gone when you close the tab, so open Seguimiento in a regular window or allow this site to store data. The app still works for that tab, so you can see what it does.
 
@@ -73,8 +80,8 @@ After the first save, the Add page says when the follow-up is ("Saved. Follow up
 
 **Errors when adding.** When you save, every problem is shown at once, next to its field, and the cursor moves to the first one. If that field is under More details, the section opens.
 
-- An empty company: "Enter the company name, e.g. Morningstar."
-- An empty role: "Enter the role, e.g. Data Analyst."
+- An empty company: "Enter the company name."
+- An empty role: "Enter the role title."
 - A date applied in the future: "Pick today or an earlier date."
 - A follow-up date before the date applied: "Pick a date on or after Oct 14, the day you applied."
 - A link that isn't a web address: "Paste the full link, starting with https://."
@@ -117,7 +124,7 @@ localStorage stays in one browser, so the phone and the laptop each have their o
 - **Weekly stats** ("you logged 4, followed up 2"): they're nice to see but don't help decide who to contact.
 - **Syncing between open tabs:** it's one person in one tab at a time, and each page reads fresh data when opened.
 - **Recovering damaged saved data:** the raw copy is kept under another key and the list carries on, which is enough for a rare problem.
-- **Example data on the first visit:** a labeled picture of a Monday shows the same thing without data that has to be cleared later.
+- **Example data on the first visit:** the quick add puts your own first application on the page within seconds, so there's nothing to clear later.
 - **Automatic sync and backup reminders:** there's no server to sync through, and a reminder would need one more thing to track.
 - **Undoing a combine:** the summary before confirming and the "nothing is deleted" rule make it safe without one.
 - **One-week and two-week buttons on the follow-up date:** the rule already fills in the date, and the "Use" suggestion covers changing it, with fewer buttons on a phone.

@@ -19,7 +19,9 @@ flowchart TD
   subgraph first["First visit"]
     open(["Open Seguimiento"]) --> home["/"]
     home --> anything{"Anything saved?"}
-    anything -- No --> empty["Ritual + example Monday<br/>+ the follow-up rules"]
+    anything -- No --> empty["Quick add: Company + Role<br/>+ the follow-up rules"]
+    empty -- "Add application" --> listed["Stays on /: message<br/>+ your list below"]
+    listed -- "Add another" --> empty
     empty -. "Add Monday check-in" .-> ics(["Calendar file:<br/>Mondays at 9:00"])
   end
 
@@ -42,7 +44,8 @@ flowchart TD
     checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
   end
 
-  empty -- "Log your first application<br/>(or ones already sent)" --> add
+  empty -- "Use the full form<br/>(earlier date, contact)" --> add
+  listed -. "Next visit" .-> checkin
   saved -. "First save only" .-> ics
   ics -. "Reminder" .-> monday
   anything -- Yes --> checkin

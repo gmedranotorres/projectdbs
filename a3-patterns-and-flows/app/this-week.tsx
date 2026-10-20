@@ -28,9 +28,15 @@ type Message = { text: string; undo?: Application; tone?: "error" };
 export function ThisWeek() {
   const store = useApplications();
   const [message, setMessage] = useState<Message | null>(null);
+  // After a quick add on the first visit, the page stays the first visit, so
+  // the new application appears under the form. Coming back later shows
+  // This week.
+  const [quickAdding, setQuickAdding] = useState(false);
 
   if (!store.hydrated) return <Loading />;
-  if (store.applications.length === 0) return <FirstVisit />;
+  if (store.applications.length === 0 || quickAdding) {
+    return <FirstVisit applications={store.applications} onAdding={() => setQuickAdding(true)} />;
+  }
 
   const today = getToday();
   const groups = groupAll(store.applications, today);
