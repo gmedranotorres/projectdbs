@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
-import { STATUS_LABELS, formFrom, isOpen, markFollowedUp } from "@/lib/applications";
+import { STATUS_LABELS, formFrom, groupOf, isOpen, markFollowedUp } from "@/lib/applications";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink } from "@/hooks/useBackLink";
 import { onEscape } from "@/lib/keys";
@@ -23,7 +23,8 @@ import {
 } from "@/components/ui";
 
 // One application: what's saved, then every field to change, the same as
-// Add plus Status. The usual change is one tap ("I followed up today").
+// Add plus Status. Once the follow-up is due, the usual change is one tap
+// ("I followed up today").
 // Saving stays here and says "Saved"; deleting asks first, on the page,
 // then goes to the list. "← Back" goes to the list, or Home, it came from.
 
@@ -61,6 +62,8 @@ export function ApplicationDetail() {
       </div>
     );
   }
+
+  const due = groupOf(app, today) === "due";
 
   function followedUp() {
     if (!app) return;
@@ -110,7 +113,10 @@ export function ApplicationDetail() {
         </Notice>
       )}
 
-      {isOpen(app.status) && (
+      {/* The question only leads once the follow-up is due, as on the
+          check-in. Before that, following up early is a quiet extra, so a
+          just-added application doesn't open on "Did you follow up?". */}
+      {due ? (
         <Card className="space-y-3">
           <h2 className="text-lg font-semibold">Did you follow up?</h2>
           <p className="text-muted">
@@ -121,6 +127,15 @@ export function ApplicationDetail() {
             I followed up today
           </Button>
         </Card>
+      ) : (
+        isOpen(app.status) && (
+          <p className="flex flex-wrap items-center gap-x-3 text-sm text-muted">
+            Followed up early?
+            <Button variant="quiet" size="sm" onClick={followedUp}>
+              I followed up today
+            </Button>
+          </p>
+        )
       )}
 
       <section aria-labelledby="edit-heading" className="space-y-4">

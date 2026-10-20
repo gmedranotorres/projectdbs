@@ -895,3 +895,12 @@ Put them in a table under "Accessibility" in the README, with pass/fail at 4.5:1
 - **Date fields were filled by setting their value.** Headless Chrome can't open the phone's native date picker. The report says so.
 - **Full-page screenshots dropped.** They draw the fixed bottom bar in the middle of the page, which would mislead. Viewport shots only.
 - **The "Priya Shah" hint is listed as a problem, not fixed:** "Don't fix anything yet."
+
+## Fixes from the first-run check (Oct 20, 2026)
+
+**What I asked.** List the problems from docs/first-run-check.md with the proposed fixes, ask which to do, and apply the ones I pick, one commit per unrelated fix (messages start "A3: fix:" and say what the new user hit). Then rerun the shortest version of the first-run check on the affected flows, append "After the fixes" to the report, and push.
+
+I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
+
+**What changed, one commit each.**
+- **1. The followed-up card.** On an application's page, "Did you follow up?" with the green **I followed up today** shows only when the follow-up is due or late, as on the check-in. Before that, the same action is a quiet line, "Followed up early? I followed up today". `markFollowedUp` now keeps a later chosen date: a week from today, or the date already set if that's later. This applies on the check-in too, where a due date is always earlier, so nothing changes there. flows.md is updated.

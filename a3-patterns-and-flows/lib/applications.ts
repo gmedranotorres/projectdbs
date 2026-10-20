@@ -83,10 +83,13 @@ export function suggestFollowUp(
 // Interviewing or has an offer keeps its status; anything else becomes
 // Followed up.
 export function markFollowedUp(app: Application, today: Day): Application {
+  // A week from today, unless a later date was already chosen: following up
+  // never pulls a follow-up earlier.
+  const weekOut = addDays(today, 7);
   return {
     ...app,
     status: app.status === "interviewing" || app.status === "offer" ? app.status : "followed-up",
-    followUpOn: addDays(today, 7),
+    followUpOn: app.followUpOn && app.followUpOn > weekOut ? app.followUpOn : weekOut,
     lastTouchedOn: today,
     updatedAt: new Date().toISOString(),
   };
