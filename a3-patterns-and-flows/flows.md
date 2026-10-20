@@ -14,9 +14,9 @@ flowchart TD
   subgraph main["Main task"]
     add["/add"] --> valid{"Valid?"}
     valid -- "No: errors by field,<br/>typing kept" --> add
-    valid -- Yes --> saved["Saved: follow-up date"]
-    saved -- "Add another" --> add
-    saved -- "See it in list" --> list["/applications"]
+    valid -- Yes --> saved["Toast: Added Company — Role"]
+    saved -- "Save and add another:<br/>empty form" --> add
+    saved -- "Save application:<br/>new one on top" --> list["/applications"]
     list -- Update --> edit["/applications/edit?id=…"]
     edit -- "Save or I followed up" --> list
   end
@@ -33,7 +33,6 @@ flowchart TD
   due -- No --> listed
   listed -- "See all" --> list
   listed -- "Add details" --> add
-  saved -. "First save only" .-> ics
   ics -. "Reminder" .-> monday
   anything -- Yes --> checkin
   act -- Details --> edit
@@ -74,13 +73,13 @@ Before anything is saved, a line under the form states the rules: a follow-up a 
 
 Seguimiento has no account, so it can't email anyone. Instead, the page offers **Add Monday check-in to my calendar**. It downloads `seguimiento-monday-check-in.ics`, a weekly event on Mondays at 9:00 starting next Monday, which the person adds to their own calendar. The page then says the file was downloaded and to open it. A last line, for someone who already uses Seguimiento on another device, links to loading a backup.
 
-If the first save happens on the full Add page instead, it says when the follow-up is ("Saved. Follow up with Priya at Morningstar on Mon, Oct 26"). When an application sent a while ago is already due, it says so instead: "It's on This week now, ready to follow up." From there you can add another or go to This week. After the very first save only, the Monday calendar reminder is offered again. Your first visit ends with a date to come back to, and a way to be reminded of it.
+If the first save happens on the full Add page instead, a toast says "Added Example Co — Data Analyst." and the All page opens with the new application on top (see Flow 2). The Monday calendar reminder is on Home.
 
 **Error: the browser won't save.** This happens in a private window, or when site data is blocked. A banner on every page says so: anything you add will be gone when you close the tab, so open Seguimiento in a regular window or allow this site to store data. The app still works for that tab, so you can see what it does.
 
 ## Flow 2: The main task (add, list, update)
 
-**Add.** The Add page is one column, in this order: Company, Role, Applied on (today is filled in), Follow up on (a week later is filled in, and it follows Applied on until you type your own), then Link, Notes and Who to follow up with, all three optional. There's no status: a new application starts as Applied. Pressing **Save application** saves it. The page then confirms the follow-up date and offers **Add another** first, because applications come in bursts. Add another clears the form and puts the cursor back in Company. **Go to Home** and **See it in your list** are the other ways out. While the form is being checked, a valid application is also logged to the browser console.
+**Add.** The Add page is one column, in this order: Company, Role, Applied on (today is filled in), Follow up on (a week later is filled in, and it follows Applied on until you type your own), then Link, Notes and Who to follow up with, all three optional. There's no status: a new application starts as Applied. Pressing **Save application** saves it, a toast says "Added Example Co — Data Analyst.", and the All page opens with the new application on top under "Just added", highlighted for a few seconds and focused for keyboard and screen reader users. The list replaces the form in the browser's history, so **Back** goes to where you were before Add, not to a filled form. Because applications come in bursts, **Save and add another** saves, shows the same toast, and gives an empty form with the cursor in Company. After a duplicate warning, **Save anyway** does whatever the button you pressed would have done.
 
 **Errors when adding.** Fields are checked when you save. Every problem is shown at once, next to its field, what you typed stays, and the cursor moves to the first one. From then on, a field with an error is checked again as you change it: the error goes as soon as it's fixed, and fixing Applied on can also clear Follow up on.
 
@@ -93,7 +92,7 @@ If the first save happens on the full Add page instead, it says when the follow-
 
 Logging the same company and role twice is a warning, not an error: "You already logged Data Analyst at Morningstar on Oct 3." It offers **Save anyway** or **Open that one**. If the browser refuses to save, usually because its storage is full, a message above the button says so. The form stays filled in so you can try again.
 
-**List.** The All page shows every application, sorted by follow-up date, in the order you'd act on them: Due this week (late ones first), Upcoming, Gone quiet, and Closed (folded away). Each row shows the company, role and status, a tag saying when (such as "4 days late", "Follow up Thu, Oct 22" or "No news for 26 days"), and an **Update** link. After you add or change one, the page says what happened and marks that row "Just changed". Late items carry a clock icon and the words "days late", so nothing depends on color alone. With nothing saved, the page explains what will appear there and offers Log an application.
+**List.** The All page shows every application, sorted by follow-up date, in the order you'd act on them: Due this week (late ones first), Upcoming, Gone quiet, and Closed (folded away). Each row shows the company, role and status, a tag saying when (such as "4 days late", "Follow up Thu, Oct 22" or "No news for 26 days"), and an **Update** link. After you add one, it sits on top under "Just added"; after you change one, the page says what happened and marks that row "Just changed". Late items carry a clock icon and the words "days late", so nothing depends on color alone. With nothing saved, the page explains what will appear there and offers Log an application.
 
 **Update.** The Update page leads with the most common change. **I followed up today** marks the application as Followed up and moves the next follow-up two weeks out, in one tap. An application that's Interviewing stays Interviewing. Below it is the same form as Add, plus the status: Applied, Followed up and Interviewing, then the closed ones, Offer, Rejected, Withdrawn and No response. Choosing Interviewing adds the interview date. Choosing a closed status hides the follow-up date. Saving takes you back to the page you came from, which says what changed ("Updated Morningstar. Next follow-up Mon, Nov 2"). **Delete application** asks first, says it can't be undone, and points out that a closed status keeps the record instead.
 

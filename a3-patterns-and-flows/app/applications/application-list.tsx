@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   STATUS_LABELS,
   daysQuiet,
   dueLabel,
   groupAll,
+  groupOf,
   plural,
   type Application,
   type Group,
@@ -16,7 +19,11 @@ import { ArrivalMessage, useHighlightId } from "@/components/arrival-message";
 import { Badge, ButtonLink, EmptyState, Loading, PageHeader } from "@/components/ui";
 
 // Every application, sorted by follow-up date, in the order you'd act on
-// them. Closed ones are folded away.
+// them. Closed ones are folded away. Coming from Add (?new=), the new one
+// sits on top under "Just added", highlighted for a few seconds, with
+// focus on it.
+
+const GLOW_MS = 3000;
 
 const SECTIONS: { group: Group; title: string }[] = [
   { group: "due", title: "Due this week" },
@@ -27,11 +34,23 @@ const SECTIONS: { group: Group; title: string }[] = [
 export function ApplicationList() {
   const store = useApplications();
   const highlight = useHighlightId();
+  const newId = useSearchParams().get("new");
+  const [glow, setGlow] = useState(true);
+
+  useEffect(() => {
+    if (!newId || !store.hydrated) return;
+    document.getElementById(`row-${newId}`)?.focus();
+    const timer = setTimeout(() => setGlow(false), GLOW_MS);
+    return () => clearTimeout(timer);
+  }, [newId, store.hydrated]);
 
   if (!store.hydrated) return <Loading />;
   const today = getToday();
   const apps = store.applications;
-  const groups = groupAll(apps, today);
+  const added = newId ? apps.find((a) => a.id === newId) : undefined;
+  const closedCount = groupAll(apps, today).closed.length;
+  // The new one shows once, on top, not again in its section.
+  const groups = groupAll(added ? apps.filter((a) => a.id !== added.id) : apps, today);
 
   return (
     <div className="space-y-8">
@@ -40,13 +59,29 @@ export function ApplicationList() {
         description={
           apps.length === 0
             ? undefined
-            : `${plural(apps.length, "application")}, ${groups.closed.length} closed`
+            : `${plural(apps.length, "application")}, ${closedCount} closed`
         }
         back={{ href: "/", label: "Home" }}
         action={apps.length > 0 && <ButtonLink href="/add">Log an application</ButtonLink>}
       />
 
-      <ArrivalMessage apps={apps} />
+      {/* After Add, the toast has already said what happened. */}
+      {!added && <ArrivalMessage apps={apps} />}
+
+      {added && (
+        <section aria-labelledby="added-heading" className="space-y-3">
+          <h2 id="added-heading" className="text-xl font-semibold">
+            Just added
+          </h2>
+          <Rows
+            apps={[added]}
+            group={groupOf(added, today)}
+            today={today}
+            highlight={glow ? added.id : null}
+            badge={false}
+          />
+        </section>
+      )}
 
       {apps.length === 0 && (
         <EmptyState title="Nothing logged yet" action={{ href: "/add", label: "Log an application" }}>
@@ -105,11 +140,14 @@ function Rows({
   group,
   today,
   highlight,
+  badge = true,
 }: {
   apps: Application[];
   group: Group;
   today: Day;
   highlight: string | null;
+  // The "Just changed" badge on the highlighted row.
+  badge?: boolean;
 }) {
   return (
     <ul className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
@@ -118,7 +156,9 @@ function Rows({
         return (
           <li
             key={app.id}
-            className={`flex items-start gap-4 px-4 py-3 ${isNew ? "bg-accent-soft" : ""}`}
+            id={`row-${app.id}`}
+            tabIndex={-1}
+            className={`flex items-start gap-4 px-4 py-3 transition-colors duration-700 motion-reduce:transition-none ${isNew ? "bg-accent-soft" : ""}`}
           >
             <div className="min-w-0 flex-1 space-y-1.5">
               <div>
@@ -127,10 +167,10 @@ function Rows({
                   {app.role} · {STATUS_LABELS[app.status]}
                 </p>
               </div>
-              {(isNew || group !== "closed") && (
+              {((isNew && badge) || group !== "closed") && (
                 <div className="flex flex-wrap gap-2">
                   {when(app, group, today)}
-                  {isNew && <Badge tone="new">Just changed</Badge>}
+                  {isNew && badge && <Badge tone="new">Just changed</Badge>}
                 </div>
               )}
             </div>

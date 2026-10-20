@@ -374,3 +374,28 @@ Keep what the person typed, move focus to the first invalid field, and clear a f
 - I chose to keep "Who to follow up with", optional and last, so This week can still say "Email Priya at Example Co".
 - Claude kept the existing behavior around the form: Follow up on follows Applied on until you type your own, the "Use" suggestion, and the duplicate warning.
 - An empty Follow up on keeps its existing message, "Pick a follow-up date, or use the suggestion below.", because the request didn't give one.
+
+## 2026-10-20 · Save application and confirm
+
+**What I asked.** Make `/add` save. On a valid submit: add the application, show the toast "Added {Company} — {Role}.", and go to `/applications` with the new item at the top, briefly highlighted. Add a secondary button, "Save and add another", that saves, clears the form, returns focus to Company and shows the same toast. Make sure the browser's Back button from `/applications` goes to where the person came from, not back into a filled form.
+
+**What changed.**
+- `app/add/add-application.tsx`:
+  - **Save application** shows the toast and calls `router.replace("/applications?new=<id>")`. The list takes the form's place in the history, so Back skips the filled form.
+  - **Save and add another** (secondary) shows the same toast and remounts the form, empty, with focus in Company.
+  - The old "Saved" panel (follow-up date, Add another, Go to Home, See it in your list, first-save calendar reminder) is gone.
+- `components/application-form.tsx`: an optional `addAnotherLabel` adds the second button, and `onSaved(app, another)` says which one was used. If a duplicate warning comes up, **Save anyway** keeps the choice. The temporary console log from the last round is removed, since `/add` saves for real now.
+- `app/applications/application-list.tsx`: with `?new=`, the new application sits on top under "Just added" and doesn't repeat in its section. It's highlighted for 3 seconds, with no fade animation when reduced motion is on, and focus moves to its row. The "Added…" notice is skipped there, because the toast already said it. The closed count in the description still counts every application.
+- Updated flows.md (Flow 1, Add, List, the diagram) and the README diagram.
+- Checked in Chrome at 390px, starting from Home → Add in the nav:
+  - Save and add another: the toast says "Added Example Co — Data Analyst.", the form is empty, focus is on Company, and the entry is saved.
+  - Duplicate + Save and add another + Save anyway: it stays on `/add` and saves.
+  - Save application: `/applications?new=…`, the right toast, "Just added" first with the row highlighted and focused, shown once, and the highlight gone after 3 seconds.
+  - History grew by one entry, and Back goes to Home.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- Claude chose `router.replace` over clearing the form before leaving. That way, Back can't return to the form at all, whether filled or empty.
+- What the old "Saved" panel did is gone from `/add`: the follow-up date in the confirmation, the "It's on This week now" note for an older application, and the calendar reminder after the very first save. The toast follows my wording exactly, and the new row shows its follow-up tag. The calendar reminder is still on Home.
+- The list keeps its **Update** links; this round didn't touch Open vs Update.
+- Note for testing: this Next.js version keeps visited pages mounted but hidden, so a page can contain hidden forms from other pages. Tests must pick visible elements.

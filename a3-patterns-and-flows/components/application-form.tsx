@@ -35,9 +35,13 @@ type Props = {
   applications: Application[];
   today: Day;
   submitLabel: string;
+  // A second, secondary save button that keeps you on the form, such as
+  // "Save and add another".
+  addAnotherLabel?: string;
   autoFocus?: boolean;
   afterSubmit?: ReactNode;
-  onSaved: (app: Application) => void;
+  // `another` is true when the second button was used.
+  onSaved: (app: Application, another: boolean) => void;
 };
 
 // Focus after React has drawn the change, such as a newly opened section.
@@ -52,6 +56,7 @@ export function ApplicationForm({
   applications,
   today,
   submitLabel,
+  addAnotherLabel,
   autoFocus,
   afterSubmit,
   onSaved,
@@ -71,6 +76,8 @@ export function ApplicationForm({
     Boolean(initial.contact || initial.link || initial.notes),
   );
   const [duplicate, setDuplicate] = useState<Application | null>(null);
+  // Which save button led to the duplicate warning, for "Save anyway".
+  const [pendingAnother, setPendingAnother] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
 
   const suggestion = suggestFollowUp(values.status, {
@@ -126,7 +133,7 @@ export function ApplicationForm({
     recheck(next);
   }
 
-  function submit(event?: FormEvent, allowDuplicate = false) {
+  function submit(event?: FormEvent, allowDuplicate = false, another = false) {
     event?.preventDefault();
     const found = validate(values, today);
     const first = FIELD_ORDER.find((f) => found[f]);
@@ -140,13 +147,12 @@ export function ApplicationForm({
     const same = findDuplicate(applications, values, before?.id);
     if (same && !allowDuplicate) {
       setDuplicate(same);
+      setPendingAnother(another);
       focusSoon(`${formId}-duplicate`);
       return;
     }
 
     const app = toApplication(values, today, before);
-    // Logged while the form is being checked.
-    if (mode === "add") console.log("Valid application", app);
     if (!(before ? saved.update(app) : saved.add(app))) {
       setSaveFailed(true);
       focusSoon(`${formId}-save-error`);
@@ -157,7 +163,7 @@ export function ApplicationForm({
     if (typedFollowUp && app.followUpOn && app.followUpOn !== before?.followUpOn) {
       saved.dismissHint(FOLLOW_UP_HINT);
     }
-    onSaved(app);
+    onSaved(app, another);
   }
 
   const text = (field: FieldName, label: string, extra: { hint?: string; optional?: boolean; placeholder?: string } = {}) => (
@@ -340,7 +346,7 @@ export function ApplicationForm({
             you have.
           </p>
           <div className="flex flex-wrap gap-2">
-            <Button onClick={() => submit(undefined, true)}>Save anyway</Button>
+            <Button onClick={() => submit(undefined, true, pendingAnother)}>Save anyway</Button>
             <ButtonLink variant="secondary" href={`/applications/edit?id=${duplicate.id}`}>
               Open that one
             </ButtonLink>
@@ -366,6 +372,11 @@ export function ApplicationForm({
         <Button type="submit" className="w-full sm:w-auto">
           {submitLabel}
         </Button>
+        {addAnotherLabel && (
+          <Button variant="secondary" className="w-full sm:w-auto" onClick={() => submit(undefined, false, true)}>
+            {addAnotherLabel}
+          </Button>
+        )}
         {afterSubmit}
       </div>
     </form>
