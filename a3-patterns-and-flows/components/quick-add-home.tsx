@@ -259,13 +259,11 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
         </div>
 
         {/* Before the button, so it's read before an older application is
-            saved with today's date. */}
-        {applications.length === 0 && (
-          <p className="text-muted">
-            Applied earlier, or want to add a contact?{" "}
-            <TextLink href={`/add?from=${here}`}>Use the full form</TextLink>.
-          </p>
-        )}
+            saved with today's date. Always shown: quick add has no date. */}
+        <p className="text-muted">
+          Applied earlier, or want to add a contact?{" "}
+          <TextLink href={`/add?from=${here}`}>Use the full form</TextLink>.
+        </p>
 
         {saveFailed && (
           <p className="flex gap-2 rounded-lg border border-error bg-error-soft p-4 text-sm">
@@ -317,11 +315,10 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
               />
             ))}
           </List>
-          <p className="flex flex-wrap gap-x-6 gap-y-2">
+          <p>
             <TextLink href="/applications">
               See all{applications.length > LIST_LIMIT ? ` ${applications.length}` : ""}
             </TextLink>
-            <TextLink href={`/add?from=${here}`}>Add details</TextLink>
           </p>
         </section>
       )}

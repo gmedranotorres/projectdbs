@@ -50,7 +50,7 @@ flowchart TD
   empty -- "Use the full form<br/>(earlier date, contact)" --> add
   due -- No --> nothing["Nothing due. Add an application<br/>or come back Monday."]
   listed -- "See all" --> list
-  listed -- "Add details" --> add
+  listed -- "Use the full form" --> add
   ics -. "Reminder" .-> monday
   anything -- Yes --> welcome
   welcome -- "quick add" --> listed
