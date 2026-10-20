@@ -9,7 +9,7 @@ type Variant = "primary" | "secondary" | "danger";
 const buttonBase =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-base font-medium transition-colors";
 const buttonVariants: Record<Variant, string> = {
-  primary: "bg-accent text-accent-ink hover:bg-accent-strong",
+  primary: "bg-accent text-accent-ink hover:bg-accent-hover",
   secondary: "border border-line-strong bg-surface text-ink hover:bg-subtle",
   danger: "border border-error bg-surface text-error hover:bg-error-soft",
 };
@@ -45,7 +45,7 @@ export function ButtonLink({
 export function TextLink({ className = "", ...props }: ComponentProps<typeof Link>) {
   return (
     <Link
-      className={`font-medium text-accent underline underline-offset-4 hover:decoration-2 ${className}`}
+      className={`font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2 ${className}`}
       {...props}
     />
   );
@@ -71,7 +71,7 @@ export function PageHeader({
       {back && (
         <Link
           href={back.href}
-          className="-my-2 inline-flex min-h-11 items-center text-sm font-medium text-accent underline underline-offset-4 hover:decoration-2"
+          className="-my-2 inline-flex min-h-11 items-center text-sm font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2"
         >
           <span aria-hidden="true">&larr;&nbsp;</span>Back
           <span className="sr-only"> to {back.label}</span>
@@ -79,7 +79,7 @@ export function PageHeader({
       )}
       <div className={`flex flex-wrap items-end justify-between gap-4 ${back ? "mt-3" : ""}`}>
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-balance">{title}</h1>
+          <h1 className="font-serif text-display text-balance">{title}</h1>
           {description && <div className="mt-2 text-muted">{description}</div>}
         </div>
         {action}
@@ -186,7 +186,7 @@ export function Tag({
   const tones = {
     plain: "border border-line bg-subtle text-muted",
     late: "bg-late-soft text-late",
-    new: "bg-accent-soft text-accent",
+    new: "bg-accent-soft text-ink",
   };
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-sm font-medium ${tones[tone]}`}>

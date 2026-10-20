@@ -139,7 +139,7 @@ function Rows({
             </div>
             <Link
               href={`/applications/edit?id=${app.id}&from=list`}
-              className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4"
+              className="inline-flex min-h-11 items-center font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2"
             >
               Update<span className="sr-only"> {app.company}</span>
             </Link>

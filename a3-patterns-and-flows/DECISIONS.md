@@ -69,3 +69,35 @@ Shared on every page:
 - The reminder is offered after the first save only, not after every save, so it doesn't nag.
 - I fixed the confirmation wording myself. Without the fix, the "Already applied" line would be contradicted by the very next screen.
 - Still open: the example on the first visit names real companies (Morningstar, Grubhub), but AGENTS.md asks for openly fictional sample content. I didn't change them, because I haven't decided yet and flows.md uses the same names.
+
+## 2026-10-20 · Calm design tokens from A2
+
+**What I asked.** Bring the Calm design system from `../a2-ui-ux-visual-design` into this project: copy its CSS variables (color roles, type roles, spacing scale, radii, border widths, shadows) into `app/globals.css`, and wire them into Tailwind so classes like `bg-surface`, `text-ink`, `text-muted` and `border-line` use them. Copy only the font setup it already uses, with no imports across folders. Recompute the contrast of every text/background pair with the WCAG formula, list them, flag anything under 4.5:1, and ask before changing a color. Apply the tokens to the layout, the navigation and PageHeader.
+
+**What changed.**
+- `app/globals.css` now holds Calm's values, copied from `themes/calm.ts` and its palette: background `#EBE2D0`, surface `#FBF7EE`, text `#3A2B21`, muted `#6B5848`, border `#C8BDAD`, accent `#8A9E80`, tint `#DDE4D4` and deeper accent `#747E65`. It also holds the four type roles (display, heading, body, label), the spacing scale (4 to 48px), the radii (6, 12, 16 and 999px), the border widths (1 and 2px) and the shadow (none). In Tailwind they're `bg-*`, `text-*`, `border-*`, `font-serif`/`font-sans`, `text-display`/`text-heading`/`text-body`/`text-label`, `rounded-badge`/`rounded-control`/`rounded-card` and `shadow-raised`.
+- Fonts: Newsreader and Inter replace Geist, set up as in A2's `fonts/calm.ts`.
+- Layout: the body uses Calm's body role. The focus ring is a 2px ring in the text color, Calm's own. The skip link uses the control radius.
+- Navigation: "Seguimiento" uses the heading role in Newsreader, the phone bar labels use the label role, and the desktop items use the control radius.
+- PageHeader: the title uses the display role in Newsreader.
+
+Contrast (WCAG 2 formula, pairs that appear in A3):
+
+| Text on background | Ratio |
+|---|---|
+| Text on background / surface / tint | 10.55 / 12.69 / 10.42 |
+| Text on accent (primary button) | 4.71 |
+| Text on the button's hover color | 5.92 |
+| Muted on background / surface / tint | 5.24 / 6.31 / 5.18 |
+| Error on background / surface / error-soft | 5.11 / 6.14 / 5.60 |
+| Late on late-soft | 6.85 |
+| ~~Sage accent as text on background / surface / tint~~ | 2.24 / 2.70 / 2.21, fixed |
+| ~~Text on deeper accent (old button hover)~~ | 3.18, fixed |
+
+**What I rejected or decided myself.**
+- I chose Calm's own link style for the failing sage text: the text color with a deeper-sage underline. That covers TextLink, Back, the links on This week and All, the current nav item, and the "New" tag. I rejected a new darker sage (`#636651`) because it isn't in Calm.
+- I chose Calm's own hover for the primary button (sage lightened toward surface, `#A1B096`) instead of the deeper accent.
+- I chose light only, like Calm in A2, and rejected keeping the old blue dark palette. `color-scheme` is now `light`.
+- Claude kept A3's own colors that Calm has no role for (subtle, late, error), with their values unchanged.
+- Claude gave the radii Tailwind names by use (`rounded-badge`, `rounded-control`, `rounded-card`), not `sm`/`md`/`lg`. Calm's sizes would have overwritten Tailwind's `rounded-lg` and `rounded-xl` and restyled every button and card. The existing components keep their radii until a round asks for them.
+- Spacing and border widths aren't new Tailwind classes. Calm's steps are already Tailwind's 1, 2, 3, 4, 6, 8 and 12, and its widths are `border` and `border-2`.

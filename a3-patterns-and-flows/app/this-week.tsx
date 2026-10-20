@@ -219,7 +219,7 @@ function DetailsLink({ app }: { app: Application }) {
   return (
     <Link
       href={`/applications/edit?id=${app.id}&from=week`}
-      className="inline-flex min-h-11 items-center px-2 font-medium text-accent underline underline-offset-4"
+      className="inline-flex min-h-11 items-center px-2 font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2"
     >
       Details<span className="sr-only"> for {app.company}</span>
     </Link>

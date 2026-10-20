@@ -62,7 +62,7 @@ export function SiteNav() {
   return (
     <header className="border-b border-line bg-surface">
       <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
-        <Link href="/" className="text-lg font-semibold tracking-tight">
+        <Link href="/" className="font-serif text-heading">
           Seguimiento
         </Link>
         <nav
@@ -77,14 +77,14 @@ export function SiteNav() {
                   <Link
                     href={item.href}
                     aria-current={current ? "page" : undefined}
-                    className={`flex min-h-14 flex-col items-center justify-center gap-0.5 px-2 text-xs md:min-h-11 md:rounded-lg md:px-3 md:text-base ${
+                    className={`flex min-h-14 flex-col items-center justify-center gap-0.5 px-2 text-label md:min-h-11 md:rounded-control md:px-3 md:text-base ${
                       current
-                        ? "font-semibold text-accent md:bg-accent-soft"
+                        ? "font-semibold text-ink md:bg-accent-soft"
                         : "text-muted hover:text-ink md:hover:bg-subtle"
                     }`}
                   >
                     {item.icon}
-                    <span className={current ? "underline decoration-2 underline-offset-4 md:no-underline" : ""}>
+                    <span className={current ? "underline decoration-accent-strong decoration-2 underline-offset-4 md:no-underline" : ""}>
                       {item.label}
                     </span>
                   </Link>
