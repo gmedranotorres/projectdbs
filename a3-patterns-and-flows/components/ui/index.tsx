@@ -11,6 +11,7 @@ export * from "./card";
 export * from "./chip";
 export * from "./field";
 export * from "./page-header";
+export * from "./progress";
 export * from "./toast";
 
 export function TextLink({ className = "", ...props }: ComponentProps<typeof Link>) {

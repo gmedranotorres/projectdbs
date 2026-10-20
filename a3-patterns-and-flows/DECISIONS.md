@@ -600,3 +600,60 @@ No change to `lib/dates.ts` was needed: day math runs at local noon, and `today(
 - **Two navs:** Claude chose two navs, one per screen size, over keeping one nav in the header. With one, a phone would Tab to the bottom bar before the page.
 - **Visible Back label:** Back names its destination on screen, because "how to get back" should be visible too.
 - **Known exception:** a toast's Close button comes after the bottom bar in Tab order, even though the toast shows at the top on phones. It lasts 5 seconds, Escape closes it, and focus is never moved into it.
+
+## 2026-10-20 · Weekly check-in
+
+**What I asked.** Build `/check-in`, the reason to come back, with these sections in order:
+1. **"Follow-ups due":** Applied or Interviewing, with followUpOn on or before today, soonest first. Each row has "Followed up" (followUpOn = today + 7, updatedAt = today), "Snooze a week" (followUpOn + 7) and "Open".
+2. **"Gone quiet":** Applied, no update in 14 days or more, no follow-up date. "Set a follow-up" opens a date field inline.
+3. **"This week":** the number added since Monday against the weekly goal (default 3, editable inline, saved in settings), as a simple progress bar with the numbers beside it.
+4. **"Done for this week":** a primary button that saves lastCheckInOn = today and shows "Done. See you next Monday."
+
+If nothing is due and nothing is quiet: "Nothing due. Add an application or come back Monday." with both links.
+
+**What I decided when Claude asked** (the request conflicted with existing rules):
+- **Followed up:** today + 7. Applied becomes Followed up (Interviewing and Offer keep theirs), and it counts as news. "I followed up today" on an application's page changes to + 7 too.
+- **Due list:** every open application counts: Applied, Followed up, Interviewing and Offer.
+- **Gone quiet:** Applied or Followed up, no update for 14+ days, and not already due. Every open application has a follow-up date, so "no follow-up date" would almost never match. The 21-day rule becomes 14 everywhere.
+- **Snooze a week:** today + 7. A week after the old date could still be in the past for a late one, and the button would seem to do nothing.
+
+**What changed.**
+- `app/this-week.tsx` is rewritten. Used by `/check-in` and by Home while something is due or quiet, it has:
+  - **Follow-ups due:** Followed up / Snooze a week / Open, with Undo.
+  - **Gone quiet:** "No update for N days", and Set a follow-up with an inline date field. A week from today is filled in, focus goes to the field, and the errors are "Pick a follow-up date." and "Choose today or a later date."
+  - **Nothing to do:** the plain message.
+  - **This week:** "Added since Monday, Oct 19: 2 applications." plus Progress, "Goal met." when reached, and an inline Change goal (1–20, "Enter a whole number from 1 to 20.").
+  - **Done for this week:** it stays "Done. See you next Monday." for the rest of the week.
+  - The old "All caught up / Next: …", "No open applications", "Follow up once more" and "Close it" are gone.
+- `lib/applications.ts`:
+  - `QUIET_AFTER_DAYS` = 14.
+  - `markFollowedUp` uses today + 7, and the Followed up suggestion is + 7.
+  - `postpone` (Snooze) and the new `setFollowUp` set the date and count as an update (`lastTouchedOn`), so a snoozed or newly dated application doesn't land in Gone quiet.
+  - `groupOf`: due = open with a date ≤ today; quiet = Applied/Followed up, not due, 14+ days without an update; everything else open is upcoming.
+- `lib/dates.ts`: `dayOf(time)` turns a saved moment such as createdAt into this device's calendar day, never the UTC one, for "added since Monday".
+- `components/ui/progress.tsx` (new, shared): a bar with `role="progressbar"` and `aria-valuetext="2 of 3"`, with the numbers beside it. It stays full past the goal, and the fill is 3.65:1 against the track.
+- `components/calendar-reminder.tsx`: `MondayReminderButton` split out, so "come back Monday" can download the Monday calendar file.
+- Wording elsewhere follows the new rules:
+  - The list's quiet badge reads "No update for N days".
+  - Home's rule line says "After 2 weeks with no update".
+  - The application page says "a week from today".
+  - The gallery shows Progress and the new badge text.
+- Updated flows.md (the follow-up rules, Flow 3, the diagram) and the README (diagram, rule line).
+- Checked in Chrome at 390px and 1440px, in Chicago time, with fictional data:
+  - **Order:** the sections come in the requested order. Due is Example Co (7 days late), Demo City Office (an offer, 2 days late, "Follow up with Alex Example at…"), then Sample Institute (Due today). Gone quiet is Placeholder Labs (No update for 20 days). An Interviewing application quiet since Sep 1 isn't listed.
+  - **Followed up:** status Followed up, Oct 27, touched and updated today; it leaves the list, focus moves to the message, and Undo restores everything.
+  - **Snooze:** an application with 14 days and no update → Oct 27, and it doesn't move to Gone quiet.
+  - **Set a follow-up:** an empty date and yesterday show the two errors. Cancel puts focus back on the button. Oct 22 is saved and the application leaves Gone quiet.
+  - **Added since Monday:** 2. It counts one created Monday 10:30 pm Chicago time (03:30 UTC Tuesday) and leaves out one created Sunday 11 pm Chicago time (04:00 UTC Monday).
+  - **Goal:** "0" and "2.5" show the error; " 2 " is saved, the bar reads 2 of 2 at 100% with "Goal met.", and focus returns to Change goal.
+  - **Done for this week:** saves `lastCheckInOn` and shows the message with focus on it; after a reload, the message is still there instead of the button.
+  - **Nothing to do:** after handling the rest, the plain message shows, with Add an application → `/add?from=/check-in` and the calendar download. Home becomes the quick add again, and the check-in again once something is due.
+  - **Tab order:** top to bottom at both widths.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- **"Both links":** Claude made them **Add an application** and **Come back Monday: add it to my calendar**, the existing Monday reminder file. There's no email, so the calendar is how "come back Monday" happens.
+- **Snooze and Set a follow-up count as an update.** Otherwise Snooze would send a stale application straight from Follow-ups due into Gone quiet. A snoozed one still comes back as due a week later, so nothing is forgotten. The badge says "No update" rather than "No news" for that reason.
+- **No Close it:** Gone quiet lost **Close it** and **Follow up once more**, since the request names only Set a follow-up. Open is kept on each row, and closing is on the application's page.
+- **Done stays shown:** "Done for this week" shows its message for the rest of the week instead of offering the button again.
+- **Home unchanged:** Home still switches to the check-in while something is due or quiet, as chosen earlier.

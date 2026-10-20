@@ -39,9 +39,11 @@ flowchart TD
   subgraph back["Coming back"]
     monday(["Monday"]) --> checkin["/ (check-in),<br/>always at /check-in"]
     checkin --> due{"Anything due<br/>or quiet?"}
-    due -- Yes --> act["I followed up · Not yet"]
+    due -- Yes --> act["Followed up · Snooze a week"]
     act -- "Undo or next one" --> checkin
-    checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
+    checkin -. "14+ days, no update" .-> quiet["Gone quiet:<br/>set a follow-up"]
+    checkin --> goal["Added since Monday<br/>vs weekly goal"]
+    goal --> doneweek["Done for this week"]
   end
 
   empty -- "Use the full form<br/>(earlier date, contact)" --> add
@@ -67,7 +69,7 @@ flowchart TD
 
 - **Something useful before any effort**, as with Teal's sample jobs. The first visit shows a labeled example Monday, not data.
 - **The first save unlocks something**, as with Huntr's AI tools. The first save gives a follow-up date, and the confirmation leads with it.
-- **Teal's follow-up rhythm, stated out loud.** Under the example, one line says Seguimiento suggests a follow-up a week after you apply, and that after 3 weeks with no news an application is marked gone quiet. Saying the rule explains why dates appear on their own.
+- **Teal's follow-up rhythm, stated out loud.** Under the example, one line says Seguimiento suggests a follow-up a week after you apply, and that after 2 weeks with no update an application is marked gone quiet. Saying the rule explains why dates appear on their own.
 - **A Monday-to-Sunday week**, like Teal's weekly goal, but without the target. This week opens with "Week of Oct 19".
 - **A reminder to come back**, like Teal's reminder emails and Huntr's digests. Seguimiento has no server and can't email, so the first visit, and the confirmation after the first save, offer **Add Monday check-in to my calendar**. It downloads a calendar file with a weekly event on Mondays at 9:00 that you add to your own calendar.
 - **Value right away, from your own data.** Instead of Teal's sample jobs, a line under the main button says: log applications you've already sent, with the day you applied, and anything from a week ago or more shows up right away in This week.

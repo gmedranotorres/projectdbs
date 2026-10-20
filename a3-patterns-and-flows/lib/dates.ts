@@ -28,6 +28,12 @@ export function today(): Day {
   return fromDate(new Date());
 }
 
+// The day, on this device's calendar, of a saved moment such as createdAt
+// ("2026-10-20T03:30:00.000Z" is Oct 19 in Chicago).
+export function dayOf(time: string): Day {
+  return fromDate(new Date(time));
+}
+
 export function addDays(day: Day, days: number): Day {
   const date = toDate(day);
   date.setDate(date.getDate() + days);

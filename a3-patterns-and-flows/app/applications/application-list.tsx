@@ -61,10 +61,10 @@ function byFollowUp(a: Application, b: Application) {
 }
 
 // Words beside the date when it needs attention, so late and gone quiet
-// never depend on color: "5 days late", "No news for 22 days".
+// never depend on color: "5 days late", "No update for 15 days".
 function attention(app: Application, today: Day) {
   if (groupOf(app, today) === "quiet") {
-    return <Badge tone="quiet">No news for {plural(daysQuiet(app, today), "day")}</Badge>;
+    return <Badge tone="quiet">No update for {plural(daysQuiet(app, today), "day")}</Badge>;
   }
   if (app.followUpOn && app.followUpOn < today) {
     return <Badge tone="due">{dueLabel(app, today)}</Badge>;

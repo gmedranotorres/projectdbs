@@ -1,72 +1,79 @@
 "use client";
 
-import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { useId, useState, type FormEvent, type ReactNode } from "react";
 import {
   STATUS_LABELS,
-  closeAs,
   daysQuiet,
   dueLabel,
   groupAll,
   markFollowedUp,
   plural,
   postpone,
+  setFollowUp,
   whoToContact,
   type Application,
 } from "@/lib/applications";
-import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday } from "@/lib/dates";
+import { addDays, dayOf, formatDay, formatShortDay, isDay, startOfWeek, today as getToday, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
 import { QuickAddHome } from "@/components/quick-add-home";
-import { Button, ButtonLink, Card, EmptyState, ErrorIcon, Loading, Notice, PageHeader, Badge, TextLink } from "@/components/ui";
+import { MondayReminderButton } from "@/components/calendar-reminder";
+import {
+  Badge,
+  Button,
+  ButtonLink,
+  Card,
+  EmptyState,
+  ErrorIcon,
+  Field,
+  Input,
+  Loading,
+  Notice,
+  PageHeader,
+  Progress,
+  TextLink,
+} from "@/components/ui";
 
-// The Monday check-in. Every follow-up can be handled right here, so the
-// ritual doesn't mean opening each application. It's Home while something
-// is due or quiet, and always at /check-in (the link in the footer).
+// The weekly check-in, the reason to come back. In order: what's due (each
+// one handled right here), what's gone quiet (give it a date), how this week
+// is going against the goal, and "Done for this week". It's Home while
+// something is due or quiet, and always at /check-in (the footer's link).
 
 type Message = { text: string; undo?: Application; tone?: "error" };
+
+const GOAL_MAX = 20;
 
 export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
   const store = useApplications();
   const [message, setMessage] = useState<Message | null>(null);
+  // The quiet application whose date field is open.
+  const [settingFor, setSettingFor] = useState<string | null>(null);
+  const [editingGoal, setEditingGoal] = useState(false);
+  const [doneFailed, setDoneFailed] = useState(false);
   const back = useBackLink();
   const here = useFromHere();
 
   if (!store.hydrated) return <Loading />;
 
   const today = getToday();
+  const monday = startOfWeek(today);
   const groups = groupAll(store.applications, today);
+  const nothingToDo = groups.due.length === 0 && groups.quiet.length === 0;
 
   // While nothing is due or quiet, / is the quick add and the newest items.
   // The check-in takes over once a follow-up comes up, and stays while its
   // message (with Undo) is showing, even after the last one is handled.
-  if (page === "home" && groups.due.length === 0 && groups.quiet.length === 0 && !message) {
+  if (page === "home" && nothingToDo && !message) {
     return <QuickAddHome applications={store.applications} />;
   }
 
-  const header = (
-    <PageHeader
-      title="This week"
-      description={`Week of ${formatShortDay(startOfWeek(today))}: who to follow up with, and what's gone quiet.`}
-      back={page === "check-in" ? back : undefined}
-    />
-  );
+  const added = store.applications.filter((a) => dayOf(a.createdAt) >= monday).length;
+  const goal = store.settings.weeklyGoal;
+  const lastCheckIn = store.settings.lastCheckInOn;
+  const doneThisWeek = lastCheckIn !== undefined && lastCheckIn >= monday;
 
-  if (store.applications.length === 0) {
-    return (
-      <div className="space-y-8">
-        {header}
-        <EmptyState
-          title="Nothing logged yet"
-          action={<ButtonLink href="/">Log your first application</ButtonLink>}
-        >
-          Log each application as you send it, and its follow-ups show up here on Monday.
-        </EmptyState>
-      </div>
-    );
-  }
-
-  const openCount = groups.due.length + groups.quiet.length + groups.upcoming.length;
+  const focusSoon = (id: string) =>
+    requestAnimationFrame(() => document.getElementById(id)?.focus());
 
   function act(before: Application, after: Application, text: string) {
     if (store.update(after)) {
@@ -74,7 +81,7 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
     } else {
       setMessage({ text: "Couldn't save that change. This browser's storage may be full.", tone: "error" });
     }
-    requestAnimationFrame(() => document.getElementById("week-message")?.focus());
+    focusSoon("week-message");
   }
 
   // If the save fails, the change stays and Undo stays offered to try again.
@@ -88,12 +95,25 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
         tone: "error",
       });
     }
-    requestAnimationFrame(() => document.getElementById("week-message")?.focus());
+    focusSoon("week-message");
+  }
+
+  function done() {
+    if (store.setSettings({ lastCheckInOn: today })) {
+      setDoneFailed(false);
+      focusSoon("week-done");
+    } else {
+      setDoneFailed(true);
+    }
   }
 
   return (
     <div className="space-y-8">
-      {header}
+      <PageHeader
+        title="This week"
+        description={`Week of ${formatShortDay(monday)}: who to follow up with, and what's gone quiet.`}
+        back={page === "check-in" ? back : undefined}
+      />
 
       {message && (
         <Notice id="week-message" tone={message.tone}>
@@ -114,16 +134,14 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
       {groups.due.length > 0 && (
         <section aria-labelledby="due-heading" className="space-y-3">
           <h2 id="due-heading" className="text-xl font-semibold">
-            Follow up this week <span className="font-normal text-muted">({groups.due.length})</span>
+            Follow-ups due <span className="font-normal text-muted">({groups.due.length})</span>
           </h2>
           <ul className="space-y-3">
             {groups.due.map((app) => (
               <li key={app.id}>
                 <Card className="space-y-3">
                   <AppHeading app={app}>
-                    <Badge tone={app.followUpOn && app.followUpOn < today ? "due" : "neutral"}>
-                      {dueLabel(app, today)}
-                    </Badge>
+                    <Badge tone={app.followUpOn! < today ? "due" : "neutral"}>{dueLabel(app, today)}</Badge>
                   </AppHeading>
                   <div className="flex flex-wrap gap-2">
                     <Button
@@ -132,18 +150,18 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
                         act(app, next, `Followed up with ${app.company}. Next follow-up ${formatDay(next.followUpOn!)}.`);
                       }}
                     >
-                      I followed up<span className="sr-only"> with {app.company}</span>
+                      Followed up<span className="sr-only">: {app.company}</span>
                     </Button>
                     <Button
                       variant="secondary"
                       onClick={() => {
                         const next = postpone(app, today);
-                        act(app, next, `${app.company} moved to ${formatDay(next.followUpOn!)}.`);
+                        act(app, next, `Snoozed ${app.company} to ${formatDay(next.followUpOn!)}.`);
                       }}
                     >
-                      Not yet<span className="sr-only"> for {app.company}</span>
+                      Snooze a week<span className="sr-only">: {app.company}</span>
                     </Button>
-                    <DetailsLink app={app} from={here} />
+                    <OpenLink app={app} from={here} />
                   </div>
                 </Card>
               </li>
@@ -159,7 +177,7 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
               Gone quiet <span className="font-normal text-muted">({groups.quiet.length})</span>
             </h2>
             <p className="mt-1 text-muted">
-              No news in 3 weeks or more. Follow up once more, or close it to clear your list.
+              Applied, with no update in 2 weeks or more. Pick a day to follow up.
             </p>
           </div>
           <ul className="space-y-3">
@@ -167,25 +185,29 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
               <li key={app.id}>
                 <Card className="space-y-3">
                   <AppHeading app={app}>
-                    <Badge tone="quiet">No news for {plural(daysQuiet(app, today), "day")}</Badge>
+                    <Badge tone="quiet">No update for {plural(daysQuiet(app, today), "day")}</Badge>
                   </AppHeading>
-                  <div className="flex flex-wrap gap-2">
-                    <Button
-                      onClick={() => {
-                        const next = markFollowedUp(app, today);
-                        act(app, next, `Followed up with ${app.company}. Next follow-up ${formatDay(next.followUpOn!)}.`);
+                  {settingFor === app.id ? (
+                    <SetFollowUpForm
+                      app={app}
+                      today={today}
+                      onSave={(day) => {
+                        setSettingFor(null);
+                        act(app, setFollowUp(app, day, today), `${app.company}: follow up on ${formatDay(day)}.`);
                       }}
-                    >
-                      Follow up once more<span className="sr-only"> with {app.company}</span>
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      onClick={() => act(app, closeAs(app, "no-response", today), `Closed ${app.company} as No response.`)}
-                    >
-                      Close it<span className="sr-only">: {app.company}</span>
-                    </Button>
-                    <DetailsLink app={app} from={here} />
-                  </div>
+                      onCancel={() => {
+                        setSettingFor(null);
+                        focusSoon(`set-${app.id}`);
+                      }}
+                    />
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      <Button id={`set-${app.id}`} variant="secondary" onClick={() => setSettingFor(app.id)}>
+                        Set a follow-up<span className="sr-only">: {app.company}</span>
+                      </Button>
+                      <OpenLink app={app} from={here} />
+                    </div>
+                  )}
                 </Card>
               </li>
             ))}
@@ -193,42 +215,86 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
         </section>
       )}
 
-      {groups.due.length === 0 && groups.quiet.length === 0 && (
-        <Card className="space-y-3">
-          {openCount > 0 ? (
-            <>
-              <h2 className="text-xl font-semibold">All caught up</h2>
-              <p>
-                Nothing due this week. Next: {groups.upcoming[0].company} on{" "}
-                {formatDay(groups.upcoming[0].followUpOn!)}
-                {groups.upcoming[0].followUpOn &&
-                  ` (in ${plural(daysBetween(today, groups.upcoming[0].followUpOn), "day")})`}
-                .
-              </p>
-            </>
-          ) : (
-            <>
-              <h2 className="text-xl font-semibold">No open applications</h2>
-              <p>Everything on your list is closed. Log a new one when you send it.</p>
-            </>
-          )}
-          <ButtonLink href={`/add?from=${here}`}>Log an application</ButtonLink>
-        </Card>
+      {nothingToDo && (
+        <EmptyState
+          action={
+            <div className="flex flex-wrap items-start gap-x-6 gap-y-3">
+              <ButtonLink variant="secondary" href={`/add?from=${here}`}>
+                Add an application
+              </ButtonLink>
+              <MondayReminderButton label="Come back Monday: add it to my calendar" variant="quiet" />
+            </div>
+          }
+        >
+          Nothing due. Add an application or come back Monday.
+        </EmptyState>
       )}
 
-      <p className="flex flex-wrap gap-x-6 gap-y-2 text-muted">
-        <TextLink href="/applications">
-          See all {plural(store.applications.length, "application")}
-        </TextLink>
-        {(groups.due.length > 0 || groups.quiet.length > 0) && (
-          <TextLink href={`/add?from=${here}`}>Log an application</TextLink>
-        )}
+      <section aria-labelledby="goal-heading" className="space-y-3">
+        <h2 id="goal-heading" className="text-xl font-semibold">
+          This week
+        </h2>
+        <Card className="space-y-3">
+          <p>
+            Added since Monday, {formatShortDay(monday)}: {plural(added, "application")}
+            {added >= goal ? ". Goal met." : "."}
+          </p>
+          <Progress label="Added this week, against your weekly goal" value={added} max={goal} />
+          {editingGoal ? (
+            <GoalForm
+              goal={goal}
+              onSave={(next) => {
+                if (store.setSettings({ weeklyGoal: next })) {
+                  setEditingGoal(false);
+                  focusSoon("change-goal");
+                  return true;
+                }
+                return false;
+              }}
+              onCancel={() => {
+                setEditingGoal(false);
+                focusSoon("change-goal");
+              }}
+            />
+          ) : (
+            <p className="flex flex-wrap items-center gap-x-3 text-muted">
+              Weekly goal: {plural(goal, "application")}
+              <Button id="change-goal" variant="quiet" size="sm" onClick={() => setEditingGoal(true)}>
+                Change goal
+              </Button>
+            </p>
+          )}
+        </Card>
+      </section>
+
+      {doneThisWeek ? (
+        <Notice id="week-done" role="status">
+          <p>Done. See you next Monday.</p>
+        </Notice>
+      ) : (
+        <div className="space-y-3">
+          {doneFailed && (
+            <Notice tone="error">
+              <p className="flex gap-2">
+                <ErrorIcon />
+                <span>Couldn&rsquo;t save. This browser&rsquo;s storage may be full; try again.</span>
+              </p>
+            </Notice>
+          )}
+          <Button onClick={done} className="w-full sm:w-auto">
+            Done for this week
+          </Button>
+        </div>
+      )}
+
+      <p className="text-muted">
+        <TextLink href="/applications">See all {plural(store.applications.length, "application")}</TextLink>
       </p>
     </div>
   );
 }
 
-// "Email Priya at Morningstar" on top, then the role and status.
+// "Follow up with Priya at Example Co" on top, then the role and status.
 function AppHeading({ app, children }: { app: Application; children: ReactNode }) {
   return (
     <div className="flex flex-wrap items-start justify-between gap-2">
@@ -245,13 +311,115 @@ function AppHeading({ app, children }: { app: Application; children: ReactNode }
   );
 }
 
-function DetailsLink({ app, from }: { app: Application; from: string }) {
+function OpenLink({ app, from }: { app: Application; from: string }) {
   return (
-    <Link
-      href={`/applications/${app.id}?from=${from}`}
-      className="inline-flex min-h-11 items-center px-2 font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2"
-    >
-      Details<span className="sr-only"> for {app.company}</span>
-    </Link>
+    <TextLink href={`/applications/${app.id}?from=${from}`} className="inline-flex min-h-11 items-center px-2">
+      Open<span className="sr-only">: {app.role} at {app.company}</span>
+    </TextLink>
+  );
+}
+
+// The date field that opens in place of "Set a follow-up". A week from
+// today is filled in; the cursor goes to the field.
+function SetFollowUpForm({
+  app,
+  today,
+  onSave,
+  onCancel,
+}: {
+  app: Application;
+  today: Day;
+  onSave: (day: Day) => void;
+  onCancel: () => void;
+}) {
+  const id = useId();
+  const [day, setDay] = useState(addDays(today, 7));
+  const [error, setError] = useState<string>();
+
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    const problem = !isDay(day)
+      ? "Pick a follow-up date."
+      : day < today
+        ? "Choose today or a later date."
+        : undefined;
+    setError(problem);
+    if (problem) document.getElementById(id)?.focus();
+    else onSave(day);
+  }
+
+  return (
+    <form noValidate onSubmit={submit} className="space-y-3">
+      <Field id={id} label={`Follow up with ${app.company} on`} error={error}>
+        <Input
+          type="date"
+          name="followUpOn"
+          value={day}
+          min={today}
+          autoFocus
+          onChange={(e) => {
+            setDay(e.target.value);
+            if (error) setError(undefined);
+          }}
+        />
+      </Field>
+      <div className="flex flex-wrap gap-2">
+        <Button type="submit">Save date</Button>
+        <Button variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+// The weekly goal, changed in place: a whole number from 1 to 20.
+function GoalForm({
+  goal,
+  onSave,
+  onCancel,
+}: {
+  goal: number;
+  onSave: (goal: number) => boolean;
+  onCancel: () => void;
+}) {
+  const id = useId();
+  const [value, setValue] = useState(String(goal));
+  const [error, setError] = useState<string>();
+
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    const n = Number(value.trim());
+    if (!/^\d+$/.test(value.trim()) || n < 1 || n > GOAL_MAX) {
+      setError(`Enter a whole number from 1 to ${GOAL_MAX}.`);
+      document.getElementById(id)?.focus();
+      return;
+    }
+    if (!onSave(n)) setError("Couldn't save. This browser's storage may be full; try again.");
+  }
+
+  return (
+    <form noValidate onSubmit={submit} className="space-y-3">
+      <Field id={id} label="Weekly goal" hint="Applications to log each week, Monday to Sunday." error={error}>
+        <Input
+          name="weeklyGoal"
+          inputMode="numeric"
+          value={value}
+          autoFocus
+          autoComplete="off"
+          className="max-w-32"
+          onChange={(e) => {
+            setValue(e.target.value);
+            if (error) setError(undefined);
+          }}
+        />
+      </Field>
+      <div className="flex flex-wrap gap-2">
+        <Button type="submit">Save goal</Button>
+        <Button variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>
+      </div>
+    </form>
   );
 }

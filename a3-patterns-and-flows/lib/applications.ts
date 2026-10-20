@@ -1,7 +1,6 @@
 import {
   addDays,
   daysBetween,
-  endOfWeek,
   formatDay,
   formatShortDay,
   isDay,
@@ -31,7 +30,8 @@ export function isOpen(status: Status | "closed"): status is OpenStatus {
 
 // ---- Follow-up rules ----------------------------------------------------
 
-export const QUIET_AFTER_DAYS = 21;
+// Applied or Followed up, with no update for this many days, goes quiet.
+export const QUIET_AFTER_DAYS = 14;
 
 // What the Status field offers. Followed up shows as Applied, and the
 // three closed statuses as Closed, with the reason chosen separately.
@@ -63,7 +63,7 @@ export function suggestFollowUp(
         ? { day: addDays(dates.appliedOn, 7), reason: "1 week after applying" }
         : { day: null, reason: "1 week after applying" };
     case "followed-up":
-      return { day: addDays(dates.today, 14), reason: "2 weeks after following up" };
+      return { day: addDays(dates.today, 7), reason: "1 week after following up" };
     case "interviewing":
       return { day: addDays(dates.today, 3), reason: "3 days from today" };
     default:
@@ -71,24 +71,34 @@ export function suggestFollowUp(
   }
 }
 
-// "I followed up today." An application that's Interviewing or has an
-// offer keeps its status; anything else becomes Followed up.
+// "Followed up": ask again a week from today. An application that's
+// Interviewing or has an offer keeps its status; anything else becomes
+// Followed up.
 export function markFollowedUp(app: Application, today: Day): Application {
   return {
     ...app,
     status: app.status === "interviewing" || app.status === "offer" ? app.status : "followed-up",
-    followUpOn: addDays(today, 14),
+    followUpOn: addDays(today, 7),
     lastTouchedOn: today,
     updatedAt: new Date().toISOString(),
   };
 }
 
-// "Not yet": ask again in a week. It isn't news, so the application still
-// goes quiet on schedule.
+// "Snooze a week": ask again a week from today (not a week after the old
+// date, which for a late one could still be in the past). Deciding counts
+// as an update, so it doesn't send the application to Gone quiet.
 export function postpone(app: Application, today: Day): Application {
+  return setFollowUp(app, addDays(today, 7), today);
+}
+
+// "Set a follow-up" on a quiet application: the date you picked. Like
+// Snooze, it's an update, so the application leaves Gone quiet and comes
+// back under Follow-ups due on that day.
+export function setFollowUp(app: Application, day: Day, today: Day): Application {
   return {
     ...app,
-    followUpOn: addDays(today, 7),
+    followUpOn: day,
+    lastTouchedOn: today,
     updatedAt: new Date().toISOString(),
   };
 }
@@ -112,7 +122,8 @@ export function closeAs(
 
 export type Group = "due" | "quiet" | "upcoming" | "closed";
 
-// An interview still to come counts as news, so it can't go quiet before it.
+// The last update: applying, following up, a status change, snoozing or
+// setting a follow-up. An interview still to come counts too.
 function lastNews(app: Application): Day {
   return app.interviewOn && app.interviewOn > app.lastTouchedOn
     ? app.interviewOn
@@ -123,16 +134,19 @@ export function daysQuiet(app: Application, today: Day): number {
   return daysBetween(lastNews(app), today);
 }
 
+// Where an application sits on the check-in:
+// - due: open, with a follow-up date today or earlier.
+// - quiet: Applied or Followed up, not due, no update for 14 days or more.
+//   (Interviewing and Offer wait on a date you set, so they don't go quiet.)
+// - upcoming: open, with the next follow-up still ahead.
 export function groupOf(app: Application, today: Day): Group {
   if (!isOpen(app.status)) return "closed";
-  if (app.status === "offer") {
-    // The next move on an offer is yours, so it doesn't go quiet. An offer
-    // saved before offers had follow-up dates has nothing to remind about.
-    if (!app.followUpOn) return "closed";
-  } else if (daysQuiet(app, today) >= QUIET_AFTER_DAYS) {
-    return "quiet";
-  }
-  if (!app.followUpOn || app.followUpOn <= endOfWeek(today)) return "due";
+  if (app.followUpOn && app.followUpOn <= today) return "due";
+  const waiting = app.status === "applied" || app.status === "followed-up";
+  if (waiting && daysQuiet(app, today) >= QUIET_AFTER_DAYS) return "quiet";
+  // An offer saved before offers had follow-up dates has nothing to remind
+  // about.
+  if (app.status === "offer" && !app.followUpOn) return "closed";
   return "upcoming";
 }
 

@@ -254,7 +254,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
       {applications.length === 0 && (
         <p className="text-muted">
           Seguimiento suggests a follow-up a week after you apply, and you can always change it.
-          After 3 weeks with no news, an application is marked gone quiet.
+          After 2 weeks with no update, an application is marked gone quiet.
         </p>
       )}
 

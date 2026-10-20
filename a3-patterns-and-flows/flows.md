@@ -25,9 +25,11 @@ flowchart TD
   subgraph back["Coming back"]
     monday(["Monday"]) --> checkin["/ (check-in),<br/>always at /check-in"]
     checkin --> due{"Anything due<br/>or quiet?"}
-    due -- Yes --> act["I followed up · Not yet"]
+    due -- Yes --> act["Followed up · Snooze a week"]
     act -- "Undo or next one" --> checkin
-    checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
+    checkin -. "14+ days, no update" .-> quiet["Gone quiet:<br/>set a follow-up"]
+    checkin --> goal["Added since Monday<br/>vs weekly goal"]
+    goal --> doneweek["Done for this week"]
   end
 
   empty -- "Use the full form<br/>(earlier date, contact)" --> add
@@ -54,14 +56,14 @@ Forms are one column with a label on every field. Errors appear when you save. E
 The follow-up date is filled in for you where a rule makes sense, and you can always change it:
 
 - **Applied:** one week after the day you applied.
-- **Followed up** (shown as Applied in the Status field): two weeks after the day you press I followed up.
+- **Followed up** (shown as Applied in the Status field): a week after the day you press Followed up.
 - **Interviewing:** choosing it fills in three days from today. The interview date is optional.
 - **Offer:** keeps the date it had. Answering the offer is the next step, so it still comes up in This week, but it never goes quiet.
 - **Closed** (Rejected, Withdrawn or No response): there's no follow-up date.
 
 On Add, the date follows Applied on until you type your own. After that, a suggestion appears under the field with a "Use" button, and the date only changes if you press it. On an application's page, choosing Interviewing fills in its date, and choosing another status right after puts the earlier date back.
 
-An open application goes quiet when there has been no news for 21 days. News means applying, following up or a change of status; an interview still to come also counts. Pressing "Not yet" isn't news, so an application you keep postponing still goes quiet on schedule.
+An application that's Applied or Followed up goes quiet when its follow-up isn't due yet and there has been no update for 14 days. An update means applying, following up, a change of status, snoozing, or setting a follow-up date on the check-in; an interview still to come also counts. Interviewing and Offer don't go quiet, because they wait on a date you set.
 
 ## Flow 1: The first visit
 
@@ -73,7 +75,7 @@ Pressing **Add application** with a field empty gives "Enter the company name." 
 
 Beside the newest item's follow-up date, a one-time tip says "We suggested a follow-up a week out. Change it anytime." It stays, visit after visit, until you press **Got it** or type a follow-up date of your own on Add or an application's page. Either one closes it for good on this device. The tip only appears beside a date Seguimiento suggested.
 
-Before anything is saved, a line under the form states the rules: a follow-up a week after you apply, which you can always change, and after 3 weeks with no news, an application is marked gone quiet. Once the list appears, the tip does that job. The Monday calendar reminder is offered on the first visit and right after the first save.
+Before anything is saved, a line under the form states the rules: a follow-up a week after you apply, which you can always change, and after 2 weeks with no update, an application is marked gone quiet. Once the list appears, the tip does that job. The Monday calendar reminder is offered on the first visit and right after the first save.
 
 `/` stays like this, the quick add and your newest applications, while nothing is due or gone quiet. When a follow-up comes up, `/` becomes the This week check-in below.
 
@@ -104,29 +106,34 @@ If the first save happens on the full Add page instead, a toast says "Added Exam
 
 If the browser refuses to save, usually because its storage is full, a message above the button says so. The form stays filled in so you can try again.
 
-**List.** The All page shows every application as one list, sorted by follow-up date, soonest first, with those without a follow-up date last. Each row shows the company, role, status and follow-up date, and an **Open** link. Late ones also say "7 days late" with a clock icon, and gone-quiet ones "No news for 35 days", so nothing depends on color alone. At the top, a search field labelled "Search by company or role" narrows the list as you type, and filter chips (All, Applied, Interviewing, Offer, Closed) show how many each holds. Followed up counts as Applied; Rejected, Withdrawn and No response count as Closed. The chosen filter is in the address (`?status=offer`), so Back and a shared link keep it; pressing the chip that's on goes back to All. While filtering or searching, a line says "Showing 3 of 5."
+**List.** The All page shows every application as one list, sorted by follow-up date, soonest first, with those without a follow-up date last. Each row shows the company, role, status and follow-up date, and an **Open** link. Late ones also say "7 days late" with a clock icon, and gone-quiet ones "No update for 20 days", so nothing depends on color alone. At the top, a search field labelled "Search by company or role" narrows the list as you type, and filter chips (All, Applied, Interviewing, Offer, Closed) show how many each holds. Followed up counts as Applied; Rejected, Withdrawn and No response count as Closed. The chosen filter is in the address (`?status=offer`), so Back and a shared link keep it; pressing the chip that's on goes back to All. While filtering or searching, a line says "Showing 3 of 5."
 
 **Never a blank page.** With nothing saved, the page says "Nothing logged yet" and offers **Log your first application**, which goes to Home. A filter with nothing in it says so in one sentence ("No offers yet.") with a link, **Show all applications**. A search with no results says "Nothing matches “zzz”." with **Clear search**, which puts the cursor back in the search field. After you add one, it sits on top, highlighted for a few seconds.
 
-**One application.** Open on any list goes to the application's own page. At the top, what's saved: company, role, status, the day you applied and the next follow-up. Then the most common change, **I followed up today**, which moves the next follow-up two weeks out in one tap and says so in a toast. An application that's Interviewing or has an offer keeps its status. Below it, every field, with the same fields and rules as Add, plus **Status**: Applied, Interviewing, Offer or Closed. Choosing Closed asks **Why it closed** (Rejected, Withdrawn or No response) and hides the follow-up date. **Save changes** stays on the page and says "Saved" in a toast. **Delete application** asks first, on the page, not in a browser dialog: it says it can't be undone and that closing keeps the record instead. **Delete it** goes to the list with "Deleted Example Co — Data Analyst." in a toast, and **Keep it** puts you back on Delete application. The list replaces the page in the history, so Back can't open what was deleted.
+**One application.** Open on any list goes to the application's own page. At the top, what's saved: company, role, status, the day you applied and the next follow-up. Then the most common change, **I followed up today**, which moves the next follow-up a week out in one tap and says so in a toast. An application that's Interviewing or has an offer keeps its status. Below it, every field, with the same fields and rules as Add, plus **Status**: Applied, Interviewing, Offer or Closed. Choosing Closed asks **Why it closed** (Rejected, Withdrawn or No response) and hides the follow-up date. **Save changes** stays on the page and says "Saved" in a toast. **Delete application** asks first, on the page, not in a browser dialog: it says it can't be undone and that closing keeps the record instead. **Delete it** goes to the list with "Deleted Example Co — Data Analyst." in a toast, and **Keep it** puts you back on Delete application. The list replaces the page in the history, so Back can't open what was deleted.
 
 **Errors on an application's page.** The same errors as Add, plus "Choose why it closed." when Closed has no reason, and "Pick a follow-up date." when a reopened application has none. An interview date, if given, can't be before the day you applied. If the address doesn't match anything saved here, perhaps because it was deleted or saved in another browser, the page says "This application isn't on this device." with a link to all applications.
 
 ## Flow 3: Coming back (the Monday check-in)
 
-Once something is due or gone quiet, Home is the This week check-in. It's also always at `/check-in`, linked from every page's footer, so it can be opened even when nothing is due: it then says what's next, or, with nothing saved, points to Home. It works on any day, but it's built for Monday. It opens with "Week of Oct 19" and then shows only what needs a decision. Every decision can be made on that page without opening each application.
+The check-in is the reason to come back. It's always at `/check-in`, linked from every page's footer, and Home becomes the check-in whenever something is due or gone quiet. It works on any day, but it's built for Monday. It opens with "Week of Oct 19", and every decision can be made right there without opening each application. Four parts, in this order:
 
-**Follow-ups due.** "Follow up this week" lists everything due by Sunday, late ones first. Each item names the person when you gave one ("Follow up with Priya at Morningstar"), shows the role and status, and says when it was due ("4 days late", "Due today", "Due Thu, Oct 22"). Each one has **I followed up** (the next date moves two weeks out), **Not yet** (asks again in a week) and **Details**.
+**1. Follow-ups due.** Every open application (Applied, Followed up, Interviewing or Offer) whose follow-up date is today or earlier, soonest first. Each one names the person when you gave one ("Follow up with Priya at Example Co"), shows the role and status, and says how late it is ("7 days late", "Due today"). Each has three actions:
+- **Followed up** moves the next follow-up to a week from today. Applied becomes Followed up; Interviewing and Offer keep their status.
+- **Snooze a week** moves it to a week from today. A week after the old date could still be in the past for a late one.
+- **Open** goes to the application's page.
 
-**Applications gone quiet.** "Gone quiet" lists open applications with no news in three weeks or more, the quietest first, with how long it has been. Each one has **Follow up once more** or **Close it**, which closes it as No response.
+**2. Gone quiet.** Applied or Followed up applications that aren't due but have had no update for 2 weeks or more, the quietest first, with "No update for 20 days". **Set a follow-up** opens a date field right there, with a week from today filled in. Saving gives it that date, so it leaves Gone quiet and comes back under Follow-ups due on that day. An empty date gives "Pick a follow-up date." and a past one "Choose today or a later date." Cancel puts you back on the button.
 
-After any of these actions, a message says what happened ("Followed up with Morningstar. Next follow-up Sun, Nov 1"), with an **Undo** in case of a wrong tap on a phone.
+After any of these, a message says what happened ("Followed up with Example Co. Next follow-up Tue, Oct 27."), with **Undo** in case of a wrong tap on a phone.
 
-**All caught up.** When nothing is due or quiet, `/` goes back to the quick add and your newest applications (see Flow 1). Right after you handle the last due one, the check-in stays while its message and **Undo** are showing, and says what's next: "Nothing due this week. Next: Grubhub on Thu, Oct 29 (in 11 days)".
+**Nothing to do.** When nothing is due and nothing is quiet, the page says so plainly: "Nothing due. Add an application or come back Monday." It offers **Add an application** and **Come back Monday: add it to my calendar**, which downloads the Monday reminder. (Home, in that case, is the quick add and your newest applications; see Flow 1.)
 
-**Everything closed.** When every application is closed, nothing is due, so `/` shows the quick add and your newest applications.
+**3. This week.** "Added since Monday, Oct 19: 2 applications." A bar shows that against the weekly goal, with "2 of 3" beside it, and "Goal met." once it's reached. The goal is 3 to start. **Change goal** opens a field in place: a whole number from 1 to 20, or "Enter a whole number from 1 to 20." It's saved in this device's settings.
 
-**Other states.** The page shows a neutral placeholder while loading, and the first-visit page when nothing is saved. When the saved data is damaged and can't be read, a banner on every page explains it. The damaged copy is set aside under another key, the list continues with whatever could be read, and the banner points to loading a backup. If the browser refuses to save "I followed up", "Not yet", "Follow up once more" or "Close it", the message says the change couldn't be saved. If it refuses an Undo, the message says the change is still saved and keeps the Undo button so you can try again.
+**4. Done for this week.** The main button saves today as the last check-in and says "Done. See you next Monday." It keeps saying so for the rest of the week.
+
+**Other states.** The page shows a neutral placeholder while loading, and the first-visit page when nothing is saved. When the saved data is damaged and can't be read, a banner on every page explains it. The damaged copy is set aside under another key, the list continues with whatever could be read, and the banner points to loading a backup. If the browser refuses to save Followed up, Snooze a week or a follow-up date, the message says the change couldn't be saved; if it refuses Done for this week or the goal, an error says so next to it. If it refuses an Undo, the message says the change is still saved and keeps the Undo button so you can try again.
 
 ## Moving between devices
 

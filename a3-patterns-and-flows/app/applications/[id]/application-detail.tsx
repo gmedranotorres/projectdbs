@@ -108,7 +108,7 @@ export function ApplicationDetail() {
           <h2 className="text-lg font-semibold">Did you follow up?</h2>
           <p className="text-muted">
             One tap marks it, and the next follow-up moves to{" "}
-            {formatDay(addDays(today, 14))}, 2 weeks from today.
+            {formatDay(addDays(today, 7))}, a week from today.
           </p>
           <Button onClick={followedUp} className="w-full sm:w-auto">
             I followed up today

@@ -46,6 +46,21 @@ function calendarFile(firstMonday: Day, url: string): string {
 }
 
 export function CalendarReminder() {
+  const firstMonday = nextMonday(getToday());
+  return (
+    <div className="space-y-3">
+      <p>
+        Get a Monday reminder in your own calendar: a weekly check-in at 9:00, starting{" "}
+        {formatDay(firstMonday)}.
+      </p>
+      <MondayReminderButton label="Add Monday check-in to my calendar" />
+    </div>
+  );
+}
+
+// The button alone, with the line that confirms the download: also used on
+// the check-in when nothing is due ("come back Monday").
+export function MondayReminderButton({ label, variant = "secondary" }: { label: string; variant?: "secondary" | "quiet" }) {
   const [downloaded, setDownloaded] = useState(false);
   const firstMonday = nextMonday(getToday());
 
@@ -61,13 +76,9 @@ export function CalendarReminder() {
   }
 
   return (
-    <div className="space-y-3">
-      <p>
-        Get a Monday reminder in your own calendar: a weekly check-in at 9:00, starting{" "}
-        {formatDay(firstMonday)}.
-      </p>
-      <Button variant="secondary" onClick={download}>
-        Add Monday check-in to my calendar
+    <div className="space-y-2">
+      <Button variant={variant} onClick={download}>
+        {label}
       </Button>
       <p role="status" className="text-sm text-muted">
         {downloaded && `Downloaded ${FILE_NAME}. Open it to add the check-in to your calendar.`}

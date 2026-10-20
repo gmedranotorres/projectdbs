@@ -17,6 +17,7 @@ import {
   List,
   ListRow,
   PageHeader,
+  Progress,
   Select,
   Textarea,
   TextLink,
@@ -55,7 +56,7 @@ const TAGS: { tone: BadgeTone; text?: string; note: string }[] = [
   { tone: "due", note: "Due" },
   { tone: "due", text: "2 days late", note: "Due, late" },
   { tone: "quiet", note: "Quiet" },
-  { tone: "quiet", text: "No news for 22 days", note: "Quiet, with how long" },
+  { tone: "quiet", text: "No update for 15 days", note: "Quiet, with how long" },
   { tone: "neutral", text: "Follow up Thu, Oct 29", note: "Plain" },
   { tone: "new", text: "Just changed", note: "New" },
 ];
@@ -289,6 +290,18 @@ export function ComponentGallery() {
             </Example>
           ))}
         </div>
+      </Section>
+
+      <Section title="Progress">
+        {[
+          { label: "Started: 1 of 3", value: 1 },
+          { label: "Goal met: 3 of 3", value: 3 },
+          { label: "Past the goal: 5 of 3 (the bar stays full)", value: 5 },
+        ].map(({ label, value }) => (
+          <Example key={label} label={label}>
+            <Progress label="Added this week, against your weekly goal" value={value} max={3} />
+          </Example>
+        ))}
       </Section>
 
       <Section title="PageHeader">
