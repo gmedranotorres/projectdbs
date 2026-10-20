@@ -232,7 +232,11 @@ Not text, so not in the table:
 
 ## First-run check
 
-_To fill in._
+Run on the live site on Oct 20, 2026, as a brand-new user on a phone. The goal: "Log the three jobs you applied to this week and set when to follow up." Then a return visit a week later, through the check-in. The full report is in [docs/first-run-check.md](docs/first-run-check.md), with every step and a screenshot for each.
+
+- **Biggest problem:** "I followed up today" is the main button on an application's page even when nothing is due. One tap can also pull a chosen follow-up date earlier.
+- **Worked well:** the empty-Role error, follow-up dates that set themselves and say so, and the weekly check-in.
+- Nine problems are ranked by impact with a proposed fix for each. None are fixed yet.
 
 ## Running locally
 

@@ -866,3 +866,32 @@ Put them in a table under "Accessibility" in the README, with pass/fail at 4.5:1
 - **Ratios are rounded down,** so a pair at 4.496 can't show as 4.50 and pass.
 - **Non-text marks stay out of the table:** the link underline is a second cue next to ink text, and the progress fill was already measured (3.65:1). Disabled controls are listed anyway, though WCAG exempts them.
 - **Large text was held to 4.5:1 in practice.** Every large heading is ink, so the 3:1 row is there for completeness.
+
+## First-run check (Oct 20, 2026)
+
+**What I asked.** Run the first-run check on the live site (https://projectdbsa3.vercel.app) with Playwright, as in A2, using a fresh browser context with no saved storage.
+- Act as a brand-new user whose goal is "Log the three jobs you applied to this week and set when to follow up."
+- Make one mistake on purpose (an empty Role).
+- Come back a week later in a context that keeps the storage, and go through /check-in.
+- Write docs/first-run-check.md: each step's expectation, outcome and hesitation; the problems ranked by impact with fixes; three things that worked. Save screenshots to docs/screenshots and link them.
+- Don't fix anything yet.
+
+**What changed.**
+- `docs/first-run-check.md` (new): 8 steps over two days, 9 problems ranked by impact with a proposed fix for each, and three things that worked.
+- `docs/screenshots/` (new): 18 phone screenshots (390px), numbered in the order of the run.
+- README: the "First-run check" section now summarizes it and links the report.
+- No app code changed.
+
+**What I rejected or decided myself.**
+- **No Playwright.** It isn't installed, A2's checks didn't actually use it (they drove Chrome over the DevTools protocol), and AGENTS.md rules out new packages. So:
+  - a fresh, empty Chrome profile stood in for the fresh context;
+  - Chrome closed and reopened on the same profile stood in for the context that keeps storage;
+  - the page's clock shifted 7 days stood in for Playwright's clock.
+
+  I asked about this before starting; only the URL was answered, so I kept to the no-packages rule.
+- **Phone size (390px).** Seguimiento is built phone-first, and it's the harder layout.
+- **Openly fictional jobs** (Example Co, Sample Labs, Placeholder Inc). Nothing real was logged or applied to.
+- **One follow-up date set by hand** (Sample Labs → Nov 3), because the goal says "set when to follow up" and quick add sets it automatically.
+- **Date fields were filled by setting their value.** Headless Chrome can't open the phone's native date picker. The report says so.
+- **Full-page screenshots dropped.** They draw the fixed bottom bar in the middle of the page, which would mislead. Viewport shots only.
+- **The "Priya Shah" hint is listed as a problem, not fixed:** "Don't fix anything yet."
