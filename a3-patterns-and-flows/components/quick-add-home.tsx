@@ -127,7 +127,11 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
       setSaveFailed(true);
       return;
     }
-    toast(`Added ${app.company} — ${app.role}. Follow up on ${formatDay(app.followUpOn!)}.`);
+    // Above the bottom bar on phones: at the top it would sit over Company,
+    // where the next one is typed.
+    toast(`Added ${app.company} — ${app.role}. Follow up on ${formatDay(app.followUpOn!)}.`, {
+      place: "bottom",
+    });
     setCompany("");
     setRole("");
     setSaveFailed(false);

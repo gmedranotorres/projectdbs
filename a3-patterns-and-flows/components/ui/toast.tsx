@@ -22,10 +22,16 @@ import {
 //
 // A message with an action, such as Undo, isn't a toast: 5 seconds is too
 // short to reach it with a keyboard or screen reader. Use a Notice.
+//
+// On phones it shows at the top. A page whose form is at the top, where
+// you type the next one right away (Home's quick add), passes
+// { place: "bottom" } to show it just above the bottom bar instead.
 
 const DURATION = 5000;
 
-const ToastContext = createContext<(message: string) => void>(() => {});
+type ToastOptions = { place?: "top" | "bottom" };
+
+const ToastContext = createContext<(message: string, options?: ToastOptions) => void>(() => {});
 
 export function useToast() {
   return useContext(ToastContext);
@@ -33,16 +39,16 @@ export function useToast() {
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   // The key restarts the timer when the same words are shown twice.
-  const [current, setCurrent] = useState<{ key: number; message: string } | null>(null);
+  const [current, setCurrent] = useState<{ key: number; message: string; place: "top" | "bottom" } | null>(null);
   const [paused, setPaused] = useState(false);
   const nextKey = useRef(0);
   const box = useRef<HTMLDivElement>(null);
   // Where focus was before it moved into the toast (to reach Close).
   const cameFrom = useRef<HTMLElement | null>(null);
 
-  const toast = useCallback((message: string) => {
+  const toast = useCallback((message: string, options?: ToastOptions) => {
     nextKey.current += 1;
-    setCurrent({ key: nextKey.current, message });
+    setCurrent({ key: nextKey.current, message, place: options?.place ?? "top" });
   }, []);
 
   // If focus is on Close when the toast goes (Close, Escape or the timer),
@@ -74,9 +80,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={toast}>
       {children}
-      {/* At the top on phones, where it can't cover what was just added
-          or the bottom navigation; near the bottom on laptops. */}
-      <div className="pointer-events-none fixed inset-x-0 top-[calc(0.75rem+env(safe-area-inset-top))] z-30 flex justify-center px-4 md:top-auto md:bottom-6">
+      {/* On phones, at the top, where it can't cover what was just added
+          or the bottom navigation, or just above the bottom bar when asked;
+          near the bottom on laptops. */}
+      <div
+        className={`pointer-events-none fixed inset-x-0 z-30 flex justify-center px-4 md:top-auto md:bottom-6 ${
+          current?.place === "bottom"
+            ? "bottom-[calc(4.75rem+env(safe-area-inset-bottom))]"
+            : "top-[calc(0.75rem+env(safe-area-inset-top))]"
+        }`}
+      >
         <div
           ref={box}
           onPointerEnter={() => setPaused(true)}
