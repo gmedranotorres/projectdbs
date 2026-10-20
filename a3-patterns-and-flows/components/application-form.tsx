@@ -19,7 +19,7 @@ import {
 } from "@/lib/applications";
 import { formatDay, formatShortDay, type Day } from "@/lib/dates";
 import { saveApplication } from "@/lib/store";
-import { Button, ButtonLink, ErrorIcon, Field, describedBy, inputClass } from "./ui";
+import { Button, ButtonLink, ErrorIcon, Field, Input, Textarea } from "./ui";
 
 // The one form behind Add and Update. Errors appear when you save, next to
 // the field, and what you typed stays. The follow-up date fills itself in
@@ -144,16 +144,13 @@ export function ApplicationForm({
 
   const text = (field: FieldName, label: string, extra: { hint?: string; optional?: boolean; placeholder?: string } = {}) => (
     <Field id={fid(field)} label={label} hint={extra.hint} optional={extra.optional} error={errors[field]}>
-      <input
-        id={fid(field)}
+      <Input
         name={field}
         type="text"
         value={values[field]}
         onChange={(e) => update(field, e.target.value)}
         placeholder={extra.placeholder}
-        className={inputClass}
         autoComplete="off"
-        {...describedBy(fid(field), extra.hint, errors[field])}
       />
     </Field>
   );
@@ -167,32 +164,26 @@ export function ApplicationForm({
   return (
     <form noValidate onSubmit={submit} className="space-y-6">
       <Field id={fid("company")} label="Company" error={errors.company}>
-        <input
-          id={fid("company")}
+        <Input
           name="company"
           type="text"
           value={values.company}
           onChange={(e) => update("company", e.target.value)}
-          className={inputClass}
           autoComplete="organization"
           autoCapitalize="words"
           autoFocus={autoFocus}
-          {...describedBy(fid("company"), false, errors.company)}
         />
       </Field>
 
       {text("role", "Role")}
 
       <Field id={fid("appliedOn")} label="Date applied" error={errors.appliedOn}>
-        <input
-          id={fid("appliedOn")}
+        <Input
           name="appliedOn"
           type="date"
           value={values.appliedOn}
           max={today}
           onChange={(e) => update("appliedOn", e.target.value)}
-          className={inputClass}
-          {...describedBy(fid("appliedOn"), false, errors.appliedOn)}
         />
       </Field>
 
@@ -218,15 +209,12 @@ export function ApplicationForm({
           hint="Your follow-up is suggested for 3 days after it."
           error={errors.interviewOn}
         >
-          <input
-            id={fid("interviewOn")}
+          <Input
             name="interviewOn"
             type="date"
             value={values.interviewOn}
             min={values.appliedOn}
             onChange={(e) => update("interviewOn", e.target.value)}
-            className={inputClass}
-            {...describedBy(fid("interviewOn"), true, errors.interviewOn)}
           />
         </Field>
       )}
@@ -242,15 +230,12 @@ export function ApplicationForm({
           }
           error={errors.followUpOn}
         >
-          <input
-            id={fid("followUpOn")}
+          <Input
             name="followUpOn"
             type="date"
             value={values.followUpOn}
             min={values.appliedOn}
             onChange={(e) => update("followUpOn", e.target.value)}
-            className={inputClass}
-            {...describedBy(fid("followUpOn"), true, errors.followUpOn)}
           />
           {showSuggestion && suggestion.day && (
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg bg-accent-soft px-3 py-2 text-sm">
@@ -258,7 +243,7 @@ export function ApplicationForm({
                 Suggested for {STATUS_LABELS[values.status]}: {formatDay(suggestion.day)},{" "}
                 {suggestion.reason}.
               </span>
-              <Button variant="secondary" className="px-3 text-sm" onClick={applySuggestion}>
+              <Button variant="secondary" size="sm" onClick={applySuggestion}>
                 Use {formatShortDay(suggestion.day)}
               </Button>
             </div>
@@ -284,27 +269,21 @@ export function ApplicationForm({
             optional: true,
           })}
           <Field id={fid("link")} label="Job posting link" optional error={errors.link}>
-            <input
-              id={fid("link")}
+            <Input
               name="link"
               type="url"
               inputMode="url"
               value={values.link}
               onChange={(e) => update("link", e.target.value)}
               placeholder="https://"
-              className={inputClass}
               autoComplete="off"
-              {...describedBy(fid("link"), false, errors.link)}
             />
           </Field>
           <Field id={fid("notes")} label="Notes" optional>
-            <textarea
-              id={fid("notes")}
+            <Textarea
               name="notes"
-              rows={3}
               value={values.notes}
               onChange={(e) => update("notes", e.target.value)}
-              className={inputClass}
             />
           </Field>
         </div>

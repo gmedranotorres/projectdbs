@@ -47,6 +47,9 @@
   --type-label-size: 0.8125rem; /* 13px */
   --type-label-weight: 500;
   --type-label-leading: 1.25;
+  --type-control-size: 0.9375rem; /* 15px: the words on buttons */
+  --type-control-weight: 500;
+  --type-control-leading: 1.25;
 
   /* Spacing: 4, 8, 12, 16, 24, 32, 48px. These are Tailwind's steps
      1, 2, 3, 4, 6, 8 and 12, so p-4 or gap-6 already land on the scale. */
@@ -109,6 +112,9 @@
   --text-label: var(--type-label-size);
   --text-label--font-weight: var(--type-label-weight);
   --text-label--line-height: var(--type-label-leading);
+  --text-control: var(--type-control-size);
+  --text-control--font-weight: var(--type-control-weight);
+  --text-control--line-height: var(--type-control-leading);
 
   --radius-badge: var(--radius-small);
   --radius-control: var(--radius-medium);
@@ -126,8 +132,25 @@ body {
   line-height: var(--type-body-leading);
 }
 
+/* Each control state, for two triggers: the real one and a forced one
+   (data-state="hover" and so on), which /dev/components uses to show every
+   state side by side. A disabled control has no hover or press. */
+@custom-variant state-hover {
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      @slot;
+    }
+  }
+  &[data-state="hover"] {
+    @slot;
+  }
+}
+
+@custom-variant state-active (&:is(:active, [data-state="active"]):not(:disabled));
+
 /* A thin ring in the text color, close to the control */
-:focus-visible {
+:focus-visible,
+[data-state="focus"] {
   outline: var(--border-thick) solid var(--focus);
   outline-offset: 2px;
 }

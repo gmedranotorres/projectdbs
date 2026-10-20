@@ -101,3 +101,33 @@ Contrast (WCAG 2 formula, pairs that appear in A3):
 - Claude kept A3's own colors that Calm has no role for (subtle, late, error), with their values unchanged.
 - Claude gave the radii Tailwind names by use (`rounded-badge`, `rounded-control`, `rounded-card`), not `sm`/`md`/`lg`. Calm's sizes would have overwritten Tailwind's `rounded-lg` and `rounded-xl` and restyled every button and card. The existing components keep their radii until a round asks for them.
 - Spacing and border widths aren't new Tailwind classes. Calm's steps are already Tailwind's 1, 2, 3, 4, 6, 8 and 12, and its widths are `border` and `border-2`.
+
+## 2026-10-20 · Shared Button, Field and Chip components
+
+**What I asked.** Build the shared form components in `components/ui`, adapted from the Calm components in A2 (copied, not linked):
+- **Button:** primary, secondary and quiet variants; sizes md and sm; rest, hover, focus-visible, active and disabled styles; `type` defaults to "button".
+- **Field:** a wrapper with a `<label htmlFor>`, an optional hint, the control and an error line. The control gets its id, aria-describedby and aria-invalid from the Field.
+- **Controls:** Input (text, url, date), Select and Textarea.
+- **Chip:** a toggle button with aria-pressed, for role suggestions and list filters.
+
+Add a page at `/dev/components` that shows every component in every state, and keep it out of the navigation.
+
+**What changed.**
+- `components/ui.tsx` moved to `components/ui/index.tsx`, so `@/components/ui` imports keep working. Button and ButtonLink are in `button.tsx`; Field, Input, Select, Textarea and ErrorIcon are in `field.tsx`; Chip is in `chip.tsx`. The index re-exports all of them.
+- Button: primary is sage with the text color, and lighter sage under the pointer. Secondary is an outline, quiet has no edge, and both take the sage tint under the pointer. Pressed, a button gets a dark edge and moves down 1px. Disabled, its edge is dashed and its text muted.
+- Sizes: md is 44px tall with Calm's 15px control text (new token `text-control`). sm is 36px, with a 44px tap area.
+- Field hands its id, aria-describedby and aria-invalid to the control inside through React context, so a control needs only its own props. The id is optional; without one, Field makes its own.
+- Controls: a muted 1px outline that darkens under the pointer, 2px red with an error, and dashed when disabled. Select draws its own arrow.
+- Chip: 36px tall, with a 44px tap area. When on, it has the sage tint, a deeper-sage edge and a check mark, so color isn't the only sign.
+- Two new Tailwind variants, `state-hover` and `state-active`, fire on the real state or on a forced `data-state`, and never on a disabled control. `data-state="focus"` draws the focus ring. `/dev/components` uses them to show every state side by side.
+- `/dev/components` shows each Button variant and size in every state. It also shows Input (text, url, date and file-free states), Select and Textarea at rest, with a hint, optional, hover, focus, error and disabled. Chip appears off and on in every state, plus a working group to try. It isn't in the navigation, and it's marked `noindex, nofollow`.
+- The pages now use the new components. The application form and Move data use `Input` and `Textarea` in place of `<input className={inputClass} {...describedBy(...)}>`, and the "Use" suggestion button is `size="sm"`. `inputClass` and `describedBy` are gone.
+
+**What I rejected or decided myself.**
+- I chose to swap the new components into every page now, so only one Button and one Field exist, as AGENTS.md asks. I rejected keeping old and new side by side.
+- I kept the error line above the control, not below it, so a phone keyboard doesn't cover it.
+- Claude kept a fourth Button variant, `danger`, because Delete on the edit page uses it.
+- Claude let Input also take `type="file"`, for the backup file on Move data, so it isn't a one-off control.
+- Claude adapted Calm's disabled look without its 70% opacity, so disabled labels stay readable (muted text is 5.24:1 or more).
+- Claude made the secondary button transparent, as in Calm, where it used to be filled with the surface color.
+- Field labels stay at 16px medium rather than Calm's 13px label role, for readability in forms.

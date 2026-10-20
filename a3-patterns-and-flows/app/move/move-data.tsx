@@ -4,7 +4,7 @@ import { useId, useState, type FormEvent } from "react";
 import { combine, plural, readBackup, toBackup, type Application } from "@/lib/applications";
 import { today as getToday } from "@/lib/dates";
 import { replaceApplications, useStore } from "@/lib/store";
-import { Button, ButtonLink, Card, ErrorIcon, Field, Loading, Notice, PageHeader, describedBy, inputClass } from "@/components/ui";
+import { Button, ButtonLink, Card, ErrorIcon, Field, Input, Loading, Notice, PageHeader } from "@/components/ui";
 
 // localStorage stays on one browser, so moving between the phone and the
 // laptop is a file: download it on one, load it on the other. Loading
@@ -127,8 +127,7 @@ export function MoveData() {
             hint="The .json file you downloaded from Seguimiento on your other device. Nothing changes until you confirm."
             error={fileError ?? undefined}
           >
-            <input
-              id={fileId}
+            <Input
               name="backup"
               type="file"
               accept=".json,application/json"
@@ -136,8 +135,6 @@ export function MoveData() {
                 setFileError(null);
                 setCheck(null);
               }}
-              className={`${inputClass} file:mr-3 file:rounded-md file:border-0 file:bg-subtle file:px-3 file:py-1.5 file:font-medium`}
-              {...describedBy(fileId, true, fileError)}
             />
           </Field>
           <Button type="submit" variant="secondary" className="w-full sm:w-auto">

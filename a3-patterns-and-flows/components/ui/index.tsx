@@ -2,45 +2,12 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
 // Small building blocks shared by every page. Tap targets are at least 44px
-// tall, and inputs use 16px text so phones don't zoom in on focus.
+// tall, and inputs use 16px text so phones don't zoom in on focus. Button,
+// Field and Chip have files of their own; everything is imported from here.
 
-type Variant = "primary" | "secondary" | "danger";
-
-const buttonBase =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-base font-medium transition-colors";
-const buttonVariants: Record<Variant, string> = {
-  primary: "bg-accent text-accent-ink hover:bg-accent-hover",
-  secondary: "border border-line-strong bg-surface text-ink hover:bg-subtle",
-  danger: "border border-error bg-surface text-error hover:bg-error-soft",
-};
-
-export function Button({
-  variant = "primary",
-  className = "",
-  ...props
-}: ComponentProps<"button"> & { variant?: Variant }) {
-  return (
-    <button
-      type="button"
-      className={`${buttonBase} ${buttonVariants[variant]} ${className}`}
-      {...props}
-    />
-  );
-}
-
-// The same look, for an action that goes to another page.
-export function ButtonLink({
-  variant = "primary",
-  className = "",
-  ...props
-}: ComponentProps<typeof Link> & { variant?: Variant }) {
-  return (
-    <Link
-      className={`${buttonBase} ${buttonVariants[variant]} ${className}`}
-      {...props}
-    />
-  );
-}
+export * from "./button";
+export * from "./chip";
+export * from "./field";
 
 export function TextLink({ className = "", ...props }: ComponentProps<typeof Link>) {
   return (
@@ -87,70 +54,6 @@ export function PageHeader({
     </div>
   );
 }
-
-// ---- Fields -------------------------------------------------------------
-
-export function ErrorIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className="mt-0.5 size-4 shrink-0" fill="currentColor">
-      <path d="M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm-.9 4.25h1.8v5.5H9.1v-5.5Zm.9 9a1.15 1.15 0 1 1 0-2.3 1.15 1.15 0 0 1 0 2.3Z" />
-    </svg>
-  );
-}
-
-// Label, then hint, then error, then the control: the error sits right above
-// what needs fixing, where a phone keyboard won't cover it.
-export function Field({
-  id,
-  label,
-  optional,
-  hint,
-  error,
-  children,
-}: {
-  id: string;
-  label: string;
-  optional?: boolean;
-  hint?: ReactNode;
-  error?: string;
-  children: ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="block font-medium">
-        {label}
-        {optional && <span className="font-normal text-muted"> (optional)</span>}
-      </label>
-      {hint && (
-        <div id={`${id}-hint`} className="mt-1 text-sm text-muted">
-          {hint}
-        </div>
-      )}
-      {error && (
-        <p id={`${id}-error`} className="mt-1.5 flex gap-1.5 text-sm font-medium text-error">
-          <ErrorIcon />
-          <span>
-            <span className="sr-only">Error: </span>
-            {error}
-          </span>
-        </p>
-      )}
-      <div className="mt-1.5">{children}</div>
-    </div>
-  );
-}
-
-// The aria attributes a control needs to point at its hint and error.
-export function describedBy(id: string, hint: unknown, error: unknown) {
-  const ids = [hint ? `${id}-hint` : "", error ? `${id}-error` : ""].filter(Boolean);
-  return {
-    "aria-describedby": ids.length ? ids.join(" ") : undefined,
-    "aria-invalid": error ? true : undefined,
-  } as const;
-}
-
-export const inputClass =
-  "block w-full rounded-lg border border-line-strong bg-surface px-3 py-2.5 text-base text-ink placeholder:text-muted aria-[invalid=true]:border-2 aria-[invalid=true]:border-error";
 
 // ---- Messages and tags ----------------------------------------------------
 
