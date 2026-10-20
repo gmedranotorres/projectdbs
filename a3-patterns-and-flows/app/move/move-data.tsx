@@ -5,6 +5,7 @@ import { combine, plural, readBackup, toBackup, type Application } from "@/lib/a
 import { today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink } from "@/hooks/useBackLink";
+import { downloadFile } from "@/lib/download";
 import { Button, ButtonLink, Card, ErrorIcon, Field, Input, Loading, Notice, PageHeader } from "@/components/ui";
 
 // localStorage stays on one browser, so moving between the phone and the
@@ -32,12 +33,7 @@ export function MoveData() {
 
   function download() {
     const name = `seguimiento-${getToday()}.json`;
-    const url = URL.createObjectURL(new Blob([toBackup(apps)], { type: "application/json" }));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = name;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    downloadFile(name, toBackup(apps, store.settings), "application/json");
     setDownloaded(name);
   }
 

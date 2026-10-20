@@ -735,3 +735,37 @@ Then write a table in README.md under "What it remembers": what is stored, under
 - Only choosing a chip is remembered. A filter that arrives in the address (a link, Back) shows but doesn't replace your choice.
 - The search text isn't remembered; the request named the filter only.
 - The filter and the draft stay out of `seguimiento:v1` and out of backups. They belong to this device and this moment, not to your list.
+
+## 2026-10-20 · Export and import JSON
+
+**What I asked.** A safety net with no packages. In the footer of `/check-in`:
+- **"Export my data"** downloads `seguimiento-YYYY-MM-DD.json`.
+- **"Import"** is a file input with a real label. It replaces the store after an inline confirmation and validates the shape. On failure it shows "Couldn't read that file. Choose a Seguimiento export."
+
+**What changed.**
+- `components/your-data.tsx` (new): the "Your data" section, last on the check-in, above the site footer. It has:
+  - **Export my data:** downloads the file, then "Downloaded seguimiento-2026-10-20.json: your applications and settings."
+  - **Import:** a Field with the label "Import" and a hint, a file input (`.json`), and **Check the file**. No file gives "Choose a Seguimiento export."; an unreadable file gives the requested message. Focus goes to the field either way, and nothing changes.
+  - **Confirmation:** a good file shows an inline box with how many applications it holds, when it was exported, and what will be replaced. **Replace my data** (danger) or **Cancel** (clears the file, focus back on the field). Replacing says "Imported. This device now has 2 applications and the settings from the file." and takes focus.
+- `lib/applications.ts`:
+  - `toBackup(apps, settings)` now writes the settings too.
+  - `readExport()` checks the shape: JSON, an object, `app: "seguimiento"`, version 1, an `applications` list where every record is readable. Settings, if present, are read field by field.
+  - `readBackup()` (Combine) uses it.
+- `hooks/useApplications.ts`: `replaceStore(applications, settings)`. Without settings in the file, this device's settings stay.
+- `lib/download.ts` (new): `downloadFile()`, shared by Export and Move data's Download backup, which now writes the same file.
+- `lib/storage.ts`: `readSettings` is exported for `readExport`.
+- README ("What it remembers") and flows.md (Your data on the check-in) are updated.
+- Checked in Chrome at 390px:
+  - **Export:** `seguimiento-2026-10-20.json` downloaded, with `app, version, exportedAt, applications, settings`: 7 applications and the goal of 4.
+  - **Bad imports:** no file shows "Choose a Seguimiento export." Not JSON, no `app` marker, and a damaged record each show "Couldn't read that file. Choose a Seguimiento export.", with focus on the field and the store unchanged. Choosing another file clears the error.
+  - **Good import:** an edited export (2 applications, goal 5) shows the confirmation with focus on it. Cancel clears the file and leaves the store as it was. Replace my data → 2 applications, goal 5, last check-in Oct 12, "Imported." focused, and the page updates.
+  - **Older backup** without settings: the confirmation leaves out goal and check-in, and the settings stay.
+  - **Move data** Combine reads the new file ("adds 2 and updates 0").
+  - **Tab order:** top to bottom.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- **One file, both pages:** Move data's Download backup used to save the applications only, under the same file name. It now writes this same export, so there's one kind of file. Move data still **combines**; Import on the check-in **replaces**, and its hint says so and links to Move data.
+- **Check the file, then confirm:** Import validates when you press **Check the file**, not as soon as a file is chosen. That's the same pattern as Move data and the form rules (errors on submit, focus on the field), and screen readers hear the error when focus returns to the field.
+- **"Footer of /check-in":** Claude read this as a "Your data" section at the end of the check-in page, not the site-wide footer, which stays one line on every page.
+- **The confirmation says what will be lost** ("The 7 applications here now, your weekly goal and last check-in…") and suggests exporting first.

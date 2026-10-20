@@ -77,6 +77,12 @@ function replaceAll(applications: Application[]): boolean {
   return write((data) => ({ ...data, applications }));
 }
 
+// Replaces everything, for Import on the check-in. Without settings in the
+// file (an older backup), this device's settings stay.
+function replaceStore(applications: Application[], settings: Settings | null): boolean {
+  return write((data) => ({ ...data, applications, settings: settings ?? data.settings }));
+}
+
 function setSettings(change: Partial<Settings>): boolean {
   return write((data) => ({ ...data, settings: { ...data.settings, ...change } }));
 }
@@ -114,6 +120,7 @@ export function useApplications() {
     update,
     remove,
     replaceAll,
+    replaceStore,
     setSettings,
     dismissHint,
     dismissRecovered,

@@ -135,6 +135,12 @@ After any of these, a message says what happened ("Followed up with Example Co. 
 
 **4. Done for this week.** The main button saves today as the last check-in and says "Done. See you next Monday." It keeps saying so for the rest of the week.
 
+**Your data**, at the foot of the page, is the safety net:
+- **Export my data** downloads everything, applications and settings, as `seguimiento-2026-10-20.json`.
+- **Import** is a labelled file field with **Check the file**. With no file: "Choose a Seguimiento export." A file that isn't valid JSON, isn't marked as Seguimiento's, or has a damaged application: "Couldn't read that file. Choose a Seguimiento export." Nothing changes in either case.
+- **A good file** opens a confirmation right there: "Replace everything on this device? The file has 2 applications, exported Tue, Oct 20. The 7 applications here now, your weekly goal and last check-in will be replaced. This can't be undone, so export first if you want a copy." **Replace my data** swaps it in and says "Imported."; **Cancel** clears the file.
+- An older backup without settings replaces the applications and keeps this device's settings. To merge instead of replace, the hint points to Move data.
+
 **Other states.** The page shows a neutral placeholder while loading, and the first-visit page when nothing is saved. When the saved data is damaged and can't be read, a banner on every page explains it. The damaged copy is set aside under another key, the list continues with whatever could be read, and the banner points to loading a backup. If the browser refuses to save Followed up, Snooze a week or a follow-up date, the message says the change couldn't be saved; if it refuses Done for this week or the goal, an error says so next to it. If it refuses an Undo, the message says the change is still saved and keeps the Undo button so you can try again.
 
 ## Moving between devices

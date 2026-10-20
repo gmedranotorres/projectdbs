@@ -74,7 +74,7 @@ export function readApplication(raw: unknown): Application | null {
 
 // Missing or odd settings fall back to the defaults, one by one. Data saved
 // before settings existed has none, which isn't damage.
-function readSettings(raw: unknown): Settings {
+export function readSettings(raw: unknown): Settings {
   const r = typeof raw === "object" && raw !== null ? (raw as Record<string, unknown>) : {};
   const goal = r.weeklyGoal;
   return {

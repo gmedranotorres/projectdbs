@@ -18,6 +18,7 @@ import { addDays, formatDay, formatShortDay, isDay, startOfWeek, today as getTod
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
 import { MondayReminderButton } from "@/components/calendar-reminder";
+import { YourData } from "@/components/your-data";
 import {
   Badge,
   Button,
@@ -283,6 +284,8 @@ export function ThisWeek() {
       <p className="text-muted">
         <TextLink href="/applications">See all {plural(store.applications.length, "application")}</TextLink>
       </p>
+
+      <YourData />
     </div>
   );
 }

@@ -7,8 +7,15 @@ import {
   isDay,
   type Day,
 } from "./dates";
-import { newId, readApplication } from "./storage";
-import { OPEN_STATUSES, type Application, type ClosedStatus, type OpenStatus, type Status } from "./types";
+import { newId, readApplication, readSettings } from "./storage";
+import {
+  OPEN_STATUSES,
+  type Application,
+  type ClosedStatus,
+  type OpenStatus,
+  type Settings,
+  type Status,
+} from "./types";
 
 export { CLOSED_STATUSES, OPEN_STATUSES } from "./types";
 export type { Application, ClosedStatus, OpenStatus, Status } from "./types";
@@ -384,25 +391,39 @@ export function toApplication(
   };
 }
 
-// ---- Moving between devices ---------------------------------------------
+// ---- Export, import and moving between devices --------------------------
+
+// One file for all three: "Export my data" on the check-in, "Download
+// backup" on Move data, and what Import and Combine read. It holds the
+// applications and the settings, named seguimiento-YYYY-MM-DD.json.
 
 export const BACKUP_APP = "seguimiento";
 
-export function toBackup(apps: Application[]): string {
+export function toBackup(apps: Application[], settings: Settings): string {
   return JSON.stringify(
     {
       app: BACKUP_APP,
       version: 1,
       exportedAt: new Date().toISOString(),
       applications: apps,
+      settings,
     },
     null,
     2,
   );
 }
 
-// Null when the file isn't a Seguimiento backup or any record is damaged.
-export function readBackup(text: string): Application[] | null {
+export type Export = {
+  applications: Application[];
+  // Null in backups made before exports held settings.
+  settings: Settings | null;
+  exportedAt: string | null;
+};
+
+// Checks the shape: a JSON object marked as Seguimiento's, version 1, with
+// a list of applications that are all readable. Settings that are there
+// are read field by field, with defaults for anything odd. Null otherwise.
+export function readExport(text: string): Export | null {
   let data: unknown;
   try {
     data = JSON.parse(text);
@@ -411,9 +432,21 @@ export function readBackup(text: string): Application[] | null {
   }
   if (typeof data !== "object" || data === null) return null;
   const d = data as Record<string, unknown>;
-  if (d.app !== BACKUP_APP || !Array.isArray(d.applications)) return null;
+  if (d.app !== BACKUP_APP || (d.version !== undefined && d.version !== 1)) return null;
+  if (!Array.isArray(d.applications)) return null;
   const apps = d.applications.map(readApplication);
-  return apps.every((a) => a !== null) ? (apps as Application[]) : null;
+  if (!apps.every((a) => a !== null)) return null;
+  const hasSettings = typeof d.settings === "object" && d.settings !== null;
+  return {
+    applications: apps as Application[],
+    settings: hasSettings ? readSettings(d.settings) : null,
+    exportedAt: typeof d.exportedAt === "string" && !Number.isNaN(Date.parse(d.exportedAt)) ? d.exportedAt : null,
+  };
+}
+
+// Just the applications, for Combine on Move data.
+export function readBackup(text: string): Application[] | null {
+  return readExport(text)?.applications ?? null;
 }
 
 // Combines a backup with what's on this device. Matching ids keep the copy
