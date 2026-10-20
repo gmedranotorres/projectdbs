@@ -904,3 +904,6 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 
 **What changed, one commit each.**
 - **1. The followed-up card.** On an application's page, "Did you follow up?" with the green **I followed up today** shows only when the follow-up is due or late, as on the check-in. Before that, the same action is a quiet line, "Followed up early? I followed up today". `markFollowedUp` now keeps a later chosen date: a week from today, or the date already set if that's later. This applies on the check-in too, where a due date is always earlier, so nothing changes there. flows.md is updated.
+- **2. Due marks on Home.** Home's Your list puts due applications first, soonest first, each with the check-in's badge ("Due today", "1 day late"). The rest follow, newest first, and five show as before.
+  - This revises "no nagging badges" from the welcome-back round, as I chose. The badge is the same words-first one used on All and the check-in, and only due rows get it.
+  - I didn't sort the whole list by follow-up (soonest first, like All): a just-added application, a week out, could then drop below older ones and vanish from under the form.

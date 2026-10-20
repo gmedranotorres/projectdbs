@@ -4,9 +4,11 @@ import { useId, useState, type FormEvent } from "react";
 import {
   LIMITS,
   addedSince,
+  dueLabel,
   emptyForm,
   findDuplicate,
   groupAll,
+  groupOf,
   oneLine,
   toApplication,
   validate,
@@ -26,6 +28,7 @@ import { useFromHere } from "@/hooks/useBackLink";
 import { CalendarReminder } from "./calendar-reminder";
 import { DuplicateNotice } from "./duplicate-notice";
 import {
+  Badge,
   Button,
   Chip,
   ChipGroup,
@@ -41,15 +44,16 @@ import {
 } from "./ui";
 
 // `/`, always: a quick add right on the page. Saving keeps you here, and
-// what you added appears under the form, newest first. Next to the newest
-// item, a one-time tip explains the suggested follow-up date. No tour, no
-// modal, no sample data.
+// what you added appears under the form. The list puts what's due first,
+// soonest first, each with the check-in's "Due today" or "2 days late";
+// the rest follow, newest first. Next to the newest item, a one-time tip
+// explains the suggested follow-up date. No tour, no modal, no sample data.
 //
 // The first visit opens with one line on what Seguimiento does. Coming back
 // with something saved, it opens with "Welcome back.", today's date and
 // three numbers that lead to the check-in and the list, plus the last
-// check-in. Nothing here nags: no badges, no alarm colors, one gentle line
-// once a week has passed.
+// check-in. Nothing here nags: the only badges are on rows that are due,
+// in words, and one gentle line once a week has passed.
 
 // Roles a grad student applying in Chicago is likely to type.
 const ROLE_CHIPS = ["Data Analyst", "Research Associate", "Policy Analyst", "Associate Consultant"];
@@ -81,8 +85,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
     requestAnimationFrame(() => document.getElementById(id)?.focus(options));
 
   const newest = [...applications].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-  const shown = newest.slice(0, LIST_LIMIT);
-  const first = shown[0];
+  const first = newest[0];
   // The tip is only true of a date Seguimiento suggested: Applied, a week
   // after the day you applied.
   // The same check as the Add page: a notice, and Add application still works.
@@ -142,6 +145,12 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
 
   const today = getToday();
   const groups = groupAll(applications, today);
+  // Due first, soonest first (groupAll's order), then the rest, newest
+  // first, so what you just added still shows under the form.
+  const shown = [...groups.due, ...newest.filter((a) => groupOf(a, today) !== "due")].slice(
+    0,
+    LIST_LIMIT,
+  );
   const added = addedSince(applications, startOfWeek(today));
   const goal = store.settings.weeklyGoal;
   const lastCheckIn = store.settings.lastCheckInOn;
@@ -290,6 +299,11 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
                 status={app.status}
                 followUpOn={app.followUpOn ?? undefined}
                 href={`/applications/${app.id}?from=${here}`}
+                hint={
+                  groupOf(app, today) === "due" ? (
+                    <Badge tone="due">{dueLabel(app, today)}</Badge>
+                  ) : undefined
+                }
                 note={
                   showHint && app.id === first.id ? (
                     <span className="inline-flex flex-wrap items-center gap-x-2 rounded-badge bg-accent-soft py-0.5 pr-0.5 pl-2 text-sm text-ink">

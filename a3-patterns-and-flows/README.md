@@ -20,7 +20,7 @@ flowchart TD
     open(["Open Seguimiento"]) --> home["/"]
     home --> anything{"Anything saved?"}
     anything -- No --> empty["Quick add: Company + Role<br/>+ the follow-up rules"]
-    empty -- "Add application" --> listed["Stays on /: message<br/>+ Your list, newest first<br/>+ one-time tip"]
+    empty -- "Add application" --> listed["Stays on /: message<br/>+ Your list, due first<br/>+ one-time tip"]
     listed -- "Add another" --> empty
     empty -. "Add Monday check-in" .-> ics(["Calendar file:<br/>Mondays at 9:00"])
   end
