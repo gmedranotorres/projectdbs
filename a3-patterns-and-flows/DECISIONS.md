@@ -907,3 +907,5 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **2. Due marks on Home.** Home's Your list puts due applications first, soonest first, each with the check-in's badge ("Due today", "1 day late"). The rest follow, newest first, and five show as before.
   - This revises "no nagging badges" from the welcome-back round, as I chose. The badge is the same words-first one used on All and the check-in, and only due rows get it.
   - I didn't sort the whole list by follow-up (soonest first, like All): a just-added application, a week out, could then drop below older ones and vanish from under the form.
+- **3. Finding the follow-up date.** The header line on an application ("Applied · Applied Tue, Oct 20 · Follow up Tue, Oct 27") ends with a quiet **Change** button. It scrolls the Follow up on field to the middle of the screen and focuses it; screen readers hear "Change the follow-up date". Save changes now says "Saved. Follow up Tue, Nov 3." (or "Saved." when it's closed).
+  - I kept the field where it is in the form, rather than moving it up, so the form stays in the same order as Add.

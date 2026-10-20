@@ -25,8 +25,10 @@ import {
 // One application: what's saved, then every field to change, the same as
 // Add plus Status. Once the follow-up is due, the usual change is one tap
 // ("I followed up today").
-// Saving stays here and says "Saved"; deleting asks first, on the page,
-// then goes to the list. "← Back" goes to the list, or Home, it came from.
+// Saving stays here and says "Saved", with the follow-up date; Change, by
+// the date at the top, goes straight to its field. Deleting asks first, on
+// the page, then goes to the list. "← Back" goes to the list, or Home, it
+// came from.
 
 export function ApplicationDetail() {
   const store = useApplications();
@@ -77,6 +79,12 @@ export function ApplicationDetail() {
     }
   }
 
+  function changeFollowUp() {
+    const field = document.querySelector<HTMLInputElement>('#edit-section [name="followUpOn"]');
+    field?.scrollIntoView({ block: "center" });
+    field?.focus({ preventScroll: true });
+  }
+
   function keep() {
     setConfirmingDelete(false);
     // Back where you were, now that the question is gone.
@@ -104,6 +112,12 @@ export function ApplicationDetail() {
           <Badge tone={statusTone(app.status)}>{STATUS_LABELS[app.status]}</Badge>
           <span>Applied {formatDay(app.appliedOn)}</span>
           <span>{app.followUpOn ? `Follow up ${formatDay(app.followUpOn)}` : "No follow-up"}</span>
+          {/* The date is the fifth field below; this goes straight to it. */}
+          {app.followUpOn && (
+            <Button variant="quiet" size="sm" onClick={changeFollowUp}>
+              Change<span className="sr-only"> the follow-up date</span>
+            </Button>
+          )}
         </p>
       </div>
 
@@ -138,7 +152,7 @@ export function ApplicationDetail() {
         )
       )}
 
-      <section aria-labelledby="edit-heading" className="space-y-4">
+      <section id="edit-section" aria-labelledby="edit-heading" className="space-y-4">
         <h2 id="edit-heading" className="text-xl font-semibold">
           Change details or status
         </h2>
@@ -155,9 +169,10 @@ export function ApplicationDetail() {
               Cancel
             </ButtonLink>
           }
-          onSaved={() => {
+          onSaved={(saved) => {
             setProblem(null);
-            toast("Saved");
+            // Say what the date is now: the field is usually out of view.
+            toast(saved.followUpOn ? `Saved. Follow up ${formatDay(saved.followUpOn)}.` : "Saved.");
           }}
         />
       </section>
