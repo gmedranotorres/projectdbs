@@ -839,3 +839,30 @@ Check the accessibility tree in the browser, not only the source. Fix and docume
 - **The loading placeholder stays without a heading.** It shows only for a moment, and it has screen-reader text ("Loading your applications…").
 - **Next's assertive route announcer is left alone.** It's the framework's own, and it reads the page title after navigation.
 - **No new attributes were added where the shared Field and Toast already do the work.** Adding them by hand would duplicate them.
+
+## Contrast check (Oct 20, 2026)
+
+**What I asked.** Compute in code the WCAG contrast ratio for every text/background pair actually used:
+- body text, muted text and links;
+- button labels on the accent;
+- badge text on each badge background;
+- error text and placeholder text;
+- the focus ring against the surface.
+
+Put them in a table under "Accessibility" in the README, with pass/fail at 4.5:1 (3:1 for large text and the focus ring). For any failure, propose the smallest token change, wait for my decision, and apply it to the token.
+
+**What changed.**
+- `scripts/check-contrast.mjs` (new) and `npm run check:contrast`:
+  - it reads the tokens from `app/globals.css`, so a token change is checked from the source;
+  - it computes the WCAG 2.2 ratio for 30 pairs and exits with an error if any fails;
+  - `-- --md` prints the README table.
+- README: a "Contrast check" part of Accessibility, with how the pairs were found, the table and the result. The old one-line contrast claim in "Also in place" moved into it.
+- **How the pairs were found:** every visible piece of text on every page was recorded in Chrome at 390px and 1440px, with its color and the background actually behind it. That included errors on the page and in cards, the delete question, the toast, and the gallery's hover and disabled states. Each color matched a token.
+
+**Result.** All 30 pairs pass, so I had no token change to propose and nothing changed in the app. The tightest is the primary button label (ink on sage) at 4.70:1.
+
+**What I rejected or decided myself.**
+- **The focus ring was checked against every background a control sits on,** not only the surface: the page, a card, the tint in the toast, and the error tint in the delete question.
+- **Ratios are rounded down,** so a pair at 4.496 can't show as 4.50 and pass.
+- **Non-text marks stay out of the table:** the link underline is a second cue next to ink text, and the progress fill was already measured (3.65:1). Disabled controls are listed anyway, though WCAG exempts them.
+- **Large text was held to 4.5:1 in practice.** Every large heading is ink, so the 3:1 row is there for completeness.

@@ -175,9 +175,56 @@ It doesn't remember the search text on All, which messages were shown, or where 
 - The gallery's EmptyState example shows its h2 ("Nothing logged yet") next to the section's own h2. That's how the component sits on a real page, under the h1. It's a level-order demo, not a skipped level.
 - While a page is still loading, it shows "Loading…" without a heading for a moment.
 
+### Contrast check (Oct 20, 2026)
+
+**How.**
+- **Finding the pairs.** Chrome rendered every page at 390px and 1440px: Home on a first visit and returning, Add, All, applications in each status, the check-in, Move data, the component gallery and a 404. It also rendered the states that bring in other colors: field errors on the page and inside cards, the delete question, the toast, and the gallery's forced hover and disabled states. A script walked every visible piece of text and recorded its color, the background actually behind it and its size, plus each field's placeholder color. Every color it found was a Calm token; nothing is drawn in a one-off color.
+- **Computing the ratios.** `npm run check:contrast` (`scripts/check-contrast.mjs`) reads the tokens from `app/globals.css` and computes the WCAG ratio for each pair, rounded down. It exits with an error if any pair falls short, so a token change gets checked again. `npm run check:contrast -- --md` prints the table below.
+
+**The bar.** Text is 4.5:1. Nearly all of it is 13 to 16px, and the few large headings are ink, which passes either way. Large text and the focus ring are 3:1.
+
+| Pair | Where | Text | Background | Ratio | Needs | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| Body text | pages, labels, headings | `--ink` #3a2b21 | `--bg` #ebe2d0 | 10.54:1 | 4.5:1 | ✓ pass |
+| Body text on a card | cards, the header, the bottom bar, fields | `--ink` #3a2b21 | `--surface` #fbf7ee | 12.69:1 | 4.5:1 | ✓ pass |
+| Body text on a tint | Interviewing and new badges, pressed chips, the toast, hovered buttons, the current tab on a laptop | `--ink` #3a2b21 | `--accent-soft` #dde4d4 | 10.41:1 | 4.5:1 | ✓ pass |
+| Body text on grey | a nav link under the pointer on a laptop | `--ink` #3a2b21 | `--subtle` #efede7 | 11.59:1 | 4.5:1 | ✓ pass |
+| Body text on the error tint | the delete question | `--ink` #3a2b21 | `--error-soft` #fbe9e6 | 11.56:1 | 4.5:1 | ✓ pass |
+| Muted text | descriptions, hints, the footer, the Closed badge, disabled buttons | `--muted` #6b5848 | `--bg` #ebe2d0 | 5.24:1 | 4.5:1 | ✓ pass |
+| Muted text on a card | roles, dates, field hints, nav labels on a phone | `--muted` #6b5848 | `--surface` #fbf7ee | 6.30:1 | 4.5:1 | ✓ pass |
+| Muted text on grey | Quiet and date badges, the closed-application note | `--muted` #6b5848 | `--subtle` #efede7 | 5.75:1 | 4.5:1 | ✓ pass |
+| Muted text on a tint | counts in a pressed chip | `--muted` #6b5848 | `--accent-soft` #dde4d4 | 5.17:1 | 4.5:1 | ✓ pass |
+| Links | TextLink: ink text, underlined | `--ink` #3a2b21 | `--bg` #ebe2d0 | 10.54:1 | 4.5:1 | ✓ pass |
+| Links on a card | TextLink inside a card | `--ink` #3a2b21 | `--surface` #fbf7ee | 12.69:1 | 4.5:1 | ✓ pass |
+| Large headings | the h1 (40 to 64px) and serif h2s (24px) | `--ink` #3a2b21 | `--bg` #ebe2d0 | 10.54:1 | 3:1 | ✓ pass |
+| Primary button label | the one main action | `--accent-ink` #3a2b21 | `--accent` #8a9e80 | 4.70:1 | 4.5:1 | ✓ pass |
+| Primary button label, under the pointer | the one main action | `--accent-ink` #3a2b21 | `--accent-hover` #a1b096 | 5.92:1 | 4.5:1 | ✓ pass |
+| Badge: Applied, Followed up | status | `--ink` #3a2b21 | `--surface` #fbf7ee | 12.69:1 | 4.5:1 | ✓ pass |
+| Badge: Interviewing, new | status, the row you just changed | `--ink` #3a2b21 | `--accent-soft` #dde4d4 | 10.41:1 | 4.5:1 | ✓ pass |
+| Badge: Offer | status | `--surface` #fbf7ee | `--ink` #3a2b21 | 12.69:1 | 4.5:1 | ✓ pass |
+| Badge: Closed (on the page) | status, dashed edge | `--muted` #6b5848 | `--bg` #ebe2d0 | 5.24:1 | 4.5:1 | ✓ pass |
+| Badge: Closed (on a card) | status, dashed edge | `--muted` #6b5848 | `--surface` #fbf7ee | 6.30:1 | 4.5:1 | ✓ pass |
+| Badge: Due, late | follow-up dates | `--late` #7a4300 | `--late-soft` #fbecd2 | 6.85:1 | 4.5:1 | ✓ pass |
+| Badge: Quiet, dates | gone quiet, plain dates | `--muted` #6b5848 | `--subtle` #efede7 | 5.75:1 | 4.5:1 | ✓ pass |
+| Error text | field errors on the page | `--error` #b02a1f | `--bg` #ebe2d0 | 5.10:1 | 4.5:1 | ✓ pass |
+| Error text on a card | field errors inside a card (Move data, the check-in) | `--error` #b02a1f | `--surface` #fbf7ee | 6.14:1 | 4.5:1 | ✓ pass |
+| Danger button label | Delete, at rest | `--error` #b02a1f | `--bg` #ebe2d0 | 5.10:1 | 4.5:1 | ✓ pass |
+| Danger button label, under the pointer | Delete | `--error` #b02a1f | `--error-soft` #fbe9e6 | 5.59:1 | 4.5:1 | ✓ pass |
+| Placeholder text | Link's https:// | `--muted` #6b5848 | `--surface` #fbf7ee | 6.30:1 | 4.5:1 | ✓ pass |
+| Focus ring on the page | 2px ring, 2px from the control | `--focus` #3a2b21 | `--bg` #ebe2d0 | 10.54:1 | 3:1 | ✓ pass |
+| Focus ring on a card |  | `--focus` #3a2b21 | `--surface` #fbf7ee | 12.69:1 | 3:1 | ✓ pass |
+| Focus ring on a tint | inside the toast | `--focus` #3a2b21 | `--accent-soft` #dde4d4 | 10.41:1 | 3:1 | ✓ pass |
+| Focus ring on the error tint | inside the delete question | `--focus` #3a2b21 | `--error-soft` #fbe9e6 | 11.56:1 | 3:1 | ✓ pass |
+
+**Result.** All 30 pairs pass, so no token changed. The closest is the primary button's label, ink on sage, at 4.70:1. That leaves little room: a darker `--accent` or a lighter `--accent-ink` could drop it under 4.5:1, so run the check again after changing either.
+
+Not text, so not in the table:
+- The link underline (`--accent-strong`) is a second cue; the link text itself is ink.
+- The progress bar's fill is 3.65:1 against its track (3:1 is the minimum for shapes), with the numbers beside it.
+- Disabled controls, which WCAG exempts, use the muted pair anyway (5.24:1).
+
 ### Also in place
 
-- Text contrast is at least 4.5:1 everywhere, measured from the Calm tokens. The progress bar's fill is 3.65:1 against its track (3:1 is the minimum for shapes), with the numbers beside it.
 - Errors sit next to the field, say what to do next and keep what was typed. Focus goes to the first one.
 - Toasts never hold actions. Undo and confirmations are Notices on the page instead.
 - The current page is marked on screen as well, with an underline on a phone and a filled tab on a laptop. Late and quiet items say so in words, never by color alone.
