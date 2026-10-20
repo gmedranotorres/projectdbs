@@ -131,7 +131,7 @@ After any of these, a message says what happened ("Followed up with Example Co. 
 
 **Nothing to do.** When nothing is due and nothing is quiet, the page says so plainly: "Nothing due. Add an application or come back Monday." It offers **Add an application** and **Come back Monday: add it to my calendar**, which downloads the Monday reminder.
 
-**3. This week.** "Added since Monday, Oct 19: 2 applications." A bar shows that against the weekly goal, with "2 of 3" beside it, and "Goal met." once it's reached. The goal is 3 to start. **Change goal** opens a field in place: a whole number from 1 to 20, or "Enter a whole number from 1 to 20." It's saved in this device's settings.
+**3. Applications this week.** "Added since Monday, Oct 19: 2 applications." A bar shows that against the weekly goal, with "2 of 3" beside it, and "Goal met." once it's reached. The goal is 3 to start, shown as "Suggested goal: 3 a week" until you choose one; after that it reads "Weekly goal: 3 applications". **Change goal** opens a field in place: a whole number from 1 to 20, or "Enter a whole number from 1 to 20." It's saved in this device's settings.
 
 **4. Done for this week.** The main button saves today as the last check-in and says "Done. See you next Monday." It keeps saying so for the rest of the week.
 

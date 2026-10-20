@@ -82,6 +82,7 @@ export function readSettings(raw: unknown): Settings {
       typeof goal === "number" && Number.isInteger(goal) && goal > 0
         ? goal
         : DEFAULT_SETTINGS.weeklyGoal,
+    ...(r.goalChosen === true ? { goalChosen: true as const } : {}),
     ...(isDay(r.lastCheckInOn) ? { lastCheckInOn: r.lastCheckInOn } : {}),
     dismissedHints: Array.isArray(r.dismissedHints)
       ? r.dismissedHints.filter((h): h is string => typeof h === "string")

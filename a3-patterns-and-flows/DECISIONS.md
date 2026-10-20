@@ -914,3 +914,7 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
   - Checked at 390px: toast 691–768px, Company 61–107px, bottom bar from 787px, focus in Company.
   - The trade-off: for 5 seconds it can cover the lower rows of Your list. The toast names what was added, so nothing is lost; typing blind into Company was the worse problem.
   - The live region is the same element in both places, so screen readers hear it the same way.
+- **6. The check-in goal wording.**
+  - The section heading is now "Applications this week", so it no longer repeats the page title "This week".
+  - Until a goal is saved, the card says "Suggested goal: 3 a week"; after Change goal, "Weekly goal: N applications". That needed one new setting, `goalChosen` (set on saving a goal). Older data and exports without it read as not chosen, and backups carry it. Added to README's "What it remembers".
+  - I kept the "0 of 3" bar and counted only since Monday: the week's count is what the goal measures. The problem was the wording that made 3 look like the person's own goal.

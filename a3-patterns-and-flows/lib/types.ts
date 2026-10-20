@@ -42,6 +42,9 @@ export const FOLLOW_UP_HINT = "follow-up-suggestion";
 
 export type Settings = {
   weeklyGoal: number;
+  // Set once the person saves a goal of their own; until then the goal is
+  // shown as a suggestion.
+  goalChosen?: true;
   lastCheckInOn?: Day;
   // Hints the person closed, so they stay closed.
   dismissedHints: string[];

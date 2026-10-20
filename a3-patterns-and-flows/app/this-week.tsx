@@ -227,7 +227,7 @@ export function ThisWeek() {
 
       <section aria-labelledby="goal-heading" className="space-y-3">
         <h2 id="goal-heading" className="text-xl font-semibold">
-          This week
+          Applications this week
         </h2>
         <Card className="space-y-3">
           <p>
@@ -239,7 +239,7 @@ export function ThisWeek() {
             <GoalForm
               goal={goal}
               onSave={(next) => {
-                if (store.setSettings({ weeklyGoal: next })) {
+                if (store.setSettings({ weeklyGoal: next, goalChosen: true })) {
                   setEditingGoal(false);
                   focusSoon("change-goal");
                   return true;
@@ -253,7 +253,10 @@ export function ThisWeek() {
             />
           ) : (
             <p className="flex flex-wrap items-center gap-x-3 text-muted">
-              Weekly goal: {plural(goal, "application")}
+              {/* Until you pick one, 3 is only a starting point. */}
+              {store.settings.goalChosen
+                ? `Weekly goal: ${plural(goal, "application")}`
+                : `Suggested goal: ${goal} a week`}
               <Button id="change-goal" variant="quiet" size="sm" onClick={() => setEditingGoal(true)}>
                 Change goal
               </Button>
