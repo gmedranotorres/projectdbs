@@ -171,3 +171,42 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - Claude added two tag looks I didn't list, Plain and New, because the pages need them where Tag used to be.
 - Claude made the toast wait while the pointer or focus is on it, so it doesn't vanish while someone is reaching for Close.
 - Claude kept ToastProvider on `/dev/components` only for now. It goes in the root layout when a page first uses a toast.
+
+## 2026-10-20 · localStorage data layer
+
+**What I asked.** Build the data layer with no new packages:
+- `lib/types.ts`: Application and Settings `{ weeklyGoal, lastCheckInOn?, dismissedHints }`.
+- `lib/storage.ts`: one key, `seguimiento:v1`, holding `{ version: 1, applications, settings: { weeklyGoal: 3, dismissedHints: [] } }`, with safe JSON parsing (a corrupt value becomes an empty store, never a crash) and ids from `crypto.randomUUID()`.
+- `lib/dates.ts`: `today()` as a local YYYY-MM-DD, `addDays`, `daysBetween`, `startOfWeek` (Monday), and "Oct 25" formatting, with no UTC conversions.
+- `hooks/useApplications.ts`: applications, settings, add, update, remove, setSettings and a `hydrated` flag. It reads localStorage only in useEffect, and pages show a neutral skeleton until it has, never the empty state.
+- A section on `/dev/components` that adds and removes a fictional Example Co, to check persistence by reloading.
+
+**What changed.**
+- **`lib/types.ts`:** Application, Settings, StoreData, the status lists and their types. The types moved here from `lib/applications.ts`, which re-exports them, so existing imports still work.
+- **`lib/storage.ts`:** the key, defaults, `newId()` (`crypto.randomUUID()`), the record check, settings read field by field with defaults, `parseStore` (never throws), `loadStore` and `saveStore`.
+- **What a load does now:**
+  - Data saved before settings existed loads with the default settings.
+  - A corrupt value becomes an empty store, and the original text is set aside under `seguimiento:v1:unreadable:<time>`.
+  - Damaged records are dropped and the rest are kept. The "couldn't be read" banner still says so.
+- **`lib/dates.ts`:** no UTC anywhere now. Day math runs at local noon, so a daylight-saving change can't shift a day. I checked it in Chicago and Auckland across both 2026 changes, over the new year, and for Sunday → Monday.
+- **`hooks/useApplications.ts`:** replaces `lib/store.ts`. It returns `applications`, `settings`, `hydrated`, `saving`, `recovered`, `add`, `update`, `remove`, `setSettings`, `replaceAll` (Move data) and `dismissRecovered`.
+  - It reads localStorage only in useEffect.
+  - The server and the first browser render both get "not loaded yet", so the HTML matches, and every page shows `<Loading />` until then.
+  - All components share one copy, so a save shows everywhere at once.
+  - Each change returns false when the browser refuses to save, so the form keeps what was typed.
+- Every page and the storage banner use the hook. The form calls `add` for a new application and `update` when editing.
+- `/dev/components` has a "Saved data" section. **Add Example Co** and **Remove Example Co** confirm with a toast and show the entry as a ListRow. Remove only touches the entry this section added.
+- Checked in Chrome:
+  - Example Co survives a reload, and is gone after Remove and a reload.
+  - A corrupt value shows the first-visit page and the banner, not a crash, with the original set aside.
+  - Data in the old shape loads, and gets settings on its next save.
+  - The form's save persists.
+  - The server's HTML for `/` is the skeleton.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- I chose to keep the app's own model instead of the 4-status one in the request: 7 statuses (Applied, Followed up, Interviewing, Offer, Rejected, Withdrawn, No response), plus `contact`, `interviewOn` and `lastTouchedOn`. "I followed up", the interview rule, "Email X at Y" and Gone quiet depend on them, and saved records stay readable. Empty optional fields stay `null` or `""` rather than missing.
+- Claude made the hook use `useSyncExternalStore` for the shared copy, with the read in useEffect. Calling setState inside the effect breaks React's lint rule (`react-hooks/set-state-in-effect`). Side effect: pages opened later in the same visit show their data at once, with no skeleton.
+- Claude kept two existing protections the request didn't mention: the corrupt original is set aside rather than overwritten, and a private window that can't save gets a banner instead of silently losing changes.
+- Claude kept a fallback id for when `crypto.randomUUID()` doesn't exist (plain http on a phone testing over the local network).
+- Still open: `weeklyGoal` (default 3) is stored but shown nowhere except `/dev/components`. The onboarding decisions rejected streaks and quotas, so how a weekly goal appears should be decided before any page uses it.

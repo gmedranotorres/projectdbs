@@ -15,7 +15,7 @@ import {
   type Application,
 } from "@/lib/applications";
 import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday } from "@/lib/dates";
-import { saveApplication, useStore } from "@/lib/store";
+import { useApplications } from "@/hooks/useApplications";
 import { ArrivalMessage } from "@/components/arrival-message";
 import { FirstVisit } from "@/components/first-visit";
 import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Badge, TextLink } from "@/components/ui";
@@ -26,10 +26,10 @@ import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Badge
 type Message = { text: string; undo?: Application; tone?: "error" };
 
 export function ThisWeek() {
-  const store = useStore();
+  const store = useApplications();
   const [message, setMessage] = useState<Message | null>(null);
 
-  if (!store) return <Loading />;
+  if (!store.hydrated) return <Loading />;
   if (store.applications.length === 0) return <FirstVisit />;
 
   const today = getToday();
@@ -37,7 +37,7 @@ export function ThisWeek() {
   const openCount = groups.due.length + groups.quiet.length + groups.upcoming.length;
 
   function act(before: Application, after: Application, text: string) {
-    if (saveApplication(after)) {
+    if (store.update(after)) {
       setMessage({ text, undo: before });
     } else {
       setMessage({ text: "Couldn't save that change. This browser's storage may be full.", tone: "error" });
@@ -47,7 +47,7 @@ export function ThisWeek() {
 
   // If the save fails, the change stays and Undo stays offered to try again.
   function undo(previous: Application) {
-    if (saveApplication(previous)) {
+    if (store.update(previous)) {
       setMessage({ text: `Undone. ${previous.company} is back where it was.` });
     } else {
       setMessage({

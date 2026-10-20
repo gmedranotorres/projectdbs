@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { OPEN_STATUSES, STATUS_LABELS } from "@/lib/applications";
+import { OPEN_STATUSES, STATUS_LABELS, emptyForm, toApplication } from "@/lib/applications";
+import { today } from "@/lib/dates";
+import { useApplications } from "@/hooks/useApplications";
 import {
   Badge,
   Button,
@@ -281,6 +283,72 @@ function Gallery() {
         </p>
         <ToastDemo />
       </Section>
+
+      <Section title="Saved data">
+        <p className="text-muted">
+          Add the fictional Example Co, then reload this page: it&rsquo;s still there. Remove it
+          and reload again: it&rsquo;s gone. Nothing else you&rsquo;ve saved is touched.
+        </p>
+        <DataDemo />
+      </Section>
+    </div>
+  );
+}
+
+// Marks the entry this demo adds, so Remove never touches a real one.
+const DEMO_NOTE = "Added from /dev/components.";
+
+function DataDemo() {
+  const data = useApplications();
+  const toast = useToast();
+  if (!data.hydrated) {
+    return <div aria-busy="true" className="h-11 w-64 animate-pulse rounded-control bg-subtle" />;
+  }
+  const demo = data.applications.filter((a) => a.company === "Example Co" && a.notes === DEMO_NOTE);
+
+  function add() {
+    const day = today();
+    const app = toApplication(
+      { ...emptyForm(day), company: "Example Co", role: "Data Analyst", notes: DEMO_NOTE },
+      day,
+    );
+    toast(data.add(app) ? "Added Example Co. Reload to check it's still there." : "Couldn't save. This browser's storage may be full.");
+  }
+
+  function remove() {
+    const ok = demo.every((a) => data.remove(a.id));
+    toast(ok ? "Removed Example Co." : "Couldn't remove it. This browser's storage may be full or blocked.");
+  }
+
+  return (
+    <div className="space-y-4">
+      <p>
+        Saved in this browser: {data.applications.length}{" "}
+        {data.applications.length === 1 ? "application" : "applications"}. Weekly goal{" "}
+        {data.settings.weeklyGoal}.
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="secondary" onClick={add} disabled={demo.length > 0}>
+          Add Example Co
+        </Button>
+        <Button variant="secondary" onClick={remove} disabled={demo.length === 0}>
+          Remove Example Co
+        </Button>
+      </div>
+      {demo.length > 0 && (
+        <List>
+          {demo.map((a) => (
+            <ListRow
+              key={a.id}
+              company={a.company}
+              role={a.role}
+              status={a.status}
+              followUpOn={a.followUpOn ?? undefined}
+              href={`/applications/edit?id=${a.id}&from=list`}
+            />
+          ))}
+        </List>
+      )}
     </div>
   );
 }

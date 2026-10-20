@@ -3,7 +3,7 @@
 import { useId, useState, type FormEvent } from "react";
 import { combine, plural, readBackup, toBackup, type Application } from "@/lib/applications";
 import { today as getToday } from "@/lib/dates";
-import { replaceApplications, useStore } from "@/lib/store";
+import { useApplications } from "@/hooks/useApplications";
 import { Button, ButtonLink, Card, ErrorIcon, Field, Input, Loading, Notice, PageHeader } from "@/components/ui";
 
 // localStorage stays on one browser, so moving between the phone and the
@@ -17,7 +17,7 @@ function focusSoon(id: string) {
 }
 
 export function MoveData() {
-  const store = useStore();
+  const store = useApplications();
   const fileId = useId();
   const [downloaded, setDownloaded] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -25,7 +25,7 @@ export function MoveData() {
   const [done, setDone] = useState<number | null>(null);
   const [saveFailed, setSaveFailed] = useState(false);
 
-  if (!store) return <Loading />;
+  if (!store.hydrated) return <Loading />;
   const apps = store.applications;
 
   function download() {
@@ -67,7 +67,7 @@ export function MoveData() {
   function confirmCombine() {
     if (!check) return;
     const result = combine(apps, check.incoming);
-    if (!replaceApplications(result.applications)) {
+    if (!store.replaceAll(result.applications)) {
       setSaveFailed(true);
       return;
     }

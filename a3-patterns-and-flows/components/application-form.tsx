@@ -18,7 +18,7 @@ import {
   type Status,
 } from "@/lib/applications";
 import { formatDay, formatShortDay, type Day } from "@/lib/dates";
-import { saveApplication } from "@/lib/store";
+import { useApplications } from "@/hooks/useApplications";
 import { Button, ButtonLink, ErrorIcon, Field, Input, Textarea } from "./ui";
 
 // The one form behind Add and Update. Errors appear when you save, next to
@@ -57,6 +57,7 @@ export function ApplicationForm({
 }: Props) {
   const formId = useId();
   const fid = (field: FieldName) => `${formId}-${field}`;
+  const saved = useApplications();
 
   const [values, setValues] = useState(initial);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -134,7 +135,7 @@ export function ApplicationForm({
     }
 
     const app = toApplication(values, today, before);
-    if (!saveApplication(app)) {
+    if (!(before ? saved.update(app) : saved.add(app))) {
       setSaveFailed(true);
       focusSoon(`${formId}-save-error`);
       return;

@@ -1,12 +1,12 @@
 "use client";
 
-import { dismissRecovered, useStore } from "@/lib/store";
+import { useApplications } from "@/hooks/useApplications";
 import { Button, ErrorIcon, TextLink } from "./ui";
 
 // Problems with saving, shown on every page so they can't be missed.
 export function StorageBanner() {
-  const store = useStore();
-  if (!store) return null;
+  const store = useApplications();
+  if (!store.hydrated) return null;
 
   if (store.saving === "unavailable") {
     return (
@@ -35,7 +35,7 @@ export function StorageBanner() {
               <TextLink href="/move">load it on Move data</TextLink>.
             </span>
           </p>
-          <Button variant="secondary" onClick={dismissRecovered}>
+          <Button variant="secondary" onClick={store.dismissRecovered}>
             Dismiss
           </Button>
         </div>

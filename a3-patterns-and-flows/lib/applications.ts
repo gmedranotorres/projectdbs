@@ -7,20 +7,13 @@ import {
   isDay,
   type Day,
 } from "./dates";
+import { newId, readApplication } from "./storage";
+import { OPEN_STATUSES, type Application, type ClosedStatus, type OpenStatus, type Status } from "./types";
+
+export { CLOSED_STATUSES, OPEN_STATUSES } from "./types";
+export type { Application, ClosedStatus, OpenStatus, Status } from "./types";
 
 // ---- The record ---------------------------------------------------------
-
-export const OPEN_STATUSES = ["applied", "followed-up", "interviewing"] as const;
-export const CLOSED_STATUSES = [
-  "offer",
-  "rejected",
-  "withdrawn",
-  "no-response",
-] as const;
-
-export type OpenStatus = (typeof OPEN_STATUSES)[number];
-export type ClosedStatus = (typeof CLOSED_STATUSES)[number];
-export type Status = OpenStatus | ClosedStatus;
 
 export const STATUS_LABELS: Record<Status, string> = {
   applied: "Applied",
@@ -32,76 +25,8 @@ export const STATUS_LABELS: Record<Status, string> = {
   "no-response": "No response",
 };
 
-export type Application = {
-  id: string;
-  company: string;
-  role: string;
-  status: Status;
-  appliedOn: Day;
-  // Only while Interviewing.
-  interviewOn: Day | null;
-  // Empty once the application is closed.
-  followUpOn: Day | null;
-  contact: string;
-  link: string;
-  notes: string;
-  // The last day there was news: applying, following up, a status change.
-  lastTouchedOn: Day;
-  // Exact times, used to pick the newer copy when two devices are combined.
-  createdAt: string;
-  updatedAt: string;
-};
-
 export function isOpen(status: Status): status is OpenStatus {
   return (OPEN_STATUSES as readonly string[]).includes(status);
-}
-
-function isStatus(value: unknown): value is Status {
-  return typeof value === "string" && value in STATUS_LABELS;
-}
-
-export function newId(): string {
-  // randomUUID only exists on https and localhost; a phone testing over the
-  // local network gets the fallback.
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-    return crypto.randomUUID();
-  }
-  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
-}
-
-// Checks one record read from storage or a backup file. Returns null when
-// it isn't a Seguimiento application.
-export function readApplication(raw: unknown): Application | null {
-  if (typeof raw !== "object" || raw === null) return null;
-  const r = raw as Record<string, unknown>;
-  const text = (v: unknown) => (typeof v === "string" ? v : "");
-  const optionalDay = (v: unknown) => (isDay(v) ? v : null);
-  if (
-    typeof r.id !== "string" ||
-    !r.id ||
-    typeof r.company !== "string" ||
-    !isStatus(r.status) ||
-    !isDay(r.appliedOn) ||
-    !isDay(r.lastTouchedOn) ||
-    typeof r.updatedAt !== "string"
-  ) {
-    return null;
-  }
-  return {
-    id: r.id,
-    company: r.company,
-    role: text(r.role),
-    status: r.status,
-    appliedOn: r.appliedOn,
-    interviewOn: optionalDay(r.interviewOn),
-    followUpOn: optionalDay(r.followUpOn),
-    contact: text(r.contact),
-    link: text(r.link),
-    notes: text(r.notes),
-    lastTouchedOn: r.lastTouchedOn,
-    createdAt: text(r.createdAt) || r.updatedAt,
-    updatedAt: r.updatedAt,
-  };
 }
 
 // ---- Follow-up rules ----------------------------------------------------

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { emptyForm, type Application } from "@/lib/applications";
 import { endOfWeek, formatDay, today as getToday } from "@/lib/dates";
-import { useStore } from "@/lib/store";
+import { useApplications } from "@/hooks/useApplications";
 import { ApplicationForm } from "@/components/application-form";
 import { CalendarReminder } from "@/components/calendar-reminder";
 import { Button, ButtonLink, Loading, PageHeader, TextLink } from "@/components/ui";
@@ -11,12 +11,12 @@ import { Button, ButtonLink, Loading, PageHeader, TextLink } from "@/components/
 // Log an application. After saving, the page says when the follow-up is
 // and offers "Add another" first, for logging several between classes.
 export function AddApplication() {
-  const store = useStore();
+  const store = useApplications();
   const [saved, setSaved] = useState<Application | null>(null);
   // A new key gives "Add another" a fresh, empty form.
   const [round, setRound] = useState(0);
 
-  if (!store) return <Loading />;
+  if (!store.hydrated) return <Loading />;
   const today = getToday();
 
   return (

@@ -11,7 +11,7 @@ import {
   type Group,
 } from "@/lib/applications";
 import { formatDay, today as getToday, type Day } from "@/lib/dates";
-import { useStore } from "@/lib/store";
+import { useApplications } from "@/hooks/useApplications";
 import { ArrivalMessage, useHighlightId } from "@/components/arrival-message";
 import { Badge, ButtonLink, EmptyState, Loading, PageHeader } from "@/components/ui";
 
@@ -25,10 +25,10 @@ const SECTIONS: { group: Group; title: string }[] = [
 ];
 
 export function ApplicationList() {
-  const store = useStore();
+  const store = useApplications();
   const highlight = useHighlightId();
 
-  if (!store) return <Loading />;
+  if (!store.hydrated) return <Loading />;
   const today = getToday();
   const apps = store.applications;
   const groups = groupAll(apps, today);

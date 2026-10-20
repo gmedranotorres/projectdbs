@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
 import { formFrom, isOpen, markFollowedUp } from "@/lib/applications";
-import { deleteApplication, saveApplication, useStore } from "@/lib/store";
+import { useApplications } from "@/hooks/useApplications";
 import { ApplicationForm } from "@/components/application-form";
 import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader } from "@/components/ui";
 
@@ -15,7 +15,7 @@ import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader } from
 const PARENT = { href: "/applications", label: "All applications" };
 
 export function EditApplication() {
-  const store = useStore();
+  const store = useApplications();
   const params = useSearchParams();
   const router = useRouter();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
@@ -26,7 +26,7 @@ export function EditApplication() {
   const id = params.get("id");
   const back = params.get("from") === "week" ? "/" : "/applications";
 
-  if (!store) return <Loading />;
+  if (!store.hydrated) return <Loading />;
   const today = getToday();
   const app = store.applications.find((a) => a.id === id);
 
@@ -57,14 +57,14 @@ export function EditApplication() {
   function followedUp() {
     if (!app) return;
     const next = markFollowedUp(app, today);
-    if (saveApplication(next)) router.push(`${back}?updated=${next.id}`);
+    if (store.update(next)) router.push(`${back}?updated=${next.id}`);
     else setProblem("Couldn't save. This browser's storage may be full.");
   }
 
   function remove() {
     if (!app) return;
     setLeaving(true);
-    if (deleteApplication(app.id)) {
+    if (store.remove(app.id)) {
       router.push(`${back}?deleted=${encodeURIComponent(app.company)}`);
     } else {
       setLeaving(false);

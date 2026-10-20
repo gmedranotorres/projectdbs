@@ -1,0 +1,49 @@
+import type { Day } from "./dates";
+
+// The shapes of what Seguimiento saves. The rules that work on them are in
+// applications.ts; reading and writing them is in storage.ts.
+
+export type { Day };
+
+export const OPEN_STATUSES = ["applied", "followed-up", "interviewing"] as const;
+export const CLOSED_STATUSES = ["offer", "rejected", "withdrawn", "no-response"] as const;
+
+export type OpenStatus = (typeof OPEN_STATUSES)[number];
+export type ClosedStatus = (typeof CLOSED_STATUSES)[number];
+export type Status = OpenStatus | ClosedStatus;
+
+export type Application = {
+  id: string;
+  company: string;
+  role: string;
+  status: Status;
+  // Calendar days, "2026-10-19", in the person's own time zone.
+  appliedOn: Day;
+  // Only while Interviewing.
+  interviewOn: Day | null;
+  // Empty once the application is closed.
+  followUpOn: Day | null;
+  // Who to follow up with: a name or an email. Empty when not given.
+  contact: string;
+  link: string;
+  notes: string;
+  // The last day there was news: applying, following up, a status change.
+  lastTouchedOn: Day;
+  // Exact times, used to pick the newer copy when two devices are combined.
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Settings = {
+  weeklyGoal: number;
+  lastCheckInOn?: Day;
+  // Hints the person closed, so they stay closed.
+  dismissedHints: string[];
+};
+
+// Everything under the one localStorage key.
+export type StoreData = {
+  version: 1;
+  applications: Application[];
+  settings: Settings;
+};
