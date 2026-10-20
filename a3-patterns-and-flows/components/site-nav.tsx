@@ -13,7 +13,8 @@ const ITEMS: { href: string; label: string; icon: ReactNode; matches: (p: string
   {
     href: "/",
     label: "Home",
-    matches: (p) => p === "/",
+    // The check-in is Home's other face, so Home stays marked there.
+    matches: (p) => p === "/" || p === "/check-in",
     icon: (
       <svg aria-hidden="true" viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
         <path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1v-8.5Z" />
@@ -56,26 +57,43 @@ const ITEMS: { href: string; label: string; icon: ReactNode; matches: (p: string
   },
 ];
 
-export function SiteNav() {
+// The header: the name, and on a laptop the navigation beside it.
+export function SiteHeader() {
   return (
     <header className="border-b border-line bg-surface">
       <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
         <Link href="/" className="font-serif text-heading">
           Seguimiento
         </Link>
-        <nav
-          aria-label="Main"
-          className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:static md:border-0 md:pb-0"
-        >
-          {/* On an application's page the address is only known in the
-              browser, so the links draw first and the current one is marked
-              once it's known. */}
-          <Suspense fallback={<NavItems pathname={null} />}>
-            <CurrentNavItems />
-          </Suspense>
+        <nav aria-label="Main" className="hidden md:block">
+          <MarkedNavItems />
         </nav>
       </div>
     </header>
+  );
+}
+
+// On a phone, the same four places as a bar at the bottom. It comes last in
+// the page, after the footer, so Tab moves top to bottom as you see it:
+// header, page, footer, bar. Only one of the two navs shows at a time.
+export function BottomNav() {
+  return (
+    <nav
+      aria-label="Main"
+      className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:hidden"
+    >
+      <MarkedNavItems />
+    </nav>
+  );
+}
+
+// On an application's page the address is only known in the browser, so
+// the links draw first and the current one is marked once it's known.
+function MarkedNavItems() {
+  return (
+    <Suspense fallback={<NavItems pathname={null} />}>
+      <CurrentNavItems />
+    </Suspense>
   );
 }
 

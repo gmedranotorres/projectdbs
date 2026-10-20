@@ -23,7 +23,7 @@ flowchart TD
   end
 
   subgraph back["Coming back"]
-    monday(["Monday"]) --> checkin["/ (check-in)"]
+    monday(["Monday"]) --> checkin["/ (check-in),<br/>always at /check-in"]
     checkin --> due{"Anything due<br/>or quiet?"}
     due -- Yes --> act["I followed up · Not yet"]
     act -- "Undo or next one" --> checkin
@@ -37,11 +37,15 @@ flowchart TD
   ics -. "Reminder" .-> monday
   anything -- Yes --> checkin
   act -- Details --> edit
+  anypage(["Any page"]) -- "Footer: Weekly check-in" --> checkin
+  edit -- "← Back to where<br/>you came from" --> list
 ```
 
 Seguimiento is a weekly ritual for one person: a second-year grad student applying to jobs in Chicago, usually in bursts between classes, on both a phone and a laptop. The main task in one sentence: I log an application, it goes on my list with a follow-up date, and when I come back on Monday it tells me who to follow up with.
 
-Everything is saved in the browser's localStorage. There are no accounts, database or APIs. Every step is its own page, and the same navigation sits on all of them: **Home** (`/`), **Add** (`/add`), **All** (`/applications`) and **Move data** (`/move`). On a phone the navigation is a bar at the bottom, within reach of a thumb. On a laptop it sits in the header. Each application has its own page, `/applications/<id>`, reached from a list.
+Everything is saved in the browser's localStorage. There are no accounts, database or APIs. Every step is its own page, and the same navigation sits on all of them: **Home** (`/`), **Add** (`/add`), **All** (`/applications`) and **Move data** (`/move`). On a phone the navigation is a bar at the bottom with four labeled items, icon and word, within reach of a thumb, and no menu to open. On a laptop it sits in the header. Each application has its own page, `/applications/<id>`, reached from a list.
+
+**Where you are and how to get back.** The current place in the navigation is marked for screen readers (`aria-current="page"`) and on screen: bold and underlined on a phone, bold on a tinted background on a laptop. An application's page marks All, and the check-in marks Home. Every page starts with the same header: the title, one line on what the page is for, and, on every page but Home, a link that says where it goes, such as "← Back to All applications". It goes to the page you came from when that's known: the list (with its filter), Home or This week for an application, the list or Home for Add. Otherwise, as from a bookmark or the navigation, it goes to Home. At the bottom of every page, a footer says "Saved on this device" and links to the **Weekly check-in** (`/check-in`). Tab moves from top to bottom as the page is laid out: header, page, footer, then the phone's bottom bar.
 
 Forms are one column with a label on every field. Errors appear when you save. Each one sits next to its field, says what to do next, and keeps what you typed.
 
@@ -110,7 +114,7 @@ If the browser refuses to save, usually because its storage is full, a message a
 
 ## Flow 3: Coming back (the Monday check-in)
 
-Once something is due or gone quiet, Home is the This week check-in. It works on any day, but it's built for Monday. It opens with "Week of Oct 19" and then shows only what needs a decision. Every decision can be made on that page without opening each application.
+Once something is due or gone quiet, Home is the This week check-in. It's also always at `/check-in`, linked from every page's footer, so it can be opened even when nothing is due: it then says what's next, or, with nothing saved, points to Home. It works on any day, but it's built for Monday. It opens with "Week of Oct 19" and then shows only what needs a decision. Every decision can be made on that page without opening each application.
 
 **Follow-ups due.** "Follow up this week" lists everything due by Sunday, late ones first. Each item names the person when you gave one ("Follow up with Priya at Morningstar"), shows the role and status, and says when it was due ("4 days late", "Due today", "Due Thu, Oct 22"). Each one has **I followed up** (the next date moves two weeks out), **Not yet** (asks again in a week) and **Details**.
 

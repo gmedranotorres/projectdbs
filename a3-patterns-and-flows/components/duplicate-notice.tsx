@@ -1,4 +1,7 @@
+"use client";
+
 import type { Application } from "@/lib/applications";
+import { useFromHere } from "@/hooks/useBackLink";
 import { Button, ButtonLink, Notice } from "./ui";
 
 // Shown under Company when a saved application has the same company and
@@ -15,6 +18,7 @@ export function DuplicateNotice({
   dismissLabel: string;
   onDismiss: () => void;
 }) {
+  const here = useFromHere();
   return (
     <div aria-live="polite">
       {match && (
@@ -24,7 +28,7 @@ export function DuplicateNotice({
               You already have {match.company} — {match.role}.
             </p>
             <div className="flex flex-wrap gap-2">
-              <ButtonLink variant="secondary" size="sm" href={`/applications/${match.id}`}>
+              <ButtonLink variant="secondary" size="sm" href={`/applications/${match.id}?from=${here}`}>
                 Open it
               </ButtonLink>
               <Button variant="quiet" size="sm" onClick={onDismiss}>

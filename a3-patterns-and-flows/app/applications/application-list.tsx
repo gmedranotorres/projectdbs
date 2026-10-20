@@ -5,6 +5,7 @@ import { useEffect, useId, useState } from "react";
 import { daysQuiet, dueLabel, groupOf, plural, type Application } from "@/lib/applications";
 import { today as getToday, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
+import { useBackLink, useFromHere } from "@/hooks/useBackLink";
 import {
   Badge,
   Button,
@@ -77,6 +78,8 @@ export function ApplicationList() {
   const params = useSearchParams();
   const searchId = useId();
   const newId = params.get("new");
+  const back = useBackLink();
+  const here = useFromHere();
   const [query, setQuery] = useState("");
   const [glow, setGlow] = useState(true);
 
@@ -117,9 +120,13 @@ export function ApplicationList() {
     <div className="space-y-6">
       <PageHeader
         title="All applications"
-        description={apps.length > 0 ? plural(apps.length, "application") : undefined}
-        back={{ href: "/", label: "Home" }}
-        action={apps.length > 0 && <ButtonLink href="/add">Log an application</ButtonLink>}
+        description={
+          apps.length > 0
+            ? `${plural(apps.length, "application")}, soonest follow-up first.`
+            : "Everything you log, soonest follow-up first."
+        }
+        back={back}
+        action={apps.length > 0 && <ButtonLink href={`/add?from=${here}`}>Log an application</ButtonLink>}
       />
 
       {apps.length === 0 ? (
@@ -171,7 +178,7 @@ export function ApplicationList() {
                   role={app.role}
                   status={app.status}
                   followUpOn={app.followUpOn ?? undefined}
-                  href={`/applications/${app.id}`}
+                  href={`/applications/${app.id}?from=${here}`}
                   hint={attention(app, today)}
                   highlight={glow && app.id === newId}
                 />

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
 import { STATUS_LABELS, formFrom, isOpen, markFollowedUp } from "@/lib/applications";
 import { useApplications } from "@/hooks/useApplications";
+import { useBackLink } from "@/hooks/useBackLink";
 import { ApplicationForm } from "@/components/application-form";
 import {
   Badge,
@@ -23,14 +24,14 @@ import {
 // One application: what's saved, then every field to change, the same as
 // Add plus Status. The usual change is one tap ("I followed up today").
 // Saving stays here and says "Saved"; deleting asks first, on the page,
-// then goes to the list. "← Back" always goes to the list.
-const PARENT = { href: "/applications", label: "All applications" };
+// then goes to the list. "← Back" goes to the list, or Home, it came from.
 
 export function ApplicationDetail() {
   const store = useApplications();
   const router = useRouter();
   const toast = useToast();
   const { id } = useParams<{ id: string }>();
+  const back = useBackLink();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
   // Set while deleting, so the page doesn't flash "not on this device" on
@@ -48,7 +49,11 @@ export function ApplicationDetail() {
   if (!app) {
     return (
       <div className="space-y-6">
-        <PageHeader title="Not found" back={PARENT} />
+        <PageHeader
+          title="Not found"
+          description="Check the address, or find it in your list."
+          back={back}
+        />
         <EmptyState action={<TextLink href="/applications">See all applications</TextLink>}>
           This application isn&rsquo;t on this device.
         </EmptyState>
@@ -83,20 +88,14 @@ export function ApplicationDetail() {
 
   return (
     <div className="space-y-8">
-      <PageHeader
-        title={app.company}
-        description={
-          <div className="space-y-2">
-            <p>{app.role}</p>
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm">
-              <Badge tone={statusTone(app.status)}>{STATUS_LABELS[app.status]}</Badge>
-              <span>Applied {formatDay(app.appliedOn)}</span>
-              <span>{app.followUpOn ? `Follow up ${formatDay(app.followUpOn)}` : "No follow-up"}</span>
-            </p>
-          </div>
-        }
-        back={PARENT}
-      />
+      <div className="space-y-3">
+        <PageHeader title={app.company} description={app.role} back={back} />
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted">
+          <Badge tone={statusTone(app.status)}>{STATUS_LABELS[app.status]}</Badge>
+          <span>Applied {formatDay(app.appliedOn)}</span>
+          <span>{app.followUpOn ? `Follow up ${formatDay(app.followUpOn)}` : "No follow-up"}</span>
+        </p>
+      </div>
 
       {problem && (
         <Notice tone="error">
@@ -130,7 +129,7 @@ export function ApplicationDetail() {
           today={today}
           submitLabel="Save changes"
           afterSubmit={
-            <ButtonLink variant="secondary" href="/applications">
+            <ButtonLink variant="secondary" href={back.href}>
               Cancel
             </ButtonLink>
           }

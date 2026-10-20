@@ -67,7 +67,7 @@ export function ComponentGallery() {
       <PageHeader
         title="Components"
         description="Every shared component in every state. This page isn't in the navigation."
-        back={{ href: "/", label: "This week" }}
+        back={{ href: "/", label: "Home" }}
       />
 
       <Section title="Button">
@@ -253,7 +253,7 @@ export function ComponentGallery() {
               status="applied"
               followUpOn="2026-10-27"
               href="/dev/components"
-              hint={
+              note={
                 <span className="inline-flex flex-wrap items-center gap-x-2 rounded-badge bg-accent-soft py-0.5 pr-0.5 pl-2 text-sm text-ink">
                   We suggested a follow-up a week out. Change it anytime.
                   <Button variant="quiet" size="sm">
@@ -293,7 +293,8 @@ export function ComponentGallery() {
 
       <Section title="PageHeader">
         <p className="text-muted">
-          The top of this page: a title, a one-line description, and Back to the parent page.
+          The top of this page: a title, a one-line description, and Back to the page you came
+          from, or Home.
         </p>
       </Section>
 

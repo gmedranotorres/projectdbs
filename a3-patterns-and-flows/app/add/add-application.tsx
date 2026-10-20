@@ -5,6 +5,7 @@ import { useState } from "react";
 import { emptyForm, type Application } from "@/lib/applications";
 import { today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
+import { useBackLink } from "@/hooks/useBackLink";
 import { ApplicationForm } from "@/components/application-form";
 import { Loading, PageHeader, useToast } from "@/components/ui";
 
@@ -15,6 +16,7 @@ export function AddApplication() {
   const store = useApplications();
   const router = useRouter();
   const toast = useToast();
+  const back = useBackLink();
   // A new key gives a fresh, empty form, with the cursor in Company.
   const [round, setRound] = useState(0);
 
@@ -34,7 +36,11 @@ export function AddApplication() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Log an application" back={{ href: "/", label: "Home" }} />
+      <PageHeader
+        title="Log an application"
+        description="Company and role are all you need; the dates are filled in for you."
+        back={back}
+      />
       <ApplicationForm
         key={round}
         mode="add"

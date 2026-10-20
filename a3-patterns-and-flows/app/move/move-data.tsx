@@ -4,6 +4,7 @@ import { useId, useState, type FormEvent } from "react";
 import { combine, plural, readBackup, toBackup, type Application } from "@/lib/applications";
 import { today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
+import { useBackLink } from "@/hooks/useBackLink";
 import { Button, ButtonLink, Card, ErrorIcon, Field, Input, Loading, Notice, PageHeader } from "@/components/ui";
 
 // localStorage stays on one browser, so moving between the phone and the
@@ -18,6 +19,7 @@ function focusSoon(id: string) {
 
 export function MoveData() {
   const store = useApplications();
+  const back = useBackLink();
   const fileId = useId();
   const [downloaded, setDownloaded] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -78,11 +80,17 @@ export function MoveData() {
 
   return (
     <div className="space-y-8">
-      <PageHeader
-        title="Move data"
-        description="Your applications are saved only in this browser. To use Seguimiento on your phone and your laptop, download a backup on one and load it on the other. Do it before your Monday check-in."
-        back={{ href: "/", label: "Home" }}
-      />
+      <div className="space-y-3">
+        <PageHeader
+          title="Move data"
+          description="Copy your applications between your phone and your laptop with a backup file."
+          back={back}
+        />
+        <p className="text-muted">
+          Your applications are saved only in this browser. Download a backup on one device
+          and load it on the other, before your Monday check-in.
+        </p>
+      </div>
 
       {done !== null && (
         <Notice id="move-done">

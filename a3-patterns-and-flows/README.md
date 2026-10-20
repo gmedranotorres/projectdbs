@@ -37,7 +37,7 @@ flowchart TD
   end
 
   subgraph back["Coming back"]
-    monday(["Monday"]) --> checkin["/ (check-in)"]
+    monday(["Monday"]) --> checkin["/ (check-in),<br/>always at /check-in"]
     checkin --> due{"Anything due<br/>or quiet?"}
     due -- Yes --> act["I followed up · Not yet"]
     act -- "Undo or next one" --> checkin
@@ -51,6 +51,8 @@ flowchart TD
   ics -. "Reminder" .-> monday
   anything -- Yes --> checkin
   act -- Details --> edit
+  anypage(["Any page"]) -- "Footer: Weekly check-in" --> checkin
+  edit -- "← Back to where<br/>you came from" --> list
 ```
 
 ## Onboarding research

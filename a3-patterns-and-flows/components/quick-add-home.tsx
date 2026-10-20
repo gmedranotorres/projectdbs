@@ -13,6 +13,7 @@ import {
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
 import { FOLLOW_UP_HINT } from "@/lib/types";
 import { useApplications } from "@/hooks/useApplications";
+import { useFromHere } from "@/hooks/useBackLink";
 import { CalendarReminder } from "./calendar-reminder";
 import { DuplicateNotice } from "./duplicate-notice";
 import {
@@ -45,6 +46,7 @@ const LIST_LIMIT = 5;
 export function QuickAddHome({ applications }: { applications: Application[] }) {
   const store = useApplications();
   const toast = useToast();
+  const here = useFromHere();
   const formId = useId();
   const companyId = `${formId}-company`;
   const roleId = `${formId}-role`;
@@ -191,7 +193,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
         {applications.length === 0 && (
           <p className="text-muted">
             Applied earlier, or want to add a contact?{" "}
-            <TextLink href="/add">Use the full form</TextLink>.
+            <TextLink href={`/add?from=${here}`}>Use the full form</TextLink>.
           </p>
         )}
 
@@ -226,8 +228,8 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
                 role={app.role}
                 status={app.status}
                 followUpOn={app.followUpOn ?? undefined}
-                href={`/applications/${app.id}`}
-                hint={
+                href={`/applications/${app.id}?from=${here}`}
+                note={
                   showHint && app.id === first.id ? (
                     <span className="inline-flex flex-wrap items-center gap-x-2 rounded-badge bg-accent-soft py-0.5 pr-0.5 pl-2 text-sm text-ink">
                       We suggested a follow-up a week out. Change it anytime.
@@ -244,7 +246,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
             <TextLink href="/applications">
               See all{applications.length > LIST_LIMIT ? ` ${applications.length}` : ""}
             </TextLink>
-            <TextLink href="/add">Add details</TextLink>
+            <TextLink href={`/add?from=${here}`}>Add details</TextLink>
           </p>
         </section>
       )}

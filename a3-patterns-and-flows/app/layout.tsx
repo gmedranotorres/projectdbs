@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Newsreader } from "next/font/google";
-import { SiteNav } from "@/components/site-nav";
+import { BottomNav, SiteHeader } from "@/components/site-nav";
 import { StorageBanner } from "@/components/storage-banner";
-import { ToastProvider } from "@/components/ui";
+import { TextLink, ToastProvider } from "@/components/ui";
 import "./globals.css";
 
 // Calm's fonts, set up as in A2: Newsreader for headlines, Inter for the
@@ -47,14 +47,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           >
             Skip to content
           </a>
-          <SiteNav />
+          <SiteHeader />
           <StorageBanner />
-          <main
-            id="main"
-            className="mx-auto w-full max-w-3xl flex-1 px-4 pb-32 pt-6 md:pb-16 md:pt-10"
-          >
+          <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 pt-6 pb-12 md:pt-10 md:pb-16">
             {children}
           </main>
+          {/* Room below for the phone's bottom bar. */}
+          <footer className="mx-auto w-full max-w-3xl px-4 pb-28 md:pb-10">
+            <p className="border-t border-line pt-4 text-sm text-muted">
+              Saved on this device ·{" "}
+              <TextLink href="/check-in">Weekly check-in</TextLink>
+            </p>
+          </footer>
+          <BottomNav />
         </ToastProvider>
       </body>
     </html>

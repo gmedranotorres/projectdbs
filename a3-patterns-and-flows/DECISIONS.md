@@ -553,3 +553,50 @@ No change to `lib/dates.ts` was needed: day math runs at local noon, and `today(
 - **Application's page:** the notice and **Keep both** apply there too. That replaces the old warning shown when you saved (with "Save anyway"), so the same form never blocks in one place and only informs in another.
 - **Spaces:** besides trimming, runs of spaces inside company, role and contact become one, which matches how duplicates are compared. Notes are only trimmed, so line breaks stay.
 - **Counter:** it counts the text as it will be saved, so it agrees with the error. It shows from 80% of the limit, and the field doesn't use `maxlength`.
+
+## 2026-10-20 · Navigation and page headers
+
+**What I asked.** Make it obvious where you are and how to get back:
+- On every page, the current nav link has `aria-current="page"` and a visible marker.
+- PageHeader shows the title and a one-line description.
+- The back link goes to the page the person came from when we know it (detail → list), otherwise to `/`.
+- Add a footer line "Saved on this device" with a link to `/check-in`.
+- On narrow screens, the nav is four labeled items with text, not a hamburger menu.
+- Check focus order top to bottom on every page.
+
+**What changed.**
+- **Back.** `hooks/useBackLink.ts` (new): pages opened from somewhere get `?from=<that page>`, and Back returns there if it's a known parent (Home, This week, All applications, Log an application). Otherwise it goes to Home. `useFromHere()` builds the value and leaves out `?new=`, so coming back doesn't pin and highlight again. Paths starting with `//` are refused, so Back can't leave the site.
+  - Links that now carry `from`: list rows (with the filter), This week's Details and Log an application, Home's list rows, Use the full form and Add details, the list's Log an application, and the duplicate notice's Open it.
+  - On an application's page, Cancel goes to the same place as Back.
+- **PageHeader.** `description` is required and is one line of text. Back's words are now visible: "← Back to All applications" instead of "← Back", with the destination only for screen readers.
+- **Descriptions.**
+  - Add: "Company and role are all you need; the dates are filled in for you."
+  - All: "2 applications, soonest follow-up first."
+  - An application: its role. The status, applied date and follow-up moved just under the header.
+  - Not found: "Check the address, or find it in your list."
+  - This week: "Week of Oct 19: who to follow up with, and what's gone quiet."
+  - Move data: shortened to "Copy your applications between your phone and your laptop with a backup file.", with the rest as a paragraph below.
+- `app/check-in/page.tsx` (new): the This week check-in, always. Home still switches between the quick add and the check-in as before. With nothing saved, `/check-in` shows "Nothing logged yet" pointing to Home.
+- `app/not-found.tsx` (new): unknown addresses get the same header ("Page not found"), Back to Home, and the footer.
+- **Footer** in the layout: "Saved on this device · Weekly check-in" → `/check-in`.
+- **Nav.** `components/site-nav.tsx` is split into SiteHeader (name, plus the nav on a laptop) and BottomNav (phone), rendered after the footer. That way Tab goes header → page → footer → bottom bar, as it looks. Only one of the two navs shows at a time; the other is `display: none`. Home is marked on `/check-in`.
+- **ListRow.** A new `note` slot under the row. Home's one-time tip moved there from `hint`, so Tab reaches Open (top right) before Got it.
+- Updated flows.md (Where you are and how to get back, the check-in, the diagram) and the README diagram.
+- Checked in Chrome at 390px and 1440px on Home (quick add, with the tip, and the check-in), `/check-in`, `/add`, `/applications`, an application's page, an unknown id, `/move`, `/dev/components` and a 404:
+  - **Headers:** every page has an h1 and a one-line description.
+  - **Nav marker:** exactly one nav shows. The current item has `aria-current="page"` and is bold and underlined at 390px, or bold on a tint at 1440px. None is marked on the gallery or the 404, which aren't in the nav.
+  - **Footer:** present on every page, linking to `/check-in`.
+  - **Tab order:** Tab was pressed through every page, comparing each stop's position. All pages go top to bottom, and left to right within a row. The first run caught Got it → Open going upward, fixed with `note`.
+  - **Back:**
+    - A list row with `?status=applied` → "Back to All applications" → `/applications?status=applied`.
+    - The check-in's Details from Home → Home; from `/check-in` → "Back to This week".
+    - Home's rows and Add details → Home. The list's Log an application → the list.
+    - Add from the nav, a typed address, `?from=//example.com` and `?from=/move` → Home.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- **/check-in:** it didn't exist, so Claude built it as the check-in that's always there, rather than pointing the footer at `/`. Home keeps the behavior I chose earlier: the quick add until something is due.
+- **"Where you came from":** it's carried in the link (`?from=`), not guessed from browser history. It survives a reload, and the browser's Back button can't confuse it.
+- **Two navs:** Claude chose two navs, one per screen size, over keeping one nav in the header. With one, a phone would Tab to the bottom bar before the page.
+- **Visible Back label:** Back names its destination on screen, because "how to get back" should be visible too.
+- **Known exception:** a toast's Close button comes after the bottom bar in Tab order, even though the toast shows at the top on phones. It lasts 5 seconds, Escape closes it, and focus is never moved into it.

@@ -16,17 +16,21 @@ import {
 } from "@/lib/applications";
 import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
+import { useBackLink, useFromHere } from "@/hooks/useBackLink";
 import { QuickAddHome } from "@/components/quick-add-home";
-import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Badge, TextLink } from "@/components/ui";
+import { Button, ButtonLink, Card, EmptyState, ErrorIcon, Loading, Notice, PageHeader, Badge, TextLink } from "@/components/ui";
 
 // The Monday check-in. Every follow-up can be handled right here, so the
-// ritual doesn't mean opening each application.
+// ritual doesn't mean opening each application. It's Home while something
+// is due or quiet, and always at /check-in (the link in the footer).
 
 type Message = { text: string; undo?: Application; tone?: "error" };
 
-export function ThisWeek() {
+export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
   const store = useApplications();
   const [message, setMessage] = useState<Message | null>(null);
+  const back = useBackLink();
+  const here = useFromHere();
 
   if (!store.hydrated) return <Loading />;
 
@@ -36,8 +40,30 @@ export function ThisWeek() {
   // While nothing is due or quiet, / is the quick add and the newest items.
   // The check-in takes over once a follow-up comes up, and stays while its
   // message (with Undo) is showing, even after the last one is handled.
-  if (groups.due.length === 0 && groups.quiet.length === 0 && !message) {
+  if (page === "home" && groups.due.length === 0 && groups.quiet.length === 0 && !message) {
     return <QuickAddHome applications={store.applications} />;
+  }
+
+  const header = (
+    <PageHeader
+      title="This week"
+      description={`Week of ${formatShortDay(startOfWeek(today))}: who to follow up with, and what's gone quiet.`}
+      back={page === "check-in" ? back : undefined}
+    />
+  );
+
+  if (store.applications.length === 0) {
+    return (
+      <div className="space-y-8">
+        {header}
+        <EmptyState
+          title="Nothing logged yet"
+          action={<ButtonLink href="/">Log your first application</ButtonLink>}
+        >
+          Log each application as you send it, and its follow-ups show up here on Monday.
+        </EmptyState>
+      </div>
+    );
   }
 
   const openCount = groups.due.length + groups.quiet.length + groups.upcoming.length;
@@ -67,7 +93,7 @@ export function ThisWeek() {
 
   return (
     <div className="space-y-8">
-      <PageHeader title="This week" description={`Week of ${formatShortDay(startOfWeek(today))}`} />
+      {header}
 
       {message && (
         <Notice id="week-message" tone={message.tone}>
@@ -117,7 +143,7 @@ export function ThisWeek() {
                     >
                       Not yet<span className="sr-only"> for {app.company}</span>
                     </Button>
-                    <DetailsLink app={app} />
+                    <DetailsLink app={app} from={here} />
                   </div>
                 </Card>
               </li>
@@ -158,7 +184,7 @@ export function ThisWeek() {
                     >
                       Close it<span className="sr-only">: {app.company}</span>
                     </Button>
-                    <DetailsLink app={app} />
+                    <DetailsLink app={app} from={here} />
                   </div>
                 </Card>
               </li>
@@ -186,7 +212,7 @@ export function ThisWeek() {
               <p>Everything on your list is closed. Log a new one when you send it.</p>
             </>
           )}
-          <ButtonLink href="/add">Log an application</ButtonLink>
+          <ButtonLink href={`/add?from=${here}`}>Log an application</ButtonLink>
         </Card>
       )}
 
@@ -195,7 +221,7 @@ export function ThisWeek() {
           See all {plural(store.applications.length, "application")}
         </TextLink>
         {(groups.due.length > 0 || groups.quiet.length > 0) && (
-          <TextLink href="/add">Log an application</TextLink>
+          <TextLink href={`/add?from=${here}`}>Log an application</TextLink>
         )}
       </p>
     </div>
@@ -219,10 +245,10 @@ function AppHeading({ app, children }: { app: Application; children: ReactNode }
   );
 }
 
-function DetailsLink({ app }: { app: Application }) {
+function DetailsLink({ app, from }: { app: Application; from: string }) {
   return (
     <Link
-      href={`/applications/${app.id}`}
+      href={`/applications/${app.id}?from=${from}`}
       className="inline-flex min-h-11 items-center px-2 font-medium text-ink underline decoration-accent-strong underline-offset-4 hover:decoration-ink hover:decoration-2"
     >
       Details<span className="sr-only"> for {app.company}</span>
