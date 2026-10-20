@@ -130,6 +130,8 @@ body {
   font-size: var(--type-body-size);
   font-weight: var(--type-body-weight);
   line-height: var(--type-body-leading);
+  /* A long word or link with no spaces wraps instead of widening the page. */
+  overflow-wrap: break-word;
 }
 
 /* Each control state, for two triggers: the real one and a forced one

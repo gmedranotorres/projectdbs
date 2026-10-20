@@ -237,16 +237,46 @@ function isWebLink(value: string): boolean {
   return /^https?:\/\//i.test(value);
 }
 
+// The longest each field can be, in characters.
+export const LIMITS = { company: 80, role: 80, notes: 1000 } as const;
+
+// One line of text as it's saved: no spaces at either end, and runs of
+// spaces inside made one. "  Example   Co " is "Example Co".
+export function oneLine(value: string): string {
+  return value.trim().replace(/\s+/g, " ");
+}
+
+// The form as it's checked and saved. Notes keep their line breaks.
+export function clean(values: FormValues): FormValues {
+  return {
+    ...values,
+    company: oneLine(values.company),
+    role: oneLine(values.role),
+    contact: oneLine(values.contact),
+    link: values.link.trim(),
+    notes: values.notes.trim(),
+  };
+}
+
+// Checks the form as it will be saved, so spaces at the ends never count.
 // Every message says what to do next.
-export function validate(values: FormValues, today: Day): FormErrors {
+export function validate(input: FormValues, today: Day): FormErrors {
+  const values = clean(input);
   const errors: FormErrors = {};
   const applied = values.appliedOn;
 
-  if (!values.company.trim()) {
+  if (!values.company) {
     errors.company = "Enter the company name.";
+  } else if (values.company.length > LIMITS.company) {
+    errors.company = `Shorten the company name to ${LIMITS.company} characters or fewer.`;
   }
-  if (!values.role.trim()) {
+  if (!values.role) {
     errors.role = "Enter the role title.";
+  } else if (values.role.length > LIMITS.role) {
+    errors.role = `Shorten the role title to ${LIMITS.role} characters or fewer.`;
+  }
+  if (values.notes.length > LIMITS.notes) {
+    errors.notes = `Shorten the notes to ${LIMITS.notes.toLocaleString("en-US")} characters or fewer.`;
   }
 
   if (!isDay(applied)) {
@@ -278,7 +308,7 @@ export function validate(values: FormValues, today: Day): FormErrors {
     }
   }
 
-  if (values.link.trim() && !isWebLink(values.link.trim())) {
+  if (values.link && !isWebLink(values.link)) {
     errors.link = "Enter a full link starting with https://, or leave it blank.";
   }
 
@@ -287,11 +317,12 @@ export function validate(values: FormValues, today: Day): FormErrors {
 
 export function findDuplicate(
   apps: Application[],
-  values: FormValues,
+  values: Pick<FormValues, "company" | "role">,
   exceptId?: string,
 ): Application | undefined {
-  const same = (a: string, b: string) =>
-    a.trim().toLowerCase() === b.trim().toLowerCase();
+  // Case and extra spaces don't make a different application.
+  const same = (a: string, b: string) => oneLine(a).toLowerCase() === oneLine(b).toLowerCase();
+  if (!oneLine(values.company) || !oneLine(values.role)) return undefined;
   return apps.find(
     (app) =>
       app.id !== exceptId &&
@@ -304,24 +335,25 @@ export function findDuplicate(
 // editing. Only call it once validate() finds nothing, so a closed status
 // has its reason.
 export function toApplication(
-  values: FormValues,
+  input: FormValues,
   today: Day,
   before?: Application,
 ): Application {
+  const values = clean(input);
   const now = new Date().toISOString();
   const open = isOpen(values.status);
   const statusChanged = before && before.status !== values.status;
   return {
     id: before?.id ?? newId(),
-    company: values.company.trim(),
-    role: values.role.trim(),
+    company: values.company,
+    role: values.role,
     status: values.status as Status,
     appliedOn: values.appliedOn,
     interviewOn: values.status === "interviewing" && values.interviewOn ? values.interviewOn : null,
     followUpOn: open ? values.followUpOn : null,
-    contact: values.contact.trim(),
-    link: values.link.trim(),
-    notes: values.notes.trim(),
+    contact: values.contact,
+    link: values.link,
+    notes: values.notes,
     lastTouchedOn: !before
       ? values.appliedOn
       : statusChanged

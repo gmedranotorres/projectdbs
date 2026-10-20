@@ -26,8 +26,8 @@ export function PageHeader({
         </Link>
       )}
       <div className={`flex flex-wrap items-end justify-between gap-4 ${back ? "mt-3" : ""}`}>
-        <div>
-          <h1 className="font-serif text-display text-balance">{title}</h1>
+        <div className="min-w-0">
+          <h1 className="font-serif text-display text-balance wrap-anywhere">{title}</h1>
           {description && <div className="mt-2 text-muted">{description}</div>}
         </div>
         {action}

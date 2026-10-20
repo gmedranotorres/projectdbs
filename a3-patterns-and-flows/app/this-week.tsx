@@ -206,11 +206,11 @@ export function ThisWeek() {
 function AppHeading({ app, children }: { app: Application; children: ReactNode }) {
   return (
     <div className="flex flex-wrap items-start justify-between gap-2">
-      <div>
-        <h3 className="text-lg font-semibold">
+      <div className="min-w-0">
+        <h3 className="line-clamp-2 text-lg font-semibold wrap-anywhere">
           {app.contact ? `Follow up with ${whoToContact(app)}` : app.company}
         </h3>
-        <p className="text-muted">
+        <p className="line-clamp-2 text-muted wrap-anywhere">
           {app.role} · {STATUS_LABELS[app.status]}
         </p>
       </div>

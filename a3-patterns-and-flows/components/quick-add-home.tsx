@@ -1,11 +1,20 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
-import { emptyForm, toApplication, validate, type Application } from "@/lib/applications";
+import {
+  LIMITS,
+  emptyForm,
+  findDuplicate,
+  oneLine,
+  toApplication,
+  validate,
+  type Application,
+} from "@/lib/applications";
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
 import { FOLLOW_UP_HINT } from "@/lib/types";
 import { useApplications } from "@/hooks/useApplications";
 import { CalendarReminder } from "./calendar-reminder";
+import { DuplicateNotice } from "./duplicate-notice";
 import {
   Button,
   Chip,
@@ -45,6 +54,8 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
   const [role, setRole] = useState("");
   const [errors, setErrors] = useState<{ company?: string; role?: string }>({});
   const [saveFailed, setSaveFailed] = useState(false);
+  // The company and role whose duplicate notice was put away.
+  const [dismissedDuplicate, setDismissedDuplicate] = useState<string | null>(null);
 
   const focus = (id: string, options?: FocusOptions) =>
     requestAnimationFrame(() => document.getElementById(id)?.focus(options));
@@ -54,6 +65,13 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
   const first = shown[0];
   // The tip is only true of a date Seguimiento suggested: Applied, a week
   // after the day you applied.
+  // The same check as the Add page: a notice, and Add application still works.
+  const pair = `${oneLine(company)}\n${oneLine(role)}`.toLowerCase();
+  const duplicate =
+    pair !== dismissedDuplicate
+      ? findDuplicate(applications, { company, role })
+      : undefined;
+
   const showHint =
     first !== undefined &&
     !store.settings.dismissedHints.includes(FOLLOW_UP_HINT) &&
@@ -90,6 +108,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
     setCompany("");
     setRole("");
     setSaveFailed(false);
+    setDismissedDuplicate(null);
     // Ready for the next one, without scrolling: the page stays put, so the
     // new item stays in view below the form.
     focus(companyId, { preventScroll: true });
@@ -109,7 +128,12 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
       />
 
       <form noValidate onSubmit={submit} className="space-y-6">
-        <Field id={companyId} label="Company" error={errors.company}>
+        <Field
+          id={companyId}
+          label="Company"
+          error={errors.company}
+          count={{ length: oneLine(company).length, max: LIMITS.company }}
+        >
           <Input
             name="company"
             value={company}
@@ -124,8 +148,23 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
           />
         </Field>
 
+        <DuplicateNotice
+          match={duplicate}
+          dismissLabel="Add anyway"
+          onDismiss={() => {
+            setDismissedDuplicate(pair);
+            // The notice goes; carry on from the next field.
+            focus(roleId);
+          }}
+        />
+
         <div className="space-y-3">
-          <Field id={roleId} label="Role" error={errors.role}>
+          <Field
+            id={roleId}
+            label="Role"
+            error={errors.role}
+            count={{ length: oneLine(role).length, max: LIMITS.role }}
+          >
             <Input
               name="role"
               value={role}

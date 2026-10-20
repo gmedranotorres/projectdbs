@@ -8,6 +8,11 @@ import { createContext, useContext, useId, type ComponentProps, type ReactNode }
 // the error) and aria-invalid, so the control inside only needs its own
 // props: <Field label="Company" error={...}><Input name="company" /></Field>.
 //
+// A field with a length limit takes `count`: a counter appears under the
+// control once 80% of the limit is used, and says how many are left or how
+// many too many. Typing past the limit is allowed (nothing pasted is cut
+// off silently); saving then shows the error.
+//
 // The controls are Calm's, from A2: a 1px outline in the muted color that
 // darkens under the pointer, 2px red when there's an error, and dashed when
 // disabled. Their text is 16px so phones don't zoom in on focus.
@@ -26,6 +31,7 @@ export function Field({
   optional,
   hint,
   error,
+  count,
   children,
 }: {
   // Pass an id to move focus to the control, such as the first error.
@@ -34,11 +40,17 @@ export function Field({
   optional?: boolean;
   hint?: ReactNode;
   error?: string;
+  count?: { length: number; max: number };
   children: ReactNode;
 }) {
   const generatedId = useId();
   const fieldId = id ?? generatedId;
-  const describedBy = [hint ? `${fieldId}-hint` : "", error ? `${fieldId}-error` : ""]
+  const showCount = count !== undefined && count.length >= count.max * 0.8;
+  const describedBy = [
+    hint ? `${fieldId}-hint` : "",
+    error ? `${fieldId}-error` : "",
+    showCount ? `${fieldId}-count` : "",
+  ]
     .filter(Boolean)
     .join(" ");
   return (
@@ -72,8 +84,28 @@ export function Field({
           {children}
         </FieldContext.Provider>
       </div>
+      {/* Always in the page, so screen readers hear it when it appears. */}
+      {count && (
+        <p
+          id={`${fieldId}-count`}
+          aria-live="polite"
+          className={`text-sm empty:hidden ${
+            count.length > count.max ? "font-medium text-error" : "text-muted"
+          } ${showCount ? "mt-1.5" : ""}`}
+        >
+          {showCount && countText(count.length, count.max)}
+        </p>
+      )}
     </div>
   );
+}
+
+// "12 characters left", "1 character too many"
+function countText(length: number, max: number) {
+  const left = max - length;
+  const n = Math.abs(left).toLocaleString("en-US");
+  const word = Math.abs(left) === 1 ? "character" : "characters";
+  return left >= 0 ? `${n} ${word} left` : `${n} ${word} too many`;
 }
 
 export function ErrorIcon() {

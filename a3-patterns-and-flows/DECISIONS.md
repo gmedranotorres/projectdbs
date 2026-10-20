@@ -483,3 +483,73 @@ Keep what the person typed, move focus to the first invalid field, and clear a f
 - Claude chose to auto-fill today + 3 for Interviewing instead of offering a "Use" button, to match Closed clearing the date on its own. The hint says it's a suggestion.
 - Saving stays on the page, as the toast implies, instead of returning to the list. "Cancel" still goes to the list.
 - The follow-up date stays required for Offer, the same rule as the other open statuses. An older offer without a date asks for one only when it's next saved.
+
+## 2026-10-20 · Duplicate notice and input limits
+
+**What I asked.** Handle the edges, with no new packages:
+- **Duplicate:** on `/add` and the quick add, if a saved application has the same company and role (ignoring case and extra spaces), show a notice beside Company: "You already have {Company} — {Role}." with "Open it" and "Add anyway". It's a notice, not an error: nothing is blocked.
+- **Length:** company and role up to 80 characters and notes up to 1,000, with a counter that appears only near the limit. Rows truncate gracefully.
+- **Whitespace:** trim fields before validating and saving.
+- **Dates:** test the day before and after a month boundary and the November DST change with `lib/dates.ts`, and show the cases.
+
+**What changed.**
+- `components/duplicate-notice.tsx` (new) holds the shared notice, in a polite live region. It's used by the Add form and the quick add, right under Company. It shows as soon as the company and role match. Saving still works without touching it. **Open it** → `/applications/<id>`. **Add anyway** hides it for that pair and moves focus to Role.
+- `components/application-form.tsx`: the old warning shown when you saved (with "Save anyway" and "Open that one") is gone, along with the save-blocking step. On an application's page, the same notice appears only when the company or role is changed to match another application, with **Keep both**.
+- `lib/applications.ts`:
+  - `LIMITS` (80 / 80 / 1,000).
+  - `oneLine()` trims and collapses runs of spaces.
+  - `clean()` is run by both `validate()` and `toApplication()`, so checks and saved data use the same text. Notes keep their line breaks.
+  - New errors: "Shorten the company name to 80 characters or fewer.", "Shorten the role title to 80 characters or fewer." and "Shorten the notes to 1,000 characters or fewer."
+  - `findDuplicate` ignores case and extra spaces.
+- `components/ui/field.tsx`: Field takes `count`.
+  - The counter appears from 80% of the limit: 64 for company and role, 800 for notes. It reads "16 characters left", then "1 character too many" in red.
+  - It's part of the field's description and in a polite live region.
+  - Typing past the limit isn't blocked, so pasted text is never cut off silently; saving shows the error.
+- Truncation:
+  - ListRow's company and role, and This week's headings, end with "…" after two lines and break long unbroken words.
+  - PageHeader's title wraps long words.
+  - `body` has `overflow-wrap: break-word`, so a long unbroken string can't widen the page.
+- `scripts/check-dates.mjs` and `npm run check:dates` run the date cases below. Node 26 runs `lib/dates.ts` directly, so no package is needed.
+- `/dev/components` shows the counter near and over the limit.
+- Updated flows.md (Add, Errors when adding, Limits, Duplicates).
+- Checked in Chrome at 390px:
+  - "  example   co " + "DATA  analyst " shows the notice for Example Co — Data Analyst, between Company and Role, with no field marked invalid. Add anyway → it's gone, focus is on Role, and it doesn't come back for the same pair. Save without dismissing → saved.
+  - Quick add: Company + the Data Analyst chip shows the notice. Add anyway, then Add application, saves; the notice returns for the next entry. Fields with only spaces show both "Enter…" errors.
+  - Counter: hidden at 63, "16 characters left" at 64, "0 characters left" at 80, red "1 character too many" at 81. 78 characters plus trailing spaces count as 78. Notes: hidden at 799, shown at 800, red at 1,001.
+  - Over all three limits: three errors with focus on Company, and what was typed is kept. Exactly 80 / 80 / 1,000 with spaces around them saves as 80 / 80 / 1,000.
+  - Long names: two lines then "…", and no horizontal scroll on the list or on the application's page.
+  - Application's page: no notice on opening, even for a pair saved anyway. Changing the company to match another shows the notice; Keep both → focus on Role, and Save works.
+  - No console errors.
+
+**Date cases** (`TZ=America/Chicago`, where daylight saving ends Sun, Nov 1, 2026 at 2am; all 25 also pass in Pacific/Auckland, Asia/Kolkata and Asia/Tokyo):
+
+| Case | Result |
+| --- | --- |
+| addDays("2026-10-31", 1) | 2026-11-01 |
+| addDays("2026-11-01", -1) | 2026-10-31 |
+| addDays("2026-10-30", 7), follow-up a week out | 2026-11-06 |
+| daysBetween("2026-10-31", "2026-11-01") | 1 |
+| formatDay("2026-10-31") / ("2026-11-01") | Sat, Oct 31 / Sun, Nov 1 |
+| today() at Oct 31, 11:30 pm / Nov 1, 12:30 am | 2026-10-31 / 2026-11-01 |
+| addDays("2026-11-30", 1) / ("2026-12-01", -1) | 2026-12-01 / 2026-11-30 |
+| addDays("2026-12-31", 1) / ("2027-01-01", -1) | 2027-01-01 / 2026-12-31 |
+| isDay("2026-11-31") | false |
+| addDays("2026-10-31", 2), across the DST change | 2026-11-02 |
+| addDays("2026-11-02", -2) | 2026-10-31 |
+| addDays("2026-10-25", 14), followed up | 2026-11-08 |
+| daysBetween("2026-10-31", "2026-11-02") / reversed | 2 / -2 |
+| daysBetween("2026-10-12", "2026-11-02"), gone quiet | 21 |
+| startOfWeek("2026-11-01"), a Sunday | 2026-10-26 |
+| endOfWeek("2026-10-26") | 2026-11-01 |
+| startOfWeek("2026-11-02"), the Monday after | 2026-11-02 |
+| today() at Nov 1, 1:30 am (an hour that happens twice) | 2026-11-01 |
+| today() at Nov 1, 11:59 pm / Nov 2, 12:01 am | 2026-11-01 / 2026-11-02 |
+
+No change to `lib/dates.ts` was needed: day math runs at local noon, and `today()` reads the local date.
+
+**What I rejected or decided myself.**
+- **Add anyway:** Claude chose to make it put the notice away instead of saving right away. On `/add` the rest of the form may still be empty, and since nothing is blocked, the save button already does the adding.
+- **Live notice:** it appears as you type, instead of when you save, so saving is never interrupted.
+- **Application's page:** the notice and **Keep both** apply there too. That replaces the old warning shown when you saved (with "Save anyway"), so the same form never blocks in one place and only informs in another.
+- **Spaces:** besides trimming, runs of spaces inside company, role and contact become one, which matches how duplicates are compared. Notes are only trimmed, so line breaks stay.
+- **Counter:** it counts the text as it will be saved, so it agrees with the error. It shows from 80% of the limit, and the field doesn't use `maxlength`.

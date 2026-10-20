@@ -81,18 +81,24 @@ If the first save happens on the full Add page instead, a toast says "Added Exam
 
 ## Flow 2: The main task (add, list, update)
 
-**Add.** The Add page is one column, in this order: Company, Role, Applied on (today is filled in), Follow up on (a week later is filled in, and it follows Applied on until you type your own), then Link, Notes and Who to follow up with, all three optional. There's no status: a new application starts as Applied. Pressing **Save application** saves it, a toast says "Added Example Co — Data Analyst.", and the All page opens with the new application on top, highlighted for a few seconds and focused for keyboard and screen reader users. The list replaces the form in the browser's history, so **Back** goes to where you were before Add, not to a filled form. Because applications come in bursts, **Save and add another** saves, shows the same toast, and gives an empty form with the cursor in Company. After a duplicate warning, **Save anyway** does whatever the button you pressed would have done.
+**Add.** The Add page is one column, in this order: Company, Role, Applied on (today is filled in), Follow up on (a week later is filled in, and it follows Applied on until you type your own), then Link, Notes and Who to follow up with, all three optional. There's no status: a new application starts as Applied. Pressing **Save application** saves it, a toast says "Added Example Co — Data Analyst.", and the All page opens with the new application on top, highlighted for a few seconds and focused for keyboard and screen reader users. The list replaces the form in the browser's history, so **Back** goes to where you were before Add, not to a filled form. Because applications come in bursts, **Save and add another** saves, shows the same toast, and gives an empty form with the cursor in Company.
 
-**Errors when adding.** Fields are checked when you save. Every problem is shown at once, next to its field, what you typed stays, and the cursor moves to the first one. From then on, a field with an error is checked again as you change it: the error goes as soon as it's fixed, and fixing Applied on can also clear Follow up on.
+**Errors when adding.** Fields are checked when you save, after spaces at either end are removed (and, in single-line fields, runs of spaces inside become one), so "  Example   Co " is saved as "Example Co" and a field of only spaces counts as empty. Every problem is shown at once, next to its field, what you typed stays, and the cursor moves to the first one. From then on, a field with an error is checked again as you change it: the error goes as soon as it's fixed, and fixing Applied on can also clear Follow up on.
 
 - An empty company: "Enter the company name."
 - An empty role: "Enter the role title."
+- A company or role over 80 characters: "Shorten the company name to 80 characters or fewer." / "Shorten the role title to 80 characters or fewer."
+- Notes over 1,000 characters: "Shorten the notes to 1,000 characters or fewer."
 - Applied on empty or not a date: "Enter the date you applied."
 - Applied on in the future: "Choose today or an earlier date."
 - A follow-up date before Applied on: "Choose a follow-up date on or after the application date."
 - A link that doesn't start with http:// or https://: "Enter a full link starting with https://, or leave it blank."
 
-Logging the same company and role twice is a warning, not an error: "You already logged Data Analyst at Morningstar on Oct 3." It offers **Save anyway** or **Open that one**. If the browser refuses to save, usually because its storage is full, a message above the button says so. The form stays filled in so you can try again.
+**Limits.** Company and role take up to 80 characters, notes up to 1,000. From 80% of the limit, a counter under the field says how many are left ("12 characters left"), and past it, in red, how many too many. Typing or pasting past the limit isn't cut off; saving shows the error. In lists, a long company or role ends with "…" after two lines.
+
+**Duplicates.** On Add and the quick add, as soon as the company and role match a saved application (ignoring case and extra spaces), a notice appears under Company: "You already have Example Co — Data Analyst." It's a notice, not an error, so saving still works. **Open it** goes to the saved one; **Add anyway** puts the notice away for that company and role and moves on to Role. On an application's page, the same notice appears only if you change the company or role to match another one, with **Keep both**.
+
+If the browser refuses to save, usually because its storage is full, a message above the button says so. The form stays filled in so you can try again.
 
 **List.** The All page shows every application as one list, sorted by follow-up date, soonest first, with those without a follow-up date last. Each row shows the company, role, status and follow-up date, and an **Open** link. Late ones also say "7 days late" with a clock icon, and gone-quiet ones "No news for 35 days", so nothing depends on color alone. At the top, a search field labelled "Search by company or role" narrows the list as you type, and filter chips (All, Applied, Interviewing, Offer, Closed) show how many each holds. Followed up counts as Applied; Rejected, Withdrawn and No response count as Closed. The chosen filter is in the address (`?status=offer`), so Back and a shared link keep it; pressing the chip that's on goes back to All. While filtering or searching, a line says "Showing 3 of 5."
 

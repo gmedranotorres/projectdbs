@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:dates": "TZ=America/Chicago node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-dates.mjs"
   },
   "dependencies": {
     "next": "16.4.2",

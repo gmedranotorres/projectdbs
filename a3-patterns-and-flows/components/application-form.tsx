@@ -4,11 +4,13 @@ import { useId, useState, type FormEvent, type ReactNode } from "react";
 import {
   CLOSED_STATUSES,
   FIELD_ORDER,
+  LIMITS,
   STAGES,
   STAGE_LABELS,
   STATUS_LABELS,
   findDuplicate,
   isOpen,
+  oneLine,
   stageOf,
   suggestFollowUp,
   toApplication,
@@ -22,7 +24,8 @@ import {
 import { addDays, formatDay, formatShortDay, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { FOLLOW_UP_HINT } from "@/lib/types";
-import { Button, ButtonLink, ErrorIcon, Field, Input, Select, Textarea } from "./ui";
+import { DuplicateNotice } from "./duplicate-notice";
+import { Button, ErrorIcon, Field, Input, Select, Textarea } from "./ui";
 
 // The one form behind Add and an application's page. Errors appear when you
 // save, next to the field, and what you typed stays. On Add, the follow-up
@@ -79,9 +82,8 @@ export function ApplicationForm({
   // The date before Interviewing filled one in, so choosing another status
   // right after puts it back.
   const [dateBeforeSuggestion, setDateBeforeSuggestion] = useState<string | null>(null);
-  const [duplicate, setDuplicate] = useState<Application | null>(null);
-  // Which save button led to the duplicate warning, for "Save anyway".
-  const [pendingAnother, setPendingAnother] = useState(false);
+  // The company and role whose duplicate notice was put away.
+  const [dismissedDuplicate, setDismissedDuplicate] = useState<string | null>(null);
   const [saveFailed, setSaveFailed] = useState(false);
 
   const suggestion = suggestFollowUp(values.status, { appliedOn: values.appliedOn, today });
@@ -103,7 +105,6 @@ export function ApplicationForm({
       setTypedFollowUp(true);
       setDateBeforeSuggestion(null);
     }
-    if (field === "company" || field === "role") setDuplicate(null);
 
     setValues(next);
     setSaveFailed(false);
@@ -154,21 +155,13 @@ export function ApplicationForm({
     recheck(next);
   }
 
-  function submit(event?: FormEvent, allowDuplicate = false, another = false) {
+  function submit(event?: FormEvent, another = false) {
     event?.preventDefault();
     const found = validate(values, today);
     const first = FIELD_ORDER.find((f) => found[f]);
     setErrors(found);
     if (first) {
       focusSoon(fid(first));
-      return;
-    }
-
-    const same = findDuplicate(applications, values, before?.id);
-    if (same && !allowDuplicate) {
-      setDuplicate(same);
-      setPendingAnother(another);
-      focusSoon(`${formId}-duplicate`);
       return;
     }
 
@@ -191,8 +184,15 @@ export function ApplicationForm({
     onSaved(app, another);
   }
 
-  const text = (field: FieldName, label: string, extra: { hint?: string; optional?: boolean; placeholder?: string } = {}) => (
-    <Field id={fid(field)} label={label} hint={extra.hint} optional={extra.optional} error={errors[field]}>
+  const text = (field: FieldName, label: string, extra: { hint?: string; optional?: boolean; placeholder?: string; max?: number } = {}) => (
+    <Field
+      id={fid(field)}
+      label={label}
+      hint={extra.hint}
+      optional={extra.optional}
+      error={errors[field]}
+      count={extra.max ? { length: oneLine(values[field]).length, max: extra.max } : undefined}
+    >
       <Input
         name={field}
         type="text"
@@ -218,9 +218,25 @@ export function ApplicationForm({
       : errors.followUpOn;
   const stage = stageOf(values.status);
 
+  // A saved application with the same company and role. When editing, only
+  // once the company or role changes, so a pair saved anyway isn't flagged
+  // every time it's opened.
+  const pair = `${oneLine(values.company)}\n${oneLine(values.role)}`.toLowerCase();
+  const pairChanged =
+    !before || pair !== `${oneLine(before.company)}\n${oneLine(before.role)}`.toLowerCase();
+  const duplicate =
+    pairChanged && pair !== dismissedDuplicate
+      ? findDuplicate(applications, values, before?.id)
+      : undefined;
+
   return (
     <form noValidate onSubmit={submit} className="space-y-6">
-      <Field id={fid("company")} label="Company" error={errors.company}>
+      <Field
+        id={fid("company")}
+        label="Company"
+        error={errors.company}
+        count={{ length: oneLine(values.company).length, max: LIMITS.company }}
+      >
         <Input
           name="company"
           type="text"
@@ -233,7 +249,17 @@ export function ApplicationForm({
         />
       </Field>
 
-      {text("role", "Role")}
+      <DuplicateNotice
+        match={duplicate}
+        dismissLabel={mode === "add" ? "Add anyway" : "Keep both"}
+        onDismiss={() => {
+          setDismissedDuplicate(pair);
+          // The notice goes; carry on from the next field.
+          focusSoon(fid("role"));
+        }}
+      />
+
+      {text("role", "Role", { max: LIMITS.role })}
 
       <Field id={fid("appliedOn")} label="Applied on" error={errors.appliedOn}>
         <Input
@@ -348,7 +374,13 @@ export function ApplicationForm({
         />
       </Field>
 
-      <Field id={fid("notes")} label="Notes" optional>
+      <Field
+        id={fid("notes")}
+        label="Notes"
+        optional
+        error={errors.notes}
+        count={{ length: values.notes.trim().length, max: LIMITS.notes }}
+      >
         <Textarea name="notes" value={values.notes} onChange={(e) => update("notes", e.target.value)} />
       </Field>
 
@@ -356,28 +388,6 @@ export function ApplicationForm({
         hint: "A name or email, e.g. Priya Shah. Monday will say who to contact.",
         optional: true,
       })}
-
-      {duplicate && (
-        <div
-          id={`${formId}-duplicate`}
-          tabIndex={-1}
-          className="space-y-3 rounded-lg border border-late bg-late-soft p-4"
-        >
-          <p>
-            <strong>
-              You already logged {duplicate.role} at {duplicate.company}
-            </strong>{" "}
-            on {formatShortDay(duplicate.appliedOn)}. Save this one anyway, or open the one
-            you have.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={() => submit(undefined, true, pendingAnother)}>Save anyway</Button>
-            <ButtonLink variant="secondary" href={`/applications/${duplicate.id}`}>
-              Open that one
-            </ButtonLink>
-          </div>
-        </div>
-      )}
 
       {saveFailed && (
         <p
@@ -398,7 +408,7 @@ export function ApplicationForm({
           {submitLabel}
         </Button>
         {addAnotherLabel && (
-          <Button variant="secondary" className="w-full sm:w-auto" onClick={() => submit(undefined, false, true)}>
+          <Button variant="secondary" className="w-full sm:w-auto" onClick={() => submit(undefined, true)}>
             {addAnotherLabel}
           </Button>
         )}

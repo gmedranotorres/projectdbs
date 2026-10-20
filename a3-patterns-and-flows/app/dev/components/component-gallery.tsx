@@ -122,6 +122,20 @@ export function ComponentGallery() {
             <Input />
           </Field>
         </Example>
+        <Example label="Near the limit">
+          <Field label="Company" count={{ length: 70, max: 80 }}>
+            <Input defaultValue={"Example Co ".repeat(6) + "Exampl"} />
+          </Field>
+        </Example>
+        <Example label="Over the limit">
+          <Field
+            label="Company"
+            error="Shorten the company name to 80 characters or fewer."
+            count={{ length: 83, max: 80 }}
+          >
+            <Input defaultValue={"Example Co ".repeat(7) + "Exa"} />
+          </Field>
+        </Example>
         <Example label="Disabled">
           <Field label="Company">
             <Input defaultValue="Example Co" disabled />

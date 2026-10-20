@@ -56,8 +56,9 @@ export function ListRow({
     >
       <div className="min-w-0 flex-1 space-y-1.5">
         <div>
-          <p className="font-medium">{company}</p>
-          <p className="text-muted">{role}</p>
+          {/* Long names end with "…" after two lines; nothing pushes the row wider. */}
+          <p className="line-clamp-2 font-medium wrap-anywhere">{company}</p>
+          <p className="line-clamp-2 text-muted wrap-anywhere">{role}</p>
         </div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
           <Badge tone={statusTone(status)}>{STATUS_LABELS[status]}</Badge>
