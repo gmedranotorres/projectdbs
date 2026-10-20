@@ -117,15 +117,21 @@ export function MoveData() {
         ) : (
           <>
             <p>This device has {plural(apps.length, "application")}.</p>
-            <Button onClick={download} className="w-full sm:w-auto">
-              Download backup
-            </Button>
-            {downloaded && (
-              <p role="status" className="text-sm">
-                Downloaded <strong>{downloaded}</strong>. Now open Seguimiento on your other
-                device and load it there.
+            {/* The status line is always in the page, empty until the download,
+                so screen readers hear it when it fills in. */}
+            <div>
+              <Button onClick={download} className="w-full sm:w-auto">
+                Download backup
+              </Button>
+              <p role="status" className="text-sm not-empty:mt-3">
+                {downloaded && (
+                  <>
+                    Downloaded <strong>{downloaded}</strong>. Now open Seguimiento on your other
+                    device and load it there.
+                  </>
+                )}
               </p>
-            )}
+            </div>
           </>
         )}
       </Card>

@@ -807,3 +807,35 @@ Fix what fails, and write the findings and changes under "Accessibility" in the 
 - **Escape doesn't close the duplicate notice.** It isn't a question, and nothing is blocked while it shows.
 - **Role chips still move the cursor to Company** when it's empty, as decided on the first visit. The audit checked chips with Company filled.
 - **The audit scripts stay out of the repo:** they need a running Chrome over the DevTools protocol. The README describes the method so it can be repeated.
+
+## Labels and announcements (Oct 20, 2026)
+
+**What I asked.** A labels and announcements audit:
+- every input, select, textarea and file input has a `<label htmlFor>` (no placeholder-only labels);
+- every error is tied to its field with `aria-describedby`, and the field carries `aria-invalid`;
+- the toast region has `aria-live="polite"`;
+- the current nav link has `aria-current`;
+- icons have text or `aria-hidden`;
+- headings run h1 → h2 in order on every page.
+
+Check the accessibility tree in the browser, not only the source. Fix and document in README.md.
+
+**What changed.**
+- `app/move/move-data.tsx`: the "Downloaded …" status line after Download backup is always in the page and fills in after the download. It used to be added along with its message, which many screen readers don't announce. The spacing only applies once there's text, so the card looks the same.
+- README: a "Labels and announcements audit" part of Accessibility, covering:
+  - the method;
+  - a result for each check;
+  - the one fix, the other live regions, and the known limits.
+
+  "Also in place" no longer repeats what the audit now covers.
+- **How it was checked:** Chrome's accessibility tree over the DevTools protocol at 390px and 1440px, on every page.
+  - States: errors triggered on every form (16 in all), the delete question open, the toast showing, and a search with no match.
+  - Also checked: no dangling or duplicate ids.
+  - Every check passed before the fix too. The Move data line was found by reading the code behind each live region.
+
+**What I rejected or decided myself.**
+- **`aria-current` was checked in the HTML.** The DevTools protocol doesn't report it as a tree property; the tree confirms which link carries it.
+- **The gallery's EmptyState example keeps its h2** next to the section's h2. It shows the component as it sits on a real page, and no level is skipped.
+- **The loading placeholder stays without a heading.** It shows only for a moment, and it has screen-reader text ("Loading your applications…").
+- **Next's assertive route announcer is left alone.** It's the framework's own, and it reads the page title after navigation.
+- **No new attributes were added where the shared Field and Toast already do the work.** Adding them by hand would duplicate them.

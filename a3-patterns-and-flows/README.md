@@ -139,12 +139,48 @@ It doesn't remember the search text on All, which messages were shown, or where 
 - **The toast's Close button** comes after the bottom bar in Tab order, even though on a phone the toast shows at the top. The toast is announced through `aria-live` when it appears, focus is never moved into it, and Escape closes it from anywhere.
 - **Picking a role chip while Company is empty** moves the cursor to Company, on purpose, so the quick add can be done in one pass.
 
+### Labels and announcements audit (Oct 20, 2026)
+
+**How.** Chrome's accessibility tree, read over the DevTools protocol (`Accessibility.getPartialAXTree` / `getFullAXTree`), is what a screen reader is given, so the checks used it as well as the HTML. Pages were checked at 390px and 1440px, and the checks were run with the errors and confirmations actually showing:
+- Home: first visit, the empty quick add, and returning.
+- Add: blank, and with errors for empty fields, a bad link and notes over the limit.
+- All applications: blank, and with a search that matches nothing.
+- An application: blank, with an empty Company and Closed without a reason, and with the delete question open.
+- An unknown application.
+- The check-in: blank, and with errors in the goal, Set a follow-up and Import.
+- Move data, with no file chosen.
+- The component gallery and a 404.
+
+| Check | Result |
+| --- | --- |
+| Every input, select, textarea and file input has a `<label htmlFor>` | ✓ every visible control on every page, 24 of them in the gallery alone. In the tree each one's name comes from its label, never from a placeholder. Link's `https://` placeholder is only a hint. |
+| Errors are tied to their field, and the field is marked invalid | ✓ all 16 errors triggered (company, role, link, notes, why it closed, goal, follow-up date, import file, backup file, and the gallery's examples). In the tree each field reads `invalid: true` and its description ends with "Error: …" plus the message. No error message is left unattached, and no field points at an id that doesn't exist. |
+| The toast region is `aria-live="polite"` | ✓ in the tree it's a `status` region (`live: polite`, `atomic: true`). It's in the page from the start, so the first toast is read too ("Added Example Co — Data Analyst. Follow up on Tue, Oct 27."). Its Close button is named "Close message". |
+| The current nav link has `aria-current` | ✓ exactly one link in the visible nav has `aria-current="page"`: Home on Home and the check-in, Add, All on the list and on an application, and Move data. The gallery and the 404 mark none. The tree confirms it's that link; the DevTools protocol doesn't report `aria-current` itself, so that attribute was checked in the HTML. |
+| Icons have text or `aria-hidden` | ✓ every `svg` is `aria-hidden` and sits next to text. No image appears in the tree. No button or link is unnamed, and none reads out a stray symbol like an arrow. |
+| Headings run h1 → h2 in order | ✓ every page has one h1 first and never skips a level. On the check-in, each application is an h3 inside its h2 section ("Follow-ups due" › "Example Co"). |
+
+**What I found and changed.** Every check in the table passed: labels, error wiring and the toast come from the shared Field and Toast, so every form has them. Reading the code behind each live region turned up one the tree snapshot couldn't show:
+- **Move data's "Downloaded …" line was added to the page only after the download.** Many screen readers stay silent when a live region appears with its message already in it. The line is now always in the page, empty until there's something to say, like the other status lines. It looks the same: the 12px gap only appears once there's text (`app/move/move-data.tsx`).
+
+**Other live regions**, all polite and in the page before they speak:
+- the duplicate notice;
+- the character counter near a limit;
+- the list's "Showing 3 of 5." line;
+- the calendar, Export and Move data download lines.
+
+"Done. See you next Monday." and the import result are announced a different way: focus moves to them. The one assertive region is Next's own route announcer, which reads the new page's title after each navigation.
+
+**Known limits.**
+- The gallery's EmptyState example shows its h2 ("Nothing logged yet") next to the section's own h2. That's how the component sits on a real page, under the h1. It's a level-order demo, not a skipped level.
+- While a page is still loading, it shows "Loading…" without a heading for a moment.
+
 ### Also in place
 
 - Text contrast is at least 4.5:1 everywhere, measured from the Calm tokens. The progress bar's fill is 3.65:1 against its track (3:1 is the minimum for shapes), with the numbers beside it.
-- Every field has a real `<label>`. Errors sit next to the field, say what to do next, keep what was typed, and are tied to it with `aria-describedby` and `aria-invalid`. Focus goes to the first one.
-- Toasts are announced politely through one `aria-live` region and never hold actions. Undo and confirmations are Notices on the page instead.
-- The current page is marked in the navigation with `aria-current="page"` as well as on screen. Late and quiet items say so in words, never by color alone.
+- Errors sit next to the field, say what to do next and keep what was typed. Focus goes to the first one.
+- Toasts never hold actions. Undo and confirmations are Notices on the page instead.
+- The current page is marked on screen as well, with an underline on a phone and a filled tab on a laptop. Late and quiet items say so in words, never by color alone.
 - Tap targets are at least 44px, and inputs use 16px text so phones don't zoom in.
 
 ## First-run check
