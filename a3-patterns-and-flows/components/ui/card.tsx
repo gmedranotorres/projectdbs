@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ComponentProps } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { STATUS_LABELS, type Status } from "@/lib/applications";
 import { formatDay, type Day } from "@/lib/dates";
 import { Badge, statusTone } from "./badge";
@@ -26,19 +26,22 @@ export function List({ className = "", ...props }: ComponentProps<"ul">) {
 }
 
 // One application in a list: company, role, status, follow-up date, and an
-// "Open" link that names the application for screen readers.
+// "Open" link that names the application for screen readers. `hint` sits
+// beside the follow-up date.
 export function ListRow({
   company,
   role,
   status,
   followUpOn,
   href,
+  hint,
 }: {
   company: string;
   role: string;
   status: Status;
   followUpOn?: Day;
   href: string;
+  hint?: ReactNode;
 }) {
   return (
     <li className="flex items-start gap-4 px-4 py-3">
@@ -52,6 +55,7 @@ export function ListRow({
           <span className="text-sm text-muted">
             {followUpOn ? `Follow up ${formatDay(followUpOn)}` : "No follow-up"}
           </span>
+          {hint}
         </div>
       </div>
       <Link

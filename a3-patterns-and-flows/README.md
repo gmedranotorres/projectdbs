@@ -20,7 +20,7 @@ flowchart TD
     open(["Open Seguimiento"]) --> home["/"]
     home --> anything{"Anything saved?"}
     anything -- No --> empty["Quick add: Company + Role<br/>+ the follow-up rules"]
-    empty -- "Add application" --> listed["Stays on /: message<br/>+ your list below"]
+    empty -- "Add application" --> listed["Stays on /: message<br/>+ Your list, newest first<br/>+ one-time tip"]
     listed -- "Add another" --> empty
     empty -. "Add Monday check-in" .-> ics(["Calendar file:<br/>Mondays at 9:00"])
   end
@@ -37,20 +37,20 @@ flowchart TD
 
   subgraph back["Coming back"]
     monday(["Monday"]) --> checkin["/ (check-in)"]
-    checkin --> due{"Follow-ups due?"}
+    checkin --> due{"Anything due<br/>or quiet?"}
     due -- Yes --> act["I followed up · Not yet"]
     act -- "Undo or next one" --> checkin
-    due -- No --> caught["All caught up: next date"]
     checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
   end
 
   empty -- "Use the full form<br/>(earlier date, contact)" --> add
-  listed -. "Next visit" .-> checkin
+  due -- No --> listed
+  listed -- "See all" --> list
+  listed -- "Add details" --> add
   saved -. "First save only" .-> ics
   ics -. "Reminder" .-> monday
   anything -- Yes --> checkin
   act -- Details --> edit
-  caught -- "Log an application" --> add
 ```
 
 ## Onboarding research

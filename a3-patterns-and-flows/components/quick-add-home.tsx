@@ -2,33 +2,44 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { emptyForm, toApplication, validate, type Application } from "@/lib/applications";
-import { formatDay, today as getToday } from "@/lib/dates";
+import { addDays, formatDay, today as getToday } from "@/lib/dates";
+import { FOLLOW_UP_HINT } from "@/lib/types";
 import { useApplications } from "@/hooks/useApplications";
+import { ArrivalMessage } from "./arrival-message";
 import { CalendarReminder } from "./calendar-reminder";
-import { Button, Chip, ErrorIcon, Field, Input, List, ListRow, PageHeader, TextLink, useToast } from "./ui";
+import {
+  Button,
+  Chip,
+  ErrorIcon,
+  Field,
+  Input,
+  List,
+  ListRow,
+  PageHeader,
+  TextLink,
+  useToast,
+} from "./ui";
 
-// What someone sees before they've saved anything: one line on what
-// Seguimiento does, and a quick add right on the page. Saving keeps you
-// here, and what you added appears under the form. No tour, no modal, no
+// `/` while nothing is due or quiet: on the first visit, and in the early
+// days before any follow-up comes up. One line on what Seguimiento does,
+// and a quick add right on the page. Saving keeps you here, and what you
+// added appears under the form, newest first. Next to the newest item, a
+// one-time tip explains the suggested follow-up date. No tour, no modal, no
 // sample data.
 
 // Roles a grad student applying in Chicago is likely to type.
 const ROLE_CHIPS = ["Data Analyst", "Research Associate", "Policy Analyst", "Associate Consultant"];
 
-export function FirstVisit({
-  applications,
-  onAdding,
-}: {
-  // What's been added so far on this page.
-  applications: Application[];
-  // Called just before the first save, so the page stays the first visit.
-  onAdding: () => void;
-}) {
+// The list shows the newest few; "See all" has the rest.
+const LIST_LIMIT = 5;
+
+export function QuickAddHome({ applications }: { applications: Application[] }) {
   const store = useApplications();
   const toast = useToast();
   const formId = useId();
   const companyId = `${formId}-company`;
   const roleId = `${formId}-role`;
+  const listId = `${formId}-list`;
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -36,6 +47,17 @@ export function FirstVisit({
   const [saveFailed, setSaveFailed] = useState(false);
 
   const focus = (id: string) => requestAnimationFrame(() => document.getElementById(id)?.focus());
+
+  const newest = [...applications].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const shown = newest.slice(0, LIST_LIMIT);
+  const first = shown[0];
+  // The tip is only true of a date Seguimiento suggested: Applied, a week
+  // after the day you applied.
+  const showHint =
+    first !== undefined &&
+    !store.settings.dismissedHints.includes(FOLLOW_UP_HINT) &&
+    first.status === "applied" &&
+    first.followUpOn === addDays(first.appliedOn, 7);
 
   function pickRole(chip: string) {
     const next = role === chip ? "" : chip;
@@ -59,7 +81,6 @@ export function FirstVisit({
     }
 
     const app = toApplication(values, today);
-    onAdding();
     if (!store.add(app)) {
       setSaveFailed(true);
       return;
@@ -71,12 +92,20 @@ export function FirstVisit({
     focus(companyId);
   }
 
+  function dismissHint() {
+    store.dismissHint(FOLLOW_UP_HINT);
+    // The button goes away with the tip; the list heading keeps your place.
+    focus(listId);
+  }
+
   return (
     <div className="space-y-8">
       <PageHeader
         title="Keep every application moving."
         description="Log what you applied to, and come back on Monday to see who to follow up with."
       />
+
+      <ArrivalMessage apps={applications} />
 
       <form noValidate onSubmit={submit} className="space-y-6">
         <Field id={companyId} label="Company" error={errors.company}>
@@ -130,20 +159,22 @@ export function FirstVisit({
             Add application
           </Button>
           <p className="text-sm text-muted">Saved on this device. No account.</p>
-          <p className="text-muted">
-            Applied earlier, or want to add a contact?{" "}
-            <TextLink href="/add">Use the full form</TextLink>.
-          </p>
+          {applications.length === 0 && (
+            <p className="text-muted">
+              Applied earlier, or want to add a contact?{" "}
+              <TextLink href="/add">Use the full form</TextLink>.
+            </p>
+          )}
         </div>
       </form>
 
-      {applications.length > 0 && (
-        <section aria-labelledby={`${formId}-list`} className="space-y-3">
-          <h2 id={`${formId}-list`} className="font-serif text-heading">
+      {first && (
+        <section aria-labelledby={listId} className="space-y-3">
+          <h2 id={listId} tabIndex={-1} className="font-serif text-heading">
             Your list
           </h2>
           <List>
-            {applications.map((app) => (
+            {shown.map((app) => (
               <ListRow
                 key={app.id}
                 company={app.company}
@@ -151,23 +182,45 @@ export function FirstVisit({
                 status={app.status}
                 followUpOn={app.followUpOn ?? undefined}
                 href={`/applications/edit?id=${app.id}&from=week`}
+                hint={
+                  showHint && app.id === first.id ? (
+                    <span className="inline-flex flex-wrap items-center gap-x-2 rounded-badge bg-accent-soft py-0.5 pr-0.5 pl-2 text-sm text-ink">
+                      We suggested a follow-up a week out. Change it anytime.
+                      <Button variant="quiet" size="sm" onClick={dismissHint}>
+                        Got it
+                      </Button>
+                    </span>
+                  ) : undefined
+                }
               />
             ))}
           </List>
+          <p className="flex flex-wrap gap-x-6 gap-y-2">
+            <TextLink href="/applications">
+              See all{applications.length > LIST_LIMIT ? ` ${applications.length}` : ""}
+            </TextLink>
+            <TextLink href="/add">Add details</TextLink>
+          </p>
         </section>
       )}
 
-      <p className="text-muted">
-        Seguimiento suggests a follow-up a week after you apply, and you can always change it.
-        After 3 weeks with no news, an application is marked gone quiet.
-      </p>
+      {applications.length === 0 && (
+        <p className="text-muted">
+          Seguimiento suggests a follow-up a week after you apply, and you can always change it.
+          After 3 weeks with no news, an application is marked gone quiet.
+        </p>
+      )}
 
-      <CalendarReminder />
+      {/* Offered on the first visit and right after the first save, like
+          the Add page does. */}
+      {applications.length <= 1 && <CalendarReminder />}
 
-      <p className="text-muted">
-        Already using Seguimiento on another device?{" "}
-        <TextLink href="/move">Load a backup</TextLink>.
-      </p>
+      {applications.length === 0 && (
+        <p className="text-muted">
+          Already using Seguimiento on another device?{" "}
+          <TextLink href="/move">Load a backup</TextLink>.
+        </p>
+      )}
     </div>
   );
 }

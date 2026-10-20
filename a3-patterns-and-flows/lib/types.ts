@@ -34,6 +34,10 @@ export type Application = {
   updatedAt: string;
 };
 
+// The one-time tip beside the first item on the list, about the suggested
+// follow-up date. Kept in Settings.dismissedHints once closed.
+export const FOLLOW_UP_HINT = "follow-up-suggestion";
+
 export type Settings = {
   weeklyGoal: number;
   lastCheckInOn?: Day;

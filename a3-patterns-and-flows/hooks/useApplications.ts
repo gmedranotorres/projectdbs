@@ -81,6 +81,15 @@ function setSettings(change: Partial<Settings>): boolean {
   return write((data) => ({ ...data, settings: { ...data.settings, ...change } }));
 }
 
+// Records a closed hint so it stays closed, on every page and visit.
+function dismissHint(id: string): boolean {
+  if (current().data.settings.dismissedHints.includes(id)) return true;
+  return write((data) => ({
+    ...data,
+    settings: { ...data.settings, dismissedHints: [...data.settings.dismissedHints, id] },
+  }));
+}
+
 function dismissRecovered() {
   commit({ ...current(), recovered: false });
 }
@@ -106,6 +115,7 @@ export function useApplications() {
     remove,
     replaceAll,
     setSettings,
+    dismissHint,
     dismissRecovered,
   };
 }

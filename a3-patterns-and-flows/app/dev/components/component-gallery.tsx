@@ -228,6 +228,25 @@ export function ComponentGallery() {
           <ListRow company="Demo Group" role="Data Analyst" status="offer" href="/dev/components" />
           <ListRow company="Fictional Inc" role="Research Assistant" status="rejected" href="/dev/components" />
         </List>
+        <Example label="With the one-time tip beside the follow-up date">
+          <List>
+            <ListRow
+              company="Example Co"
+              role="Data Analyst"
+              status="applied"
+              followUpOn="2026-10-27"
+              href="/dev/components"
+              hint={
+                <span className="inline-flex flex-wrap items-center gap-x-2 rounded-badge bg-accent-soft py-0.5 pr-0.5 pl-2 text-sm text-ink">
+                  We suggested a follow-up a week out. Change it anytime.
+                  <Button variant="quiet" size="sm">
+                    Got it
+                  </Button>
+                </span>
+              }
+            />
+          </List>
+        </Example>
       </Section>
 
       <Section title="Badge">

@@ -17,7 +17,7 @@ import {
 import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { ArrivalMessage } from "@/components/arrival-message";
-import { FirstVisit } from "@/components/first-visit";
+import { QuickAddHome } from "@/components/quick-add-home";
 import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Badge, TextLink } from "@/components/ui";
 
 // The Monday check-in. Every follow-up can be handled right here, so the
@@ -28,18 +28,19 @@ type Message = { text: string; undo?: Application; tone?: "error" };
 export function ThisWeek() {
   const store = useApplications();
   const [message, setMessage] = useState<Message | null>(null);
-  // After a quick add on the first visit, the page stays the first visit, so
-  // the new application appears under the form. Coming back later shows
-  // This week.
-  const [quickAdding, setQuickAdding] = useState(false);
 
   if (!store.hydrated) return <Loading />;
-  if (store.applications.length === 0 || quickAdding) {
-    return <FirstVisit applications={store.applications} onAdding={() => setQuickAdding(true)} />;
-  }
 
   const today = getToday();
   const groups = groupAll(store.applications, today);
+
+  // While nothing is due or quiet, / is the quick add and the newest items.
+  // The check-in takes over once a follow-up comes up, and stays while its
+  // message (with Undo) is showing, even after the last one is handled.
+  if (groups.due.length === 0 && groups.quiet.length === 0 && !message) {
+    return <QuickAddHome applications={store.applications} />;
+  }
+
   const openCount = groups.due.length + groups.quiet.length + groups.upcoming.length;
 
   function act(before: Application, after: Application, text: string) {

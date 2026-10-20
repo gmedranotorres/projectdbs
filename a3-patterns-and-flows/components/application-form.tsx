@@ -19,6 +19,7 @@ import {
 } from "@/lib/applications";
 import { formatDay, formatShortDay, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
+import { FOLLOW_UP_HINT } from "@/lib/types";
 import { Button, ButtonLink, ErrorIcon, Field, Input, Textarea } from "./ui";
 
 // The one form behind Add and Update. Errors appear when you save, next to
@@ -63,6 +64,8 @@ export function ApplicationForm({
   const [errors, setErrors] = useState<FormErrors>({});
   // A date already saved counts as the person's own.
   const [followUpIsMine, setFollowUpIsMine] = useState(mode === "edit");
+  // Whether the person typed a follow-up date here, for closing the tip.
+  const [typedFollowUp, setTypedFollowUp] = useState(false);
   const [suggestionMatters, setSuggestionMatters] = useState(mode === "add");
   const [moreOpen, setMoreOpen] = useState(
     Boolean(initial.contact || initial.link || initial.notes),
@@ -93,7 +96,10 @@ export function ApplicationForm({
         cleared.push("followUpOn");
       }
     }
-    if (field === "followUpOn") setFollowUpIsMine(true);
+    if (field === "followUpOn") {
+      setFollowUpIsMine(true);
+      setTypedFollowUp(true);
+    }
     if (field === "company" || field === "role") setDuplicate(null);
 
     setValues(next);
@@ -139,6 +145,11 @@ export function ApplicationForm({
       setSaveFailed(true);
       focusSoon(`${formId}-save-error`);
       return;
+    }
+    // Someone who sets their own follow-up date has learned what the tip on
+    // the list says, so it closes for good.
+    if (typedFollowUp && app.followUpOn && app.followUpOn !== before?.followUpOn) {
+      saved.dismissHint(FOLLOW_UP_HINT);
     }
     onSaved(app);
   }

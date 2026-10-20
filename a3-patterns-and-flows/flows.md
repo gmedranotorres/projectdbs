@@ -6,7 +6,7 @@ flowchart TD
     open(["Open Seguimiento"]) --> home["/"]
     home --> anything{"Anything saved?"}
     anything -- No --> empty["Quick add: Company + Role<br/>+ the follow-up rules"]
-    empty -- "Add application" --> listed["Stays on /: message<br/>+ your list below"]
+    empty -- "Add application" --> listed["Stays on /: message<br/>+ Your list, newest first<br/>+ one-time tip"]
     listed -- "Add another" --> empty
     empty -. "Add Monday check-in" .-> ics(["Calendar file:<br/>Mondays at 9:00"])
   end
@@ -23,20 +23,20 @@ flowchart TD
 
   subgraph back["Coming back"]
     monday(["Monday"]) --> checkin["/ (check-in)"]
-    checkin --> due{"Follow-ups due?"}
+    checkin --> due{"Anything due<br/>or quiet?"}
     due -- Yes --> act["I followed up · Not yet"]
     act -- "Undo or next one" --> checkin
-    due -- No --> caught["All caught up: next date"]
     checkin -. "21+ days, no news" .-> quiet["Gone quiet:<br/>follow up · close"]
   end
 
   empty -- "Use the full form<br/>(earlier date, contact)" --> add
-  listed -. "Next visit" .-> checkin
+  due -- No --> listed
+  listed -- "See all" --> list
+  listed -- "Add details" --> add
   saved -. "First save only" .-> ics
   ics -. "Reminder" .-> monday
   anything -- Yes --> checkin
   act -- Details --> edit
-  caught -- "Log an application" --> add
 ```
 
 Seguimiento is a weekly ritual for one person: a second-year grad student applying to jobs in Chicago, usually in bursts between classes, on both a phone and a laptop. The main task in one sentence: I log an application, it goes on my list with a follow-up date, and when I come back on Monday it tells me who to follow up with.
@@ -64,9 +64,13 @@ You open Seguimiento for the first time, with nothing saved. For a moment, while
 
 Then the page says what Seguimiento is for and lets you start right there. The heading is "Keep every application moving.", and one line under it says: log what you applied to, and come back on Monday to see who to follow up with. Below is a quick add with two fields, **Company** and **Role**. Under Role, chips offer roles you're likely to type: Data Analyst, Research Associate, Policy Analyst and Associate Consultant. Tapping one fills in Role and, if Company is still empty, moves you there; tapping it again clears Role. A small line says "Saved on this device. No account." Another links to the full Add form, for an application sent on an earlier day or one with a contact to follow up with. There's no tour, no pop-up and no sample data.
 
-Pressing **Add application** with a field empty gives "Enter the company name." or "Enter the role title." next to the field, keeps what you typed, and moves you to the first one. A quick add saves today as the day you applied and a follow-up a week later. A short message says so ("Added Example Co — Data Analyst. Follow up on Tue, Oct 27."), announced politely to screen readers. You stay on the page: the form empties for the next one, and what you added appears below it under "Your list", each row with **Open**. The next time you open Seguimiento, `/` is This week.
+Pressing **Add application** with a field empty gives "Enter the company name." or "Enter the role title." next to the field, keeps what you typed, and moves you to the first one. A quick add saves today as the day you applied and a follow-up a week later. A short message says so ("Added Example Co — Data Analyst. Follow up on Tue, Oct 27."), announced politely to screen readers. You stay on the page: the form empties for the next one, and what you added appears below it under "Your list", newest first, each row with **Open**. The list shows the newest five; **See all** goes to the All page, and **Add details** opens the full Add form, so it's always within reach but never required.
 
-Under that, one line states the rules: a follow-up a week after you apply, which you can always change, and after 3 weeks with no news, an application is marked gone quiet.
+Beside the newest item's follow-up date, a one-time tip says "We suggested a follow-up a week out. Change it anytime." It stays, visit after visit, until you press **Got it** or type a follow-up date of your own on Add or Update. Either one closes it for good on this device. The tip only appears beside a date Seguimiento suggested.
+
+Before anything is saved, a line under the form states the rules: a follow-up a week after you apply, which you can always change, and after 3 weeks with no news, an application is marked gone quiet. Once the list appears, the tip does that job. The Monday calendar reminder is offered on the first visit and right after the first save.
+
+`/` stays like this, the quick add and your newest applications, while nothing is due or gone quiet. When a follow-up comes up, `/` becomes the This week check-in below.
 
 Seguimiento has no account, so it can't email anyone. Instead, the page offers **Add Monday check-in to my calendar**. It downloads `seguimiento-monday-check-in.ics`, a weekly event on Mondays at 9:00 starting next Monday, which the person adds to their own calendar. The page then says the file was downloaded and to open it. A last line, for someone who already uses Seguimiento on another device, links to loading a backup.
 
@@ -104,9 +108,9 @@ This week is the home page. It works on any day, but it's built for Monday. It o
 
 After any of these actions, a message says what happened ("Followed up with Morningstar. Next follow-up Sun, Nov 1"), with an **Undo** in case of a wrong tap on a phone.
 
-**All caught up.** When nothing is due or quiet, the page says so and tells you what's next: "Nothing due this week. Next: Grubhub on Thu, Oct 29 (in 11 days)". It also offers Log an application.
+**All caught up.** When nothing is due or quiet, `/` goes back to the quick add and your newest applications (see Flow 1). Right after you handle the last due one, the check-in stays while its message and **Undo** are showing, and says what's next: "Nothing due this week. Next: Grubhub on Thu, Oct 29 (in 11 days)".
 
-**Everything closed.** When every application is closed, the page says there are no open applications and offers to log a new one.
+**Everything closed.** When every application is closed, nothing is due, so `/` shows the quick add and your newest applications.
 
 **Other states.** The page shows a neutral placeholder while loading, and the first-visit page when nothing is saved. When the saved data is damaged and can't be read, a banner on every page explains it. The damaged copy is set aside under another key, the list continues with whatever could be read, and the banner points to loading a backup. If the browser refuses to save "I followed up", "Not yet", "Follow up once more" or "Close it", the message says the change couldn't be saved. If it refuses an Undo, the message says the change is still saved and keeps the Undo button so you can try again.
 

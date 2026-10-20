@@ -264,3 +264,37 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - I chose Research Associate over Research Analyst and Research Assistant, because it's what my postings say most.
 - I kept Associate Consultant over Consultant and Associate.
 - Titles aren't standardized, so the chips follow my own postings, not a rule. Claude left the fictional "Research Assistant" sample row on `/dev/components` as it is.
+
+## 2026-10-20 · First item on the list
+
+**What I asked.** Make the moment after the first add teach the pattern:
+- Once at least one application exists, `/` shows "Your list" below the quick add: a ListRow per item, newest first.
+- Beside the first item's follow-up date, a one-time hint: "We suggested a follow-up a week out. Change it anytime." It stays until the person dismisses it or edits a follow-up date, and the dismissal is recorded in `settings.dismissedHints`.
+- "See all" links to `/applications` and "Add details" to `/add`, so the full form is discoverable but never required.
+
+**What changed.**
+- `components/first-visit.tsx` became `components/quick-add-home.tsx` (QuickAddHome). It now serves returning visitors too: the quick add, then "Your list", newest first by `createdAt`, as ListRows with Open, followed by **See all** and **Add details**.
+- **The tip:** sits beside the newest item's follow-up date and reads "We suggested a follow-up a week out. Change it anytime.", with **Got it**.
+  - **Got it** records `"follow-up-suggestion"` in `settings.dismissedHints` (new `FOLLOW_UP_HINT` in `lib/types.ts`, new `dismissHint()` in the hook) and moves focus to the "Your list" heading.
+  - Typing a follow-up date of your own on Add or Update also records it.
+  - The tip survives reloads until one of those happens.
+- ListRow takes an optional `hint`, shown beside the follow-up date. `/dev/components` shows a row with the tip.
+- `app/this-week.tsx`: `/` is QuickAddHome while nothing is due or quiet. The check-in takes over once a follow-up comes up, and stays while its message with **Undo** is showing, even after the last due item is handled. The page that comes back from Update (`?updated=`) still shows its confirmation.
+- Updated flows.md (Flow 1, the diagram, All caught up, Everything closed) and the README diagram.
+- Checked in Chrome at 390px and 1440px:
+  - An empty `/` has no list.
+  - After a first add, the list shows with the tip, See all and Add details.
+  - The tip survives a reload.
+  - After a second add, it's on top and the tip moves to it.
+  - **Got it** hides the tip, moves focus to "Your list", records the id, and it stays hidden after a reload.
+  - With the hint reset, typing a date on Update records the dismissal.
+  - With a due item, `/` is This week; after "I followed up" on it, This week stays with Undo; the next visit is the quick add again.
+  - No console errors and no sideways scroll.
+
+**What I rejected or decided myself.**
+- I chose "quick add until something's due" over keeping the check-in on `/` permanently, and over replacing the check-in with the quick add for good. Mondays stay a check-in.
+- Claude put the tip beside the newest item (the top row), and only when its date is the one Seguimiento suggested (Applied, a week after the day you applied), so the tip's words are always true.
+- Claude made only a typed date close the tip. A date changed by closing an application, by a status change, by **Use**, or by I followed up / Not yet doesn't count.
+- Claude showed the newest five, with See all for the rest, so `/` stays short after many applications.
+- Once the list exists, Claude replaced "Applied earlier…? Use the full form" with **Add details**, since both open `/add`. The follow-up rules line now shows only before the first save, because the tip does its job after that. The calendar reminder shows on the first visit and right after the first save, and the backup line only when nothing is saved.
+- The "All caught up" card now only appears for a moment, right after the last due item is handled.
