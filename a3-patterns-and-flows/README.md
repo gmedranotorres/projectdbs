@@ -112,7 +112,40 @@ It doesn't remember the search text on All, which messages were shown, or where 
 
 ## Accessibility
 
-_To fill in._
+### Keyboard audit (Oct 20, 2026)
+
+**How.** Every page was driven with real key presses (Tab, Shift+Tab, Enter, Space, Escape, arrow keys) in Chrome, with a script over the DevTools protocol and no packages, at 390px and at 1440px. The pages: Home on a first visit and when returning, Add, All applications, an application, an unknown application, the check-in, Move data, the component gallery and a 404. For every Tab stop it recorded where the element sits on screen, and whether the focus ring was actually drawn (a 2px outline) and on screen.
+
+| Check | Result |
+| --- | --- |
+| The skip link is the first Tab stop and works | ✓ on every page. It appears when focused, Enter moves focus to the page, and the next Tab is the first control: Company on a first visit, the first number when returning. |
+| Focus is visible on every control | ✓ after a fix: date fields lost their ring on the calendar button (see below). Everything else shows the 2px ink outline. |
+| Tab order follows the visual order | ✓ on every page at both widths, top to bottom and left to right within a row: header, page, footer, then the phone's bottom bar. |
+| Enter submits forms | ✓ quick add, Add (and its errors, with focus on the first), an application's Save changes, the weekly goal, Set a follow-up, and Check the file on Import and Move data. In the search field on All, Enter does nothing unexpected. |
+| Escape dismisses the toast and inline confirmations | ✓ after fixes. The toast, the delete question, Import's "Replace everything?", Move data's Combine, and the inline Change goal and Set a follow-up forms all close with Escape, with focus back on the button that opened them. |
+| Chips are reachable and toggle with Space and Enter | ✓ the role chips on Home and the filter chips on All are one Tab stop each. Arrow keys, Home and End move between chips; Space and Enter press and unpress. |
+| Nothing traps focus | ✓ Tab goes through every page and back to the skip link, and Shift+Tab from the first stop reaches the last. The checks were run at 390px and 1440px. |
+
+**What I found and changed.**
+- **Date fields hid their focus ring on the calendar button.** In Chrome a date field is four Tab stops (month, day, year, calendar). On the last one the field isn't `:focus`, so no outline was drawn. Date fields now show the ring whenever focus is anywhere inside them (`input[type="date"]:focus-within` in `globals.css`).
+- **Escape didn't close the inline confirmations.** It only closed the toast. Now Escape works like Cancel / Keep it on the delete question, the Import confirmation and the Move data confirmation, and on the two inline forms on the check-in. Focus goes back to the button that opened each one (`lib/keys.ts`).
+- **Escape on a confirmation also closed the toast.** Next runs React from the document itself, so stopping the event in React didn't stop the toast's own document listener. The inline handlers now mark Escape as handled, and the toast leaves its message up for those. A second Escape closes it.
+- **Move data's confirmation had no way back** except choosing another file. It now has **Cancel**, as well as Escape.
+- **Focus could be lost when a toast closed.** With focus on the toast's Close button, closing it (Close, Escape or the 5-second timer) left focus nowhere. It now returns to wherever it was before.
+- **The skip link relied on browser behavior.** `<main>` now takes focus (`tabIndex={-1}`, with no ring since it isn't a control), so "Skip to content" moves focus into the page in every browser, not just Chrome.
+
+**Known limits.**
+- **Date fields** are several Tab stops each. That's the browser's own control, kept so phones get their native date picker.
+- **The toast's Close button** comes after the bottom bar in Tab order, even though on a phone the toast shows at the top. The toast is announced through `aria-live` when it appears, focus is never moved into it, and Escape closes it from anywhere.
+- **Picking a role chip while Company is empty** moves the cursor to Company, on purpose, so the quick add can be done in one pass.
+
+### Also in place
+
+- Text contrast is at least 4.5:1 everywhere, measured from the Calm tokens. The progress bar's fill is 3.65:1 against its track (3:1 is the minimum for shapes), with the numbers beside it.
+- Every field has a real `<label>`. Errors sit next to the field, say what to do next, keep what was typed, and are tied to it with `aria-describedby` and `aria-invalid`. Focus goes to the first one.
+- Toasts are announced politely through one `aria-live` region and never hold actions. Undo and confirmations are Notices on the page instead.
+- The current page is marked in the navigation with `aria-current="page"` as well as on screen. Late and quiet items say so in words, never by color alone.
+- Tap targets are at least 44px, and inputs use 16px text so phones don't zoom in.
 
 ## First-run check
 

@@ -6,6 +6,7 @@ import { addDays, formatDay, today as getToday } from "@/lib/dates";
 import { STATUS_LABELS, formFrom, isOpen, markFollowedUp } from "@/lib/applications";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink } from "@/hooks/useBackLink";
+import { onEscape } from "@/lib/keys";
 import { ApplicationForm } from "@/components/application-form";
 import {
   Badge,
@@ -71,6 +72,12 @@ export function ApplicationDetail() {
     } else {
       setProblem("Couldn't save. This browser's storage may be full.");
     }
+  }
+
+  function keep() {
+    setConfirmingDelete(false);
+    // Back where you were, now that the question is gone.
+    requestAnimationFrame(() => document.getElementById("delete-application")?.focus());
   }
 
   function remove() {
@@ -145,7 +152,7 @@ export function ApplicationDetail() {
           Delete
         </h2>
         {confirmingDelete ? (
-          <div className="space-y-3 rounded-lg border border-error bg-error-soft p-4">
+          <div onKeyDown={(e) => onEscape(e, keep)} className="space-y-3 rounded-lg border border-error bg-error-soft p-4">
             <p>
               <strong>
                 Delete {app.role} at {app.company}?
@@ -157,14 +164,7 @@ export function ApplicationDetail() {
               <Button variant="danger" onClick={remove} autoFocus>
                 Delete it
               </Button>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setConfirmingDelete(false);
-                  // Back where you were, now that the question is gone.
-                  requestAnimationFrame(() => document.getElementById("delete-application")?.focus());
-                }}
-              >
+              <Button variant="secondary" onClick={keep}>
                 Keep it
               </Button>
             </div>

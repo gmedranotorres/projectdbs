@@ -19,6 +19,7 @@ import { useApplications } from "@/hooks/useApplications";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
 import { MondayReminderButton } from "@/components/calendar-reminder";
 import { YourData } from "@/components/your-data";
+import { onEscape } from "@/lib/keys";
 import {
   Badge,
   Button,
@@ -345,7 +346,7 @@ function SetFollowUpForm({
   }
 
   return (
-    <form noValidate onSubmit={submit} className="space-y-3">
+    <form noValidate onSubmit={submit} onKeyDown={(e) => onEscape(e, onCancel)} className="space-y-3">
       <Field id={id} label={`Follow up with ${app.company} on`} error={error}>
         <Input
           type="date"
@@ -395,7 +396,7 @@ function GoalForm({
   }
 
   return (
-    <form noValidate onSubmit={submit} className="space-y-3">
+    <form noValidate onSubmit={submit} onKeyDown={(e) => onEscape(e, onCancel)} className="space-y-3">
       <Field id={id} label="Weekly goal" hint="Applications to log each week, Monday to Sunday." error={error}>
         <Input
           name="weeklyGoal"

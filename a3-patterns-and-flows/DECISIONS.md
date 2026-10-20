@@ -769,3 +769,41 @@ Then write a table in README.md under "What it remembers": what is stored, under
 - **Check the file, then confirm:** Import validates when you press **Check the file**, not as soon as a file is chosen. That's the same pattern as Move data and the form rules (errors on submit, focus on the field), and screen readers hear the error when focus returns to the field.
 - **"Footer of /check-in":** Claude read this as a "Your data" section at the end of the check-in page, not the site-wide footer, which stays one line on every page.
 - **The confirmation says what will be lost** ("The 7 applications here now, your weekly goal and last check-in…") and suggests exporting first.
+
+## 2026-10-20 · Keyboard access
+
+**What I asked.** A keyboard audit of every page:
+- the skip link is the first Tab stop and works;
+- focus is visible on every control;
+- Tab order follows the visual order;
+- Enter submits forms;
+- Escape dismisses the toast and inline confirmations;
+- chips are reachable and toggle with Space and Enter;
+- nothing traps focus.
+
+Fix what fails, and write the findings and changes under "Accessibility" in the README.
+
+**What changed.**
+- `app/globals.css`: `input[type="date"]:focus-within` gets the focus ring. On the calendar button inside a date field, the field isn't `:focus`, so it had none.
+- `lib/keys.ts` (new): `onEscape(event, cancel)`, used on:
+  - the delete question (Keep it);
+  - Import's confirmation (Cancel);
+  - Move data's confirmation (the new Cancel);
+  - the check-in's Change goal and Set a follow-up forms.
+
+  It marks the key as handled, so the toast ignores that press.
+- `components/ui/toast.tsx`:
+  - Escape that an inline question already used no longer closes the toast. React and the toast's listener both sit on the document in Next, so `stopPropagation` wasn't enough.
+  - When the toast closes with focus on Close, focus returns to where it was before (or to the page).
+- `app/move/move-data.tsx`: the Combine confirmation has a **Cancel** button, and Escape works too. Both return focus to the file field.
+- `app/layout.tsx`: `<main tabIndex={-1}>` with no outline, so the skip link moves focus into the page in every browser.
+- README: an Accessibility section with the method, a results table for each check, what was found and changed, the known limits, and what was already in place.
+- **How it was checked:** real key presses through the DevTools protocol at 390px and 1440px, on Home (first visit and returning), Add, All, an application, an unknown application, the check-in, Move data, the gallery and a 404.
+  - Before: everything passed except date-field focus rings (on every page with dates), Escape on inline confirmations, and the toast closing along with them.
+  - After: every check passes, as in the README table.
+
+**What I rejected or decided myself.**
+- **The toast's Close stays last in the Tab order.** Moving it would split the toast region by screen size. It's announced, never takes focus, and Escape closes it from anywhere.
+- **Escape doesn't close the duplicate notice.** It isn't a question, and nothing is blocked while it shows.
+- **Role chips still move the cursor to Company** when it's empty, as decided on the first visit. The audit checked chips with Company filled.
+- **The audit scripts stay out of the repo:** they need a running Chrome over the DevTools protocol. The README describes the method so it can be repeated.

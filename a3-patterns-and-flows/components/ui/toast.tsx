@@ -36,13 +36,21 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [current, setCurrent] = useState<{ key: number; message: string } | null>(null);
   const [paused, setPaused] = useState(false);
   const nextKey = useRef(0);
+  const box = useRef<HTMLDivElement>(null);
+  // Where focus was before it moved into the toast (to reach Close).
+  const cameFrom = useRef<HTMLElement | null>(null);
 
   const toast = useCallback((message: string) => {
     nextKey.current += 1;
     setCurrent({ key: nextKey.current, message });
   }, []);
 
+  // If focus is on Close when the toast goes (Close, Escape or the timer),
+  // it goes back to where it was, so it's never lost on the page.
   const dismiss = useCallback(() => {
+    if (box.current?.contains(document.activeElement)) {
+      (cameFrom.current?.isConnected ? cameFrom.current : document.getElementById("main"))?.focus();
+    }
     setCurrent(null);
     setPaused(false);
   }, []);
@@ -56,7 +64,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!current) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") dismiss();
+      // An inline question or form that used this Escape marks it handled.
+      if (e.key === "Escape" && !e.defaultPrevented) dismiss();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -69,9 +78,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           or the bottom navigation; near the bottom on laptops. */}
       <div className="pointer-events-none fixed inset-x-0 top-[calc(0.75rem+env(safe-area-inset-top))] z-30 flex justify-center px-4 md:top-auto md:bottom-6">
         <div
+          ref={box}
           onPointerEnter={() => setPaused(true)}
           onPointerLeave={() => setPaused(false)}
-          onFocus={() => setPaused(true)}
+          onFocus={(e) => {
+            if (!box.current?.contains(e.relatedTarget)) cameFrom.current = e.relatedTarget as HTMLElement | null;
+            setPaused(true);
+          }}
           onBlur={() => setPaused(false)}
           className={
             current

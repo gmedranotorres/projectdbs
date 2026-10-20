@@ -49,7 +49,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </a>
           <SiteHeader />
           <StorageBanner />
-          <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 pt-6 pb-12 md:pt-10 md:pb-16">
+          {/* tabIndex -1: "Skip to content" moves focus here in every browser, so
+              the next Tab starts inside the page. It's not a control, so no ring. */}
+          <main
+            id="main"
+            tabIndex={-1}
+            className="mx-auto w-full max-w-3xl flex-1 px-4 pt-6 pb-12 outline-none md:pt-10 md:pb-16"
+          >
             {children}
           </main>
           {/* Room below for the phone's bottom bar. */}

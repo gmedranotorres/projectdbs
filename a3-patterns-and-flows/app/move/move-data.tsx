@@ -6,6 +6,7 @@ import { today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink } from "@/hooks/useBackLink";
 import { downloadFile } from "@/lib/download";
+import { onEscape } from "@/lib/keys";
 import { Button, ButtonLink, Card, ErrorIcon, Field, Input, Loading, Notice, PageHeader } from "@/components/ui";
 
 // localStorage stays on one browser, so moving between the phone and the
@@ -60,6 +61,13 @@ export function MoveData() {
     const result = combine(apps, incoming);
     setCheck({ incoming, added: result.added, updated: result.updated, total: incoming.length });
     focusSoon("move-check");
+  }
+
+  // Cancel or Escape: put the question away and go back to the file field.
+  function cancelCheck() {
+    setCheck(null);
+    setSaveFailed(false);
+    focusSoon(fileId);
   }
 
   function confirmCombine() {
@@ -147,7 +155,12 @@ export function MoveData() {
         </form>
 
         {check && (
-          <div id="move-check" tabIndex={-1} className="space-y-3 rounded-lg bg-accent-soft p-4">
+          <div
+            id="move-check"
+            tabIndex={-1}
+            onKeyDown={(e) => onEscape(e, cancelCheck)}
+            className="space-y-3 rounded-lg bg-accent-soft p-4"
+          >
             {check.added + check.updated === 0 ? (
               <p>
                 This device already has everything in that file ({plural(check.total, "application")}).
@@ -165,7 +178,12 @@ export function MoveData() {
                 <p className="text-sm text-muted">
                   When both devices changed the same application, the more recent change is kept.
                 </p>
-                <Button onClick={confirmCombine}>Combine</Button>
+                <div className="flex flex-wrap gap-2">
+                  <Button onClick={confirmCombine}>Combine</Button>
+                  <Button variant="secondary" onClick={cancelCheck}>
+                    Cancel
+                  </Button>
+                </div>
               </>
             )}
             {saveFailed && (

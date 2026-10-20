@@ -157,6 +157,14 @@ body {
   outline-offset: 2px;
 }
 
+/* A date field is several stops (month, day, year, the calendar button).
+   On the calendar button the field itself isn't :focus, so the ring follows
+   focus anywhere inside it. */
+input[type="date"]:focus-within {
+  outline: var(--border-thick) solid var(--focus);
+  outline-offset: 2px;
+}
+
 /* Native controls such as date inputs draw in light, to match. */
 :root {
   color-scheme: light;

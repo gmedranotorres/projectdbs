@@ -4,6 +4,7 @@ import { useId, useRef, useState, type FormEvent } from "react";
 import { plural, readExport, toBackup, type Export } from "@/lib/applications";
 import { dayOf, formatDay, today as getToday } from "@/lib/dates";
 import { downloadFile } from "@/lib/download";
+import { onEscape } from "@/lib/keys";
 import { useApplications } from "@/hooks/useApplications";
 import { Button, ErrorIcon, Field, Input, Notice, TextLink } from "./ui";
 
@@ -137,6 +138,7 @@ export function YourData() {
         <div
           id={confirmId}
           tabIndex={-1}
+          onKeyDown={(e) => onEscape(e, cancel)}
           className="space-y-3 rounded-lg border border-error bg-error-soft p-4"
         >
           <p>
