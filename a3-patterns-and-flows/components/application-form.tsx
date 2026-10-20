@@ -81,7 +81,6 @@ export function ApplicationForm({
 
   function update(field: FieldName, value: string) {
     const next = { ...values, [field]: value } as FormValues;
-    const cleared: FieldName[] = [field];
 
     if (field === "status" || field === "appliedOn" || field === "interviewOn") {
       setSuggestionMatters(true);
@@ -93,7 +92,6 @@ export function ApplicationForm({
       // An empty date is filled in even if earlier dates were typed by hand.
       if ((!followUpIsMine || !next.followUpOn) && s.day) {
         next.followUpOn = s.day;
-        cleared.push("followUpOn");
       }
     }
     if (field === "followUpOn") {
@@ -104,22 +102,28 @@ export function ApplicationForm({
 
     setValues(next);
     setSaveFailed(false);
+    recheck(next);
+  }
+
+  // Once a field shows an error, it's checked again on every change: the
+  // error goes as soon as the field is fixed (fixing Applied on can also fix
+  // Follow up on), and stays, updated, until then. Fields without an error
+  // get none until the next save.
+  function recheck(next: FormValues) {
+    const found = validate(next, today);
     setErrors((prev) => {
-      const rest = { ...prev };
-      for (const f of cleared) delete rest[f];
-      return rest;
+      const still: FormErrors = {};
+      for (const f of Object.keys(prev) as FieldName[]) if (found[f]) still[f] = found[f];
+      return still;
     });
   }
 
   function applySuggestion() {
     if (!suggestion.day) return;
-    setValues({ ...values, followUpOn: suggestion.day });
+    const next = { ...values, followUpOn: suggestion.day };
+    setValues(next);
     setFollowUpIsMine(false);
-    setErrors((prev) => {
-      const rest = { ...prev };
-      delete rest.followUpOn;
-      return rest;
-    });
+    recheck(next);
   }
 
   function submit(event?: FormEvent, allowDuplicate = false) {
@@ -141,6 +145,8 @@ export function ApplicationForm({
     }
 
     const app = toApplication(values, today, before);
+    // Logged while the form is being checked.
+    if (mode === "add") console.log("Valid application", app);
     if (!(before ? saved.update(app) : saved.add(app))) {
       setSaveFailed(true);
       focusSoon(`${formId}-save-error`);
@@ -163,7 +169,33 @@ export function ApplicationForm({
         onChange={(e) => update(field, e.target.value)}
         placeholder={extra.placeholder}
         autoComplete="off"
+        aria-required={extra.optional ? undefined : "true"}
       />
+    </Field>
+  );
+
+  const contactField = text("contact", "Who to follow up with", {
+    hint: "A name or email, e.g. Priya Shah. Monday will say who to contact.",
+    optional: true,
+  });
+
+  const linkField = (
+    <Field id={fid("link")} label="Link" optional error={errors.link}>
+      <Input
+        name="link"
+        type="url"
+        inputMode="url"
+        value={values.link}
+        onChange={(e) => update("link", e.target.value)}
+        placeholder="https://"
+        autoComplete="off"
+      />
+    </Field>
+  );
+
+  const notesField = (
+    <Field id={fid("notes")} label="Notes" optional>
+      <Textarea name="notes" value={values.notes} onChange={(e) => update("notes", e.target.value)} />
     </Field>
   );
 
@@ -184,18 +216,20 @@ export function ApplicationForm({
           autoComplete="organization"
           autoCapitalize="words"
           autoFocus={autoFocus}
+          aria-required="true"
         />
       </Field>
 
       {text("role", "Role")}
 
-      <Field id={fid("appliedOn")} label="Date applied" error={errors.appliedOn}>
+      <Field id={fid("appliedOn")} label="Applied on" error={errors.appliedOn}>
         <Input
           name="appliedOn"
           type="date"
           value={values.appliedOn}
           max={today}
           onChange={(e) => update("appliedOn", e.target.value)}
+          aria-required="true"
         />
       </Field>
 
@@ -248,6 +282,7 @@ export function ApplicationForm({
             value={values.followUpOn}
             min={values.appliedOn}
             onChange={(e) => update("followUpOn", e.target.value)}
+            aria-required="true"
           />
           {showSuggestion && suggestion.day && (
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg bg-accent-soft px-3 py-2 text-sm">
@@ -267,39 +302,29 @@ export function ApplicationForm({
         </p>
       )}
 
-      <details
-        open={moreOpen}
-        onToggle={(e) => setMoreOpen(e.currentTarget.open)}
-        className="rounded-xl border border-line bg-surface"
-      >
-        <summary className="flex min-h-12 cursor-pointer items-center px-4 font-medium">
-          More details <span className="ml-1 font-normal text-muted">(optional)</span>
-        </summary>
-        <div className="space-y-6 border-t border-line p-4">
-          {text("contact", "Who to follow up with", {
-            hint: "A name or email, e.g. Priya Shah. Monday will say who to contact.",
-            optional: true,
-          })}
-          <Field id={fid("link")} label="Job posting link" optional error={errors.link}>
-            <Input
-              name="link"
-              type="url"
-              inputMode="url"
-              value={values.link}
-              onChange={(e) => update("link", e.target.value)}
-              placeholder="https://"
-              autoComplete="off"
-            />
-          </Field>
-          <Field id={fid("notes")} label="Notes" optional>
-            <Textarea
-              name="notes"
-              value={values.notes}
-              onChange={(e) => update("notes", e.target.value)}
-            />
-          </Field>
-        </div>
-      </details>
+      {mode === "add" ? (
+        // On Add, every field shows, one column, in order.
+        <>
+          {linkField}
+          {notesField}
+          {contactField}
+        </>
+      ) : (
+        <details
+          open={moreOpen}
+          onToggle={(e) => setMoreOpen(e.currentTarget.open)}
+          className="rounded-xl border border-line bg-surface"
+        >
+          <summary className="flex min-h-12 cursor-pointer items-center px-4 font-medium">
+            More details <span className="ml-1 font-normal text-muted">(optional)</span>
+          </summary>
+          <div className="space-y-6 border-t border-line p-4">
+            {contactField}
+            {linkField}
+            {notesField}
+          </div>
+        </details>
+      )}
 
       {duplicate && (
         <div

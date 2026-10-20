@@ -340,3 +340,37 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - The calendar text also changed on the Add page, which uses the same CalendarReminder after a first save.
 - Claude added `aria-required` only on the quick add. The full Add form doesn't have it yet.
 - The check-in's own heading stays "This week", and so does the field hint "It shows up under This week…", which refers to that section.
+
+## 2026-10-20 · Add form with inline validation
+
+**What I asked.** Build the full form at `/add` with the shared Field components, one column, in this order: Company, Role, Applied on (default today), Follow up on (default today + 7), Link (optional), Notes (optional). No status field: new applications start as Applied.
+
+Validate on submit, with the error next to its field:
+- Company empty: "Enter the company name."
+- Role empty: "Enter the role title."
+- Applied on empty or invalid: "Enter the date you applied."; in the future: "Choose today or an earlier date."
+- Follow up on before Applied on: "Choose a follow-up date on or after the application date."
+- A link that doesn't start with http:// or https://: "Enter a full link starting with https://, or leave it blank."
+
+Keep what the person typed, move focus to the first invalid field, and clear a field's error as soon as it's fixed. Don't save yet; log the valid object to the console.
+
+**What changed.**
+- `/add` (ApplicationForm in add mode) is one column in that order, with Who to follow up with last. Link, Notes and contact show directly; the "More details" fold stays on Update only. The labels are now "Applied on" and "Link", on Update too, since it's the same form.
+- `validate()` in `lib/applications.ts` uses the five messages above. The link rule is now exactly "starts with http:// or https://". These messages apply on Update too.
+- Errors recheck themselves: once a field shows an error, every change checks it again. It clears as soon as the field is fixed, and fixing Applied on also clears a Follow up on error. Fields without an error get none until the next save. Before, any keystroke cleared a field's error, even if it was still wrong.
+- Company, Role, Applied on and Follow up on are marked `aria-required` (this was missing on the full form).
+- On `/add`, a valid save logs `Valid application` and the object to the console.
+- flows.md (Add, Errors when adding) is updated.
+- Checked in Chrome at 390px:
+  - The fields come in the right order, with no status, and the defaults are today and a week later.
+  - Both empty: both errors, with focus on Company. Fixing Company clears only its error.
+  - A future date, an empty date, a follow-up before the applied date and a bad link each show their message, with focus on the first and everything typed kept.
+  - Moving Applied on earlier clears the Follow up on error; fixing the link clears its error.
+  - A valid save logs the object and saves it.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- I chose to keep saving and log as well, instead of "don't save yet". `/add` is where Use the full form, Add details, the Add nav item and the All page's empty state lead, and it's the only way to log an earlier date. Logging only would lose what people enter.
+- I chose to keep "Who to follow up with", optional and last, so This week can still say "Email Priya at Example Co".
+- Claude kept the existing behavior around the form: Follow up on follows Applied on until you type your own, the "Use" suggestion, and the duplicate warning.
+- An empty Follow up on keeps its existing message, "Pick a follow-up date, or use the suggestion below.", because the request didn't give one.

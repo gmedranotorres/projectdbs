@@ -80,15 +80,16 @@ If the first save happens on the full Add page instead, it says when the follow-
 
 ## Flow 2: The main task (add, list, update)
 
-**Add.** The Add page asks for the company, the role, the date applied (today is filled in) and the follow-up date (a week later is filled in). Who to follow up with, the link to the job posting and notes are optional, folded under "More details" so the form fits on a phone screen. Pressing **Save application** saves it. The page then confirms the follow-up date and offers **Add another** first, because applications come in bursts. Add another clears the form and puts the cursor back in Company. **See this week** and **See it in your list** are the other ways out.
+**Add.** The Add page is one column, in this order: Company, Role, Applied on (today is filled in), Follow up on (a week later is filled in, and it follows Applied on until you type your own), then Link, Notes and Who to follow up with, all three optional. There's no status: a new application starts as Applied. Pressing **Save application** saves it. The page then confirms the follow-up date and offers **Add another** first, because applications come in bursts. Add another clears the form and puts the cursor back in Company. **Go to Home** and **See it in your list** are the other ways out. While the form is being checked, a valid application is also logged to the browser console.
 
-**Errors when adding.** When you save, every problem is shown at once, next to its field, and the cursor moves to the first one. If that field is under More details, the section opens.
+**Errors when adding.** Fields are checked when you save. Every problem is shown at once, next to its field, what you typed stays, and the cursor moves to the first one. From then on, a field with an error is checked again as you change it: the error goes as soon as it's fixed, and fixing Applied on can also clear Follow up on.
 
 - An empty company: "Enter the company name."
 - An empty role: "Enter the role title."
-- A date applied in the future: "Pick today or an earlier date."
-- A follow-up date before the date applied: "Pick a date on or after Oct 14, the day you applied."
-- A link that isn't a web address: "Paste the full link, starting with https://."
+- Applied on empty or not a date: "Enter the date you applied."
+- Applied on in the future: "Choose today or an earlier date."
+- A follow-up date before Applied on: "Choose a follow-up date on or after the application date."
+- A link that doesn't start with http:// or https://: "Enter a full link starting with https://, or leave it blank."
 
 Logging the same company and role twice is a warning, not an error: "You already logged Data Analyst at Morningstar on Oct 3." It offers **Save anyway** or **Open that one**. If the browser refuses to save, usually because its storage is full, a message above the button says so. The form stays filled in so you can try again.
 

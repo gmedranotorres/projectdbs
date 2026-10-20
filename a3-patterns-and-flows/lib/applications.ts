@@ -210,15 +210,7 @@ export function formFrom(app: Application): FormValues {
 }
 
 function isWebLink(value: string): boolean {
-  try {
-    const url = new URL(value);
-    return (
-      (url.protocol === "https:" || url.protocol === "http:") &&
-      url.hostname.includes(".")
-    );
-  } catch {
-    return false;
-  }
+  return /^https?:\/\//i.test(value);
 }
 
 // Every message says what to do next.
@@ -234,9 +226,9 @@ export function validate(values: FormValues, today: Day): FormErrors {
   }
 
   if (!isDay(applied)) {
-    errors.appliedOn = "Enter the day you applied. If you're not sure, a guess is fine.";
+    errors.appliedOn = "Enter the date you applied.";
   } else if (applied > today) {
-    errors.appliedOn = "Pick today or an earlier date.";
+    errors.appliedOn = "Choose today or an earlier date.";
   }
 
   const afterApplied = isDay(applied)
@@ -254,13 +246,13 @@ export function validate(values: FormValues, today: Day): FormErrors {
   if (isOpen(values.status)) {
     if (!isDay(values.followUpOn)) {
       errors.followUpOn = "Pick a follow-up date, or use the suggestion below.";
-    } else if (afterApplied && values.followUpOn < applied) {
-      errors.followUpOn = afterApplied;
+    } else if (isDay(applied) && values.followUpOn < applied) {
+      errors.followUpOn = "Choose a follow-up date on or after the application date.";
     }
   }
 
   if (values.link.trim() && !isWebLink(values.link.trim())) {
-    errors.link = "Paste the full link, starting with https://.";
+    errors.link = "Enter a full link starting with https://, or leave it blank.";
   }
 
   return errors;
