@@ -3,6 +3,7 @@
 import { useId, useState, type FormEvent, type ReactNode } from "react";
 import {
   STATUS_LABELS,
+  addedSince,
   daysQuiet,
   dueLabel,
   groupAll,
@@ -13,10 +14,9 @@ import {
   whoToContact,
   type Application,
 } from "@/lib/applications";
-import { addDays, dayOf, formatDay, formatShortDay, isDay, startOfWeek, today as getToday, type Day } from "@/lib/dates";
+import { addDays, formatDay, formatShortDay, isDay, startOfWeek, today as getToday, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
-import { QuickAddHome } from "@/components/quick-add-home";
 import { MondayReminderButton } from "@/components/calendar-reminder";
 import {
   Badge,
@@ -36,14 +36,14 @@ import {
 
 // The weekly check-in, the reason to come back. In order: what's due (each
 // one handled right here), what's gone quiet (give it a date), how this week
-// is going against the goal, and "Done for this week". It's Home while
-// something is due or quiet, and always at /check-in (the footer's link).
+// is going against the goal, and "Done for this week". At /check-in, linked
+// from Home's numbers and every page's footer.
 
 type Message = { text: string; undo?: Application; tone?: "error" };
 
 const GOAL_MAX = 20;
 
-export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
+export function ThisWeek() {
   const store = useApplications();
   const [message, setMessage] = useState<Message | null>(null);
   // The quiet application whose date field is open.
@@ -60,14 +60,7 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
   const groups = groupAll(store.applications, today);
   const nothingToDo = groups.due.length === 0 && groups.quiet.length === 0;
 
-  // While nothing is due or quiet, / is the quick add and the newest items.
-  // The check-in takes over once a follow-up comes up, and stays while its
-  // message (with Undo) is showing, even after the last one is handled.
-  if (page === "home" && nothingToDo && !message) {
-    return <QuickAddHome applications={store.applications} />;
-  }
-
-  const added = store.applications.filter((a) => dayOf(a.createdAt) >= monday).length;
+  const added = addedSince(store.applications, monday);
   const goal = store.settings.weeklyGoal;
   const lastCheckIn = store.settings.lastCheckInOn;
   const doneThisWeek = lastCheckIn !== undefined && lastCheckIn >= monday;
@@ -112,7 +105,7 @@ export function ThisWeek({ page = "home" }: { page?: "home" | "check-in" }) {
       <PageHeader
         title="This week"
         description={`Week of ${formatShortDay(monday)}: who to follow up with, and what's gone quiet.`}
-        back={page === "check-in" ? back : undefined}
+        back={back}
       />
 
       {message && (

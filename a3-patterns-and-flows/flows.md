@@ -23,7 +23,8 @@ flowchart TD
   end
 
   subgraph back["Coming back"]
-    monday(["Monday"]) --> checkin["/ (check-in),<br/>always at /check-in"]
+    monday(["Monday"]) --> welcome["/ : Welcome back + date<br/>due · quiet · added vs goal<br/>last check-in"]
+    welcome -- "a number, or<br/>Start your check-in?" --> checkin["/check-in"]
     checkin --> due{"Anything due<br/>or quiet?"}
     due -- Yes --> act["Followed up · Snooze a week"]
     act -- "Undo or next one" --> checkin
@@ -33,11 +34,12 @@ flowchart TD
   end
 
   empty -- "Use the full form<br/>(earlier date, contact)" --> add
-  due -- No --> listed
+  due -- No --> nothing["Nothing due. Add an application<br/>or come back Monday."]
   listed -- "See all" --> list
   listed -- "Add details" --> add
   ics -. "Reminder" .-> monday
-  anything -- Yes --> checkin
+  anything -- Yes --> welcome
+  welcome -- "quick add" --> listed
   act -- Details --> edit
   anypage(["Any page"]) -- "Footer: Weekly check-in" --> checkin
   edit -- "← Back to where<br/>you came from" --> list
@@ -47,7 +49,7 @@ Seguimiento is a weekly ritual for one person: a second-year grad student applyi
 
 Everything is saved in the browser's localStorage. There are no accounts, database or APIs. Every step is its own page, and the same navigation sits on all of them: **Home** (`/`), **Add** (`/add`), **All** (`/applications`) and **Move data** (`/move`). On a phone the navigation is a bar at the bottom with four labeled items, icon and word, within reach of a thumb, and no menu to open. On a laptop it sits in the header. Each application has its own page, `/applications/<id>`, reached from a list.
 
-**Where you are and how to get back.** The current place in the navigation is marked for screen readers (`aria-current="page"`) and on screen: bold and underlined on a phone, bold on a tinted background on a laptop. An application's page marks All, and the check-in marks Home. Every page starts with the same header: the title, one line on what the page is for, and, on every page but Home, a link that says where it goes, such as "← Back to All applications". It goes to the page you came from when that's known: the list (with its filter), Home or This week for an application, the list or Home for Add. Otherwise, as from a bookmark or the navigation, it goes to Home. At the bottom of every page, a footer says "Saved on this device" and links to the **Weekly check-in** (`/check-in`). Tab moves from top to bottom as the page is laid out: header, page, footer, then the phone's bottom bar.
+**Where you are and how to get back.** The current place in the navigation is marked for screen readers (`aria-current="page"`) and on screen: bold and underlined on a phone, bold on a tinted background on a laptop. An application's page marks All, and the check-in, reached from Home, marks Home. Every page starts with the same header: the title, one line on what the page is for, and, on every page but Home, a link that says where it goes, such as "← Back to All applications". It goes to the page you came from when that's known: the list (with its filter), Home or This week for an application, the list or Home for Add. Otherwise, as from a bookmark or the navigation, it goes to Home. At the bottom of every page, a footer says "Saved on this device" and links to the **Weekly check-in** (`/check-in`). Tab moves from top to bottom as the page is laid out: header, page, footer, then the phone's bottom bar.
 
 Forms are one column with a label on every field. Errors appear when you save. Each one sits next to its field, says what to do next, and keeps what you typed.
 
@@ -77,7 +79,7 @@ Beside the newest item's follow-up date, a one-time tip says "We suggested a fol
 
 Before anything is saved, a line under the form states the rules: a follow-up a week after you apply, which you can always change, and after 2 weeks with no update, an application is marked gone quiet. Once the list appears, the tip does that job. The Monday calendar reminder is offered on the first visit and right after the first save.
 
-`/` stays like this, the quick add and your newest applications, while nothing is due or gone quiet. When a follow-up comes up, `/` becomes the This week check-in below.
+**Coming back.** From the next visit on, once anything is saved, the headline is "Welcome back." with today's date ("Tuesday, October 20") instead of the first-visit line. (It's decided when the page opens, so saving your very first one doesn't make the page jump under your cursor.) Under it, three numbers, each a link: **follow-ups due** and **gone quiet** go to the check-in, and **added this week**, shown against the goal ("2 of 3"), goes to the list. Then, if you've done a check-in, "Last check-in: Tue, Oct 13", and once that's 7 or more days ago, one gentle line: "It's been a week. Start your check-in?" with a link. There's no modal and no badge, and the numbers use no alarm colors. Below that, the quick add stays, then Your list with the five newest and See all. `/` is always this page; the check-in lives at `/check-in`.
 
 Seguimiento has no account, so it can't email anyone. Instead, the page offers **Add Monday check-in to my calendar**. It downloads `seguimiento-monday-check-in.ics`, a weekly event on Mondays at 9:00 starting next Monday, which the person adds to their own calendar. The page then says the file was downloaded and to open it. A last line, for someone who already uses Seguimiento on another device, links to loading a backup.
 
@@ -116,7 +118,7 @@ If the browser refuses to save, usually because its storage is full, a message a
 
 ## Flow 3: Coming back (the Monday check-in)
 
-The check-in is the reason to come back. It's always at `/check-in`, linked from every page's footer, and Home becomes the check-in whenever something is due or gone quiet. It works on any day, but it's built for Monday. It opens with "Week of Oct 19", and every decision can be made right there without opening each application. Four parts, in this order:
+The check-in is the reason to come back. It lives at `/check-in`, reached from Home's numbers, the "Start your check-in?" line, and every page's footer. It works on any day, but it's built for Monday. It opens with "Week of Oct 19", and every decision can be made right there without opening each application. Four parts, in this order:
 
 **1. Follow-ups due.** Every open application (Applied, Followed up, Interviewing or Offer) whose follow-up date is today or earlier, soonest first. Each one names the person when you gave one ("Follow up with Priya at Example Co"), shows the role and status, and says how late it is ("7 days late", "Due today"). Each has three actions:
 - **Followed up** moves the next follow-up to a week from today. Applied becomes Followed up; Interviewing and Offer keep their status.
@@ -127,7 +129,7 @@ The check-in is the reason to come back. It's always at `/check-in`, linked from
 
 After any of these, a message says what happened ("Followed up with Example Co. Next follow-up Tue, Oct 27."), with **Undo** in case of a wrong tap on a phone.
 
-**Nothing to do.** When nothing is due and nothing is quiet, the page says so plainly: "Nothing due. Add an application or come back Monday." It offers **Add an application** and **Come back Monday: add it to my calendar**, which downloads the Monday reminder. (Home, in that case, is the quick add and your newest applications; see Flow 1.)
+**Nothing to do.** When nothing is due and nothing is quiet, the page says so plainly: "Nothing due. Add an application or come back Monday." It offers **Add an application** and **Come back Monday: add it to my calendar**, which downloads the Monday reminder.
 
 **3. This week.** "Added since Monday, Oct 19: 2 applications." A bar shows that against the weekly goal, with "2 of 3" beside it, and "Goal met." once it's reached. The goal is 3 to start. **Change goal** opens a field in place: a whole number from 1 to 20, or "Enter a whole number from 1 to 20." It's saved in this device's settings.
 

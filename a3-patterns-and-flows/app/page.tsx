@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Loading } from "@/components/ui";
-import { ThisWeek } from "./this-week";
+import { HomePage } from "./home-page";
 
 // The root layout's "%s · Seguimiento" template only reaches pages in
 // folders below it, so this one is spelled out.
@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: { absolute: "Home · Seguimiento" } }
 export default function Home() {
   return (
     <Suspense fallback={<Loading />}>
-      <ThisWeek />
+      <HomePage />
     </Suspense>
   );
 }

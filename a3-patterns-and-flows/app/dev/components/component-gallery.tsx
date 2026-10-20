@@ -18,6 +18,7 @@ import {
   ListRow,
   PageHeader,
   Progress,
+  StatLink,
   Select,
   Textarea,
   TextLink,
@@ -302,6 +303,22 @@ export function ComponentGallery() {
             <Progress label="Added this week, against your weekly goal" value={value} max={3} />
           </Example>
         ))}
+      </Section>
+
+      <Section title="StatLink">
+        <Example label="Home's three numbers, each a link">
+          <ul className="grid grid-cols-3 gap-3">
+            <li>
+              <StatLink href="/dev/components" value={2} label="follow-ups due" />
+            </li>
+            <li>
+              <StatLink href="/dev/components" value={0} label="gone quiet" />
+            </li>
+            <li>
+              <StatLink href="/dev/components" value="1 of 3" label="added this week" />
+            </li>
+          </ul>
+        </Example>
       </Section>
 
       <Section title="PageHeader">

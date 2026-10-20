@@ -65,6 +65,15 @@ export function formatDay(day: Day): string {
   });
 }
 
+// "Monday, October 26"
+export function formatLongDay(day: Day): string {
+  return toDate(day).toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 // "Oct 26"
 export function formatShortDay(day: Day): string {
   return toDate(day).toLocaleDateString("en-US", { month: "short", day: "numeric" });

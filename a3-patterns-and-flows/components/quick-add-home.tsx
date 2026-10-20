@@ -3,14 +3,23 @@
 import { useId, useState, type FormEvent } from "react";
 import {
   LIMITS,
+  addedSince,
   emptyForm,
   findDuplicate,
+  groupAll,
   oneLine,
   toApplication,
   validate,
   type Application,
 } from "@/lib/applications";
-import { addDays, formatDay, today as getToday } from "@/lib/dates";
+import {
+  addDays,
+  daysBetween,
+  formatDay,
+  formatLongDay,
+  startOfWeek,
+  today as getToday,
+} from "@/lib/dates";
 import { FOLLOW_UP_HINT } from "@/lib/types";
 import { useApplications } from "@/hooks/useApplications";
 import { useFromHere } from "@/hooks/useBackLink";
@@ -26,16 +35,21 @@ import {
   List,
   ListRow,
   PageHeader,
+  StatLink,
   TextLink,
   useToast,
 } from "./ui";
 
-// `/` while nothing is due or quiet: on the first visit, and in the early
-// days before any follow-up comes up. One line on what Seguimiento does,
-// and a quick add right on the page. Saving keeps you here, and what you
-// added appears under the form, newest first. Next to the newest item, a
-// one-time tip explains the suggested follow-up date. No tour, no modal, no
-// sample data.
+// `/`, always: a quick add right on the page. Saving keeps you here, and
+// what you added appears under the form, newest first. Next to the newest
+// item, a one-time tip explains the suggested follow-up date. No tour, no
+// modal, no sample data.
+//
+// The first visit opens with one line on what Seguimiento does. Coming back
+// with something saved, it opens with "Welcome back.", today's date and
+// three numbers that lead to the check-in and the list, plus the last
+// check-in. Nothing here nags: no badges, no alarm colors, one gentle line
+// once a week has passed.
 
 // Roles a grad student applying in Chicago is likely to type.
 const ROLE_CHIPS = ["Data Analyst", "Research Associate", "Policy Analyst", "Associate Consultant"];
@@ -51,6 +65,10 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
   const companyId = `${formId}-company`;
   const roleId = `${formId}-role`;
   const listId = `${formId}-list`;
+  // Decided when the page opens: someone who just saved their first one on
+  // this visit isn't "back" yet, and the form shouldn't jump down under
+  // their cursor.
+  const [returning] = useState(applications.length > 0);
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -122,12 +140,55 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
     focus(listId);
   }
 
+  const today = getToday();
+  const groups = groupAll(applications, today);
+  const added = addedSince(applications, startOfWeek(today));
+  const goal = store.settings.weeklyGoal;
+  const lastCheckIn = store.settings.lastCheckInOn;
+  const weekSinceCheckIn = lastCheckIn !== undefined && daysBetween(lastCheckIn, today) >= 7;
+
   return (
     <div className="space-y-8">
-      <PageHeader
-        title="Keep every application moving."
-        description="Log what you applied to, and come back on Monday to see who to follow up with."
-      />
+      {returning ? (
+        <div className="space-y-5">
+          <PageHeader title="Welcome back." description={formatLongDay(today)} />
+          <ul aria-label="This week at a glance" className="grid grid-cols-3 gap-3">
+            <li>
+              <StatLink
+                href={`/check-in?from=${here}`}
+                value={groups.due.length}
+                label={groups.due.length === 1 ? "follow-up due" : "follow-ups due"}
+              />
+            </li>
+            <li>
+              <StatLink href={`/check-in?from=${here}`} value={groups.quiet.length} label="gone quiet" />
+            </li>
+            <li>
+              <StatLink
+                href={`/applications?from=${here}`}
+                value={`${added} of ${goal}`}
+                label="added this week"
+              />
+            </li>
+          </ul>
+          {lastCheckIn && (
+            <div className="space-y-1">
+              <p className="text-muted">Last check-in: {formatDay(lastCheckIn)}</p>
+              {weekSinceCheckIn && (
+                <p>
+                  It&rsquo;s been a week.{" "}
+                  <TextLink href={`/check-in?from=${here}`}>Start your check-in?</TextLink>
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      ) : (
+        <PageHeader
+          title="Keep every application moving."
+          description="Log what you applied to, and come back on Monday to see who to follow up with."
+        />
+      )}
 
       <form noValidate onSubmit={submit} className="space-y-6">
         <Field

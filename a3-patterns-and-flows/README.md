@@ -37,7 +37,8 @@ flowchart TD
   end
 
   subgraph back["Coming back"]
-    monday(["Monday"]) --> checkin["/ (check-in),<br/>always at /check-in"]
+    monday(["Monday"]) --> welcome["/ : Welcome back + date<br/>due · quiet · added vs goal<br/>last check-in"]
+    welcome -- "a number, or<br/>Start your check-in?" --> checkin["/check-in"]
     checkin --> due{"Anything due<br/>or quiet?"}
     due -- Yes --> act["Followed up · Snooze a week"]
     act -- "Undo or next one" --> checkin
@@ -47,11 +48,12 @@ flowchart TD
   end
 
   empty -- "Use the full form<br/>(earlier date, contact)" --> add
-  due -- No --> listed
+  due -- No --> nothing["Nothing due. Add an application<br/>or come back Monday."]
   listed -- "See all" --> list
   listed -- "Add details" --> add
   ics -. "Reminder" .-> monday
-  anything -- Yes --> checkin
+  anything -- Yes --> welcome
+  welcome -- "quick add" --> listed
   act -- Details --> edit
   anypage(["Any page"]) -- "Footer: Weekly check-in" --> checkin
   edit -- "← Back to where<br/>you came from" --> list

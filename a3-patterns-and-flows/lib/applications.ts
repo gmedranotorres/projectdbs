@@ -1,5 +1,6 @@
 import {
   addDays,
+  dayOf,
   daysBetween,
   formatDay,
   formatShortDay,
@@ -168,6 +169,11 @@ export function groupAll(
   groups.quiet.sort((a, b) => lastNews(a).localeCompare(lastNews(b)));
   groups.closed.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   return groups;
+}
+
+// How many were logged on or after `monday`, by this device's calendar.
+export function addedSince(apps: Application[], monday: Day): number {
+  return apps.filter((a) => dayOf(a.createdAt) >= monday).length;
 }
 
 export function plural(n: number, word: string): string {

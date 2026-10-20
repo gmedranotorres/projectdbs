@@ -5,12 +5,12 @@ import { ThisWeek } from "../this-week";
 
 export const metadata: Metadata = { title: "This week" };
 
-// The Monday check-in, on any day: what's due, what's gone quiet, or what
-// comes up next. Home shows the same page only while something needs doing.
+// The weekly check-in, on any day. Home's numbers and every page's footer
+// link here.
 export default function CheckInPage() {
   return (
     <Suspense fallback={<Loading />}>
-      <ThisWeek page="check-in" />
+      <ThisWeek />
     </Suspense>
   );
 }

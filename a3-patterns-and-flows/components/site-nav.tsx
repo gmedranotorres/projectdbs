@@ -13,7 +13,8 @@ const ITEMS: { href: string; label: string; icon: ReactNode; matches: (p: string
   {
     href: "/",
     label: "Home",
-    // The check-in is Home's other face, so Home stays marked there.
+    // The check-in isn't in the nav; it's reached from Home, so Home stays
+    // marked there.
     matches: (p) => p === "/" || p === "/check-in",
     icon: (
       <svg aria-hidden="true" viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">

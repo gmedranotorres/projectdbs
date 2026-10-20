@@ -657,3 +657,37 @@ If nothing is due and nothing is quiet: "Nothing due. Add an application or come
 - **No Close it:** Gone quiet lost **Close it** and **Follow up once more**, since the request names only Set a follow-up. Open is kept on each row, and closing is on the application's page.
 - **Done stays shown:** "Done for this week" shows its message for the rest of the week instead of offering the button again.
 - **Home unchanged:** Home still switches to the check-in while something is due or quiet, as chosen earlier.
+
+## 2026-10-20 · Welcome back home
+
+**What I asked.** Design the returning state of `/`. When anything is saved:
+- **Header:** replace the first-visit headline with "Welcome back." and today's date.
+- **Numbers:** three numbers as links: follow-ups due (→ `/check-in`), gone quiet (→ `/check-in`), and added this week against the goal (→ `/applications`).
+- **Below:** the quick add stays, then "Your list" with the five most recent and "See all".
+- **Last check-in:** if lastCheckInOn is set, show "Last check-in: {date}". When it's 7 or more days ago, add one gentle line, "It's been a week. Start your check-in?", with a link.
+- No modals, no nagging badges.
+
+**What changed.**
+- `components/quick-add-home.tsx`: with something saved when the page opens, it shows:
+  - The header "Welcome back." with today's date ("Tuesday, October 20").
+  - A list of three StatLinks: "3 follow-ups due" and "1 gone quiet" → `/check-in?from=/`, and "2 of 3 added this week" → `/applications?from=/`.
+  - "Last check-in: Tue, Oct 13", and from 7 days on, "It's been a week. Start your check-in?" (the question is the link).
+  - The quick add, Your list (five newest) and See all stay as they were.
+- `components/ui/stat-link.tsx` (new, shared): a tile that's one link. It shows the number in the headline face and an underlined label, with neutral colors and no badge. There's a space between the number and the label, so screen readers say "3 follow-ups due". It's shown in `/dev/components`.
+- `app/home-page.tsx` (new): Home is always the quick add page. `app/this-week.tsx` is now only `/check-in`: the `page` prop and the fallback to the quick add are gone, and Back always shows.
+- `lib/`: `formatLongDay` ("Tuesday, October 20") and `addedSince(apps, monday)`, which Home and the check-in share.
+- Updated flows.md (Coming back in Flow 1, Flow 3's opening, the nav note, the diagram) and the README diagram.
+- Checked in Chrome at 390px and 1440px:
+  - **First visit:** the first-visit headline and no numbers. After the first quick add on that same visit, the headline stays and focus stays on Company. On the next visit: "Welcome back." with "Tuesday, October 20" and 0 / 0 / "1 of 3".
+  - **Returning, with fictional data:** the order is Welcome back › numbers › quick add › Your list. The numbers read 3 follow-ups due / 1 gone quiet / 2 of 3 added this week, with the right links.
+  - **Last check-in:** none saved shows no line. Oct 19 and Oct 14 (6 days) show only "Last check-in"; Oct 13 (7 days) adds the line, linking to `/check-in?from=/`.
+  - **Calm:** no dialog, and no late or error colors in the numbers.
+  - **Links and quick add:** "3 follow-ups due" opens `/check-in` with "← Back to Home". A quick add while returning gives the toast, puts the new one at the top of Your list, and changes the number to 3 of 3.
+  - **Tab order:** top to bottom at both widths, with no horizontal scroll at 390px.
+  - No console errors.
+
+**What I rejected or decided myself.**
+- **Home stays the quick add.** Home used to turn into the check-in whenever something was due or quiet (my earlier choice). These numbers link to `/check-in`, so Home now always stays the quick add, and the check-in lives only at `/check-in`.
+- **"Returning" is decided when the page opens.** Saving your very first application doesn't switch the headline mid-visit, which would also push the form down under the cursor. The welcome shows from the next visit.
+- **The "added this week" number** shows "2 of 3" as the figure, with "added this week" as the label.
+- **The week counts from the check-in day:** "It's been a week" appears at 7 days or more since the last check-in, by calendar days, not since the last Monday.
