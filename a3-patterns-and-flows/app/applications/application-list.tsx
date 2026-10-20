@@ -13,7 +13,7 @@ import {
 import { formatDay, today as getToday, type Day } from "@/lib/dates";
 import { useStore } from "@/lib/store";
 import { ArrivalMessage, useHighlightId } from "@/components/arrival-message";
-import { ButtonLink, Loading, PageHeader, Tag } from "@/components/ui";
+import { Badge, ButtonLink, EmptyState, Loading, PageHeader } from "@/components/ui";
 
 // Every application, sorted by follow-up date, in the order you'd act on
 // them. Closed ones are folded away.
@@ -39,22 +39,19 @@ export function ApplicationList() {
         title="All applications"
         description={
           apps.length === 0
-            ? "Nothing logged yet."
+            ? undefined
             : `${plural(apps.length, "application")}, ${groups.closed.length} closed`
         }
         back={{ href: "/", label: "This week" }}
-        action={<ButtonLink href="/add">Log an application</ButtonLink>}
+        action={apps.length > 0 && <ButtonLink href="/add">Log an application</ButtonLink>}
       />
 
       <ArrivalMessage apps={apps} />
 
       {apps.length === 0 && (
-        <div className="rounded-xl border border-dashed border-line-strong bg-surface p-5">
-          <p>
-            Log each application as you send it, and it shows up here sorted by follow-up
-            date.
-          </p>
-        </div>
+        <EmptyState title="Nothing logged yet" action={{ href: "/add", label: "Log an application" }}>
+          Log each application as you send it, and it shows up here sorted by follow-up date.
+        </EmptyState>
       )}
 
       {SECTIONS.map(({ group, title }) =>
@@ -90,14 +87,14 @@ function when(app: Application, group: Group, today: Day) {
   switch (group) {
     case "due":
       return (
-        <Tag tone={app.followUpOn && app.followUpOn < today ? "late" : "plain"}>
+        <Badge tone={app.followUpOn && app.followUpOn < today ? "due" : "neutral"}>
           {dueLabel(app, today)}
-        </Tag>
+        </Badge>
       );
     case "upcoming":
-      return <Tag>Follow up {formatDay(app.followUpOn!)}</Tag>;
+      return <Badge>Follow up {formatDay(app.followUpOn!)}</Badge>;
     case "quiet":
-      return <Tag>No news for {plural(daysQuiet(app, today), "day")}</Tag>;
+      return <Badge tone="quiet">No news for {plural(daysQuiet(app, today), "day")}</Badge>;
     case "closed":
       return null;
   }
@@ -133,7 +130,7 @@ function Rows({
               {(isNew || group !== "closed") && (
                 <div className="flex flex-wrap gap-2">
                   {when(app, group, today)}
-                  {isNew && <Tag tone="new">Just changed</Tag>}
+                  {isNew && <Badge tone="new">Just changed</Badge>}
                 </div>
               )}
             </div>

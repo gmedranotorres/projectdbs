@@ -1,5 +1,5 @@
 import { CalendarReminder } from "./calendar-reminder";
-import { ButtonLink, PageHeader, Tag, TextLink } from "./ui";
+import { Badge, ButtonLink, PageHeader, TextLink } from "./ui";
 
 // What someone sees before they've saved anything: what the ritual is, a
 // picture of where it leads, and one thing to do.
@@ -37,14 +37,14 @@ export function FirstVisit() {
               <span className="font-medium">Email Priya at Morningstar</span>
               <span className="block text-sm text-muted">Data Analyst · Applied</span>
             </span>
-            <Tag tone="late">2 days late</Tag>
+            <Badge tone="due">2 days late</Badge>
           </li>
           <li className="flex flex-wrap items-center justify-between gap-2 py-3">
             <span>
               <span className="font-medium">Grubhub</span>
               <span className="block text-sm text-muted">Product Analyst · Followed up</span>
             </span>
-            <Tag>Due Thu, Oct 22</Tag>
+            <Badge>Due Thu, Oct 22</Badge>
           </li>
         </ul>
         <p className="mt-3 border-t border-line pt-3 text-sm text-muted">

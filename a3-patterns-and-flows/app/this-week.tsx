@@ -18,7 +18,7 @@ import { daysBetween, formatDay, formatShortDay, startOfWeek, today as getToday 
 import { saveApplication, useStore } from "@/lib/store";
 import { ArrivalMessage } from "@/components/arrival-message";
 import { FirstVisit } from "@/components/first-visit";
-import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Tag, TextLink } from "@/components/ui";
+import { Button, ButtonLink, Card, ErrorIcon, Loading, Notice, PageHeader, Badge, TextLink } from "@/components/ui";
 
 // The Monday check-in. Every follow-up can be handled right here, so the
 // ritual doesn't mean opening each application.
@@ -91,9 +91,9 @@ export function ThisWeek() {
               <li key={app.id}>
                 <Card className="space-y-3">
                   <AppHeading app={app}>
-                    <Tag tone={app.followUpOn && app.followUpOn < today ? "late" : "plain"}>
+                    <Badge tone={app.followUpOn && app.followUpOn < today ? "due" : "neutral"}>
                       {dueLabel(app, today)}
-                    </Tag>
+                    </Badge>
                   </AppHeading>
                   <div className="flex flex-wrap gap-2">
                     <Button
@@ -137,7 +137,7 @@ export function ThisWeek() {
               <li key={app.id}>
                 <Card className="space-y-3">
                   <AppHeading app={app}>
-                    <Tag>No news for {plural(daysQuiet(app, today), "day")}</Tag>
+                    <Badge tone="quiet">No news for {plural(daysQuiet(app, today), "day")}</Badge>
                   </AppHeading>
                   <div className="flex flex-wrap gap-2">
                     <Button

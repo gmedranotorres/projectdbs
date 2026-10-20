@@ -131,3 +131,43 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - Claude adapted Calm's disabled look without its 70% opacity, so disabled labels stay readable (muted text is 5.24:1 or more).
 - Claude made the secondary button transparent, as in Calm, where it used to be filled with the surface color.
 - Field labels stay at 16px medium rather than Calm's 13px label role, for readability in forms.
+
+## 2026-10-20 · Layout and feedback components
+
+**What I asked.** Add the remaining shared components in the Calm style and show them on `/dev/components`:
+- **Card**, and **ListRow** (company, role, status badge, follow-up date, an "Open" link).
+- **Badge** for status (Applied, Interviewing, Offer, Closed), plus small tags "Due" and "Quiet".
+- **PageHeader** (title, one-line description, back link).
+- **EmptyState** (headline, one sentence, one primary action).
+- **Toast:** one `aria-live="polite"` region; a message shows for 5 seconds with a close button; never more than one at a time; Escape dismisses it.
+
+**What changed.**
+- New files in `components/ui`:
+  - `card.tsx`: Card, List and ListRow.
+  - `badge.tsx`: Badge and `statusTone`.
+  - `page-header.tsx`: PageHeader, moved here unchanged, and EmptyState.
+  - `toast.tsx`: ToastProvider and `useToast`.
+- **Card:** Calm's 16px corners (`rounded-card`), a thin edge and no shadow. It used to have 12px corners.
+- **ListRow:** company, role, a status badge in the status's own words, "Follow up Tue, Oct 27" or "No follow-up", and **Open**, which tells screen readers which application it opens. List is the card that holds the rows.
+- **Badge:** Calm's 6px corners and the 13px label text.
+  - Status looks: Applied is outlined, Interviewing is tinted sage, Offer is filled with the text color, and Closed has a dashed edge with muted text.
+  - Tags: Due is amber with a clock, Quiet is gray with a moon, Plain (for dates) and New ("Just changed").
+  - Every pair is at least 5.24:1.
+- **EmptyState:** a dashed card with a Newsreader headline, one muted sentence and a primary button.
+- **Toast:** the region is always in the page as `role="status"` and `aria-live="polite"`, so new messages are announced reliably. The close button sits outside that region, so "Close message" isn't read out with every message. The toast sits above the phone's bottom bar.
+- **Swapped into the pages:**
+  - Tag became Badge on This week, All and the first-visit example (late becomes Due, plain stays Plain, No news becomes Quiet, Just changed becomes New). Tag is gone.
+  - All with nothing saved now uses EmptyState ("Nothing logged yet"), and its header button is hidden then, so there's one primary action.
+- `/dev/components` adds Card, ListRow (five fictional rows, one per look), every Badge, EmptyState and a Toast demo. Its own header, now with Back to This week, is the PageHeader example.
+- Checked in Chrome:
+  - Toast: a second message replaces the first; the message clears after 5 seconds; Escape and Close dismiss it; there's only ever one live region.
+  - No sideways scroll at 390px.
+
+**What I rejected or decided myself.**
+- I chose drop-ins only. ListRow and Toast aren't on the pages yet:
+  - ListRow says "Open" where flows.md and the All page say **Update**.
+  - The This week confirmations carry **Undo**, which can't live in a message that disappears after 5 seconds. Both wait until flows.md decides.
+- Claude kept a status badge's words as the status's own ("Followed up", "Rejected") and gave them the four looks I listed (Followed up looks like Applied; Rejected, Withdrawn and No response look like Closed), so no information is lost.
+- Claude added two tag looks I didn't list, Plain and New, because the pages need them where Tag used to be.
+- Claude made the toast wait while the pointer or focus is on it, so it doesn't vanish while someone is reaching for Close.
+- Claude kept ToastProvider on `/dev/components` only for now. It goes in the root layout when a page first uses a toast.

@@ -3,18 +3,26 @@
 import { useState, type ReactNode } from "react";
 import { OPEN_STATUSES, STATUS_LABELS } from "@/lib/applications";
 import {
+  Badge,
   Button,
+  Card,
   Chip,
+  EmptyState,
   Field,
   Input,
+  List,
+  ListRow,
   PageHeader,
   Select,
   Textarea,
+  ToastProvider,
+  useToast,
+  type BadgeTone,
   type ButtonSize,
   type ButtonVariant,
 } from "@/components/ui";
 
-// Every shared form component in every state, side by side. Hover, focus
+// Every shared component in every state, side by side. Hover, focus
 // and active are forced with data-state, so they show without a pointer;
 // the components also respond for real.
 
@@ -37,12 +45,33 @@ const SIZES: ButtonSize[] = ["md", "sm"];
 
 const ROLES = ["Data Analyst", "Product Analyst", "UX Researcher"];
 
+const STATUS_BADGES: BadgeTone[] = ["applied", "interviewing", "offer", "closed"];
+
+const TAGS: { tone: BadgeTone; text?: string; note: string }[] = [
+  { tone: "due", note: "Due" },
+  { tone: "due", text: "2 days late", note: "Due, late" },
+  { tone: "quiet", note: "Quiet" },
+  { tone: "quiet", text: "No news for 22 days", note: "Quiet, with how long" },
+  { tone: "neutral", text: "Follow up Thu, Oct 29", note: "Plain" },
+  { tone: "new", text: "Just changed", note: "New" },
+];
+
 export function ComponentGallery() {
   return (
+    <ToastProvider>
+      <Gallery />
+    </ToastProvider>
+  );
+}
+
+function Gallery() {
+  return (
     <div className="space-y-12">
+      {/* This header is also the PageHeader example. */}
       <PageHeader
         title="Components"
         description="Every shared component in every state. This page isn't in the navigation."
+        back={{ href: "/", label: "This week" }}
       />
 
       <Section title="Button">
@@ -190,6 +219,82 @@ export function ComponentGallery() {
           <RoleChips />
         </Example>
       </Section>
+
+      <Section title="Card">
+        <Card className="space-y-2">
+          <p className="font-medium">Example Co</p>
+          <p className="text-muted">The surface color, a thin edge, 16px corners and no shadow.</p>
+        </Card>
+      </Section>
+
+      <Section title="ListRow">
+        <List>
+          <ListRow company="Example Co" role="Data Analyst" status="applied" followUpOn="2026-10-27" href="/dev/components" />
+          <ListRow company="Sample Studio" role="Product Analyst" status="followed-up" followUpOn="2026-11-03" href="/dev/components" />
+          <ListRow company="Placeholder Labs" role="UX Researcher" status="interviewing" followUpOn="2026-10-23" href="/dev/components" />
+          <ListRow company="Demo Group" role="Data Analyst" status="offer" href="/dev/components" />
+          <ListRow company="Fictional Inc" role="Research Assistant" status="rejected" href="/dev/components" />
+        </List>
+      </Section>
+
+      <Section title="Badge">
+        <Example label="Status">
+          <div className="flex flex-wrap gap-2">
+            {STATUS_BADGES.map((tone) => (
+              <Badge key={tone} tone={tone} />
+            ))}
+          </div>
+        </Example>
+        <Example label="Status, in its own words (Followed up looks like Applied; Rejected like Closed)">
+          <div className="flex flex-wrap gap-2">
+            <Badge tone="applied">Followed up</Badge>
+            <Badge tone="closed">Rejected</Badge>
+            <Badge tone="closed">Withdrawn</Badge>
+            <Badge tone="closed">No response</Badge>
+          </div>
+        </Example>
+        <div className="flex flex-wrap gap-x-4 gap-y-5">
+          {TAGS.map(({ tone, text, note }) => (
+            <Example key={note} label={note}>
+              <Badge tone={tone}>{text}</Badge>
+            </Example>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="PageHeader">
+        <p className="text-muted">
+          The top of this page: a title, a one-line description, and Back to the parent page.
+        </p>
+      </Section>
+
+      <Section title="EmptyState">
+        <EmptyState title="Nothing logged yet" action={{ href: "/add", label: "Log an application" }}>
+          Log each application as you send it, and it shows up here sorted by follow-up date.
+        </EmptyState>
+      </Section>
+
+      <Section title="Toast">
+        <p className="text-muted">
+          One message at a time, for 5 seconds. Close or Escape dismisses it, and a new one
+          replaces the one showing.
+        </p>
+        <ToastDemo />
+      </Section>
+    </div>
+  );
+}
+
+function ToastDemo() {
+  const toast = useToast();
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button variant="secondary" onClick={() => toast("Backup downloaded.")}>
+        Show a message
+      </Button>
+      <Button variant="secondary" onClick={() => toast("Copied the job posting link.")}>
+        Show another
+      </Button>
     </div>
   );
 }
