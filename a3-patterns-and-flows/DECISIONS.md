@@ -247,3 +247,20 @@ Add a page at `/dev/components` that shows every component in every state, and k
 - Claude didn't add a duplicate warning to the quick add; the full Add form still has one.
 - Known: on a laptop, the toast sits at the bottom of the screen and can cover the date on the row just added for its 5 seconds. It says the same date, so the toast's position is unchanged for now.
 - Still open: the README's "Onboarding research → What I took" still describes the example Monday and the "Already applied" line. That's my write-up to revise.
+
+## 2026-10-20 · Role chip names
+
+**What I asked.** Help me look into how these roles are actually titled, and update the role chips on the first visit to the correct names.
+
+**What changed.**
+- Claude checked Chicago postings and some guides to job titles:
+  - "Data Analyst" is the standard title (NORC posts Data Analyst I and II).
+  - "Policy Analyst" is exactly what the City of Chicago's budget office posted in 2026.
+  - "Research Assistant" is mostly an academic title for people just out of a degree. Research organizations hiring at master's level more often say "Research Associate" (NORC's Research Associate I).
+  - "Associate Consultant" is Bain's entry title for undergrad and master's hires; BCG says "Associate" and uses "Consultant" for post-MBA hires.
+- The chips are now Data Analyst, **Research Associate**, Policy Analyst and Associate Consultant. flows.md says the same.
+
+**What I rejected or decided myself.**
+- I chose Research Associate over Research Analyst and Research Assistant, because it's what my postings say most.
+- I kept Associate Consultant over Consultant and Associate.
+- Titles aren't standardized, so the chips follow my own postings, not a rule. Claude left the fictional "Research Assistant" sample row on `/dev/components` as it is.

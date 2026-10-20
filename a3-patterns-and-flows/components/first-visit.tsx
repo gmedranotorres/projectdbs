@@ -13,7 +13,7 @@ import { Button, Chip, ErrorIcon, Field, Input, List, ListRow, PageHeader, TextL
 // sample data.
 
 // Roles a grad student applying in Chicago is likely to type.
-const ROLE_CHIPS = ["Data Analyst", "Research Assistant", "Policy Analyst", "Associate Consultant"];
+const ROLE_CHIPS = ["Data Analyst", "Research Associate", "Policy Analyst", "Associate Consultant"];
 
 export function FirstVisit({
   applications,
