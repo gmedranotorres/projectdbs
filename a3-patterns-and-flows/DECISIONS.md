@@ -923,3 +923,31 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **The rerun.** The shortest version of the first-run check, on the live site after Vercel served the new build, covering only the steps the fixes touch. Every fix held. It's written up as "After the fixes" in docs/first-run-check.md, with 8 new screenshots (`after-01` to `after-08`). The empty-Role step was left out because nothing there changed.
   - **Found along the way:** the quiet buttons ("Change", "Followed up early?") read like plain text. It's noted in the report, not changed.
   - **A test-script mistake:** the first tap on "Use the full form" missed because the link wraps onto two lines and the script aimed between them. Fixed in the script, and noted in the report.
+
+## Final README (Oct 21, 2026)
+
+**What I asked.** Finish README.md so it answers what I'll be asked in class, in plain first person, using only facts from this repo:
+1. the tool, the user and what brings them back;
+2. the flows, with the main-task sentence and the Mermaid diagram;
+3. onboarding, and what I took from the research;
+4. retention and the storage table;
+5. accessibility (keyboard, labels, contrast);
+6. the first-run check with its feedback and my changes, linking the report and screenshots;
+7. a short agentic-workflow paragraph ending with "[Gabriela adds a sentence here]";
+8. running locally, plus the live URL at the top.
+
+**What changed.**
+- README.md is reorganized into those eight numbered sections, with the live URL at the top.
+- "First visit", "Coming back" and "Running locally" were still placeholders. They're now part of sections 3, 4 and 8.
+- **Section 3, "What I took", is brought up to date with the app:**
+  - the example Monday and the "Already applied somewhere?" line were removed in the first-visit round, and now appear only as something I tried and dropped;
+  - "Log your first application" became **Add application**;
+  - the weekly goal, added later, is explained against the "no quotas" decision.
+- **Section 6** now lists the eight fixes with before/after screenshots. It used to say "None are fixed yet".
+- **Section 5:** one known limit now says the toast sits just above the bottom bar after a quick add on Home.
+- The keyboard, labels and contrast audits and the storage table are kept as they were.
+
+**What I rejected or decided myself.**
+- **Finishing the previous round first.** Before this README, Claude completed the pending rerun and "After the fixes" section (commit "A3: first-run check after the fixes"), so section 6 could describe it.
+- **"What I took" was rewritten by Claude.** An earlier entry said that write-up was mine to revise. Every change follows DECISIONS.md and the current code, but it's worth my own read.
+- **The agentic paragraph uses only DECISIONS.md:** the rejections (the skeleton prompt, a non-Calm sage, "don't save yet", the example Monday) and the hard parts (conflicting specs, Next's kept pages and document-level events). The last line is left for me.

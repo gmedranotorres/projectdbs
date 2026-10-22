@@ -1,16 +1,27 @@
 # Seguimiento
 
-A weekly check-in for a job search: it tells you who to follow up with.
+**Live:** https://projectdbsa3.vercel.app
 
-## Who it's for
+A weekly check-in for a job search: it tells me who to follow up with.
 
-A second-year grad student applying to jobs in Chicago. They apply in bursts between classes, on a phone and a laptop, and lose track of who to follow up with. It's a weekly ritual, not a CRM.
+## 1. The tool, who it's for, and what brings them back
 
-## The main task
+Seguimiento is a job-application tracker built around follow-ups. I log each application as I send it, and it gives me a follow-up date. It's for a grad student applying to jobs in Chicago: me. I apply in bursts between classes, on my phone and my laptop, and I lose track of who to follow up with. So it's a weekly ritual, not a CRM.
 
-Log an application → it's on my list with a follow-up date → on Monday, Seguimiento tells me who to follow up with.
+What brings me back is the **Monday check-in** at `/check-in`. It lists:
+- the follow-ups due, each with **Followed up**, **Snooze a week** or **Open**;
+- what's gone quiet (2 weeks with no update), with **Set a follow-up**;
+- how many I added this week, against a weekly goal;
+- **Done for this week**, which says "Done. See you next Monday."
 
-## The flows
+To get there:
+- **Home:** coming back, it opens with "Welcome back." and three numbers. "Follow-ups due" and "gone quiet" link to the check-in; "added this week" links to the list.
+- **Calendar:** on the first visit I can add a weekly Monday 9:00 reminder to my own calendar.
+- **Footer:** every page links to the Weekly check-in.
+
+## 2. The flows
+
+**The main task:** Log an application → it's on my list with a follow-up date → on Monday, Seguimiento tells me who to follow up with.
 
 The steps, states and errors behind this diagram are in [flows.md](flows.md).
 
@@ -59,7 +70,26 @@ flowchart TD
   edit -- "← Back to where<br/>you came from" --> list
 ```
 
-## Onboarding research
+## 3. Onboarding
+
+### What someone new sees
+
+There's no sign-up and no tour. The first screen at `/` is the task itself ([screenshot](docs/screenshots/01-first-visit.png)):
+- **The headline:** "Keep every application moving.", with one line under it: "Log what you applied to, and come back on Monday to see who to follow up with."
+- **A two-field quick add:** Company and Role, with four role chips (Data Analyst, Research Associate, Policy Analyst, Associate Consultant). Then "Applied earlier, or want to add a contact? Use the full form." and **Add application**.
+- **"Saved on this device. No account."**
+- **The rule, in one line:** Seguimiento suggests a follow-up a week after you apply, and after 2 weeks with no update an application is marked gone quiet.
+- **A reminder:** **Add Monday check-in to my calendar**, plus "Load a backup" for someone who already uses it on another device.
+
+### Something useful right away
+
+One company and one role, then **Add application**, and the first result is already there:
+- **A follow-up date:** the toast says "Added Example Co — Data Analyst. Follow up on Tue, Oct 27."
+- **Your list:** the application appears under the form, with that date and a one-time tip: "We suggested a follow-up a week out. Change it anytime."
+- **Nothing blocks you:** a mistake costs nothing. An empty Role says "Enter the role title." next to the field, keeps what I typed, and puts the cursor there ([screenshot](docs/screenshots/04-empty-role-error.png)).
+- **Older applications count too:** logged through the full form with the day I applied, one from a week ago or more is already due on the check-in.
+
+### What I took from the research
 
 **What I looked at.** How three job-search tools welcome someone new: [Huntr](https://huntr.co/product/job-tracker), [Teal's Job Tracker](https://www.tealhq.com/tools/job-tracker) and [Simplify](https://simplify.jobs/). All three hide their first screen behind sign-up, so I used public sources only: help centers, product pages, store listings and reviews. The full findings, with a link for every fact, are in [docs/onboarding-research.md](docs/onboarding-research.md). The sources I relied on most:
 
@@ -69,32 +99,29 @@ flowchart TD
 
 **What I took.**
 
-- **Something useful before any effort**, as with Teal's sample jobs. The first visit shows a labeled example Monday, not data.
-- **The first save unlocks something**, as with Huntr's AI tools. The first save gives a follow-up date, and the confirmation leads with it.
-- **Teal's follow-up rhythm, stated out loud.** Under the example, one line says Seguimiento suggests a follow-up a week after you apply, and that after 2 weeks with no update an application is marked gone quiet. Saying the rule explains why dates appear on their own.
-- **A Monday-to-Sunday week**, like Teal's weekly goal, but without the target. This week opens with "Week of Oct 19".
-- **A reminder to come back**, like Teal's reminder emails and Huntr's digests. Seguimiento has no server and can't email, so the first visit, and the confirmation after the first save, offer **Add Monday check-in to my calendar**. It downloads a calendar file with a weekly event on Mondays at 9:00 that you add to your own calendar.
-- **Value right away, from your own data.** Instead of Teal's sample jobs, a line under the main button says: log applications you've already sent, with the day you applied, and anything from a week ago or more shows up right away in This week.
+- **The first save unlocks something**, as with Huntr's AI tools after you save a job. My first save gives a follow-up date, and the confirmation leads with it.
+- **Teal's follow-up rhythm, said out loud.** One line on the first visit gives the rule (a week, then gone quiet after 2 weeks), so dates that appear on their own make sense.
+- **A Monday-to-Sunday week**, like Teal's weekly goal. The check-in reads "Week of Oct 26" and counts what I added since Monday. There's a weekly goal, but it starts as "Suggested goal: 3 a week" until I choose one (1 to 20), and missing it changes nothing.
+- **A reminder to come back**, like Teal's reminder emails and Huntr's digests. Seguimiento has no server and can't email, so the first visit offers **Add Monday check-in to my calendar**: a calendar file with a weekly event on Mondays at 9:00 that I add to my own calendar.
+- **Something useful before any effort**, as with Teal's sample jobs. I first tried a picture of an example Monday on the first visit, then removed it: it was sample data, and it named real companies. What stayed is a first screen that *is* the task: two fields and a button.
 
 **What I rejected and why.**
 
 - **Signing up before seeing anything** (all three tools). Seguimiento has no accounts. Everything stays in this browser, and you can start right away.
-- **Questionnaires up front** (Simplify's salary, experience and matching quiz; Teal's target date). Nothing is asked before "Log your first application". A grad student logging between classes shouldn't have to set anything up first.
-- **Sample data in the real list** (Teal). Huntr's App Store review shows what goes wrong: you can't tell how to try the app without filling it with fake companies. The example is a picture, so there's nothing to clear later.
-- **Streaks and quotas** (Simplify's daily streak; Teal's goal of up to 12 applications a week). For a once-a-week ritual, they add pressure without helping you decide who to contact.
+- **Questionnaires up front** (Simplify's salary, experience and matching quiz; Teal's target date). Nothing is asked before **Add application**. A grad student logging between classes shouldn't have to set anything up first.
+- **Sample data in the real list** (Teal). Huntr's App Store review shows what goes wrong: you can't tell how to try the app without filling it with fake companies. The list holds only what I log.
+- **Streaks and quotas** (Simplify's daily streak; Teal's goal of up to 12 applications a week). For a once-a-week ritual, they add pressure without helping you decide who to contact. The weekly goal I added later stays a suggestion I can change, with no streak.
 - **Setup scores and install prompts** (Simplify's "Profile Strength"; the Teal and Simplify extension prompts). They make the first screen about setting up the tool, not about your job search.
 
-## First visit
+## 4. Retention: what it remembers, and where
 
-_To fill in._
+**Coming back.** Once anything is saved, Home opens with "Welcome back." and today's date ([screenshot](docs/screenshots/12-week-later-home.png)). Under it, three numbers, each a link:
+- **follow-ups due** and **gone quiet** open the check-in;
+- **added this week** ("0 of 3") opens the list.
 
-## Coming back
+If I've done a check-in, it says "Last check-in: Tue, Oct 27". Once that's 7 or more days ago, one gentle line asks "It's been a week. Start your check-in?". Your list puts what's due first, marked "Due today" or "1 day late". There's no modal and no streak.
 
-_To fill in._
-
-## What it remembers
-
-Everything stays in this browser's `localStorage`. There's no account and no server, so nothing leaves the device unless you export it ("Export my data" on the check-in, or "Download backup" on Move data: the same file). Each key starts with `seguimiento:`.
+Everything stays in this browser's `localStorage`. There's no account and no server, so nothing leaves the device unless I export it ("Export my data" on the check-in, or "Download backup" on Move data: the same file). Each key starts with `seguimiento:`.
 
 | What | Key | Why |
 | --- | --- | --- |
@@ -111,11 +138,11 @@ The applications and settings live under one key, so they're written together an
 
 It doesn't remember the search text on All, which messages were shown, or where you scrolled. Each visit starts from your list as it is.
 
-## Accessibility
+## 5. Accessibility
 
 ### Keyboard audit (Oct 20, 2026)
 
-**How.** Every page was driven with real key presses (Tab, Shift+Tab, Enter, Space, Escape, arrow keys) in Chrome, with a script over the DevTools protocol and no packages, at 390px and at 1440px. The pages: Home on a first visit and when returning, Add, All applications, an application, an unknown application, the check-in, Move data, the component gallery and a 404. For every Tab stop it recorded where the element sits on screen, and whether the focus ring was actually drawn (a 2px outline) and on screen.
+**How.** I had every page driven with real key presses (Tab, Shift+Tab, Enter, Space, Escape, arrow keys) in Chrome, with a script over the DevTools protocol and no packages, at 390px and at 1440px. The pages: Home on a first visit and when returning, Add, All applications, an application, an unknown application, the check-in, Move data, the component gallery and a 404. For every Tab stop it recorded where the element sits on screen, and whether the focus ring was actually drawn (a 2px outline) and on screen.
 
 | Check | Result |
 | --- | --- |
@@ -137,7 +164,7 @@ It doesn't remember the search text on All, which messages were shown, or where 
 
 **Known limits.**
 - **Date fields** are several Tab stops each. That's the browser's own control, kept so phones get their native date picker.
-- **The toast's Close button** comes after the bottom bar in Tab order, even though on a phone the toast shows at the top. The toast is announced through `aria-live` when it appears, focus is never moved into it, and Escape closes it from anywhere.
+- **The toast's Close button** comes after the bottom bar in Tab order, even though on a phone the toast shows at the top (or, after a quick add on Home, just above the bottom bar). The toast is announced through `aria-live` when it appears, focus is never moved into it, and Escape closes it from anywhere.
 - **Picking a role chip while Company is empty** moves the cursor to Company, on purpose, so the quick add can be done in one pass.
 
 ### Labels and announcements audit (Oct 20, 2026)
@@ -231,14 +258,66 @@ Not text, so not in the table:
 - The current page is marked on screen as well, with an underline on a phone and a filled tab on a laptop. Late and quiet items say so in words, never by color alone.
 - Tap targets are at least 44px, and inputs use 16px text so phones don't zoom in.
 
-## First-run check
+## 6. First-run check
 
-Run on the live site on Oct 20, 2026, as a brand-new user on a phone. The goal: "Log the three jobs you applied to this week and set when to follow up." Then a return visit a week later, through the check-in. The full report is in [docs/first-run-check.md](docs/first-run-check.md), with every step and a screenshot for each.
+**What the agent did.** I had Claude act as a brand-new user on the live site, on a phone (390px), with a fresh browser and no saved data. The goal it was given: "Log the three jobs you applied to this week and set when to follow up." It used openly fictional jobs, made one mistake on purpose (an empty Role), and came back a week later through the check-in. It drove Chrome over the DevTools protocol instead of Playwright, because AGENTS.md allows no new packages. The full report, with what it expected, what happened and where it hesitated at each step, is in [docs/first-run-check.md](docs/first-run-check.md). The screenshots are in [docs/screenshots](docs/screenshots).
 
-- **Biggest problem:** "I followed up today" is the main button on an application's page even when nothing is due. One tap can also pull a chosen follow-up date earlier.
-- **Worked well:** the empty-Role error, follow-up dates that set themselves and say so, and the weekly check-in.
-- Nine problems are ranked by impact with a proposed fix for each. None are fixed yet.
+**Its feedback.**
+- **What worked:**
+  - The empty-Role error ([04](docs/screenshots/04-empty-role-error.png)).
+  - Follow-up dates that set themselves and say so ([03](docs/screenshots/03-job1-added.png)).
+  - The check-in, which it called the best screen in the app ([14](docs/screenshots/14-check-in.png)).
+- **Nine problems,** ranked by impact. The biggest: on an application I had added that same day, the main button was **I followed up today**, and one tap would have pulled the follow-up date I had chosen (Nov 3) back to Oct 27 ([09](docs/screenshots/09-detail-sample-labs.png)).
 
-## Running locally
+**What I changed.** I chose fixes 1 to 8 and left 9 (only the latest Undo stays on the check-in). Each fix is its own commit starting "A3: fix:":
 
-_To fill in._
+| # | What the new user hit | What I changed | After |
+| --- | --- | --- | --- |
+| 1 | "I followed up today" led on a job applied that day | The card shows only once the follow-up is due; before that it's a quiet "Followed up early?" line, and following up never pulls a chosen date earlier. | [after-03](docs/screenshots/after-03-detail-just-added.png), [after-07](docs/screenshots/after-07-detail-due.png) |
+| 2 | Home's list didn't say which follow-ups were due | Due first, with "Due today" / "1 day late" | [after-06](docs/screenshots/after-06-week-later-your-list.png) |
+| 3 | The follow-up date was hard to find | **Change** beside the date; "Saved. Follow up Tue, Nov 3." | [after-04](docs/screenshots/after-04-change-follow-up.png), [after-05](docs/screenshots/after-05-saved-toast.png) |
+| 4 | The way to log an earlier date disappeared after one add | "Use the full form" stays; "Add details" is gone | [after-06](docs/screenshots/after-06-week-later-your-list.png) |
+| 5 | The toast covered Company right after a quick add | On Home it shows just above the bottom bar | [after-01](docs/screenshots/after-01-quick-add-toast.png) |
+| 6 | The check-in showed a goal I never set | "Suggested goal: 3 a week"; heading "Applications this week" | [after-08](docs/screenshots/after-08-check-in-goal.png) |
+| 7 | Saving on the full form didn't say the follow-up date | The same "Added … Follow up on …" toast | [after-02](docs/screenshots/after-02-full-form-toast.png) |
+| 8 | The contact hint named a realistic person | "e.g. Sam Example." | |
+
+A shorter rerun on the live site checked every fix ("After the fixes" in the report). It also noticed that the quiet buttons ("Change", "Followed up early?") read like plain text; I've left that for later.
+
+## 7. Agentic workflow
+
+I built Seguimiento with Claude Code in short rounds: one pasted spec each time.
+- **The rounds:** the flows, the first visit, the Add form, the list, an application's page, the check-in, coming back, what it remembers, export and import. Then audits for the keyboard, labels and contrast, and the first-run check.
+- **Every round ended the same way:** a build, an entry in [DECISIONS.md](DECISIONS.md) (what I asked, what changed, what I rejected or decided), and a commit starting "A3:".
+- **[AGENTS.md](AGENTS.md) held the rules that never changed:** localStorage only, no new packages, shared components, real labels, local dates, openly fictional examples.
+
+**What I rejected:**
+- the original skeleton prompt, because it would have replaced working pages with placeholders;
+- a new darker sage that isn't in Calm, in favor of Calm's own link style;
+- "don't save yet" on the Add form, because it's the only way to log an earlier date;
+- the example Monday on the first visit, because it was sample data naming real companies.
+
+**What was hard:**
+- **New specs that contradicted earlier choices:** the status model, how far Followed up and Snooze move a date, when something goes quiet. Claude stopped and asked, and I chose four statuses plus a reason, a week out, and 14 days.
+- **This version of Next.js:** it keeps visited pages mounted and runs React from the document, so one Escape closed both a confirmation and the toast until that was fixed.
+
+[Gabriela adds a sentence here]
+
+## 8. Running locally
+
+You need Node.js 23.6 or newer (the date check runs a `.ts` file directly).
+
+```bash
+npm install
+npm run dev
+```
+
+Then open http://localhost:3000. Everything is saved in that browser's `localStorage`, so there's nothing else to set up.
+
+Also available:
+- `npm run build` — production build
+- `npm run lint` — ESLint
+- `npm run check:dates` — date cases across month ends and the November daylight-saving change, in Chicago time
+- `npm run check:contrast` — WCAG contrast for every text/background pair (`-- --md` prints the README table)
+
+`/dev/components` shows every shared component in every state. It isn't in the navigation.
