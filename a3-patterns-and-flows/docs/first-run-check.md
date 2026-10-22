@@ -140,6 +140,46 @@ Tapped **2 follow-ups due**.
 2. **Follow-ups set themselves, visibly.** Every job got a date a week out without being asked, and the date was said aloud: in the toast, on the row, and in a one-time tip that it can be changed. On the full form, changing Applied on moved Follow up on with it. ([03](screenshots/03-job1-added.png), [07](screenshots/07-add-applied-yesterday.png))
 3. **The check-in is the best screen in the app.** A week later, the number on Home led straight to the two due jobs, each clearly late or due today. One tap dealt with each one and said the new date with an Undo, and Done closed the loop: "See you next Monday", and Home shows the last check-in. Nothing was lost across the browser restart. ([14](screenshots/14-check-in.png) to [18](screenshots/18-home-after-check-in.png))
 
-## Not fixed yet
+## Not fixed in the first run
 
-This is a report only, as asked. Nothing in the app was changed.
+The first run was a report only, as asked. Nothing in the app was changed then; the fixes came after, below.
+
+## After the fixes
+
+Gabriela chose problems 1 to 8 and left 9 (only the latest Undo stays on the check-in). Each fix is its own commit, starting "A3: fix:":
+
+| # | Fix | Commit |
+| --- | --- | --- |
+| 1 | "Did you follow up?" leads only once the follow-up is due. Before that, the same action is a quiet "Followed up early?" line, and following up never pulls a chosen date earlier. | `654f34a` |
+| 2 | Home's Your list puts due jobs first, with the check-in's "Due today" / "1 day late" badges. The rest follow, newest first. | `bc2ef52` |
+| 3 | **Change** beside the follow-up date at the top of an application goes straight to the field. Save says "Saved. Follow up Tue, Nov 3." | `ab1671d` |
+| 4 | "Applied earlier, or want to add a contact? Use the full form" stays on Home on every visit. The unclear "Add details" is gone. | `40824a9` |
+| 5 | On Home on a phone, the quick-add toast shows just above the bottom bar instead of over Company. | `f1f300d` |
+| 6 | On the check-in, "Suggested goal: 3 a week" until you choose one. The section heading is "Applications this week". | `c135974` |
+| 7 | The full Add form's toast gives the follow-up date, like the quick add's. | `2bdb1e9` |
+| 8 | The contact hint says "e.g. Sam Example." instead of a realistic name. | `7f09b78` |
+
+### The shorter rerun (Wed, Oct 21)
+
+**How.** Same setup as before: the live site once it served the new build (confirmed by its contact hint reading "e.g. Sam Example."), a fresh Chrome profile, a 390px phone with touch, and real taps and typing. I repeated only the steps the fixes touch:
+- **Day 1:** two jobs by quick add, a third applied yesterday through the full form, and Sample Labs' follow-up moved to Nov 3.
+- **A week later (Wed, Oct 28):** the same profile reopened, with Home, the job due today, and the check-in.
+
+The empty-Role mistake was left out because nothing there changed. As before, dates were filled by setting the field's value.
+
+| Step | Before | After |
+| --- | --- | --- |
+| Quick add on a phone | The toast covered Company, where the cursor was. | The toast sits at 691–768px, Company at 61–107px, the bottom bar from 787px. Nothing covers the field. ([after-01](screenshots/after-01-quick-add-toast.png)) |
+| Third job, applied yesterday | The "Use the full form" line was gone after the first add; I went through the Add tab. | The line was still there. I tapped it, set Applied on to yesterday, and saved: "Added Placeholder Inc — Policy Analyst. Follow up on Tue, Oct 27." ([after-02](screenshots/after-02-full-form-toast.png)) |
+| Opening a job added today | The green "I followed up today" card led the page. | No card. The header reads "Follow up Wed, Oct 28 · **Change**", with a quiet "Followed up early? I followed up today" line under it. ([after-03](screenshots/after-03-detail-just-added.png)) |
+| Changing the follow-up date | Scroll past the card to the fifth field. Save said only "Saved". | **Change** put the cursor in Follow up on, in the middle of the screen. The contact hint below reads "e.g. Sam Example.". Save said "Saved. Follow up Tue, Nov 3." ([after-04](screenshots/after-04-change-follow-up.png), [after-05](screenshots/after-05-saved-toast.png)) |
+| Home, a week later | All three rows looked alike; the job due today was last. | Placeholder Inc "1 day late", then Example Co "Due today", then Sample Labs (Nov 3) with no badge. ([after-06](screenshots/after-06-week-later-your-list.png)) |
+| Opening the job due today | (not reached before) | "Did you follow up?" leads here, as it should, and moves the follow-up to Wed, Nov 4. ([after-07](screenshots/after-07-detail-due.png)) |
+| The check-in's goal | "This week" twice; "Weekly goal: 3 applications", a goal never set. | Headings: This week › Follow-ups due (2) › Applications this week › Your data. "Suggested goal: 3 a week · Change goal". ([after-08](screenshots/after-08-check-in-goal.png)) |
+
+No errors were reported by the page in either visit, and all three jobs were still there after the browser restart.
+
+**Still open.**
+- **Problem 9** (one Undo at a time) was left as is, by choice.
+- **New observation:** "Change" and "Followed up early? I followed up today" use the quiet button style, which has no outline, so they read like plain text ([after-03](screenshots/after-03-detail-just-added.png)). They're labeled and keyboard reachable; whether they need a visible edge is a design call for later.
+- **A note on method:** in this rerun, the script's first tap on "Use the full form" missed. The link wraps onto two lines on a phone, and the script aimed at the middle of the whole link, between the lines. A person taps the words, so the script now aims at the first line. This was the test's mistake, not the site's.
