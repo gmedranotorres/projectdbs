@@ -44,5 +44,13 @@ check('startOfWeek("2026-11-02")  (Monday after)', d.startOfWeek("2026-11-02"), 
 check('today() at Nov 1, 1:30 am (happens twice)', todayAt(2026, 11, 1, 1, 30), "2026-11-01");
 check('today() at Nov 1, 11:59 pm', todayAt(2026, 11, 1, 23, 59), "2026-11-01");
 check('today() at Nov 2, 12:01 am', todayAt(2026, 11, 2, 0, 1), "2026-11-02");
+console.log("— Check-in day: the next chosen weekday (0 Sunday … 6 Saturday)");
+check('weekdayOf("2026-11-01")  (a Sunday)', d.weekdayOf("2026-11-01"), 0);
+check('nextWeekday("2026-10-26", 1)  (Monday is today)', d.nextWeekday("2026-10-26", 1), "2026-10-26");
+check('nextWeekday("2026-10-27", 1)  (Tuesday → next Monday)', d.nextWeekday("2026-10-27", 1), "2026-11-02");
+check('nextWeekday("2026-10-29", 4)  (Thursday is today)', d.nextWeekday("2026-10-29", 4), "2026-10-29");
+check('nextWeekday("2026-10-30", 4)  (Friday → next Thursday)', d.nextWeekday("2026-10-30", 4), "2026-11-05");
+check('nextWeekday("2026-10-31", 0)  (across the DST change)', d.nextWeekday("2026-10-31", 0), "2026-11-01");
+check('nextWeekday("2026-12-30", 5)  (across the year)', d.nextWeekday("2026-12-30", 5), "2027-01-01");
 console.log(fails ? `${fails} failed` : "all passed");
 process.exitCode = fails ? 1 : 0;

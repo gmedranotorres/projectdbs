@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useState, type FormEvent } from "react";
 import {
   LIMITS,
   addedSince,
@@ -40,11 +40,14 @@ import {
   PageHeader,
   StatLink,
   TextLink,
-  useToast,
 } from "./ui";
 
-// `/`, always: a quick add right on the page. Saving keeps you here, and
-// what you added appears under the form. The list puts what's due first,
+// `/`, always: a quick add right on the page, in its own card titled "Log
+// an application". Saving keeps you here: a line under the button says what
+// was saved and where it went, and the new item sits at the top of the list
+// below, tinted for a few seconds and tagged "Just added", with "Show me" to
+// jump to it. (Class feedback: people weren't sure what "Add application"
+// would add, or where it went.) The list puts what's due first,
 // soonest first, each with the check-in's "Due today" or "2 days late";
 // the rest follow, newest first. Next to the newest item, a one-time tip
 // explains the suggested follow-up date. No tour, no modal, no sample data.
@@ -61,14 +64,18 @@ const ROLE_CHIPS = ["Data Analyst", "Research Associate", "Policy Analyst", "Ass
 // The list shows the newest few; "See all" has the rest.
 const LIST_LIMIT = 5;
 
+// How long the new row stays tinted, the same as on All applications.
+const GLOW_MS = 3000;
+
 export function QuickAddHome({ applications }: { applications: Application[] }) {
   const store = useApplications();
-  const toast = useToast();
   const here = useFromHere();
   const formId = useId();
   const companyId = `${formId}-company`;
   const roleId = `${formId}-role`;
   const listId = `${formId}-list`;
+  const formHeadingId = `${formId}-form-heading`;
+  const rowId = (id: string) => `${formId}-row-${id}`;
   // Decided when the page opens: someone who just saved their first one on
   // this visit isn't "back" yet, and the form shouldn't jump down under
   // their cursor.
@@ -80,6 +87,16 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
   const [saveFailed, setSaveFailed] = useState(false);
   // The company and role whose duplicate notice was put away.
   const [dismissedDuplicate, setDismissedDuplicate] = useState<string | null>(null);
+  // The one just saved on this visit: named under the button, first on the
+  // list, tagged "Just added". `glow` tints its row for a few seconds.
+  const [justAdded, setJustAdded] = useState<Application | null>(null);
+  const [glow, setGlow] = useState(0);
+
+  useEffect(() => {
+    if (!glow) return;
+    const timer = setTimeout(() => setGlow(0), GLOW_MS);
+    return () => clearTimeout(timer);
+  }, [glow]);
 
   const focus = (id: string, options?: FocusOptions) =>
     requestAnimationFrame(() => document.getElementById(id)?.focus(options));
@@ -127,11 +144,10 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
       setSaveFailed(true);
       return;
     }
-    // Above the bottom bar on phones: at the top it would sit over Company,
-    // where the next one is typed.
-    toast(`Added ${app.company} — ${app.role}. Follow up on ${formatDay(app.followUpOn!)}.`, {
-      place: "bottom",
-    });
+    // Said right under the button, where the eye already is, instead of a
+    // toast at the edge of the screen.
+    setJustAdded(app);
+    setGlow((g) => g + 1);
     setCompany("");
     setRole("");
     setSaveFailed(false);
@@ -139,6 +155,13 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
     // Ready for the next one, without scrolling: the page stays put, so the
     // new item stays in view below the form.
     focus(companyId, { preventScroll: true });
+  }
+
+  // "Show me": to the new row, tinted again so it's easy to spot.
+  function showJustAdded() {
+    if (!justAdded) return;
+    document.getElementById(rowId(justAdded.id))?.focus();
+    setGlow((g) => g + 1);
   }
 
   function dismissHint() {
@@ -149,12 +172,16 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
 
   const today = getToday();
   const groups = groupAll(applications, today);
-  // Due first, soonest first (groupAll's order), then the rest, newest
-  // first, so what you just added still shows under the form.
-  const shown = [...groups.due, ...newest.filter((a) => groupOf(a, today) !== "due")].slice(
-    0,
-    LIST_LIMIT,
-  );
+  // What you just added first, so it's always in view; then due, soonest
+  // first (groupAll's order); then the rest, newest first.
+  const justAddedRow = justAdded ? applications.find((a) => a.id === justAdded.id) : undefined;
+  const shown = [
+    ...(justAddedRow ? [justAddedRow] : []),
+    ...groups.due,
+    ...newest.filter((a) => groupOf(a, today) !== "due"),
+  ]
+    .filter((a, i, all) => all.indexOf(a) === i)
+    .slice(0, LIST_LIMIT);
   const added = addedSince(applications, startOfWeek(today));
   const goal = store.settings.weeklyGoal;
   const lastCheckIn = store.settings.lastCheckInOn;
@@ -199,93 +226,124 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
       ) : (
         <PageHeader
           title="Keep every application moving."
-          description="Log what you applied to, and come back on Monday to see who to follow up with."
+          description="Log what you applied to, and come back for a weekly check-in to see who to follow up with."
         />
       )}
 
-      <form noValidate onSubmit={submit} className="space-y-6">
-        <Field
-          id={companyId}
-          label="Company"
-          error={errors.company}
-          count={{ length: oneLine(company).length, max: LIMITS.company }}
-        >
-          <Input
-            name="company"
-            value={company}
-            onChange={(e) => {
-              setCompany(e.target.value);
-              setSaveFailed(false);
-              setErrors((prev) => ({ ...prev, company: undefined }));
-            }}
-            autoComplete="organization"
-            autoCapitalize="words"
-            aria-required="true"
-          />
-        </Field>
-
-        <DuplicateNotice
-          match={duplicate}
-          dismissLabel="Add anyway"
-          onDismiss={() => {
-            setDismissedDuplicate(pair);
-            // The notice goes; carry on from the next field.
-            focus(roleId);
-          }}
-        />
-
-        <div className="space-y-3">
+      <section
+        aria-labelledby={formHeadingId}
+        className="space-y-5 rounded-card border border-line bg-surface p-5 shadow-raised sm:p-6"
+      >
+        <div>
+          <h2 id={formHeadingId} className="font-serif text-heading">
+            Log an application
+          </h2>
+          <p className="mt-1 text-muted">Type the company and role, then save it to your list.</p>
+        </div>
+        <form noValidate onSubmit={submit} className="space-y-6">
           <Field
-            id={roleId}
-            label="Role"
-            error={errors.role}
-            count={{ length: oneLine(role).length, max: LIMITS.role }}
+            id={companyId}
+            label="Company"
+            error={errors.company}
+            count={{ length: oneLine(company).length, max: LIMITS.company }}
           >
             <Input
-              name="role"
-              value={role}
+              name="company"
+              value={company}
               onChange={(e) => {
-                setRole(e.target.value);
+                setCompany(e.target.value);
                 setSaveFailed(false);
-                setErrors((prev) => ({ ...prev, role: undefined }));
+                setErrors((prev) => ({ ...prev, company: undefined }));
               }}
-              autoComplete="off"
+              autoComplete="organization"
+              autoCapitalize="words"
               aria-required="true"
             />
           </Field>
-          <ChipGroup label="Common roles">
-            {ROLE_CHIPS.map((chip) => (
-              <Chip key={chip} pressed={role === chip} onClick={() => pickRole(chip)}>
-                {chip}
-              </Chip>
-            ))}
-          </ChipGroup>
-        </div>
 
-        {/* Before the button, so it's read before an older application is
-            saved with today's date. Always shown: quick add has no date. */}
-        <p className="text-muted">
-          Applied earlier, or want to add a contact?{" "}
-          <TextLink href={`/add?from=${here}`}>Use the full form</TextLink>.
-        </p>
+          <DuplicateNotice
+            match={duplicate}
+            dismissLabel="Add anyway"
+            onDismiss={() => {
+              setDismissedDuplicate(pair);
+              // The notice goes; carry on from the next field.
+              focus(roleId);
+            }}
+          />
 
-        {saveFailed && (
-          <p className="flex gap-2 rounded-lg border border-error bg-error-soft p-4 text-sm">
-            <ErrorIcon />
-            <span>
-              <strong>Couldn&rsquo;t save.</strong> This browser&rsquo;s storage may be full. What
-              you typed is still here; try again.
-            </span>
+          <div className="space-y-3">
+            <Field
+              id={roleId}
+              label="Role"
+              error={errors.role}
+              count={{ length: oneLine(role).length, max: LIMITS.role }}
+            >
+              <Input
+                name="role"
+                value={role}
+                onChange={(e) => {
+                  setRole(e.target.value);
+                  setSaveFailed(false);
+                  setErrors((prev) => ({ ...prev, role: undefined }));
+                }}
+                autoComplete="off"
+                aria-required="true"
+              />
+            </Field>
+            <ChipGroup label="Common roles">
+              {ROLE_CHIPS.map((chip) => (
+                <Chip key={chip} pressed={role === chip} onClick={() => pickRole(chip)}>
+                  {chip}
+                </Chip>
+              ))}
+            </ChipGroup>
+          </div>
+
+          {/* Before the button, so it's read before an older application is
+              saved with today's date. Always shown: quick add has no date. */}
+          <p className="text-muted">
+            Applied earlier, or want to add a contact?{" "}
+            <TextLink href={`/add?from=${here}`}>Use the full form</TextLink>.
           </p>
-        )}
 
-        <div className="space-y-3">
-          <Button type="submit" className="w-full sm:w-auto">
-            Add application
-          </Button>
-          <p className="text-sm text-muted">Saved on this device. No account.</p>
-        </div>
-      </form>
+          {saveFailed && (
+            <p className="flex gap-2 rounded-lg border border-error bg-error-soft p-4 text-sm">
+              <ErrorIcon />
+              <span>
+                <strong>Couldn&rsquo;t save.</strong> This browser&rsquo;s storage may be full. What
+                you typed is still here; try again.
+              </span>
+            </p>
+          )}
+
+          <div className="space-y-3">
+            <Button type="submit" className="w-full sm:w-auto">
+              Save to my list
+            </Button>
+            {/* Always in the page, so screen readers announce each save. */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <p role="status" className="flex gap-2">
+                {justAdded && (
+                  <>
+                    <CheckIcon />
+                    <span>
+                      <strong>Saved.</strong> {justAdded.company} — {justAdded.role} is at the top of
+                      Your list, below.
+                      {justAdded.followUpOn && ` Follow up on ${formatDay(justAdded.followUpOn)}.`}
+                    </span>
+                  </>
+                )}
+              </p>
+              {justAdded && (
+                <Button variant="quiet" size="sm" onClick={showJustAdded}>
+                  Show me<span className="sr-only">: {justAdded.company} in Your list</span>
+                </Button>
+              )}
+            </div>
+            <p className="text-sm text-muted">Saved on this device. No account.</p>
+          </div>
+        </form>
+      </section>
 
       {first && (
         <section aria-labelledby={listId} className="space-y-3">
@@ -296,13 +354,17 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
             {shown.map((app) => (
               <ListRow
                 key={app.id}
+                rowId={rowId(app.id)}
+                highlight={glow > 0 && app.id === justAdded?.id}
                 company={app.company}
                 role={app.role}
                 status={app.status}
                 followUpOn={app.followUpOn ?? undefined}
                 href={`/applications/${app.id}?from=${here}`}
                 hint={
-                  groupOf(app, today) === "due" ? (
+                  app.id === justAdded?.id ? (
+                    <Badge tone="new">Just added</Badge>
+                  ) : groupOf(app, today) === "due" ? (
                     <Badge tone="due">{dueLabel(app, today)}</Badge>
                   ) : undefined
                 }
@@ -345,5 +407,14 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
         </p>
       )}
     </div>
+  );
+}
+
+// The tick beside "Saved.": a sign that isn't color alone.
+function CheckIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className="mt-1 size-4 shrink-0 text-accent" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 10.5 8.5 14.5 15.5 6" />
+    </svg>
   );
 }

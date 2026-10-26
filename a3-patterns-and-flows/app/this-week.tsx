@@ -17,7 +17,7 @@ import {
 import { addDays, formatDay, formatShortDay, isDay, startOfWeek, today as getToday, type Day } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
-import { MondayReminderButton } from "@/components/calendar-reminder";
+import { CalendarReminder, ReminderButton, checkInDayName } from "@/components/calendar-reminder";
 import { YourData } from "@/components/your-data";
 import { onEscape } from "@/lib/keys";
 import {
@@ -66,6 +66,7 @@ export function ThisWeek() {
   const goal = store.settings.weeklyGoal;
   const lastCheckIn = store.settings.lastCheckInOn;
   const doneThisWeek = lastCheckIn !== undefined && lastCheckIn >= monday;
+  const checkInDay = checkInDayName(store.settings);
 
   const focusSoon = (id: string) =>
     requestAnimationFrame(() => document.getElementById(id)?.focus());
@@ -217,11 +218,11 @@ export function ThisWeek() {
               <ButtonLink variant="secondary" href={`/add?from=${here}`}>
                 Add an application
               </ButtonLink>
-              <MondayReminderButton label="Come back Monday: add it to my calendar" variant="quiet" />
+              <ReminderButton label={`Come back ${checkInDay}: add it to my calendar`} variant="quiet" />
             </div>
           }
         >
-          Nothing due. Add an application or come back Monday.
+          Nothing due. Add an application or come back {checkInDay}.
         </EmptyState>
       )}
 
@@ -267,7 +268,7 @@ export function ThisWeek() {
 
       {doneThisWeek ? (
         <Notice id="week-done" role="status">
-          <p>Done. See you next Monday.</p>
+          <p>Done. See you next {checkInDay}.</p>
         </Notice>
       ) : (
         <div className="space-y-3">
@@ -288,6 +289,15 @@ export function ThisWeek() {
       <p className="text-muted">
         <TextLink href="/applications">See all {plural(store.applications.length, "application")}</TextLink>
       </p>
+
+      <section aria-labelledby="reminder-heading" className="space-y-3">
+        <h2 id="reminder-heading" className="text-xl font-semibold">
+          Your check-in reminder
+        </h2>
+        <Card>
+          <CalendarReminder />
+        </Card>
+      </section>
 
       <YourData />
     </div>

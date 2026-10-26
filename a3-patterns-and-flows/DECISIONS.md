@@ -951,3 +951,28 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **Finishing the previous round first.** Before this README, Claude completed the pending rerun and "After the fixes" section (commit "A3: first-run check after the fixes"), so section 6 could describe it.
 - **"What I took" was rewritten by Claude.** An earlier entry said that write-up was mine to revise. Every change follows DECISIONS.md and the current code, but it's worth my own read.
 - **The agentic paragraph uses only DECISIONS.md:** the rejections (the skeleton prompt, a non-Calm sage, "don't save yet", the example Monday) and the hard parts (conflicting specs, Next's kept pages and document-level events). The last line is left for me.
+
+## Class feedback round (Oct 25, 2026)
+
+**What I asked.** Act on the class feedback on A3:
+1. "Add application" on Home was confusing: unclear what it would add, and where the new one went;
+2. brown and beige text on tan backgrounds was hard to read;
+3. pages and sections weren't visually distinct;
+4. main actions (CTAs) weren't prominent enough;
+5. the calendar check-in was Monday only;
+6. (optional) a badge or award for motivation.
+
+**What changed.**
+- **Home's quick add** (`components/quick-add-home.tsx`): on a card titled "Log an application"; the button reads **Save to my list**; an inline "✓ Saved." line under the button names the application, says it's at the top of Your list, and offers **Show me**; the new row goes first, tagged **Just added**, tinted 3 seconds. The Home toast is gone, replaced by that line.
+- **All applications** (`app/applications/application-list.tsx`): the row arriving from Add is tagged **Just added** as well.
+- **Add page** (`app/add/add-application.tsx`): the form sits on a Card.
+- **Tokens** (`app/globals.css`): ink #3a2b21 → #2a1d14; muted #6b5848 → #54412f; surface #fbf7ee → #fffcf6; line #c8bdad → #bcae99; accent #8a9e80 → #3e5a3b (deep sage) with hover #2f4a2d; the primary label is now light (`--accent-ink: var(--surface)`); `--raised-shadow` is a soft shadow instead of none.
+- **Button** (`components/ui/button.tsx`): primary is semibold with the shadow. **Card, List, StatLink** use the shadow.
+- **Check-in day**: `Settings.checkInDay` (0–6, Monday when unset, read safely in `lib/storage.ts`); `weekdayOf` and `nextWeekday` in `lib/dates.ts`, with checks in `scripts/check-dates.mjs`; `components/calendar-reminder.tsx` has the picker and builds the calendar file for that day; the check-in page has a "Your check-in reminder" section and uses the day's name in its wording. Two hints no longer say "Monday" (the contact field and Move data).
+- `scripts/check-contrast.mjs` checks the tick icon (3:1). All 31 pairs pass. README section 9 records the round.
+
+**What I rejected or decided myself.**
+- **Badges or awards: not done.** Optional in the feedback, and A4 is due Tuesday.
+- **The new deep sage isn't Calm's sage, and I'm keeping it.** In A3 I said no to a darker sage to stay faithful to Calm. Class feedback changed my mind: Ariel said the CTAs didn't feel prominent, and on the oat background the pale sage with brown text looked almost like a secondary button. The deep sage is still a sage, so the app keeps Calm's calm, earthy feel, and I only use it for the one main action on each page. Light text on the darker fill also raised the button's contrast from 4.70:1 to 7.51:1, so it's easier to read, not only easier to see.
+- **Weeks still start on Monday.** Only the reminder day moves; the goal and "This week" keep Monday to Sunday.
+

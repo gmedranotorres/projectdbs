@@ -5,21 +5,26 @@
    only, so there is no dark palette.
 
    Colors are roles, not hues. Warnings and errors always come with words
-   and an icon, so nothing depends on telling red from green. */
+   and an icon, so nothing depends on telling red from green.
+
+   After A3 feedback ("brown or beige type on tan is hard to read", "can
+   CTAs feel more prominent?") the roles stay, with more distance between
+   them: darker ink and muted text, a whiter surface lifted off the oat
+   page by a soft shadow, and a deep sage primary button with light words. */
 :root {
   /* Calm's six roles */
   --bg: #ebe2d0; /* background: oat paper */
-  --surface: #fbf7ee; /* surface: warm white */
-  --ink: #3a2b21; /* text: brown ink */
-  --muted: #6b5848; /* muted text: walnut */
-  --line: #c8bdad; /* border: ink at 20% on oat */
-  --accent: #8a9e80; /* accent: sage, the primary button only */
+  --surface: #fffcf6; /* surface: warm white, lighter so cards stand off the page */
+  --ink: #2a1d14; /* text: brown ink, darkened (12.7:1 on the page) */
+  --muted: #54412f; /* muted text: walnut, darkened (7.5:1 on the page) */
+  --line: #bcae99; /* border: a little darker, so card edges show */
+  --accent: #3e5a3b; /* accent: deep sage, the primary button only */
 
   /* Calm's colors for jobs the six roles can't do */
   --accent-soft: #dde4d4; /* accent tint: sage mist */
   --accent-strong: #747e65; /* deeper accent: sage with 28% ink, for marks such as link underlines */
-  --accent-hover: #a1b096; /* the primary button under the pointer: sage lightened toward surface */
-  --accent-ink: var(--ink); /* the label on the primary button */
+  --accent-hover: #2f4a2d; /* the primary button under the pointer: a step darker */
+  --accent-ink: var(--surface); /* the label on the primary button: light on deep sage */
   --line-strong: var(--muted); /* the outline of fields; the border role is too faint alone */
   --focus: var(--ink);
 
@@ -71,8 +76,9 @@
   --border-thin: 1px; /* edges, dividers and outlines */
   --border-thick: 2px; /* the selected tab and the focus ring */
 
-  /* No shadow: a thin line instead */
-  --raised-shadow: none;
+  /* Cards and panels: the thin line plus a soft shadow, so sections read
+     as separate pieces on the oat page */
+  --raised-shadow: 0 1px 2px rgb(42 29 20 / 0.06), 0 6px 16px -4px rgb(42 29 20 / 0.08);
 }
 
 /* The tokens as Tailwind classes: bg-surface, text-ink, text-muted,

@@ -321,3 +321,56 @@ Also available:
 - `npm run check:contrast` — WCAG contrast for every text/background pair (`-- --md` prints the README table)
 
 `/dev/components` shows every shared component in every state. It isn't in the navigation.
+
+## 9. After class feedback (Oct 25, 2026)
+
+Two classmates reviewed the submitted version. What they raised, and what changed:
+
+- **"Add application" was unclear** (both reviewers). One wasn't sure it would add what she had just typed rather than ask for a document; the other took a second to find where the new one went.
+  - The quick add on Home now sits on its own card titled **Log an application**, with one line: "Type the company and role, then save it to your list."
+  - The button says **Save to my list**.
+  - Right under the button, a line says what happened: "✓ Saved. Example Co — Data Analyst is at the top of Your list, below. Follow up on …", with **Show me**, which moves to the new row. This replaces the toast at the edge of the screen on Home.
+  - The new row goes to the top of Your list, tagged **Just added** and tinted for 3 seconds. The full form (Add) already opened All applications with the new row on top; that row now carries the same **Just added** tag.
+- **Brown and beige text on tan was hard to read**, even though every pair passed WCAG. The ink and muted text are darker (muted went from 5.24:1 to 7.51:1 on the page), and the card surface is lighter.
+- **Sections didn't stand apart.** Cards, lists and the number tiles keep their thin edge and now also have a soft shadow, so they lift off the oat page. The Add form sits on a card too.
+- **Main actions didn't look prominent.** The primary button is now a deep sage fill with light, semibold words (7.51:1), instead of a pale sage with brown words (4.70:1). Secondary and quiet buttons are unchanged, so the one main action stands out more.
+- **A check-in on a day other than Monday.** The calendar reminder has a **Check-in day** picker (Monday by default), on the first visit and in a new **Your check-in reminder** section on the check-in page. The choice is saved with the settings and goes into the calendar file and the wording ("Come back Thursday", "See you next Thursday"). Weeks and the weekly goal still run Monday to Sunday.
+- **Not done: badges or awards for applying.** The reviewer called it optional. The weekly goal and "Goal met" already give some of this.
+
+### Contrast after the changes
+
+`npm run check:contrast -- --md`, now with one more pair (the tick beside "Saved."):
+
+| Pair | Where | Text | Background | Ratio | Needs | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| Body text | pages, labels, headings | `--ink` #2a1d14 | `--bg` #ebe2d0 | 12.70:1 | 4.5:1 | ✓ pass |
+| Body text on a card | cards, the header, the bottom bar, fields | `--ink` #2a1d14 | `--surface` #fffcf6 | 15.96:1 | 4.5:1 | ✓ pass |
+| Body text on a tint | Interviewing and new badges, pressed chips, the toast, hovered buttons, the current tab on a laptop | `--ink` #2a1d14 | `--accent-soft` #dde4d4 | 12.55:1 | 4.5:1 | ✓ pass |
+| Body text on grey | a nav link under the pointer on a laptop | `--ink` #2a1d14 | `--subtle` #efede7 | 13.96:1 | 4.5:1 | ✓ pass |
+| Body text on the error tint | the delete question | `--ink` #2a1d14 | `--error-soft` #fbe9e6 | 13.93:1 | 4.5:1 | ✓ pass |
+| Muted text | descriptions, hints, the footer, the Closed badge, disabled buttons | `--muted` #54412f | `--bg` #ebe2d0 | 7.50:1 | 4.5:1 | ✓ pass |
+| Muted text on a card | roles, dates, field hints, nav labels on a phone | `--muted` #54412f | `--surface` #fffcf6 | 9.43:1 | 4.5:1 | ✓ pass |
+| Muted text on grey | Quiet and date badges, the closed-application note | `--muted` #54412f | `--subtle` #efede7 | 8.25:1 | 4.5:1 | ✓ pass |
+| Muted text on a tint | counts in a pressed chip | `--muted` #54412f | `--accent-soft` #dde4d4 | 7.41:1 | 4.5:1 | ✓ pass |
+| Links | TextLink: ink text, underlined | `--ink` #2a1d14 | `--bg` #ebe2d0 | 12.70:1 | 4.5:1 | ✓ pass |
+| Links on a card | TextLink inside a card | `--ink` #2a1d14 | `--surface` #fffcf6 | 15.96:1 | 4.5:1 | ✓ pass |
+| Large headings | the h1 (40 to 64px) and serif h2s (24px) | `--ink` #2a1d14 | `--bg` #ebe2d0 | 12.70:1 | 3:1 | ✓ pass |
+| Primary button label | the one main action | `--accent-ink` #fffcf6 | `--accent` #3e5a3b | 7.51:1 | 4.5:1 | ✓ pass |
+| Primary button label, under the pointer | the one main action | `--accent-ink` #fffcf6 | `--accent-hover` #2f4a2d | 9.59:1 | 4.5:1 | ✓ pass |
+| Badge: Applied, Followed up | status | `--ink` #2a1d14 | `--surface` #fffcf6 | 15.96:1 | 4.5:1 | ✓ pass |
+| Badge: Interviewing, new | status, the row you just changed | `--ink` #2a1d14 | `--accent-soft` #dde4d4 | 12.55:1 | 4.5:1 | ✓ pass |
+| Badge: Offer | status | `--surface` #fffcf6 | `--ink` #2a1d14 | 15.96:1 | 4.5:1 | ✓ pass |
+| Badge: Closed (on the page) | status, dashed edge | `--muted` #54412f | `--bg` #ebe2d0 | 7.50:1 | 4.5:1 | ✓ pass |
+| Badge: Closed (on a card) | status, dashed edge | `--muted` #54412f | `--surface` #fffcf6 | 9.43:1 | 4.5:1 | ✓ pass |
+| Badge: Due, late | follow-up dates | `--late` #7a4300 | `--late-soft` #fbecd2 | 6.85:1 | 4.5:1 | ✓ pass |
+| Badge: Quiet, dates | gone quiet, plain dates | `--muted` #54412f | `--subtle` #efede7 | 8.25:1 | 4.5:1 | ✓ pass |
+| Error text | field errors on the page | `--error` #b02a1f | `--bg` #ebe2d0 | 5.10:1 | 4.5:1 | ✓ pass |
+| Error text on a card | field errors inside a card (Move data, the check-in) | `--error` #b02a1f | `--surface` #fffcf6 | 6.41:1 | 4.5:1 | ✓ pass |
+| Danger button label | Delete, at rest | `--error` #b02a1f | `--bg` #ebe2d0 | 5.10:1 | 4.5:1 | ✓ pass |
+| Danger button label, under the pointer | Delete | `--error` #b02a1f | `--error-soft` #fbe9e6 | 5.59:1 | 4.5:1 | ✓ pass |
+| Placeholder text | Link's https:// | `--muted` #54412f | `--surface` #fffcf6 | 9.43:1 | 4.5:1 | ✓ pass |
+| Tick beside "Saved." | the confirmation under Save to my list (an icon: 3:1) | `--accent` #3e5a3b | `--surface` #fffcf6 | 7.51:1 | 3:1 | ✓ pass |
+| Focus ring on the page | 2px ring, 2px from the control | `--focus` #2a1d14 | `--bg` #ebe2d0 | 12.70:1 | 3:1 | ✓ pass |
+| Focus ring on a card |  | `--focus` #2a1d14 | `--surface` #fffcf6 | 15.96:1 | 3:1 | ✓ pass |
+| Focus ring on a tint | inside the toast | `--focus` #2a1d14 | `--accent-soft` #dde4d4 | 12.55:1 | 3:1 | ✓ pass |
+| Focus ring on the error tint | inside the delete question | `--focus` #2a1d14 | `--error-soft` #fbe9e6 | 13.93:1 | 3:1 | ✓ pass |

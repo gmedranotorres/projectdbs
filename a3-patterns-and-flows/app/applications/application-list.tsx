@@ -32,8 +32,8 @@ import {
 // chip chosen is also remembered (lib/remember.ts): opening All without a
 // filter in the address shows that one again.
 //
-// Coming from Add (?new=), the new one sits on top, highlighted for a few
-// seconds, with focus on it.
+// Coming from Add (?new=), the new one sits on top, tagged "Just added" and
+// highlighted for a few seconds, with focus on it.
 
 type Filter = "all" | "applied" | "interviewing" | "offer" | "closed";
 
@@ -194,7 +194,16 @@ export function ApplicationList() {
                   status={app.status}
                   followUpOn={app.followUpOn ?? undefined}
                   href={`/applications/${app.id}?from=${here}`}
-                  hint={attention(app, today)}
+                  hint={
+                    app.id === newId ? (
+                      <>
+                        <Badge tone="new">Just added</Badge>
+                        {attention(app, today)}
+                      </>
+                    ) : (
+                      attention(app, today)
+                    )
+                  }
                   highlight={glow && app.id === newId}
                 />
               ))}

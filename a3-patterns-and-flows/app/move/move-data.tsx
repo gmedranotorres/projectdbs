@@ -92,7 +92,7 @@ export function MoveData() {
         />
         <p className="text-muted">
           Your applications are saved only in this browser. Download a backup on one device
-          and load it on the other, before your Monday check-in.
+          and load it on the other, before your next check-in.
         </p>
       </div>
 

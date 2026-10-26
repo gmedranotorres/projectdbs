@@ -61,6 +61,7 @@ const pairs = [
   ["Danger button label", "Delete, at rest", "error", "bg", 4.5],
   ["Danger button label, under the pointer", "Delete", "error", "error-soft", 4.5],
   ["Placeholder text", "Link's https://", "muted", "surface", 4.5],
+  ["Tick beside \"Saved.\"", "the confirmation under Save to my list (an icon: 3:1)", "accent", "surface", 3],
   ["Focus ring on the page", "2px ring, 2px from the control", "focus", "bg", 3],
   ["Focus ring on a card", "", "focus", "surface", 3],
   ["Focus ring on a tint", "inside the toast", "focus", "accent-soft", 3],

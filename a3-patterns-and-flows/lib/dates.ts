@@ -46,6 +46,16 @@ export function daysBetween(from: Day, to: Day): number {
   return Math.round((toDate(to).getTime() - toDate(from).getTime()) / 86400000);
 }
 
+// 0 for Sunday through 6 for Saturday, as Date.getDay() counts.
+export function weekdayOf(day: Day): number {
+  return toDate(day).getDay();
+}
+
+// `day` itself if it falls on `weekday`, otherwise the next one.
+export function nextWeekday(day: Day, weekday: number): Day {
+  return addDays(day, (weekday - weekdayOf(day) + 7) % 7);
+}
+
 // The Monday of the week `day` is in.
 export function startOfWeek(day: Day): Day {
   const weekday = toDate(day).getDay(); // 0 is Sunday

@@ -17,7 +17,7 @@ export function StatLink({
   return (
     <Link
       href={href}
-      className="group block h-full rounded-card border border-line bg-surface p-4 text-ink transition-colors state-hover:border-muted"
+      className="group block h-full rounded-card border border-line bg-surface p-4 text-ink shadow-raised transition-colors state-hover:border-muted"
     >
       <span className="block font-serif text-heading tabular-nums">{value}</span>{" "}
       <span className="mt-1 block text-sm font-medium underline decoration-accent-strong underline-offset-4 group-hover:decoration-ink group-hover:decoration-2">

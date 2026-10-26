@@ -46,6 +46,10 @@ export type Settings = {
   // shown as a suggestion.
   goalChosen?: true;
   lastCheckInOn?: Day;
+  // The weekday the calendar reminder repeats on: 0 is Sunday, 6 Saturday.
+  // Monday until the person picks another. Weeks (and the weekly goal)
+  // still run Monday to Sunday.
+  checkInDay?: number;
   // Hints the person closed, so they stay closed.
   dismissedHints: string[];
 };

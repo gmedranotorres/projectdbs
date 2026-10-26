@@ -84,6 +84,12 @@ export function readSettings(raw: unknown): Settings {
         : DEFAULT_SETTINGS.weeklyGoal,
     ...(r.goalChosen === true ? { goalChosen: true as const } : {}),
     ...(isDay(r.lastCheckInOn) ? { lastCheckInOn: r.lastCheckInOn } : {}),
+    ...(typeof r.checkInDay === "number" &&
+    Number.isInteger(r.checkInDay) &&
+    r.checkInDay >= 0 &&
+    r.checkInDay <= 6
+      ? { checkInDay: r.checkInDay }
+      : {}),
     dismissedHints: Array.isArray(r.dismissedHints)
       ? r.dismissedHints.filter((h): h is string => typeof h === "string")
       : [],

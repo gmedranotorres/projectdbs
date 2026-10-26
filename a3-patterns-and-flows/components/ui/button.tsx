@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
 
-// Calm's button, from A2. "primary" is the one main action in view,
+// Calm's button, from A2. "primary" is the one main action in view: a
+// filled deep-sage button with light, semibold words, so it stands out from
+// everything else on the page (after A3 feedback that CTAs were too quiet),
 // "secondary" is everything else, "quiet" is a minor action with no edge,
 // and "danger" is for deleting. Under the pointer a button takes the tint;
 // pressed, it gets a dark edge and moves down 1px. Disabled, its edge is
@@ -22,7 +24,7 @@ const sizes: Record<ButtonSize, string> = {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "border-transparent bg-accent text-accent-ink state-hover:bg-accent-hover state-active:border-ink state-active:bg-accent",
+    "border-transparent bg-accent font-semibold text-accent-ink shadow-raised state-hover:bg-accent-hover state-active:border-ink state-active:bg-accent state-active:shadow-none",
   secondary:
     "border-line-strong bg-transparent text-ink state-hover:bg-accent-soft state-active:border-ink state-active:bg-accent-soft",
   quiet:

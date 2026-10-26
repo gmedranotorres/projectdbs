@@ -4,8 +4,8 @@ import { STATUS_LABELS, type Status } from "@/lib/applications";
 import { formatDay, type Day } from "@/lib/dates";
 import { Badge, statusTone } from "./badge";
 
-// Calm's card, from A2: the surface color, a thin edge, large corners and
-// no shadow.
+// Calm's card, from A2: the surface color, a thin edge and large corners,
+// plus (since the A3 feedback) a soft shadow that lifts it off the page.
 export function Card({ className = "", ...props }: ComponentProps<"div">) {
   return (
     <div
@@ -19,7 +19,7 @@ export function Card({ className = "", ...props }: ComponentProps<"div">) {
 export function List({ className = "", ...props }: ComponentProps<"ul">) {
   return (
     <ul
-      className={`divide-y divide-line overflow-hidden rounded-card border border-line bg-surface ${className}`}
+      className={`divide-y divide-line overflow-hidden rounded-card border border-line bg-surface shadow-raised ${className}`}
       {...props}
     />
   );

@@ -8,7 +8,7 @@ import { formatDay, today as getToday } from "@/lib/dates";
 import { useApplications } from "@/hooks/useApplications";
 import { useBackLink } from "@/hooks/useBackLink";
 import { ApplicationForm } from "@/components/application-form";
-import { Button, Loading, PageHeader, useToast } from "@/components/ui";
+import { Button, Card, Loading, PageHeader, useToast } from "@/components/ui";
 
 // Log an application. Save application confirms with a toast and goes to
 // the list, with the new one on top. Save and add another confirms the same
@@ -96,18 +96,21 @@ export function AddApplication() {
           </Button>
         </p>
       )}
-      <ApplicationForm
-        key={round}
-        mode="add"
-        initial={draft && round === 0 ? draft : emptyForm(today)}
-        applications={store.applications}
-        today={today}
-        submitLabel="Save application"
-        addAnotherLabel="Save and add another"
-        autoFocus={round > 0}
-        onSaved={onSaved}
-        onChange={keepDraft}
-      />
+      {/* The form on a card of its own, so it reads as one thing to fill in. */}
+      <Card className="p-5 sm:p-6">
+        <ApplicationForm
+          key={round}
+          mode="add"
+          initial={draft && round === 0 ? draft : emptyForm(today)}
+          applications={store.applications}
+          today={today}
+          submitLabel="Save application"
+          addAnotherLabel="Save and add another"
+          autoFocus={round > 0}
+          onSaved={onSaved}
+          onChange={keepDraft}
+        />
+      </Card>
     </div>
   );
 }
