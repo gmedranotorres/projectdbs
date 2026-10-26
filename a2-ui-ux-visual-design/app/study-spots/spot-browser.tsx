@@ -150,13 +150,30 @@ export function SpotBrowser() {
         title={spot.name}
         type={spot.type}
       >
-        <Picture>
-          <SpotPicture
-            spot={spot}
-            place="panel"
-            sizes="(max-width: 40rem) 100vw, 26rem"
-          />
-        </Picture>
+        <figure>
+          <Picture>
+            <SpotPicture
+              spot={spot}
+              place="panel"
+              sizes="(max-width: 40rem) 100vw, 26rem"
+            />
+          </Picture>
+          {/* where the photo comes from, linked to its source */}
+          {spot.photo && spot.credit && (
+            <figcaption className={`${label} mt-2`}>
+              Photo:{" "}
+              <a
+                href={spot.credit.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ui-link"
+              >
+                {spot.credit.name}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </figcaption>
+          )}
+        </figure>
         {spot.also.length > 0 && (
           <ul role="list" className="flex flex-wrap gap-2">
             {spot.also.map((option) => (

@@ -6,7 +6,7 @@ The site is Hyde Park Study Spots: a guide that helps UChicago students decide w
 
 - Deliverables: three mood boards, three design systems built from them, and the site in the one style I choose. The homepage is the hub.
 - Stack: Next.js and Tailwind, static only. No database, backend, accounts, external APIs, or stored data; interactions are faked in the browser. Ask before adding any package.
-- Images are generated in code (SVG/CSS) or are my own photos in public/photos. No hotlinked images, and no real logos, university crests, or characters from real games.
+- Images are drawn in code, or are photos of my spots credited and linked to their source. No hotlinked images, and no real logos, university crests, or characters from real games.
 - Change only what I ask for; don't restyle things I didn't mention.
 - After each round, run npm run build, commit with a message that says what I asked for, and add a short entry to DECISIONS.md: what I asked, what changed, and what I rejected or decided myself.
 
