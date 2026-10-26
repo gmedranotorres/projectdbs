@@ -279,7 +279,7 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 **What I asked.** Turn the photos I put in `public/photos` into JPGs (1600px wide, under 400 KB, same slug names) with sips, and delete the originals. Delete the Ida Noyes photo and keep its drawing. Use each photo for its spot, with alt text describing what the photo shows, and put a "Photo: <credit>" line linked to its source under the photo in the detail panel. Change the images rule in AGENTS.md.
 
 **What changed.**
-- Seven photos in `public/photos`, all JPG and under 400 KB: harper-reading-room, regenstein, mansueto, crerar, keller-center, plein-air-cafe, build-coffee. The PNG and TIFF originals and the Ida Noyes photo were deleted.
+- Seven photos in `public/photos`, all JPG and under 400 KB (400,000 bytes, as Finder counts): harper-reading-room, regenstein, mansueto, crerar, keller-center, plein-air-cafe, build-coffee. The PNG and TIFF originals and the Ida Noyes photo were deleted.
 - Each of those spots has its photo, alt text written from what the photo shows, and a credit. Ida Noyes keeps its Calm scene (the bench on the Midway).
 - The detail panel shows "Photo: <credit>" under the photo; the credit links to its source page and opens in a new tab.
 - AGENTS.md: "Images are drawn in code, or are photos of my spots credited and linked to their source."
@@ -289,7 +289,8 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 **What I rejected.** The Ida Noyes photo (it shows the event theater, not the Cloister Club).
 
 **Choices Claude made that I have not reviewed yet.**
-- Photos were shrunk to 1600px wide only when they were wider. Four were narrower and kept their own width (Harper 1558px, Plein Air 964px, Keller 862px, Regenstein 410px), because stretching them adds file size but no detail. Harper was then shrunk to 1400px, because at 1558px it was still 466 KB at quality 52; at 1400px and quality 60 it is 394 KB. The site shows it at most about 370px wide.
+- Photos were shrunk to 1600px wide only when they were wider. Four were narrower and kept their own width (Harper 1558px, Plein Air 964px, Keller 862px, Regenstein 410px), because stretching them adds file size but no detail. Harper was then shrunk to 1320px, because at 1558px it was still 466 KB at quality 52. The site shows it at most about 370px wide.
 - Regenstein's photo is only 410px wide, so it looks a little soft on sharp screens.
 - The rest of the images rule was kept: "No hotlinked images, and no real logos, university crests, or characters from real games." Two photos show those in passing: the university seal is woven into Harper's carpet, and a screen on the left of the Crerar photo shows the University of Chicago name.
 - The credit sits under the photo in the panel only; the cards show the photo without a credit.
+- Harper and Mansueto were first saved at 404 KB and 407 KB, over the limit as Finder counts it, and pushed that way. They were then re-saved from those JPGs (Harper at 1320px wide, Mansueto at quality 70), because the originals had already been deleted.
