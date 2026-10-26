@@ -209,3 +209,51 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - The card picture on the Editorial page is the mood board's Midway map; the panel picture is its halftone dots.
 - Section numbers use lining figures, because Playfair Display's old-style 1 reads as a capital I. Calm and Arcade look the same as before.
 - Arcade and Editorial both have square corners, as my mood board brief said. They differ from each other in fonts, edge width, shadow, focus ring and color.
+
+## Round 8 · 2026-10-25 · Peer feedback round
+
+**What I asked.** Answer two classmates' comments on Assignment 2, changing only what I listed: better contrast for small text (Ariel), photo slots (Ariel), more of the Calm mood board's visuals on the site (Gbenga), and more ways to filter (Gbenga). Check the site at 390px and 1440px, with the keyboard only and with reduced motion, and run the build.
+
+**What changed, and the feedback each change answers.**
+- *Ariel: "small light text is hard to read on the beige and tan backgrounds."* Changed in the Calm tokens (`themes/calm.ts`), so the site and `/design-systems/calm` both changed. Cards, the detail panel, fields and chips are now plain white (`#FFFFFF`, was warm white `#FBF7EE`); oat paper is only the page background. Muted text is now `#564538` (was walnut `#6B5848`): walnut darkened with brown ink, still warm brown. The Color roles section shows the new hex values and ratios, worked out in code with the WCAG formula.
+- Contrast before and after, for every pair that changed:
+
+  | Pair | Before | After |
+  | --- | --- | --- |
+  | Muted text on background (labels, the count) | 5.24:1 | 7.08:1 |
+  | Muted text on surface (labels on cards, placeholder text) | 6.31:1 | 9.11:1 |
+  | Muted text on accent tint (a list row's note under the pointer) | 5.18:1 | 7.00:1 |
+  | Text on surface (card names, chip text, field text) | 12.69:1 | 13.57:1 |
+  | Text on accent, hovered (primary button under the pointer) | 5.92:1 | 5.99:1 |
+  | Surface on text (the strong badge) | 12.69:1 | 13.57:1 |
+  | Control outline on background (a mark, needs 3:1) | 5.24:1 | 7.08:1 |
+  | Control outline on surface (a mark, needs 3:1) | 6.31:1 | 9.11:1 |
+  | Deeper accent on surface, and surface on deeper accent (marks) | 4.00:1 | 4.27:1 |
+  | Disabled text on background (design system page only) | 2.92:1 | 3.51:1 |
+  | Disabled text on surface (design system page only) | 3.22:1 | 4.00:1 |
+
+- *Ariel: "students choose a spot by how it looks."* Each spot has a `photo` field in `content/spots.ts`: `"/photos/<id>.jpg"` once I add my own photo to `public/photos`, `null` until then. All eight are `null` for now. The ids are the slugs I gave (harper-reading-room, regenstein, ida-noyes, mansueto, crerar, keller-center, plein-air-cafe, build-coffee). Cards show the picture at the top, 4:3, with rounded corners and the card's 1px line; the detail panel shows it larger. Photos go through next/image, with alt text that describes the place. No photo was downloaded or hotlinked.
+- *Gbenga: "more of the mood board's visual elements should reach the site."* While a spot's photo is `null`, its picture frame shows one of the Calm board's own scene components: the window light on a long table for Harper and Mansueto, the stack of books for Regenstein, the bench on the Midway for Ida Noyes, the reading lamp for Crerar, the plant for Keller, and the steaming mug for Plein Air and Build. A small reading lamp sits next to the site's title. No other sections were added.
+- *Gbenga: "one student may care about open late, another about coffee nearby."* The "Good for" chips are unchanged (All, Quiet & views, Big tables, Coworking; one at a time). A second row, "Also", has two chips that switch on and off and combine with any "Good for" choice: "Coffee nearby" (Harper Reading Room, Regenstein, Keller Center, Plein Air Café, Build Coffee & Books) and "Open late (finals)" (Regenstein, Mansueto). A spot shows when it matches the "Good for" choice and every "Also" chip that is on. The count says how many match ("5 of 8 spots"). When nothing matches, the design system's empty state says "No spots match these filters", and its "Clear filters" button goes back to All. The detail panel shows the spot's badges: "Coffee nearby", "Open until 4 a.m. in finals". The Calm design system's Components section has a new "Also" chips specimen.
+- Checked in Chrome at 390px (1 column) and 1440px (3 columns): no sideways scrolling; with the keyboard (Tab reaches ← Hub, the "Good for" row, both "Also" chips and every card; Enter opens a card's panel; Escape closes it and the focus goes back to the card); and with reduced motion on (nothing animates, nothing slides). A scan of every piece of text on the site found none under 4.5:1; the lowest is the "Get directions" label, 4.71:1. A test photo, made for the check and then deleted, showed that next/image loads a photo into the card and the panel with its alt text. `npm run build` passes.
+
+**What I decided myself.**
+- Only my own photos go in `public/photos`: nothing downloaded or hotlinked.
+- The "Good for" chips stay as they are, one choice at a time; the "Also" chips are a second row that combines with them.
+- Which spots are "Coffee nearby" and "Open late (finals)".
+
+**What I decided not to do, and why.**
+- No live Google Maps data (opening hours, busy times, ratings). The site is static, with no external APIs.
+- No hours, distances or ratings I haven't verified. The only hour on the site is the 4 a.m. finals closing my own notes give for Regenstein and Mansueto.
+
+**Choices Claude made that I have not reviewed yet.**
+- My instruction was to darken muted text until every text pair reached 4.5:1, but every pair already did (the lowest was 5.24:1). So the target became 7:1 on the page background, the level WCAG asks of small text at AAA. The theme works the color out with that rule, so changing 7 in `themes/calm.ts` changes it.
+- Disabled controls stay under 4.5:1 (3.51:1 at worst), because the shared stylesheet fades them to 70%. WCAG does not ask contrast of disabled controls, and the site has none; the design system page shows them in Control states.
+- The surface is pure white, not a color from the mood board. The scenes inside the picture frames keep the board's own colors.
+- The "Good for" row now has a visible label, "Good for", so it matches the labeled "Also" row (it had a hidden label, "Filter the spots").
+- The card's picture is framed inside the card's padding, so all four corners are rounded. The card's small arrow moved to the bottom corner, below the picture. This is a new option on the shared card (`picture`), so the Arcade and Editorial pages did not change.
+- Two scenes appear twice: the long table (Harper, Mansueto) and the mug (Plein Air, Build). The lamp beside the title is the board's reading lamp, which Crerar also uses. To show the lamp more than once, it now takes an id the way the long table already does; the drawing did not change.
+- The alt text for each spot is written from my notes (for example "Long tables under the glass dome of the Mansueto Grand Reading Room"). I should check each one against my photo when I add it.
+- The badges are a list of words in the panel only; the cards keep their one "Good for" badge.
+- The "Also" chips are checkboxes and the "Good for" chips are radios, so Space switches an "Also" chip and the arrow keys change the "Good for" choice. Enter alone does neither.
+- The design system's empty-state wording, "No spots match this filter", became "No spots match these filters" on the site, because two rows can be on at once.

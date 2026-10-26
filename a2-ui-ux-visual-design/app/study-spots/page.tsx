@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import { ReadingLamp } from "@/app/mood-boards/calm/art/scenes";
+import { calmVars } from "@/app/mood-boards/calm/palette";
 import { CanvasColor } from "@/components/mood-board/canvas-color";
 import { grain } from "@/components/mood-board/grain";
 import { InlineLink } from "@/components/ui/link";
@@ -37,7 +39,16 @@ export default function Page() {
           <InlineLink href="/" className="inline-flex h-11 items-center">
             ← Hub
           </InlineLink>
-          <h1 className="ui-display mt-4 sm:mt-8">{siteName}</h1>
+          <div className="mt-4 flex items-center gap-4 sm:mt-8 sm:gap-6">
+            {/* the mood board's reading lamp, as a small mark */}
+            <div
+              className="ui-frame size-14 flex-none overflow-hidden rounded-(--ui-radius-md) sm:size-20"
+              style={calmVars}
+            >
+              <ReadingLamp id="site-header-lamp" />
+            </div>
+            <h1 className="ui-display">{siteName}</h1>
+          </div>
           <p className="mt-3 max-w-2xl">{siteIntro}</p>
         </header>
 

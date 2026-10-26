@@ -13,7 +13,8 @@ import { UiStates } from "./ui-states";
 
 // A design system page: the same six numbered sections for every style.
 // A style brings its theme, its fonts, a page background and two pictures
-// from its mood board; everything else is shared.
+// from its mood board, and may add components only it shows; everything
+// else is shared.
 export function DesignSystemPage({
   theme,
   slug,
@@ -22,6 +23,7 @@ export function DesignSystemPage({
   background,
   cardMedia,
   panelMedia,
+  moreComponents,
 }: {
   theme: Theme;
   // the style's name in addresses and ids: "calm"
@@ -35,6 +37,8 @@ export function DesignSystemPage({
   // pictures from the mood board, for the card and the detail panel
   cardMedia: ReactNode;
   panelMedia: ReactNode;
+  // specimens for section 4 that only this style's site uses
+  moreComponents?: ReactNode;
 }) {
   // The ids carry the style's name, so a link to "#calm-components" can
   // never land on another design system's section.
@@ -128,7 +132,12 @@ export function DesignSystemPage({
           {...sections[3]}
           intro="Every component the site could use. They all work: try them with the mouse and with the keyboard."
         >
-          <Gallery slug={slug} cardMedia={cardMedia} panelMedia={panelMedia} />
+          <Gallery
+            slug={slug}
+            cardMedia={cardMedia}
+            panelMedia={panelMedia}
+            extra={moreComponents}
+          />
         </Section>
 
         <Section

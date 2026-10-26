@@ -108,17 +108,19 @@ export function LongTable({ id = "calm-table" }: { id?: string }) {
 }
 
 // A pendant lamp with a sage shade, and its pool of light on an open book.
-export function ReadingLamp() {
+// `id` names the glow, for the same reason as in LongTable: the site shows
+// this lamp more than once.
+export function ReadingLamp({ id = "calm-lamp-glow" }: { id?: string }) {
   return (
     <svg viewBox="0 0 200 440" preserveAspectRatio={slice} className={svg} aria-hidden="true">
       <defs>
-        <linearGradient id="calm-lamp-glow" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" style={{ stopColor: "var(--warm-white)", stopOpacity: 0.95 }} />
           <stop offset="1" style={{ stopColor: "var(--warm-white)", stopOpacity: 0.15 }} />
         </linearGradient>
       </defs>
       <rect width="200" height="440" fill="var(--oat)" />
-      <path d="M56 206H144L204 396H-4Z" fill="url(#calm-lamp-glow)" />
+      <path d="M56 206H144L204 396H-4Z" fill={`url(#${id})`} />
       <path d="M100 0V150" stroke="var(--ink)" fill="none" />
       <circle cx="100" cy="210" r="10" fill="var(--warm-white)" stroke="var(--line)" />
       <path d="M52 204Q52 150 100 150Q148 150 148 204Z" fill="var(--sage)" stroke="var(--sage-deep)" />

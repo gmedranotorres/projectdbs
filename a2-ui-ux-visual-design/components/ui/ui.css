@@ -609,6 +609,23 @@
     border-bottom: var(--ui-line) solid var(--ui-border);
   }
 
+  .ui-picture {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: var(--ui-line) solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+  }
+
+  .ui-picture img {
+    object-fit: cover;
+  }
+
+  /* framed inside a card, in line with its text */
+  .ui-card > .ui-picture {
+    margin: var(--ui-space-4) var(--ui-space-4) 0;
+  }
+
   .ui-card-body {
     display: grid;
     gap: var(--ui-space-2);
@@ -665,6 +682,12 @@
     background: var(--ui-muted);
     mask: var(--ui-icon-right) center / contain no-repeat;
     pointer-events: none;
+  }
+
+  /* below a framed picture, the arrow moves to the bottom corner */
+  .ui-card:where(:has(> .ui-picture)) .ui-card-arrow {
+    top: auto;
+    bottom: var(--ui-space-4);
   }
 
   .ui-card:where(:has(.ui-card-trigger:hover), [data-state="hover"]) {

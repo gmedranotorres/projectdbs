@@ -1,11 +1,16 @@
 import { palette } from "@/app/mood-boards/calm/palette";
 import type { ColorRole, Theme } from "@/components/ui/theme";
-import { mix } from "@/lib/color";
+import { darkenToContrast, mix } from "@/lib/color";
 
 // Calm, as tokens. The colors are the Calm mood board's own palette (its
 // palette.ts), so a hex changed there changes the board, this design system
 // and the site together. Two colors are mixed from the palette, the same
 // way the board mixes them: the thin line and the deeper sage.
+//
+// Two depart from the board, for contrast (peer feedback round): surfaces
+// are plain white, so oat paper is only the page, and muted text is walnut
+// darkened with brown ink until it reaches 7:1 on oat paper, the level
+// WCAG asks of small text at AAA.
 
 const serif = "var(--newsreader), ui-serif, Georgia, serif";
 const sans = "var(--inter), ui-sans-serif, system-ui, sans-serif";
@@ -19,8 +24,8 @@ const colors: Theme["colors"] = {
   },
   surface: {
     label: "Surface",
-    hex: palette.warmWhite.hex,
-    from: palette.warmWhite.name,
+    hex: "#FFFFFF",
+    from: `white, lighter than ${palette.warmWhite.name}`,
     use: "Cards, panels and fields",
   },
   text: {
@@ -31,8 +36,8 @@ const colors: Theme["colors"] = {
   },
   muted: {
     label: "Muted text",
-    hex: palette.walnut.hex,
-    from: palette.walnut.name,
+    hex: darkenToContrast(palette.walnut.hex, palette.oat.hex, palette.ink.hex, 7),
+    from: `${palette.walnut.name}, darkened with ${palette.ink.name} to 7:1 on ${palette.oat.name}`,
     use: "Labels and hints, and the outline of controls",
   },
   border: {

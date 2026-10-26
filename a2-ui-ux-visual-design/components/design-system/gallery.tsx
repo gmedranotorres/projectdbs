@@ -12,6 +12,8 @@ import { SpotDemo } from "./spot-demo";
 
 // Section 4. Every component, live, filled with the site's own content.
 //
+// `extra` is specimens only one style shows, placed after the filter chips.
+//
 // `slug` names the style. It goes into the names of the radio groups: the
 // browser treats radios with one name as one group across the whole
 // document, and Next.js can keep two design system pages in it at once.
@@ -19,10 +21,12 @@ export function Gallery({
   slug,
   cardMedia,
   panelMedia,
+  extra,
 }: {
   slug: string;
   cardMedia: ReactNode;
   panelMedia: ReactNode;
+  extra?: ReactNode;
 }) {
   return (
     <div className="grid gap-x-10 gap-y-12 md:grid-cols-2 xl:grid-cols-3">
@@ -139,6 +143,8 @@ export function Gallery({
           </div>
         </fieldset>
       </Specimen>
+
+      {extra}
 
       <Specimen title="Tabs" note="The arrow keys change tab.">
         <Tabs

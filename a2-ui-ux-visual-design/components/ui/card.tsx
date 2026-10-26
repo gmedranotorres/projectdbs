@@ -4,7 +4,8 @@ import type { MouseEvent, ReactNode } from "react";
 import "./ui.css";
 
 // A card for one study spot: an optional picture, a small label, the
-// spot's name, and whatever else it needs.
+// spot's name, and whatever else it needs. `media` runs edge to edge across
+// the top; `picture` is framed inside the card instead (see Picture).
 //
 // With `onOpen`, the whole card opens something: its name becomes a button
 // stretched over the card, so a click anywhere on it, or Enter or Space
@@ -15,6 +16,7 @@ export function SpotCard({
   name,
   type,
   media,
+  picture,
   actions,
   children,
   onOpen,
@@ -26,6 +28,7 @@ export function SpotCard({
   type?: string;
   // a picture drawn in code, or a photo
   media?: ReactNode;
+  picture?: ReactNode;
   // the card's buttons, for a card that does not open as a whole
   actions?: ReactNode;
   // anything else about the spot, such as a badge
@@ -48,6 +51,7 @@ export function SpotCard({
       data-state={forced}
     >
       {media && <div className="ui-card-media">{media}</div>}
+      {picture && <Picture>{picture}</Picture>}
       <div className="ui-card-body">
         {type && <p className="ui-label ui-muted">{type}</p>}
         <Heading className="ui-heading">
@@ -65,4 +69,10 @@ export function SpotCard({
       {onOpen && <span className="ui-card-arrow" aria-hidden="true" />}
     </article>
   );
+}
+
+// A photo or a drawing in a 4:3 frame, with rounded corners and the theme's
+// thin line around it. A photo inside should fill it (next/image's `fill`).
+export function Picture({ children }: { children: ReactNode }) {
+  return <div className="ui-picture">{children}</div>;
 }
