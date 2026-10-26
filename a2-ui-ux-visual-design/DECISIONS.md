@@ -257,3 +257,19 @@ One entry per round: what I asked, what changed, and what I rejected or decided 
 - The badges are a list of words in the panel only; the cards keep their one "Good for" badge.
 - The "Also" chips are checkboxes and the "Good for" chips are radios, so Space switches an "Also" chip and the arrow keys change the "Good for" choice. Enter alone does neither.
 - The design system's empty-state wording, "No spots match this filter", became "No spots match these filters" on the site, because two rows can be on at once.
+
+## Round 9 · 2026-10-25 · Next.js security upgrade
+
+**What I asked.** Run the security upgrade that `npm run build` recommended, in this folder rather than in a separate worktree.
+
+**What changed.**
+- Next.js 16.4.0 → 16.4.3, and eslint-config-next to match, both pinned to exact versions as before. 16.4.3 is a patch release on the same 16.4 line. It fixes three advisories against 16.0.0–16.4.0: remote code execution in the Image Optimization API with SVG files (critical), remote code execution in `use cache` functions returning typed arrays, and a denial of service in App Router Server Actions. `npm audit` now finds 0 vulnerabilities.
+- Only `package.json` and `package-lock.json` changed. No app code changed.
+- `npm run build` passes on the first run (16.4.0 stopped every build once with the security warning). The Round 8 checks were run again on the new build with the same results: 390px and 1440px, keyboard, reduced motion, and the contrast scan. Every page loads.
+
+**What I decided myself.** Upgrade in this folder.
+
+**What I rejected.** Nothing.
+
+**Choices Claude made that I have not reviewed yet.**
+- The upgrade was done with `npm install`, not with `next upgrade --agent=security`. That command hands the upgrade to an AI agent, which would also add an `experimental.agentUpgrade` setting to `next.config.ts` and send a usage report to Vercel. Neither is needed to fix the vulnerability.
