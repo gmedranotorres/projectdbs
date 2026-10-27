@@ -7,7 +7,7 @@ import {
   isDay,
   type Day,
 } from "./dates";
-import { newId, readApplication, readSettings } from "./records";
+import { isWebLink, newId, readApplication, readSettings } from "./records";
 import {
   OPEN_STATUSES,
   type Application,
@@ -303,10 +303,6 @@ export function formFrom(app: Application): FormValues {
     link: app.link,
     notes: app.notes,
   };
-}
-
-function isWebLink(value: string): boolean {
-  return /^https?:\/\//i.test(value);
 }
 
 // The longest each field can be, in characters.

@@ -9,6 +9,10 @@ import {
   type Status,
 } from "./types";
 
+export function isWebLink(value: string): boolean {
+  return /^https?:\/\//i.test(value);
+}
+
 // Checking records that come from outside the database: a backup or export
 // file. What the database sends back is already checked by its own
 // constraints (hooks/useData.ts).
@@ -73,7 +77,8 @@ export function readApplication(raw: unknown): Application | null {
     interviewOn: optionalDay(r.interviewOn),
     followUpOn: optionalDay(r.followUpOn),
     contact: text(r.contact),
-    link: text(r.link),
+    // Only a web link; anything else (javascript:, data:) is dropped.
+    link: isWebLink(text(r.link)) ? text(r.link) : "",
     notes: text(r.notes),
     lastTouchedOn: r.lastTouchedOn,
     createdAt: text(r.createdAt) || r.updatedAt,

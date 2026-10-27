@@ -1062,3 +1062,14 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **Fixed in the test, not the app.** The link name allows that one optional space and must otherwise match from start to end. The timeout wasn't raised; slowness wasn't the cause.
 - **Cleanup bug fixed.** A saved application now goes on the cleanup list as soon as the save is confirmed, before the visibility check. The failed run had left "Example Co A 1793121086188-04uk" in user A's account. Claude looked it up and deleted that one row by id.
 - **ESLint ignores Playwright's output** (`playwright-report`, `test-results`, `playwright/.clerk`). After a failure, the report holds the trace viewer's bundled JavaScript, and lint reported 3,064 problems in it.
+
+## Security review findings
+
+**What I asked.** List each /security-review finding as fixed, false positive or not done; fix the real ones and commit.
+
+**What changed.**
+- **Fixed: imported links.** `readApplication` in `lib/records.ts` now blanks any link in a backup file that doesn't start with http:// or https://. `isWebLink` moved there from `lib/applications.ts`, which imports it, so the form and the import use the same check.
+
+**What I rejected or decided myself.**
+- **False positives, left as they are:** backup import overwriting another person's rows (row-level security blocks it, and `user_id` is never sent); shared Find jobs cache (it holds only public listings, and the route checks sign-in); harmful job links from The Muse (React 19 blocks `javascript:`, and links open with `noopener noreferrer`); the `?from=` back link (only five exact Seguimiento paths are followed).
+- **Not done:** revoking EXECUTE on `rls_auto_enable()`. The advisor flagged it, but the function came with the Supabase project, not this branch.
