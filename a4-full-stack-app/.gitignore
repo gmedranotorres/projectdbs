@@ -42,3 +42,8 @@ next-env.d.ts
 
 # personal notes (never commit)
 Gabriela_Personal_Profile.md
+
+# playwright
+/playwright/.clerk
+/test-results
+/playwright-report

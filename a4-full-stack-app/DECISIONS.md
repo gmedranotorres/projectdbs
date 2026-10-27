@@ -1041,3 +1041,24 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **The results aren't sorted by date,** because The Muse doesn't return them that way. The page doesn't claim an order.
 - **Defaults are Data and Analytics, Entry Level.** Data Science had only 2 Chicago jobs when checked, so "nothing found" will be common there.
 - **Signed out, the proxy redirects `/api/jobs` to sign-in** before the route runs. The route's own 401 is the backup.
+
+## Playwright isolation test (Oct 27, 2026)
+
+**What I asked.** Set up Playwright with `@clerk/testing`: `clerkSetup()` in a global setup, a webServer running `npm run dev`, and `.env.local` loaded in `playwright.config` without Claude reading it. One test, `tests/isolation.spec.ts`: users A and B each sign in with `clerk.signIn({ page, emailAddress })` in their own browser context and save an application with a unique company name. Each list shows its own company and not the other's. Both applications are deleted at the end. Ignore `playwright/.clerk`, `test-results` and `playwright-report`. Don't run it.
+
+**What changed.**
+- Added `@playwright/test` and `@clerk/testing` as dev dependencies.
+- `playwright.config.ts` loads `.env.local` with Node's own `process.loadEnvFile` (no new package), and still runs without the file, as in CI. It starts or reuses `npm run dev` on port 3000, and runs Chromium with traces kept on failure.
+- `tests/global-setup.ts` calls `clerkSetup()`. It reads `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`.
+- `tests/isolation.spec.ts` follows the steps above through the real screens. Applications are logged on Add and found on All applications by their "Open" link's accessible name. Deletion goes through the application page.
+
+**What I rejected or decided myself.**
+- **Cleanup always runs.** Even if a check fails, every application the test saved is deleted. The first failure is the one reported.
+- **Company names are "Example Co A …" and "Example Co B …" with a timestamp,** openly fictional and unique per run.
+- **No saved sign-in (`storageState`).** Signing in fresh each run is the point of the test. `playwright/.clerk` is ignored anyway, as asked.
+- **Checked only that Playwright finds the test** (`playwright test --list`, which starts no server and runs nothing).
+
+**After the first run failed.** The page snapshot showed the list loaded and the link present, but named "Open : Data Analyst at …". Chrome puts a space before the colon because the screen-reader-only span is its own box. The test wanted "Open: …".
+- **Fixed in the test, not the app.** The link name allows that one optional space and must otherwise match from start to end. The timeout wasn't raised; slowness wasn't the cause.
+- **Cleanup bug fixed.** A saved application now goes on the cleanup list as soon as the save is confirmed, before the visibility check. The failed run had left "Example Co A 1793121086188-04uk" in user A's account. Claude looked it up and deleted that one row by id.
+- **ESLint ignores Playwright's output** (`playwright-report`, `test-results`, `playwright/.clerk`). After a failure, the report holds the trace viewer's bundled JavaScript, and lint reported 3,064 problems in it.
