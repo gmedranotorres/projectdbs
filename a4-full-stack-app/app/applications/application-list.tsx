@@ -35,12 +35,13 @@ import {
 // Coming from Add (?new=), the new one sits on top, tagged "Just added" and
 // highlighted for a few seconds, with focus on it.
 
-type Filter = "all" | "applied" | "interviewing" | "offer" | "closed";
+type Filter = "all" | "interested" | "applied" | "interviewing" | "offer" | "closed";
 
-// The same four looks as the status badges: Followed up counts as Applied;
+// The same five looks as the status badges: Followed up counts as Applied;
 // Rejected, Withdrawn and No response as Closed.
 const FILTERS: { id: Filter; label: string; empty: string }[] = [
   { id: "all", label: "All", empty: "" },
+  { id: "interested", label: "Interested", empty: "No saved jobs yet. Find some on Find jobs." },
   { id: "applied", label: "Applied", empty: "Nothing in Applied right now." },
   { id: "interviewing", label: "Interviewing", empty: "No interviews yet." },
   { id: "offer", label: "Offer", empty: "No offers yet." },

@@ -147,6 +147,10 @@ export function ApplicationForm({
       : stage === "closed" ? (was && !isOpen(was) ? was : "closed")
       : stage;
     const next = { ...values, status };
+    // Leaving Interested means applying now: Applied on was the day it was
+    // saved, so it becomes today (and back again on returning).
+    if (values.status === "interested" && stage !== "interested") next.appliedOn = today;
+    if (stage === "interested" && was === "interested") next.appliedOn = before!.appliedOn;
     if (stage === "interviewing") {
       if (followUpIsMine) setDateBeforeSuggestion(values.followUpOn);
       next.followUpOn = addDays(today, 3);
@@ -295,7 +299,11 @@ export function ApplicationForm({
         </Select>
       </Field>
 
-      <Field id={fid("appliedOn")} label="Applied on" error={errors.appliedOn}>
+      <Field
+        id={fid("appliedOn")}
+        label={values.status === "interested" ? "Saved on" : "Applied on"}
+        error={errors.appliedOn}
+      >
         <Input
           name="appliedOn"
           type="date"

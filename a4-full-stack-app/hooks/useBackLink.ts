@@ -13,6 +13,7 @@ const PLACES: Record<string, string> = {
   "/check-in": "This week",
   "/applications": "All applications",
   "/add": "Log an application",
+  "/jobs": "Find jobs",
 };
 
 export type BackLink = { href: string; label: string };

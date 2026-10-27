@@ -66,6 +66,9 @@ export function readApplication(raw: unknown): Application | null {
     role: text(r.role),
     status: r.status,
     sponsorship: isSponsorship(r.sponsorship) ? r.sponsorship : "unknown",
+    // Backups made before Find jobs were all logged by hand.
+    source: r.source === "muse" && Number.isInteger(r.museJobId) ? "muse" : "manual",
+    museJobId: r.source === "muse" && Number.isInteger(r.museJobId) ? (r.museJobId as number) : null,
     appliedOn: r.appliedOn,
     interviewOn: optionalDay(r.interviewOn),
     followUpOn: optionalDay(r.followUpOn),

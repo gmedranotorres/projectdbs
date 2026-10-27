@@ -7,6 +7,7 @@ import {
   daysQuiet,
   dueLabel,
   groupAll,
+  markApplied,
   markFollowedUp,
   plural,
   postpone,
@@ -140,14 +141,26 @@ export function ThisWeek() {
                     <Badge tone={app.followUpOn! < today ? "due" : "neutral"}>{dueLabel(app, today)}</Badge>
                   </AppHeading>
                   <div className="flex flex-wrap gap-2">
-                    <Button
-                      onClick={() => {
-                        const next = markFollowedUp(app, today);
-                        act(app, next, `Followed up with ${app.company}. Next follow-up ${formatDay(next.followUpOn!)}.`);
-                      }}
-                    >
-                      Followed up<span className="sr-only">: {app.company}</span>
-                    </Button>
+                    {/* A saved job's next step is applying, not following up. */}
+                    {app.status === "interested" ? (
+                      <Button
+                        onClick={() => {
+                          const next = markApplied(app, today);
+                          act(app, next, `Marked ${app.company} Applied. Next follow-up ${formatDay(next.followUpOn!)}.`);
+                        }}
+                      >
+                        I applied<span className="sr-only">: {app.company}</span>
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          const next = markFollowedUp(app, today);
+                          act(app, next, `Followed up with ${app.company}. Next follow-up ${formatDay(next.followUpOn!)}.`);
+                        }}
+                      >
+                        Followed up<span className="sr-only">: {app.company}</span>
+                      </Button>
+                    )}
                     <Button
                       variant="secondary"
                       onClick={() => {

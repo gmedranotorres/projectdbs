@@ -50,10 +50,10 @@ export function Notice({
 
 // Shown while the browser reads saved data. It has no visible words so a
 // quick load doesn't flash text.
-export function Loading() {
+export function Loading({ label = "Loading your applications…" }: { label?: string }) {
   return (
     <div aria-busy="true" className="space-y-4">
-      <p className="sr-only">Loading your applications…</p>
+      <p className="sr-only">{label}</p>
       <div className="h-8 w-48 animate-pulse rounded-md bg-subtle" />
       <div className="h-28 animate-pulse rounded-xl bg-subtle" />
       <div className="h-28 animate-pulse rounded-xl bg-subtle" />

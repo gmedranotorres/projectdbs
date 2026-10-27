@@ -26,9 +26,9 @@ Data lives in Supabase, one set of rows per signed-in Clerk user. Clerk is Supab
 - job_url text not null default ''
 - source text not null default 'manual': 'manual' or 'muse'
 - muse_job_id bigint: set only when source is 'muse'; unique per user
-- status text not null: applied, followed-up, interviewing, offer (open); rejected, withdrawn, no-response (closed)
+- status text not null: interested, applied, followed-up, interviewing, offer (open); rejected, withdrawn, no-response (closed). Interested is a job saved from Find jobs, not applied to yet
 - sponsorship text not null default 'unknown': 'sponsors', 'doesnt_sponsor' or 'unknown'
-- applied_on date not null
+- applied_on date not null: while interested, the day it was saved
 - interview_on date: only while interviewing
 - next_follow_up date: empty once the application is closed
 - contact text not null default ''

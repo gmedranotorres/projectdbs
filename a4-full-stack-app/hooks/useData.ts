@@ -25,12 +25,12 @@ import type { Application, Settings, Sponsorship, Status } from "@/lib/types";
 
 type Client = ReturnType<typeof useSupabase>;
 
-// Everything but user_id, source and muse_job_id, which nothing reads yet.
+// Everything but user_id.
 const APP_COLUMNS =
-  "id, company, role, job_url, sponsorship, status, applied_on, interview_on, next_follow_up, contact, notes, last_touched_on, created_at, updated_at";
+  "id, company, role, job_url, source, muse_job_id, sponsorship, status, applied_on, interview_on, next_follow_up, contact, notes, last_touched_on, created_at, updated_at";
 const SETTINGS_COLUMNS = "weekly_goal, goal_chosen, last_check_in_on, check_in_day, dismissed_hints";
 
-type AppRow = Omit<Tables<"applications">, "user_id" | "source" | "muse_job_id">;
+type AppRow = Omit<Tables<"applications">, "user_id">;
 type SettingsRow = Omit<Tables<"user_settings">, "user_id" | "updated_at">;
 
 // ---- Rows and records ---------------------------------------------------
@@ -44,6 +44,8 @@ function fromRow(r: AppRow): Application {
     role: r.role,
     status: r.status as Status,
     sponsorship: r.sponsorship as Sponsorship,
+    source: r.source === "muse" ? "muse" : "manual",
+    museJobId: r.muse_job_id,
     appliedOn: r.applied_on,
     interviewOn: r.interview_on,
     followUpOn: r.next_follow_up,
@@ -65,6 +67,8 @@ function toRow(app: Application) {
     company: app.company,
     role: app.role,
     job_url: app.link,
+    source: app.source,
+    muse_job_id: app.museJobId,
     sponsorship: app.sponsorship,
     status: app.status,
     applied_on: app.appliedOn,
@@ -193,6 +197,12 @@ function actions(client: Client) {
         .insert(toRow(app))
         .select(APP_COLUMNS)
         .single();
+      // A job from Find jobs already saved, on another device: read it back
+      // and treat it as saved.
+      if (error?.code === "23505" && app.museJobId !== null) {
+        await reload(client);
+        return ready()?.applications.find((a) => a.museJobId === app.museJobId) ?? null;
+      }
       if (error) return null;
       const saved = fromRow(data);
       change({ applications: [...(ready()?.applications ?? []), saved] });

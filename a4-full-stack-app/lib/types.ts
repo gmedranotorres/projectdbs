@@ -7,8 +7,8 @@ import type { Day } from "./dates";
 export type { Day };
 
 // Open ones have a follow-up date. An offer is open: answering it is the
-// next step.
-export const OPEN_STATUSES = ["applied", "followed-up", "interviewing", "offer"] as const;
+// next step. Interested is a job saved from Find jobs, not applied to yet.
+export const OPEN_STATUSES = ["interested", "applied", "followed-up", "interviewing", "offer"] as const;
 export const CLOSED_STATUSES = ["rejected", "withdrawn", "no-response"] as const;
 
 export type OpenStatus = (typeof OPEN_STATUSES)[number];
@@ -26,7 +26,11 @@ export type Application = {
   role: string;
   status: Status;
   sponsorship: Sponsorship;
-  // Calendar days, "2026-10-19", in the person's own time zone.
+  // Logged by hand, or saved from The Muse on Find jobs (with its job id).
+  source: "manual" | "muse";
+  museJobId: number | null;
+  // Calendar days, "2026-10-19", in the person's own time zone. While
+  // Interested, the day it was saved.
   appliedOn: Day;
   // Only while Interviewing, and only if given.
   interviewOn: Day | null;

@@ -3,7 +3,15 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
-import { SPONSORSHIP_TAGS, STATUS_LABELS, formFrom, groupOf, isOpen, markFollowedUp } from "@/lib/applications";
+import {
+  SPONSORSHIP_TAGS,
+  STATUS_LABELS,
+  formFrom,
+  groupOf,
+  isOpen,
+  markApplied,
+  markFollowedUp,
+} from "@/lib/applications";
 import { useData } from "@/hooks/useData";
 import { useBackLink } from "@/hooks/useBackLink";
 import { onEscape } from "@/lib/keys";
@@ -66,10 +74,12 @@ export function ApplicationDetail() {
   }
 
   const due = groupOf(app, today) === "due";
+  // A saved job's next step is applying, not following up.
+  const interested = app.status === "interested";
 
   async function followedUp() {
     if (!app) return;
-    const next = await store.update(markFollowedUp(app, today));
+    const next = await store.update(interested ? markApplied(app, today) : markFollowedUp(app, today));
     if (next) {
       setProblem(null);
       setRound((r) => r + 1);
@@ -111,7 +121,9 @@ export function ApplicationDetail() {
         <p className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted">
           <Badge tone={statusTone(app.status)}>{STATUS_LABELS[app.status]}</Badge>
           <Badge>{SPONSORSHIP_TAGS[app.sponsorship]}</Badge>
-          <span>Applied {formatDay(app.appliedOn)}</span>
+          <span>
+            {interested ? "Saved" : "Applied"} {formatDay(app.appliedOn)}
+          </span>
           <span>{app.followUpOn ? `Follow up ${formatDay(app.followUpOn)}` : "No follow-up"}</span>
           {/* The date is the fifth field below; this goes straight to it. */}
           {app.followUpOn && (
@@ -133,21 +145,21 @@ export function ApplicationDetail() {
           just-added application doesn't open on "Did you follow up?". */}
       {due ? (
         <Card className="space-y-3">
-          <h2 className="text-lg font-semibold">Did you follow up?</h2>
+          <h2 className="text-lg font-semibold">{interested ? "Did you apply?" : "Did you follow up?"}</h2>
           <p className="text-muted">
-            One tap marks it, and the next follow-up moves to{" "}
+            One tap marks it{interested ? " Applied" : ""}, and the next follow-up moves to{" "}
             {formatDay(addDays(today, 7))}, a week from today.
           </p>
           <Button onClick={followedUp} className="w-full sm:w-auto">
-            I followed up today
+            {interested ? "I applied today" : "I followed up today"}
           </Button>
         </Card>
       ) : (
         isOpen(app.status) && (
           <p className="flex flex-wrap items-center gap-x-3 text-sm text-muted">
-            Followed up early?
+            {interested ? "Applied already?" : "Followed up early?"}
             <Button variant="quiet" size="sm" onClick={followedUp}>
-              I followed up today
+              {interested ? "I applied today" : "I followed up today"}
             </Button>
           </p>
         )

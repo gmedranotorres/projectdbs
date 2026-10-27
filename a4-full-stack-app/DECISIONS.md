@@ -1024,3 +1024,20 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **Move data stays,** now as "keep a copy, or bring applications in from a file". That's the way to bring in data from the localStorage version: export it there, then load the file here. Combine writes only the newer rows in one request: either all of them save or none do. Import saves the file's rows first and only then deletes the others, so a failure never leaves you with nothing.
 - **The tag shows on All applications, not on Home's short list.** The request said "the list". Unknown is tagged too, since not knowing is worth seeing.
 - **The filter chip and the Add draft stay in localStorage,** as AGENTS.md says.
+
+## Find jobs (Oct 27, 2026)
+
+**What I asked.** A Find jobs page, linked in the header. The Muse is called from a route handler (`app/api/jobs/route.ts`), never from the browser, only for signed-in users, and cached for an hour to stay under 500 requests an hour. Filters: category (Data Science, Data and Analytics, exactly as The Muse names them) and level (Entry Level, Mid Level); location fixed to Chicago, IL. Each result shows title, company, level, publication date and a link to the posting. "Save to tracker" creates an application with source `muse`, status Interested, sponsorship unknown and a follow-up in 7 days; a saved job shows "Saved". Three Calm states: loading skeleton, nothing found, The Muse unavailable (with a link to add one by hand). In development only, `?simulate=down` forces the unavailable state.
+
+**What changed.**
+- `app/api/jobs/route.ts`: checks `auth()`, accepts only the offered filters, and calls The Muse from a `'use cache'` helper with `cacheLife('hours')`. Each search is fetched at most once an hour, and a failure isn't cached. It answers 401 signed out, 400 for other filters, and 503 when The Muse fails or with `?simulate=down` in development.
+- `app/jobs/`: the page. Category and level are chips, kept in the address like All applications' filter, with "Show more jobs" for the next 20. Saving moves focus to the new "Open" link and confirms with a toast. A failed save shows an inline error under that job.
+- **Interested status:** migration `add_interested_status` allows it and lets it keep a follow-up date. AGENTS.md's data model now lists it. It has its own badge look, Status option and list filter chip. While Interested, Applied on reads "Saved on". The check-in and the application page offer "I applied" instead of "I followed up", which marks it Applied today with a follow-up a week later. Saved jobs don't count toward the weekly goal until applied to.
+- Find jobs is fifth in the navigation, after All.
+
+**What I rejected or decided myself.**
+- **Interested was my choice among three.** The data model had no Interested status and applied_on is required. I picked a new open status with applied_on holding the save day, over making applied_on optional (larger change) or saving as Applied (untrue, and it would count toward the goal).
+- **The Muse needs a User-Agent header.** Without one, its CDN answers 403.
+- **The results aren't sorted by date,** because The Muse doesn't return them that way. The page doesn't claim an order.
+- **Defaults are Data and Analytics, Entry Level.** Data Science had only 2 Chicago jobs when checked, so "nothing found" will be common there.
+- **Signed out, the proxy redirects `/api/jobs` to sign-in** before the route runs. The route's own 401 is the backup.

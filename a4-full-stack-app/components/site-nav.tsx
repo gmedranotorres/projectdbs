@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
 
-// The same four places on every page. On a phone they sit in a bar at the
+// The same five places on every page. On a phone they sit in a bar at the
 // bottom, within reach of a thumb; from 768px up they move into the header.
 
 const icon = "size-6 md:hidden";
@@ -47,6 +47,17 @@ const ITEMS: { href: string; label: string; icon: ReactNode; matches: (p: string
     ),
   },
   {
+    href: "/jobs",
+    label: "Find jobs",
+    matches: (p) => p === "/jobs",
+    icon: (
+      <svg aria-hidden="true" viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+        <circle cx="10.5" cy="10.5" r="6" />
+        <path d="m15 15 5 5" />
+      </svg>
+    ),
+  },
+  {
     href: "/move",
     label: "Move data",
     matches: (p) => p === "/move",
@@ -74,7 +85,7 @@ export function SiteHeader({ children }: { children: ReactNode }) {
   );
 }
 
-// The four places in the header, on a laptop.
+// The five places in the header, on a laptop.
 export function HeaderNav() {
   return (
     <nav aria-label="Main" className="hidden md:block">
@@ -83,7 +94,7 @@ export function HeaderNav() {
   );
 }
 
-// On a phone, the same four places as a bar at the bottom. It comes last in
+// On a phone, the same five places as a bar at the bottom. It comes last in
 // the page, after the footer, so Tab moves top to bottom as you see it:
 // header, page, footer, bar. Only one of the two navs shows at a time.
 export function BottomNav() {
@@ -113,7 +124,7 @@ function CurrentNavItems() {
 
 function NavItems({ pathname }: { pathname: string | null }) {
   return (
-    <ul className="mx-auto grid max-w-3xl grid-cols-4 md:flex md:gap-1">
+    <ul className="mx-auto grid max-w-3xl grid-cols-5 md:flex md:gap-1">
       {ITEMS.map((item) => {
         const current = pathname !== null && item.matches(pathname);
         return (

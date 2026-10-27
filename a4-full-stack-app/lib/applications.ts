@@ -24,6 +24,7 @@ export type { Application, ClosedStatus, OpenStatus, Sponsorship, Status } from 
 // ---- The record ---------------------------------------------------------
 
 export const STATUS_LABELS: Record<Status, string> = {
+  interested: "Interested",
   applied: "Applied",
   "followed-up": "Followed up",
   interviewing: "Interviewing",
@@ -58,10 +59,11 @@ export const QUIET_AFTER_DAYS = 14;
 
 // What the Status field offers. Followed up shows as Applied, and the
 // three closed statuses as Closed, with the reason chosen separately.
-export const STAGES = ["applied", "interviewing", "offer", "closed"] as const;
+export const STAGES = ["interested", "applied", "interviewing", "offer", "closed"] as const;
 export type Stage = (typeof STAGES)[number];
 
 export const STAGE_LABELS: Record<Stage, string> = {
+  interested: "Interested",
   applied: "Applied",
   interviewing: "Interviewing",
   offer: "Offer",
@@ -81,6 +83,8 @@ export function suggestFollowUp(
   dates: { appliedOn: Day; today: Day },
 ): { day: Day | null; reason: string } {
   switch (status) {
+    case "interested":
+      return { day: addDays(dates.today, 7), reason: "1 week from today" };
     case "applied":
       return isDay(dates.appliedOn)
         ? { day: addDays(dates.appliedOn, 7), reason: "1 week after applying" }
@@ -105,6 +109,19 @@ export function markFollowedUp(app: Application, today: Day): Application {
     ...app,
     status: app.status === "interviewing" || app.status === "offer" ? app.status : "followed-up",
     followUpOn: app.followUpOn && app.followUpOn > weekOut ? app.followUpOn : weekOut,
+    lastTouchedOn: today,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+// "I applied" on a saved job: Applied today, with the usual follow-up a
+// week later.
+export function markApplied(app: Application, today: Day): Application {
+  return {
+    ...app,
+    status: "applied",
+    appliedOn: today,
+    followUpOn: addDays(today, 7),
     lastTouchedOn: today,
     updatedAt: new Date().toISOString(),
   };
@@ -197,8 +214,14 @@ export function groupAll(
 }
 
 // How many were logged on or after `monday`, by this device's calendar.
+// Saved jobs only count once applied to, in the week they were: whichever
+// is later, the day logged or the day applied.
 export function addedSince(apps: Application[], monday: Day): number {
-  return apps.filter((a) => dayOf(a.createdAt) >= monday).length;
+  return apps.filter((a) => {
+    if (a.status === "interested") return false;
+    const logged = dayOf(a.createdAt);
+    return (logged > a.appliedOn ? logged : a.appliedOn) >= monday;
+  }).length;
 }
 
 export function plural(n: number, word: string): string {
@@ -329,7 +352,8 @@ export function validate(input: FormValues, today: Day): FormErrors {
   }
 
   if (!isDay(applied)) {
-    errors.appliedOn = "Enter the date you applied.";
+    errors.appliedOn =
+      values.status === "interested" ? "Enter the date you saved it." : "Enter the date you applied.";
   } else if (applied > today) {
     errors.appliedOn = "Choose today or an earlier date.";
   }
@@ -399,6 +423,8 @@ export function toApplication(
     role: values.role,
     status: values.status as Status,
     sponsorship: values.sponsorship,
+    source: before?.source ?? "manual",
+    museJobId: before?.museJobId ?? null,
     appliedOn: values.appliedOn,
     interviewOn: values.status === "interviewing" && values.interviewOn ? values.interviewOn : null,
     followUpOn: open ? values.followUpOn : null,
@@ -411,6 +437,34 @@ export function toApplication(
         ? today
         : before.lastTouchedOn,
     createdAt: before?.createdAt ?? now,
+    updatedAt: now,
+  };
+}
+
+// A job from Find jobs, saved as Interested: Sponsorship unknown, and a
+// follow-up a week from today to decide whether to apply. The id and times
+// are placeholders, as in toApplication().
+export function fromMuseJob(
+  job: { id: number; title: string; company: string; url: string },
+  today: Day,
+): Application {
+  const now = new Date().toISOString();
+  return {
+    id: newId(),
+    company: oneLine(job.company).slice(0, LIMITS.company),
+    role: oneLine(job.title).slice(0, LIMITS.role),
+    status: "interested",
+    sponsorship: "unknown",
+    source: "muse",
+    museJobId: job.id,
+    appliedOn: today,
+    interviewOn: null,
+    followUpOn: addDays(today, 7),
+    contact: "",
+    link: job.url,
+    notes: "",
+    lastTouchedOn: today,
+    createdAt: now,
     updatedAt: now,
   };
 }

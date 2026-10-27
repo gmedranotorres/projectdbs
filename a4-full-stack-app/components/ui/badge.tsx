@@ -1,14 +1,15 @@
 import type { ReactNode } from "react";
 import type { Status } from "@/lib/applications";
 
-// Calm's badge, from A2: small corners and the label type role. Four looks
-// for status (Applied, Interviewing, Offer, Closed), and small tags for
+// Calm's badge, from A2: small corners and the label type role. Five looks
+// for status (Interested, Applied, Interviewing, Offer, Closed), and small tags for
 // when: "Due" (with a clock), "Quiet" (with a moon), a plain one for dates,
 // and "new" for the row you just changed. Every badge carries words, and
 // the strongest ones an icon or a dashed edge, so color is never the only
 // sign. Without children, a badge says its own name.
 
 export type BadgeTone =
+  | "interested"
   | "applied"
   | "interviewing"
   | "offer"
@@ -19,6 +20,7 @@ export type BadgeTone =
   | "new";
 
 const tones: Record<BadgeTone, string> = {
+  interested: "border-accent-strong bg-surface text-ink",
   applied: "border-line-strong bg-surface text-ink",
   interviewing: "border-accent-soft bg-accent-soft text-ink",
   offer: "border-ink bg-ink text-surface",
@@ -30,6 +32,7 @@ const tones: Record<BadgeTone, string> = {
 };
 
 const names: Partial<Record<BadgeTone, string>> = {
+  interested: "Interested",
   applied: "Applied",
   interviewing: "Interviewing",
   offer: "Offer",
@@ -42,6 +45,8 @@ const names: Partial<Record<BadgeTone, string>> = {
 // status's own ("Followed up", "Rejected"), so nothing is lost.
 export function statusTone(status: Status): BadgeTone {
   switch (status) {
+    case "interested":
+      return "interested";
     case "applied":
     case "followed-up":
       return "applied";
