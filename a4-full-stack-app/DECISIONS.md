@@ -1063,7 +1063,7 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **Cleanup bug fixed.** A saved application now goes on the cleanup list as soon as the save is confirmed, before the visibility check. The failed run had left "Example Co A 1793121086188-04uk" in user A's account. Claude looked it up and deleted that one row by id.
 - **ESLint ignores Playwright's output** (`playwright-report`, `test-results`, `playwright/.clerk`). After a failure, the report holds the trace viewer's bundled JavaScript, and lint reported 3,064 problems in it.
 
-## Security review findings
+## Security review findings (Oct 27, 2026)
 
 **What I asked.** List each /security-review finding as fixed, false positive or not done; fix the real ones and commit.
 
