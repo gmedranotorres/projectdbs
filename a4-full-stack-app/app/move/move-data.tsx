@@ -3,15 +3,16 @@
 import { useId, useState, type FormEvent } from "react";
 import { combine, plural, readBackup, toBackup, type Application } from "@/lib/applications";
 import { today as getToday } from "@/lib/dates";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import { useBackLink } from "@/hooks/useBackLink";
 import { downloadFile } from "@/lib/download";
 import { onEscape } from "@/lib/keys";
 import { Button, ButtonLink, Card, ErrorIcon, Field, Input, Loading, Notice, PageHeader } from "@/components/ui";
 
-// localStorage stays on one browser, so moving between the phone and the
-// laptop is a file: download it on one, load it on the other. Loading
-// combines instead of replacing, so changes made on both survive.
+// Applications are saved to the person's account, so every device they sign
+// in on has them. A backup file is a copy to keep, or a way to bring in
+// applications from a file, such as one exported before Seguimiento had
+// accounts. Loading combines instead of replacing, so nothing is lost.
 
 type Check = { incoming: Application[]; added: number; updated: number; total: number };
 
@@ -20,7 +21,7 @@ function focusSoon(id: string) {
 }
 
 export function MoveData() {
-  const store = useApplications();
+  const store = useData();
   const back = useBackLink();
   const fileId = useId();
   const [downloaded, setDownloaded] = useState<string | null>(null);
@@ -52,7 +53,7 @@ export function MoveData() {
     const incoming = readBackup(await file.text());
     if (!incoming) {
       setFileError(
-        "This file isn't a Seguimiento backup. Download a new one on your other device and try again.",
+        "This file isn't a Seguimiento backup. Choose a .json file downloaded from Seguimiento.",
       );
       focusSoon(fileId);
       return;
@@ -70,10 +71,10 @@ export function MoveData() {
     focusSoon(fileId);
   }
 
-  function confirmCombine() {
+  async function confirmCombine() {
     if (!check) return;
     const result = combine(apps, check.incoming);
-    if (!store.replaceAll(result.applications)) {
+    if (!(await store.combine(check.incoming))) {
       setSaveFailed(true);
       return;
     }
@@ -87,12 +88,12 @@ export function MoveData() {
       <div className="space-y-3">
         <PageHeader
           title="Move data"
-          description="Copy your applications between your phone and your laptop with a backup file."
+          description="Keep a copy of your applications in a file, or bring them in from one."
           back={back}
         />
         <p className="text-muted">
-          Your applications are saved only in this browser. Download a backup on one device
-          and load it on the other, before your next check-in.
+          Your applications are saved to your account, so every device you sign in on has them.
+          A backup file is a copy to keep, and a way to bring in applications from a file.
         </p>
       </div>
 
@@ -100,8 +101,7 @@ export function MoveData() {
         <Notice id="move-done">
           <div className="space-y-3">
             <p>
-              <strong>Combined.</strong> You now have {plural(done, "application")} on this
-              device.
+              <strong>Combined.</strong> You now have {plural(done, "application")} saved.
             </p>
             <ButtonLink href="/">Go to Home</ButtonLink>
           </div>
@@ -112,11 +112,11 @@ export function MoveData() {
         <h2 className="text-xl font-semibold">1. Download a backup</h2>
         {apps.length === 0 ? (
           <p className="text-muted">
-            No applications on this device yet, so there&rsquo;s nothing to download.
+            No applications saved yet, so there&rsquo;s nothing to download.
           </p>
         ) : (
           <>
-            <p>This device has {plural(apps.length, "application")}.</p>
+            <p>You have {plural(apps.length, "application")} saved.</p>
             {/* The status line is always in the page, empty until the download,
                 so screen readers hear it when it fills in. */}
             <div>
@@ -126,8 +126,7 @@ export function MoveData() {
               <p role="status" className="text-sm not-empty:mt-3">
                 {downloaded && (
                   <>
-                    Downloaded <strong>{downloaded}</strong>. Now open Seguimiento on your other
-                    device and load it there.
+                    Downloaded <strong>{downloaded}</strong>.
                   </>
                 )}
               </p>
@@ -142,7 +141,7 @@ export function MoveData() {
           <Field
             id={fileId}
             label="Backup file"
-            hint="The .json file you downloaded from Seguimiento on your other device. Nothing changes until you confirm."
+            hint="A .json file downloaded from Seguimiento. Nothing changes until you confirm."
             error={fileError ?? undefined}
           >
             <Input
@@ -169,7 +168,7 @@ export function MoveData() {
           >
             {check.added + check.updated === 0 ? (
               <p>
-                This device already has everything in that file ({plural(check.total, "application")}).
+                You already have everything in that file ({plural(check.total, "application")}).
                 Nothing to combine.
               </p>
             ) : (
@@ -182,7 +181,8 @@ export function MoveData() {
                   . Nothing is deleted.
                 </p>
                 <p className="text-sm text-muted">
-                  When both devices changed the same application, the more recent change is kept.
+                  When the file and your list both changed the same application, the more recent
+                  change is kept.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Button onClick={confirmCombine}>Combine</Button>
@@ -195,7 +195,7 @@ export function MoveData() {
             {saveFailed && (
               <p className="flex gap-2 text-sm font-medium text-error">
                 <ErrorIcon />
-                Couldn&rsquo;t save the combined list. This browser&rsquo;s storage may be full.
+                Couldn&rsquo;t save the combined list. Check your connection and try again.
                 Nothing changed.
               </p>
             )}

@@ -3,10 +3,10 @@
 import { useId, useState } from "react";
 import { formatDay, nextWeekday, today as getToday, type Day } from "@/lib/dates";
 import type { Settings } from "@/lib/types";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import { Button, Field, Select } from "./ui";
 
-// Seguimiento has no server, so it can't email anyone. Instead it hands over
+// Seguimiento doesn't send email, so it can't remind anyone. Instead it hands over
 // a calendar file with a weekly check-in that the person adds to their own
 // calendar. The day is theirs to pick (Monday unless they choose another,
 // after class feedback asking for that); it's saved with the settings, so
@@ -72,8 +72,9 @@ function calendarFile(first: Day, weekday: number, url: string): string {
 
 // Pick the day, then add it: on Home's first visit and on the check-in.
 export function CalendarReminder() {
-  const store = useApplications();
+  const store = useData();
   const selectId = useId();
+  const [saveFailed, setSaveFailed] = useState(false);
   const weekday = checkInDayOf(store.settings);
   const first = nextWeekday(getToday(), weekday);
 
@@ -84,11 +85,17 @@ export function CalendarReminder() {
         {WEEKDAYS[weekday]}, starting {formatDay(first)}.
       </p>
       <div className="max-w-xs">
-        <Field id={selectId} label="Check-in day">
+        <Field
+          id={selectId}
+          label="Check-in day"
+          error={saveFailed ? "Couldn't save the day. Check your connection and choose it again." : undefined}
+        >
           <Select
             name="checkInDay"
             value={weekday}
-            onChange={(e) => store.setSettings({ checkInDay: Number(e.target.value) })}
+            onChange={async (e) => {
+              setSaveFailed(!(await store.setSettings({ checkInDay: Number(e.target.value) })));
+            }}
           >
             {/* Monday first, as the weeks run. */}
             {[1, 2, 3, 4, 5, 6, 0].map((d) => (
@@ -108,7 +115,7 @@ export function CalendarReminder() {
 // the check-in when nothing is due ("come back Monday"). It uses the saved
 // day.
 export function ReminderButton({ label, variant = "secondary" }: { label: string; variant?: "secondary" | "quiet" }) {
-  const store = useApplications();
+  const store = useData();
   const [downloaded, setDownloaded] = useState<string | null>(null);
   const weekday = checkInDayOf(store.settings);
 

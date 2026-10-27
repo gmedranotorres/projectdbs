@@ -1,10 +1,11 @@
 import { emptyForm, type FormValues } from "./applications";
 import { addDays, isDay, type Day } from "./dates";
+import { SPONSORSHIPS, type Sponsorship } from "./types";
 
-// Small things remembered between visits, each under its own key, apart
-// from the applications in seguimiento:v1. They're conveniences: if one
-// can't be read or saved, it's simply forgotten, and none of them go into a
-// backup. Only call these in the browser.
+// Small things this device remembers between visits, each under its own
+// key; the applications themselves are in Supabase. They're conveniences:
+// if one can't be read or saved, it's simply forgotten, and none of them go
+// into a backup. Only call these in the browser.
 
 export const FILTER_KEY = "seguimiento:list-filter";
 export const DRAFT_KEY = "seguimiento:add-draft";
@@ -40,14 +41,16 @@ export function rememberListFilter(filter: string) {
 
 // ---- The draft on Add ---------------------------------------------------
 
-// Only what the person typed is kept. Dates still at their defaults (today,
-// a week later) aren't, so a draft restored on another day gets that day's
-// defaults, not stale ones. A follow-up that's just Applied on + 7 isn't
-// kept either; it's worked out again.
+// Only what the person typed or chose is kept. Dates still at their
+// defaults (today, a week later) aren't, so a draft restored on another day
+// gets that day's defaults, not stale ones. A follow-up that's just Applied
+// on + 7 isn't kept either; it's worked out again.
 const TEXT_FIELDS = ["company", "role", "link", "notes", "contact"] as const;
 const DATE_FIELDS = ["appliedOn", "followUpOn"] as const;
 
-type Draft = Partial<Pick<FormValues, (typeof TEXT_FIELDS)[number] | (typeof DATE_FIELDS)[number]>>;
+type Draft = Partial<
+  Pick<FormValues, (typeof TEXT_FIELDS)[number] | (typeof DATE_FIELDS)[number] | "sponsorship">
+>;
 
 export function saveAddDraft(values: FormValues, today: Day) {
   const defaults = emptyForm(today);
@@ -55,6 +58,7 @@ export function saveAddDraft(values: FormValues, today: Day) {
   for (const f of [...TEXT_FIELDS, ...DATE_FIELDS]) {
     if (values[f] !== defaults[f]) draft[f] = values[f];
   }
+  if (values.sponsorship !== defaults.sponsorship) draft.sponsorship = values.sponsorship;
   if (draft.followUpOn !== undefined && isDay(values.appliedOn) && draft.followUpOn === addDays(values.appliedOn, 7)) {
     delete draft.followUpOn;
   }
@@ -79,6 +83,9 @@ export function readAddDraft(today: Day): FormValues | null {
   const form = emptyForm(today);
   for (const f of TEXT_FIELDS) if (typeof saved[f] === "string") form[f] = saved[f];
   for (const f of DATE_FIELDS) if (isDay(saved[f])) form[f] = saved[f];
+  if ((SPONSORSHIPS as readonly unknown[]).includes(saved.sponsorship)) {
+    form.sponsorship = saved.sponsorship as Sponsorship;
+  }
   if (!isDay(saved.followUpOn) && isDay(saved.appliedOn)) form.followUpOn = addDays(saved.appliedOn, 7);
   return TEXT_FIELDS.some((f) => form[f].trim()) ? form : null;
 }

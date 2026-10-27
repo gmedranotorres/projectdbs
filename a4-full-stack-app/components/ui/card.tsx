@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
-import { STATUS_LABELS, type Status } from "@/lib/applications";
+import { SPONSORSHIP_TAGS, STATUS_LABELS, type Sponsorship, type Status } from "@/lib/applications";
 import { formatDay, type Day } from "@/lib/dates";
 import { Badge, statusTone } from "./badge";
 
@@ -26,7 +26,8 @@ export function List({ className = "", ...props }: ComponentProps<"ul">) {
 }
 
 // One application in a list: company, role, status, follow-up date, and an
-// "Open" link that names the application for screen readers. `hint` sits
+// "Open" link that names the application for screen readers. `sponsorship`,
+// when given, is a small tag beside the status. `hint` sits
 // beside the follow-up date, for words such as "5 days late". `note` goes
 // under the whole row, for anything with a button, so Tab reaches Open (top
 // right) before it. `highlight` tints the row (it fades out when turned
@@ -35,6 +36,7 @@ export function ListRow({
   company,
   role,
   status,
+  sponsorship,
   followUpOn,
   href,
   hint,
@@ -45,6 +47,7 @@ export function ListRow({
   company: string;
   role: string;
   status: Status;
+  sponsorship?: Sponsorship;
   followUpOn?: Day;
   href: string;
   hint?: ReactNode;
@@ -67,6 +70,7 @@ export function ListRow({
           </div>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
             <Badge tone={statusTone(status)}>{STATUS_LABELS[status]}</Badge>
+            {sponsorship && <Badge>{SPONSORSHIP_TAGS[sponsorship]}</Badge>}
             <span className="text-sm text-muted">
               {followUpOn ? `Follow up ${formatDay(followUpOn)}` : "No follow-up"}
             </span>

@@ -3,8 +3,8 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { addDays, formatDay, today as getToday } from "@/lib/dates";
-import { STATUS_LABELS, formFrom, groupOf, isOpen, markFollowedUp } from "@/lib/applications";
-import { useApplications } from "@/hooks/useApplications";
+import { SPONSORSHIP_TAGS, STATUS_LABELS, formFrom, groupOf, isOpen, markFollowedUp } from "@/lib/applications";
+import { useData } from "@/hooks/useData";
 import { useBackLink } from "@/hooks/useBackLink";
 import { onEscape } from "@/lib/keys";
 import { ApplicationForm } from "@/components/application-form";
@@ -31,15 +31,15 @@ import {
 // came from.
 
 export function ApplicationDetail() {
-  const store = useApplications();
+  const store = useData();
   const router = useRouter();
   const toast = useToast();
   const { id } = useParams<{ id: string }>();
   const back = useBackLink();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
-  // Set while deleting, so the page doesn't flash "not on this device" on
-  // its way out.
+  // Set while deleting, so the page doesn't flash "not found" on its way
+  // out.
   const [leaving, setLeaving] = useState(false);
   // A new key refills the form after "I followed up today" changes the
   // saved dates.
@@ -59,7 +59,7 @@ export function ApplicationDetail() {
           back={back}
         />
         <EmptyState action={<TextLink href="/applications">See all applications</TextLink>}>
-          This application isn&rsquo;t on this device.
+          This application isn&rsquo;t in your list.
         </EmptyState>
       </div>
     );
@@ -67,15 +67,15 @@ export function ApplicationDetail() {
 
   const due = groupOf(app, today) === "due";
 
-  function followedUp() {
+  async function followedUp() {
     if (!app) return;
-    const next = markFollowedUp(app, today);
-    if (store.update(next)) {
+    const next = await store.update(markFollowedUp(app, today));
+    if (next) {
       setProblem(null);
       setRound((r) => r + 1);
       toast(`Saved. Next follow-up ${formatDay(next.followUpOn!)}.`);
     } else {
-      setProblem("Couldn't save. This browser's storage may be full.");
+      setProblem("Couldn't save. Check your connection and try again.");
     }
   }
 
@@ -91,16 +91,16 @@ export function ApplicationDetail() {
     requestAnimationFrame(() => document.getElementById("delete-application")?.focus());
   }
 
-  function remove() {
+  async function remove() {
     if (!app) return;
     setLeaving(true);
-    if (store.remove(app.id)) {
+    if (await store.remove(app.id)) {
       toast(`Deleted ${app.company} — ${app.role}.`);
       // replace: Back from the list shouldn't open a page that's gone.
       router.replace("/applications");
     } else {
       setLeaving(false);
-      setProblem("Couldn't delete. This browser's storage may be full or blocked.");
+      setProblem("Couldn't delete. Check your connection and try again.");
     }
   }
 
@@ -110,6 +110,7 @@ export function ApplicationDetail() {
         <PageHeader title={app.company} description={app.role} back={back} />
         <p className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted">
           <Badge tone={statusTone(app.status)}>{STATUS_LABELS[app.status]}</Badge>
+          <Badge>{SPONSORSHIP_TAGS[app.sponsorship]}</Badge>
           <span>Applied {formatDay(app.appliedOn)}</span>
           <span>{app.followUpOn ? `Follow up ${formatDay(app.followUpOn)}` : "No follow-up"}</span>
           {/* The date is the fifth field below; this goes straight to it. */}

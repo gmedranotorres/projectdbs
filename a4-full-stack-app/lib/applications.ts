@@ -7,18 +7,19 @@ import {
   isDay,
   type Day,
 } from "./dates";
-import { newId, readApplication, readSettings } from "./storage";
+import { newId, readApplication, readSettings } from "./records";
 import {
   OPEN_STATUSES,
   type Application,
   type ClosedStatus,
   type OpenStatus,
   type Settings,
+  type Sponsorship,
   type Status,
 } from "./types";
 
-export { CLOSED_STATUSES, OPEN_STATUSES } from "./types";
-export type { Application, ClosedStatus, OpenStatus, Status } from "./types";
+export { CLOSED_STATUSES, OPEN_STATUSES, SPONSORSHIPS } from "./types";
+export type { Application, ClosedStatus, OpenStatus, Sponsorship, Status } from "./types";
 
 // ---- The record ---------------------------------------------------------
 
@@ -30,6 +31,20 @@ export const STATUS_LABELS: Record<Status, string> = {
   rejected: "Rejected",
   withdrawn: "Withdrawn",
   "no-response": "No response",
+};
+
+// The choices on the form.
+export const SPONSORSHIP_LABELS: Record<Sponsorship, string> = {
+  sponsors: "Sponsors",
+  doesnt_sponsor: "Doesn't sponsor",
+  unknown: "Unknown",
+};
+
+// The tag on the list, which has to make sense without the field's label.
+export const SPONSORSHIP_TAGS: Record<Sponsorship, string> = {
+  sponsors: "Sponsors",
+  doesnt_sponsor: "Doesn't sponsor",
+  unknown: "Sponsorship unknown",
 };
 
 export function isOpen(status: Status | "closed"): status is OpenStatus {
@@ -211,6 +226,7 @@ export type FormValues = {
   role: string;
   // "closed" while Closed is chosen but not yet why.
   status: Status | "closed";
+  sponsorship: Sponsorship;
   appliedOn: string;
   interviewOn: string;
   followUpOn: string;
@@ -226,6 +242,7 @@ export type FormErrors = Partial<Record<FieldName, string>>;
 export const FIELD_ORDER: FieldName[] = [
   "company",
   "role",
+  "sponsorship",
   "appliedOn",
   "status",
   "interviewOn",
@@ -240,6 +257,7 @@ export function emptyForm(today: Day): FormValues {
     company: "",
     role: "",
     status: "applied",
+    sponsorship: "unknown",
     appliedOn: today,
     interviewOn: "",
     followUpOn: addDays(today, 7),
@@ -254,6 +272,7 @@ export function formFrom(app: Application): FormValues {
     company: app.company,
     role: app.role,
     status: app.status,
+    sponsorship: app.sponsorship,
     appliedOn: app.appliedOn,
     interviewOn: app.interviewOn ?? "",
     followUpOn: app.followUpOn ?? "",
@@ -363,7 +382,8 @@ export function findDuplicate(
 
 // Turns a valid form into a record. `before` is the saved version when
 // editing. Only call it once validate() finds nothing, so a closed status
-// has its reason.
+// has its reason. A new one's id and times are only placeholders: the
+// database sets them when it's saved.
 export function toApplication(
   input: FormValues,
   today: Day,
@@ -378,6 +398,7 @@ export function toApplication(
     company: values.company,
     role: values.role,
     status: values.status as Status,
+    sponsorship: values.sponsorship,
     appliedOn: values.appliedOn,
     interviewOn: values.status === "interviewing" && values.interviewOn ? values.interviewOn : null,
     followUpOn: open ? values.followUpOn : null,
@@ -452,7 +473,7 @@ export function readBackup(text: string): Application[] | null {
   return readExport(text)?.applications ?? null;
 }
 
-// Combines a backup with what's on this device. Matching ids keep the copy
+// Combines a backup with what's saved in your account. Matching ids keep the copy
 // changed most recently; nothing is deleted.
 export function combine(
   local: Application[],

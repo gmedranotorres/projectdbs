@@ -23,7 +23,7 @@ import {
   today as getToday,
 } from "@/lib/dates";
 import { FOLLOW_UP_HINT } from "@/lib/types";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import { useFromHere } from "@/hooks/useBackLink";
 import { CalendarReminder } from "./calendar-reminder";
 import { DuplicateNotice } from "./duplicate-notice";
@@ -68,7 +68,7 @@ const LIST_LIMIT = 5;
 const GLOW_MS = 3000;
 
 export function QuickAddHome({ applications }: { applications: Application[] }) {
-  const store = useApplications();
+  const store = useData();
   const here = useFromHere();
   const formId = useId();
   const companyId = `${formId}-company`;
@@ -85,6 +85,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
   const [role, setRole] = useState("");
   const [errors, setErrors] = useState<{ company?: string; role?: string }>({});
   const [saveFailed, setSaveFailed] = useState(false);
+  const [saving, setSaving] = useState(false);
   // The company and role whose duplicate notice was put away.
   const [dismissedDuplicate, setDismissedDuplicate] = useState<string | null>(null);
   // The one just saved on this visit: named under the button, first on the
@@ -126,8 +127,10 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
     if (next && !company.trim()) focus(companyId);
   }
 
-  function submit(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
+    // A second press while saving would save it twice.
+    if (saving) return;
     const today = getToday();
     // The same checks and words as the Add page. appliedOn is today and
     // followUpOn a week later, as emptyForm() fills them in.
@@ -139,8 +142,10 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
       return;
     }
 
-    const app = toApplication(values, today);
-    if (!store.add(app)) {
+    setSaving(true);
+    const app = await store.add(toApplication(values, today));
+    setSaving(false);
+    if (!app) {
       setSaveFailed(true);
       return;
     }
@@ -165,7 +170,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
   }
 
   function dismissHint() {
-    store.dismissHint(FOLLOW_UP_HINT);
+    void store.dismissHint(FOLLOW_UP_HINT);
     // The button goes away with the tip; the list heading keeps your place.
     focus(listId);
   }
@@ -310,8 +315,8 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
             <p className="flex gap-2 rounded-lg border border-error bg-error-soft p-4 text-sm">
               <ErrorIcon />
               <span>
-                <strong>Couldn&rsquo;t save.</strong> This browser&rsquo;s storage may be full. What
-                you typed is still here; try again.
+                <strong>Couldn&rsquo;t save.</strong> Check your connection and try again. What
+                you typed is still here.
               </span>
             </p>
           )}
@@ -340,7 +345,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
                 </Button>
               )}
             </div>
-            <p className="text-sm text-muted">Saved on this device. No account.</p>
+            <p className="text-sm text-muted">Saved to your account, on every device you sign in on.</p>
           </div>
         </form>
       </section>
@@ -402,7 +407,7 @@ export function QuickAddHome({ applications }: { applications: Application[] }) 
 
       {applications.length === 0 && (
         <p className="text-muted">
-          Already using Seguimiento on another device?{" "}
+          Have a Seguimiento backup file?{" "}
           <TextLink href="/move">Load a backup</TextLink>.
         </p>
       )}

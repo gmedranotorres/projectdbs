@@ -5,6 +5,8 @@ import {
   CLOSED_STATUSES,
   FIELD_ORDER,
   LIMITS,
+  SPONSORSHIPS,
+  SPONSORSHIP_LABELS,
   STAGES,
   STAGE_LABELS,
   STATUS_LABELS,
@@ -22,7 +24,7 @@ import {
   type Stage,
 } from "@/lib/applications";
 import { addDays, formatDay, formatShortDay, isDay, type Day } from "@/lib/dates";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import { FOLLOW_UP_HINT } from "@/lib/types";
 import { DuplicateNotice } from "./duplicate-notice";
 import { Button, ErrorIcon, Field, Input, Select, Textarea } from "./ui";
@@ -73,7 +75,7 @@ export function ApplicationForm({
 }: Props) {
   const formId = useId();
   const fid = (field: FieldName) => `${formId}-${field}`;
-  const saved = useApplications();
+  const saved = useData();
 
   const [values, setValues] = useState(initial);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -92,6 +94,7 @@ export function ApplicationForm({
   // The company and role whose duplicate notice was put away.
   const [dismissedDuplicate, setDismissedDuplicate] = useState<string | null>(null);
   const [saveFailed, setSaveFailed] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const suggestion = suggestFollowUp(values.status, { appliedOn: values.appliedOn, today });
 
@@ -166,8 +169,10 @@ export function ApplicationForm({
     recheck(next);
   }
 
-  function submit(event?: FormEvent, another = false) {
+  async function submit(event?: FormEvent, another = false) {
     event?.preventDefault();
+    // A second press while saving would save it twice.
+    if (saving) return;
     const found = validate(values, today);
     const first = FIELD_ORDER.find((f) => found[f]);
     setErrors(found);
@@ -176,8 +181,12 @@ export function ApplicationForm({
       return;
     }
 
-    const app = toApplication(values, today, before);
-    if (!(before ? saved.update(app) : saved.add(app))) {
+    const record = toApplication(values, today, before);
+    setSaving(true);
+    // As saved: a new one now has the id the database gave it.
+    const app = before ? await saved.update(record) : await saved.add(record);
+    setSaving(false);
+    if (!app) {
       setSaveFailed(true);
       focusSoon(`${formId}-save-error`);
       return;
@@ -185,7 +194,7 @@ export function ApplicationForm({
     // Someone who sets their own follow-up date has learned what the tip on
     // the list says, so it closes for good.
     if (typedFollowUp && app.followUpOn && app.followUpOn !== before?.followUpOn) {
-      saved.dismissHint(FOLLOW_UP_HINT);
+      void saved.dismissHint(FOLLOW_UP_HINT);
     }
     // Once saved, the date is the one on record, not a suggestion to undo.
     if (before) {
@@ -271,6 +280,20 @@ export function ApplicationForm({
       />
 
       {text("role", "Role", { max: LIMITS.role })}
+
+      <Field id={fid("sponsorship")} label="Sponsorship" hint="Whether they sponsor work visas.">
+        <Select
+          name="sponsorship"
+          value={values.sponsorship}
+          onChange={(e) => update("sponsorship", e.target.value)}
+        >
+          {SPONSORSHIPS.map((s) => (
+            <option key={s} value={s}>
+              {SPONSORSHIP_LABELS[s]}
+            </option>
+          ))}
+        </Select>
+      </Field>
 
       <Field id={fid("appliedOn")} label="Applied on" error={errors.appliedOn}>
         <Input
@@ -408,8 +431,8 @@ export function ApplicationForm({
         >
           <ErrorIcon />
           <span>
-            <strong>Couldn&rsquo;t save.</strong> This browser&rsquo;s storage may be full. What
-            you typed is still here: try again, or download a backup on Move data first.
+            <strong>Couldn&rsquo;t save.</strong> Check your connection and try again. What you
+            typed is still here.
           </span>
         </p>
       )}

@@ -72,7 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               {/* Room below for the phone's bottom bar. */}
               <footer className="mx-auto w-full max-w-3xl px-4 pb-28 md:pb-10">
                 <p className="border-t border-line pt-4 text-sm text-muted">
-                  Saved on this device ·{" "}
+                  Saved to your account ·{" "}
                   <TextLink href="/check-in">Weekly check-in</TextLink>
                 </p>
               </footer>

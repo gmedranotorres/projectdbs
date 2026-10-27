@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import { daysQuiet, dueLabel, groupOf, plural, type Application } from "@/lib/applications";
 import { today as getToday, type Day } from "@/lib/dates";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
 import { readListFilter, rememberListFilter } from "@/lib/remember";
 import {
@@ -25,7 +25,7 @@ import {
 } from "@/components/ui";
 
 // Every application as a ListRow, soonest follow-up first and those without
-// one last. Filter chips (with counts) narrow it by status, and the search
+// one last, each tagged with whether the employer sponsors visas. Filter chips (with counts) narrow it by status, and the search
 // narrows it by company or role as you type. Every empty result says why
 // and offers a way back, so the page is never blank. The filter lives in
 // the address (?status=), so a link can open it and Back keeps it. The last
@@ -76,7 +76,7 @@ function attention(app: Application, today: Day) {
 }
 
 export function ApplicationList() {
-  const store = useApplications();
+  const store = useData();
   const router = useRouter();
   const params = useSearchParams();
   const searchId = useId();
@@ -192,6 +192,7 @@ export function ApplicationList() {
                   company={app.company}
                   role={app.role}
                   status={app.status}
+                  sponsorship={app.sponsorship}
                   followUpOn={app.followUpOn ?? undefined}
                   href={`/applications/${app.id}?from=${here}`}
                   hint={

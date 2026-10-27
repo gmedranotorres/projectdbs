@@ -1005,3 +1005,22 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **The `rls_auto_enable` warning was left alone.** It's not ours: it's the project's built-in event trigger that turns RLS on for new tables, and Postgres won't run an event-trigger function called directly. Revoking EXECUTE from `anon` and `authenticated` would clear the warning; it's a separate choice.
 - **The performance warning is a false positive.** The policies already wrap the call in `select`; `explain` as a signed-in user shows `auth.jwt()` evaluated once (`InitPlan`) and an index scan on `user_id`.
 - **No `updated_at` trigger.** Not asked for; the app sets `updated_at` when it saves.
+
+## Supabase instead of localStorage (Oct 27, 2026)
+
+**What I asked.** Replace localStorage with Supabase, keeping every screen, flow and Calm style the same (the form, the list, the detail page and the weekly check-in). All reads and writes go through the Supabase client with the Clerk token, and `user_id` is never sent from the browser. Add a Sponsorship field (Sponsors, Doesn't sponsor, Unknown by default) to the form and detail page, shown as a small tag in the list. Show a calm inline error when a save fails. Remove the localStorage hook.
+
+**What changed.**
+- `hooks/useData.ts` replaces `hooks/useApplications.ts` (deleted). It reads the applications and settings once per sign-in through `useSupabase()` and shares one copy with every component. Each change resolves only after Supabase saves it, so the screen never shows something unsaved.
+- `lib/storage.ts` is gone. The checks for backup files moved to `lib/records.ts`, and `newId()` always makes a real uuid now.
+- `lib/supabase/database.types.ts`: types generated from the database. Both clients use them.
+- **Sponsorship:** a field under Role on Add and on an application's page; a tag next to the status in All applications and at the top of an application's page ("Sponsors", "Doesn't sponsor", "Sponsorship unknown"). The Add draft keeps it. Older backups read as Unknown.
+- **Errors:** every "storage may be full" message now says "Check your connection and try again", in the same inline boxes as before. A failed first load shows a banner with **Try again**. Choosing a check-in day that doesn't save shows an error under the field.
+- **Wording that was no longer true:** the footer, Home, Move data, Your data and "not found" said data was saved only on this device. They now say it's saved to your account.
+
+**What I rejected or decided myself.**
+- **Nothing is shown before it's saved.** The screen waits for Supabase rather than updating first and rolling back, so a failure keeps what was typed and says so. Pressing Save twice while waiting doesn't save twice.
+- **New applications get their id from the database**, and the page then goes to that id.
+- **Move data stays,** now as "keep a copy, or bring applications in from a file". That's the way to bring in data from the localStorage version: export it there, then load the file here. Combine writes only the newer rows in one request: either all of them save or none do. Import saves the file's rows first and only then deletes the others, so a failure never leaves you with nothing.
+- **The tag shows on All applications, not on Home's short list.** The request said "the list". Unknown is tagged too, since not knowing is worth seeing.
+- **The filter chip and the Add draft stay in localStorage,** as AGENTS.md says.

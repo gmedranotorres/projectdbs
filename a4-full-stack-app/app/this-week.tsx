@@ -15,7 +15,7 @@ import {
   type Application,
 } from "@/lib/applications";
 import { addDays, formatDay, formatShortDay, isDay, startOfWeek, today as getToday, type Day } from "@/lib/dates";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import { useBackLink, useFromHere } from "@/hooks/useBackLink";
 import { CalendarReminder, ReminderButton, checkInDayName } from "@/components/calendar-reminder";
 import { YourData } from "@/components/your-data";
@@ -46,7 +46,7 @@ type Message = { text: string; undo?: Application; tone?: "error" };
 const GOAL_MAX = 20;
 
 export function ThisWeek() {
-  const store = useApplications();
+  const store = useData();
   const [message, setMessage] = useState<Message | null>(null);
   // The quiet application whose date field is open.
   const [settingFor, setSettingFor] = useState<string | null>(null);
@@ -71,22 +71,22 @@ export function ThisWeek() {
   const focusSoon = (id: string) =>
     requestAnimationFrame(() => document.getElementById(id)?.focus());
 
-  function act(before: Application, after: Application, text: string) {
-    if (store.update(after)) {
+  async function act(before: Application, after: Application, text: string) {
+    if (await store.update(after)) {
       setMessage({ text, undo: before });
     } else {
-      setMessage({ text: "Couldn't save that change. This browser's storage may be full.", tone: "error" });
+      setMessage({ text: "Couldn't save that change. Check your connection and try again.", tone: "error" });
     }
     focusSoon("week-message");
   }
 
   // If the save fails, the change stays and Undo stays offered to try again.
-  function undo(previous: Application) {
-    if (store.update(previous)) {
+  async function undo(previous: Application) {
+    if (await store.update(previous)) {
       setMessage({ text: `Undone. ${previous.company} is back where it was.` });
     } else {
       setMessage({
-        text: `Couldn't undo, so the change to ${previous.company} is still saved. This browser's storage may be full; try again.`,
+        text: `Couldn't undo, so the change to ${previous.company} is still saved. Check your connection and try again.`,
         undo: previous,
         tone: "error",
       });
@@ -94,8 +94,8 @@ export function ThisWeek() {
     focusSoon("week-message");
   }
 
-  function done() {
-    if (store.setSettings({ lastCheckInOn: today })) {
+  async function done() {
+    if (await store.setSettings({ lastCheckInOn: today })) {
       setDoneFailed(false);
       focusSoon("week-done");
     } else {
@@ -239,8 +239,8 @@ export function ThisWeek() {
           {editingGoal ? (
             <GoalForm
               goal={goal}
-              onSave={(next) => {
-                if (store.setSettings({ weeklyGoal: next, goalChosen: true })) {
+              onSave={async (next) => {
+                if (await store.setSettings({ weeklyGoal: next, goalChosen: true })) {
                   setEditingGoal(false);
                   focusSoon("change-goal");
                   return true;
@@ -276,7 +276,7 @@ export function ThisWeek() {
             <Notice tone="error">
               <p className="flex gap-2">
                 <ErrorIcon />
-                <span>Couldn&rsquo;t save. This browser&rsquo;s storage may be full; try again.</span>
+                <span>Couldn&rsquo;t save. Check your connection and try again.</span>
               </p>
             </Notice>
           )}
@@ -390,14 +390,14 @@ function GoalForm({
   onCancel,
 }: {
   goal: number;
-  onSave: (goal: number) => boolean;
+  onSave: (goal: number) => Promise<boolean>;
   onCancel: () => void;
 }) {
   const id = useId();
   const [value, setValue] = useState(String(goal));
   const [error, setError] = useState<string>();
 
-  function submit(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
     const n = Number(value.trim());
     if (!/^\d+$/.test(value.trim()) || n < 1 || n > GOAL_MAX) {
@@ -405,7 +405,7 @@ function GoalForm({
       document.getElementById(id)?.focus();
       return;
     }
-    if (!onSave(n)) setError("Couldn't save. This browser's storage may be full; try again.");
+    if (!(await onSave(n))) setError("Couldn't save. Check your connection and try again.");
   }
 
   return (

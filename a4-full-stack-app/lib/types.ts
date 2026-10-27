@@ -1,7 +1,8 @@
 import type { Day } from "./dates";
 
 // The shapes of what Seguimiento saves. The rules that work on them are in
-// applications.ts; reading and writing them is in storage.ts.
+// applications.ts; reading and writing them in Supabase is in
+// hooks/useData.ts.
 
 export type { Day };
 
@@ -14,11 +15,17 @@ export type OpenStatus = (typeof OPEN_STATUSES)[number];
 export type ClosedStatus = (typeof CLOSED_STATUSES)[number];
 export type Status = OpenStatus | ClosedStatus;
 
+// Whether the employer sponsors work visas. Unknown until the person finds
+// out.
+export const SPONSORSHIPS = ["sponsors", "doesnt_sponsor", "unknown"] as const;
+export type Sponsorship = (typeof SPONSORSHIPS)[number];
+
 export type Application = {
   id: string;
   company: string;
   role: string;
   status: Status;
+  sponsorship: Sponsorship;
   // Calendar days, "2026-10-19", in the person's own time zone.
   appliedOn: Day;
   // Only while Interviewing, and only if given.
@@ -52,11 +59,4 @@ export type Settings = {
   checkInDay?: number;
   // Hints the person closed, so they stay closed.
   dismissedHints: string[];
-};
-
-// Everything under the one localStorage key.
-export type StoreData = {
-  version: 1;
-  applications: Application[];
-  settings: Settings;
 };

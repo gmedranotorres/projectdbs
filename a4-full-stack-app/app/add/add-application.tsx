@@ -5,7 +5,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { emptyForm, type Application, type FormValues } from "@/lib/applications";
 import { clearAddDraft, hasAddDraft, readAddDraft, saveAddDraft } from "@/lib/remember";
 import { formatDay, today as getToday } from "@/lib/dates";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import { useBackLink } from "@/hooks/useBackLink";
 import { ApplicationForm } from "@/components/application-form";
 import { Button, Card, Loading, PageHeader, useToast } from "@/components/ui";
@@ -18,7 +18,7 @@ import { Button, Card, Loading, PageHeader, useToast } from "@/components/ui";
 // on the nav, a closed tab) loses nothing: coming back restores it with
 // "Restored your draft". Saving clears it, and so does Start over.
 export function AddApplication() {
-  const store = useApplications();
+  const store = useData();
   const router = useRouter();
   const toast = useToast();
   const back = useBackLink();

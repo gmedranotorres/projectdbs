@@ -10,8 +10,8 @@ import { Welcome } from "./welcome";
 export const metadata: Metadata = { title: { absolute: "Home · Seguimiento" } };
 
 // Signed out, "/" is the welcome page, the only one there is. Signed in,
-// it's Home: saved applications live only in the browser, so that page is
-// drawn there; the server sends the loading placeholder.
+// it's Home: the browser reads the applications from Supabase, so that page
+// is drawn there; the server sends the loading placeholder.
 export default function Home() {
   return (
     <Suspense fallback={<Loading />}>

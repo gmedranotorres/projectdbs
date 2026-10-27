@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { OPEN_STATUSES, STATUS_LABELS, emptyForm, toApplication } from "@/lib/applications";
 import { today } from "@/lib/dates";
-import { useApplications } from "@/hooks/useApplications";
+import { useData } from "@/hooks/useData";
 import {
   Badge,
   Button,
@@ -362,31 +362,31 @@ export function ComponentGallery() {
 const DEMO_NOTE = "Added from /dev/components.";
 
 function DataDemo() {
-  const data = useApplications();
+  const data = useData();
   const toast = useToast();
   if (!data.hydrated) {
     return <div aria-busy="true" className="h-11 w-64 animate-pulse rounded-control bg-subtle" />;
   }
   const demo = data.applications.filter((a) => a.company === "Example Co" && a.notes === DEMO_NOTE);
 
-  function add() {
+  async function add() {
     const day = today();
     const app = toApplication(
       { ...emptyForm(day), company: "Example Co", role: "Data Analyst", notes: DEMO_NOTE },
       day,
     );
-    toast(data.add(app) ? "Added Example Co. Reload to check it's still there." : "Couldn't save. This browser's storage may be full.");
+    toast((await data.add(app)) ? "Added Example Co. Reload to check it's still there." : "Couldn't save. Check your connection and try again.");
   }
 
-  function remove() {
-    const ok = demo.every((a) => data.remove(a.id));
-    toast(ok ? "Removed Example Co." : "Couldn't remove it. This browser's storage may be full or blocked.");
+  async function remove() {
+    const results = await Promise.all(demo.map((a) => data.remove(a.id)));
+    toast(results.every(Boolean) ? "Removed Example Co." : "Couldn't remove it. Check your connection and try again.");
   }
 
   return (
     <div className="space-y-4">
       <p>
-        Saved in this browser: {data.applications.length}{" "}
+        Saved to your account: {data.applications.length}{" "}
         {data.applications.length === 1 ? "application" : "applications"}. Weekly goal{" "}
         {data.settings.weeklyGoal}.
       </p>
