@@ -1,0 +1,127 @@
+"use client";
+
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+
+// A short message that goes away by itself after 5 seconds: for news that
+// needs no action, such as "Copied". Wrap the page in <ToastProvider> and
+// call toast("…") from inside it.
+//
+// There's one region, always in the page and polite, so screen readers
+// announce each message without interrupting. A new message replaces the
+// one showing, so there's never more than one. Close or Escape dismisses
+// it. The timer waits while the pointer or keyboard focus is on the toast,
+// so it doesn't vanish while you're reaching for Close.
+//
+// A message with an action, such as Undo, isn't a toast: 5 seconds is too
+// short to reach it with a keyboard or screen reader. Use a Notice.
+//
+// On phones it shows at the top. A page whose form is at the top, where
+// you type the next one right away (Home's quick add), passes
+// { place: "bottom" } to show it just above the bottom bar instead.
+
+const DURATION = 5000;
+
+type ToastOptions = { place?: "top" | "bottom" };
+
+const ToastContext = createContext<(message: string, options?: ToastOptions) => void>(() => {});
+
+export function useToast() {
+  return useContext(ToastContext);
+}
+
+export function ToastProvider({ children }: { children: ReactNode }) {
+  // The key restarts the timer when the same words are shown twice.
+  const [current, setCurrent] = useState<{ key: number; message: string; place: "top" | "bottom" } | null>(null);
+  const [paused, setPaused] = useState(false);
+  const nextKey = useRef(0);
+  const box = useRef<HTMLDivElement>(null);
+  // Where focus was before it moved into the toast (to reach Close).
+  const cameFrom = useRef<HTMLElement | null>(null);
+
+  const toast = useCallback((message: string, options?: ToastOptions) => {
+    nextKey.current += 1;
+    setCurrent({ key: nextKey.current, message, place: options?.place ?? "top" });
+  }, []);
+
+  // If focus is on Close when the toast goes (Close, Escape or the timer),
+  // it goes back to where it was, so it's never lost on the page.
+  const dismiss = useCallback(() => {
+    if (box.current?.contains(document.activeElement)) {
+      (cameFrom.current?.isConnected ? cameFrom.current : document.getElementById("main"))?.focus();
+    }
+    setCurrent(null);
+    setPaused(false);
+  }, []);
+
+  useEffect(() => {
+    if (!current || paused) return;
+    const timer = setTimeout(dismiss, DURATION);
+    return () => clearTimeout(timer);
+  }, [current, paused, dismiss]);
+
+  useEffect(() => {
+    if (!current) return;
+    const onKey = (e: KeyboardEvent) => {
+      // An inline question or form that used this Escape marks it handled.
+      if (e.key === "Escape" && !e.defaultPrevented) dismiss();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [current, dismiss]);
+
+  return (
+    <ToastContext.Provider value={toast}>
+      {children}
+      {/* On phones, at the top, where it can't cover what was just added
+          or the bottom navigation, or just above the bottom bar when asked;
+          near the bottom on laptops. */}
+      <div
+        className={`pointer-events-none fixed inset-x-0 z-30 flex justify-center px-4 md:top-auto md:bottom-6 ${
+          current?.place === "bottom"
+            ? "bottom-[calc(4.75rem+env(safe-area-inset-bottom))]"
+            : "top-[calc(0.75rem+env(safe-area-inset-top))]"
+        }`}
+      >
+        <div
+          ref={box}
+          onPointerEnter={() => setPaused(true)}
+          onPointerLeave={() => setPaused(false)}
+          onFocus={(e) => {
+            if (!box.current?.contains(e.relatedTarget)) cameFrom.current = e.relatedTarget as HTMLElement | null;
+            setPaused(true);
+          }}
+          onBlur={() => setPaused(false)}
+          className={
+            current
+              ? "pointer-events-auto flex w-full max-w-md items-center gap-2 rounded-card border border-line-strong bg-surface py-1 pr-1 pl-4 text-ink shadow-raised"
+              : "contents"
+          }
+        >
+          <div role="status" aria-live="polite" aria-atomic="true" className="min-w-0 flex-1 py-2">
+            {current && <p key={current.key}>{current.message}</p>}
+          </div>
+          {current && (
+            <button
+              type="button"
+              onClick={dismiss}
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-control text-ink transition-colors state-hover:bg-accent-soft state-active:bg-accent-soft"
+            >
+              <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M5 5l10 10M15 5 5 15" />
+              </svg>
+              <span className="sr-only">Close message</span>
+            </button>
+          )}
+        </div>
+      </div>
+    </ToastContext.Provider>
+  );
+}

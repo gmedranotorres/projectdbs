@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+/* The Calm design system from A2 (../a2-ui-ux-visual-design, themes/calm.ts),
+   copied here as values so this project builds on its own. Calm is light
+   only, so there is no dark palette.
+
+   Colors are roles, not hues. Warnings and errors always come with words
+   and an icon, so nothing depends on telling red from green.
+
+   After A3 feedback ("brown or beige type on tan is hard to read", "can
+   CTAs feel more prominent?") the roles stay, with more distance between
+   them: darker ink and muted text, a whiter surface lifted off the oat
+   page by a soft shadow, and a deep sage primary button with light words. */
+:root {
+  /* Calm's six roles */
+  --bg: #ebe2d0; /* background: oat paper */
+  --surface: #fffcf6; /* surface: warm white, lighter so cards stand off the page */
+  --ink: #2a1d14; /* text: brown ink, darkened (12.7:1 on the page) */
+  --muted: #54412f; /* muted text: walnut, darkened (7.5:1 on the page) */
+  --line: #bcae99; /* border: a little darker, so card edges show */
+  --accent: #3e5a3b; /* accent: deep sage, the primary button only */
+
+  /* Calm's colors for jobs the six roles can't do */
+  --accent-soft: #dde4d4; /* accent tint: sage mist */
+  --accent-strong: #747e65; /* deeper accent: sage with 28% ink, for marks such as link underlines */
+  --accent-hover: #2f4a2d; /* the primary button under the pointer: a step darker */
+  --accent-ink: var(--surface); /* the label on the primary button: light on deep sage */
+  --line-strong: var(--muted); /* the outline of fields; the border role is too faint alone */
+  --focus: var(--ink);
+
+  /* A3's own colors, which Calm doesn't have */
+  --subtle: #efede7;
+  --late: #7a4300;
+  --late-soft: #fbecd2;
+  --error: #b02a1f;
+  --error-soft: #fbe9e6;
+
+  /* Type roles: Newsreader for headlines, Inter for the interface */
+  --type-serif: var(--newsreader), ui-serif, Georgia, serif;
+  --type-sans: var(--inter), ui-sans-serif, system-ui, sans-serif;
+  --type-display-size: clamp(2.5rem, 1.75rem + 3.5vw, 4rem); /* 40 to 64px */
+  --type-display-weight: 300;
+  --type-display-leading: 1.02;
+  --type-display-tracking: -0.02em;
+  --type-heading-size: 1.5rem; /* 24px */
+  --type-heading-weight: 400;
+  --type-heading-leading: 1.15;
+  --type-heading-tracking: -0.005em;
+  --type-body-size: 1rem; /* 16px */
+  --type-body-weight: 400;
+  --type-body-leading: 1.6;
+  --type-label-size: 0.8125rem; /* 13px */
+  --type-label-weight: 500;
+  --type-label-leading: 1.25;
+  --type-control-size: 0.9375rem; /* 15px: the words on buttons */
+  --type-control-weight: 500;
+  --type-control-leading: 1.25;
+
+  /* Spacing: 4, 8, 12, 16, 24, 32, 48px. These are Tailwind's steps
+     1, 2, 3, 4, 6, 8 and 12, so p-4 or gap-6 already land on the scale. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* Radii */
+  --radius-small: 6px; /* badges and checkboxes */
+  --radius-medium: 12px; /* buttons and fields */
+  --radius-large: 16px; /* cards and panels */
+  --radius-round: 999px; /* chips and switches */
+
+  /* Border widths: Tailwind's border and border-2 */
+  --border-thin: 1px; /* edges, dividers and outlines */
+  --border-thick: 2px; /* the selected tab and the focus ring */
+
+  /* Cards and panels: the thin line plus a soft shadow, so sections read
+     as separate pieces on the oat page */
+  --raised-shadow: 0 1px 2px rgb(42 29 20 / 0.06), 0 6px 16px -4px rgb(42 29 20 / 0.08);
+}
+
+/* The tokens as Tailwind classes: bg-surface, text-ink, text-muted,
+   border-line, font-serif text-display, rounded-card, shadow-raised... */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-late: var(--late);
+  --color-late-soft: var(--late-soft);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+
+  --font-sans: var(--type-sans);
+  --font-serif: var(--type-serif);
+
+  --text-display: var(--type-display-size);
+  --text-display--font-weight: var(--type-display-weight);
+  --text-display--line-height: var(--type-display-leading);
+  --text-display--letter-spacing: var(--type-display-tracking);
+  --text-heading: var(--type-heading-size);
+  --text-heading--font-weight: var(--type-heading-weight);
+  --text-heading--line-height: var(--type-heading-leading);
+  --text-heading--letter-spacing: var(--type-heading-tracking);
+  --text-body: var(--type-body-size);
+  --text-body--font-weight: var(--type-body-weight);
+  --text-body--line-height: var(--type-body-leading);
+  --text-label: var(--type-label-size);
+  --text-label--font-weight: var(--type-label-weight);
+  --text-label--line-height: var(--type-label-leading);
+  --text-control: var(--type-control-size);
+  --text-control--font-weight: var(--type-control-weight);
+  --text-control--line-height: var(--type-control-leading);
+
+  --radius-badge: var(--radius-small);
+  --radius-control: var(--radius-medium);
+  --radius-card: var(--radius-large);
+
+  --shadow-raised: var(--raised-shadow);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--type-sans);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: var(--type-body-leading);
+  /* A long word or link with no spaces wraps instead of widening the page. */
+  overflow-wrap: break-word;
+}
+
+/* Each control state, for two triggers: the real one and a forced one
+   (data-state="hover" and so on), which /dev/components uses to show every
+   state side by side. A disabled control has no hover or press. */
+@custom-variant state-hover {
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      @slot;
+    }
+  }
+  &[data-state="hover"] {
+    @slot;
+  }
+}
+
+@custom-variant state-active (&:is(:active, [data-state="active"]):not(:disabled));
+
+/* A thin ring in the text color, close to the control */
+:focus-visible,
+[data-state="focus"] {
+  outline: var(--border-thick) solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* A date field is several stops (month, day, year, the calendar button).
+   On the calendar button the field itself isn't :focus, so the ring follows
+   focus anywhere inside it. */
+input[type="date"]:focus-within {
+  outline: var(--border-thick) solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Native controls such as date inputs draw in light, to match. */
+:root {
+  color-scheme: light;
+}
