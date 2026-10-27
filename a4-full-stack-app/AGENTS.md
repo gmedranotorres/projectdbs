@@ -55,6 +55,7 @@ Two per-device conveniences stay in localStorage, since losing them loses nothin
 - Keys only through process.env; never written into code, tests, docs or commits.
 - Every table has user_id and row-level security, with policies so a person can read and change only rows where user_id = auth.jwt()->>'sub'.
 - The Muse is called from a server route, never from the browser.
+- Every server route and server action checks sign-in with auth() itself, not only the proxy.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

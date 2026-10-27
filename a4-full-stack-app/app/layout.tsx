@@ -1,6 +1,8 @@
+import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import type { Metadata, Viewport } from "next";
 import { Inter, Newsreader } from "next/font/google";
-import { BottomNav, SiteHeader } from "@/components/site-nav";
+import { calmAppearance, SignedInOnly, SignInLinks } from "@/components/account";
+import { BottomNav, HeaderNav, SiteHeader } from "@/components/site-nav";
 import { StorageBanner } from "@/components/storage-banner";
 import { TextLink, ToastProvider } from "@/components/ui";
 import "./globals.css";
@@ -39,34 +41,45 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${newsreader.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        {/* One toast region for the whole site. */}
-        <ToastProvider>
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-30 focus:rounded-control focus:bg-surface focus:px-4 focus:py-2"
-          >
-            Skip to content
-          </a>
-          <SiteHeader />
-          <StorageBanner />
-          {/* tabIndex -1: "Skip to content" moves focus here in every browser, so
-              the next Tab starts inside the page. It's not a control, so no ring. */}
-          <main
-            id="main"
-            tabIndex={-1}
-            className="mx-auto w-full max-w-3xl flex-1 px-4 pt-6 pb-12 outline-none md:pt-10 md:pb-16"
-          >
-            {children}
-          </main>
-          {/* Room below for the phone's bottom bar. */}
-          <footer className="mx-auto w-full max-w-3xl px-4 pb-28 md:pb-10">
-            <p className="border-t border-line pt-4 text-sm text-muted">
-              Saved on this device ·{" "}
-              <TextLink href="/check-in">Weekly check-in</TextLink>
-            </p>
-          </footer>
-          <BottomNav />
-        </ToastProvider>
+        <ClerkProvider appearance={calmAppearance} signInUrl="/sign-in" signUpUrl="/sign-up">
+          {/* One toast region for the whole site. */}
+          <ToastProvider>
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-30 focus:rounded-control focus:bg-surface focus:px-4 focus:py-2"
+            >
+              Skip to content
+            </a>
+            {/* Signed out, there's only the welcome page, so no navigation:
+                just the way in. */}
+            <SiteHeader>
+              <SignedInOnly signedOut={<SignInLinks />}>
+                <HeaderNav />
+                <UserButton />
+              </SignedInOnly>
+            </SiteHeader>
+            <StorageBanner />
+            {/* tabIndex -1: "Skip to content" moves focus here in every browser, so
+                the next Tab starts inside the page. It's not a control, so no ring. */}
+            <main
+              id="main"
+              tabIndex={-1}
+              className="mx-auto w-full max-w-3xl flex-1 px-4 pt-6 pb-12 outline-none md:pt-10 md:pb-16"
+            >
+              {children}
+            </main>
+            <SignedInOnly>
+              {/* Room below for the phone's bottom bar. */}
+              <footer className="mx-auto w-full max-w-3xl px-4 pb-28 md:pb-10">
+                <p className="border-t border-line pt-4 text-sm text-muted">
+                  Saved on this device ·{" "}
+                  <TextLink href="/check-in">Weekly check-in</TextLink>
+                </p>
+              </footer>
+              <BottomNav />
+            </SignedInOnly>
+          </ToastProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

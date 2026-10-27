@@ -58,19 +58,28 @@ const ITEMS: { href: string; label: string; icon: ReactNode; matches: (p: string
   },
 ];
 
-// The header: the name, and on a laptop the navigation beside it.
-export function SiteHeader() {
+// The header: the name, and beside it what the layout passes in. Signed
+// in, that's the navigation (on a laptop) and the account menu; signed out,
+// Sign in and Sign up.
+export function SiteHeader({ children }: { children: ReactNode }) {
   return (
     <header className="border-b border-line bg-surface">
-      <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/" className="font-serif text-heading">
           Seguimiento
         </Link>
-        <nav aria-label="Main" className="hidden md:block">
-          <MarkedNavItems />
-        </nav>
+        <div className="flex items-center gap-2">{children}</div>
       </div>
     </header>
+  );
+}
+
+// The four places in the header, on a laptop.
+export function HeaderNav() {
+  return (
+    <nav aria-label="Main" className="hidden md:block">
+      <MarkedNavItems />
+    </nav>
   );
 }
 

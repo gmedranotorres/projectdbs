@@ -976,3 +976,15 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 - **The new deep sage isn't Calm's sage, and I'm keeping it.** In A3 I said no to a darker sage to stay faithful to Calm. Class feedback changed my mind: Ariel said the CTAs didn't feel prominent, and on the oat background the pale sage with brown text looked almost like a secondary button. The deep sage is still a sage, so the app keeps Calm's calm, earthy feel, and I only use it for the one main action on each page. Light text on the darker fill also raised the button's contrast from 4.70:1 to 7.51:1, so it's easier to read, not only easier to see.
 - **Weeks still start on Monday.** Only the reminder day moves; the goal and "This week" keep Monday to Sunday.
 
+## Clerk sign-in (Oct 27, 2026)
+
+**What I asked.** Finish the Clerk setup after `clerk init`: ClerkProvider in the root layout, Sign in, Sign up and a user button in the header in Calm's tokens, and protection for every page except the welcome page `/` and the sign-in and sign-up pages.
+
+**What changed.**
+- `proxy.ts` sends a signed-out visitor to `/sign-in` from any other page, then back. `/` shows a welcome page with **Sign up** and **Sign in** buttons when signed out, and Home when signed in.
+- The header shows Sign in and Sign up, or the navigation and Clerk's account menu. Clerk's forms use the Calm tokens (`components/account.tsx`).
+- AGENTS.md: every server route and server action checks sign-in with `auth()` itself, not only the proxy.
+
+**What I rejected or decided myself.**
+- **Navigation is hidden when signed out.** Signed out, the only page you can open is the welcome page, so links to Add, All, Move data or the check-in would just bounce you to sign-in. Hiding the header links, the footer and the phone's bottom bar keeps the welcome page to one clear choice: sign up or sign in.
+

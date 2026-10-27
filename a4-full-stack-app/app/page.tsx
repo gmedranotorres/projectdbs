@@ -1,18 +1,23 @@
+import { Show } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Loading } from "@/components/ui";
 import { HomePage } from "./home-page";
+import { Welcome } from "./welcome";
 
 // The root layout's "%s · Seguimiento" template only reaches pages in
 // folders below it, so this one is spelled out.
 export const metadata: Metadata = { title: { absolute: "Home · Seguimiento" } };
 
-// Saved applications live only in the browser, so the page is drawn there;
-// the server sends the loading placeholder.
+// Signed out, "/" is the welcome page, the only one there is. Signed in,
+// it's Home: saved applications live only in the browser, so that page is
+// drawn there; the server sends the loading placeholder.
 export default function Home() {
   return (
     <Suspense fallback={<Loading />}>
-      <HomePage />
+      <Show when="signed-in" fallback={<Welcome />}>
+        <HomePage />
+      </Show>
     </Suspense>
   );
 }
