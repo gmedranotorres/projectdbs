@@ -988,3 +988,20 @@ I picked 1 to 8 and left 9 (only the latest Undo stays on the check-in).
 **What I rejected or decided myself.**
 - **Navigation is hidden when signed out.** Signed out, the only page you can open is the welcome page, so links to Add, All, Move data or the check-in would just bounce you to sign-in. Hiding the header links, the footer and the phone's bottom bar keeps the welcome page to one clear choice: sign up or sign in.
 
+
+## Supabase tables and clients (Oct 27, 2026)
+
+**What I asked.** Using the Supabase MCP server, create the AGENTS.md tables as migrations saved in `supabase/migrations/`: row-level security on every table; select, insert, update and delete granted to `authenticated` only, nothing to `anon`; policies for all four where `(select auth.jwt()->>'sub') = user_id`; `user_id` text, not null, default `auth.jwt()->>'sub'`; `sponsorship` with a check constraint, default `unknown`. Then a browser client that passes Clerk's `session.getToken()` as `accessToken`, a server client that uses `auth().getToken()`, both on `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, never the secret key. Finally, run the security advisors.
+
+**What changed.**
+- Three migrations, applied through the MCP server and saved under the versions Supabase recorded: `create_applications`, `create_user_settings`, `limit_authenticated_to_crud`.
+- `lib/supabase/client.ts`: `useSupabase()`, a hook that makes a client sending the Clerk session token. `lib/supabase/server.ts`: `createServerSupabase()` for server routes and actions.
+- Added `@supabase/supabase-js`.
+- Security advisor: one warning, on `public.rls_auto_enable()` (callable by `anon` and `authenticated`). Performance advisor: `auth_rls_initplan` on all eight policies.
+
+**What I rejected or decided myself.**
+- **The rest of the data model is in the database too:** `status` and `source` have check constraints with their values, `weekly_goal` must be above 0, `check_in_day` is 0 to 6, `muse_job_id` only when `source` is `muse` and unique per user, `interview_on` only while interviewing, and no `next_follow_up` once closed. The app already saves data this way (`lib/applications.ts`).
+- **Removed TRUNCATE, REFERENCES and TRIGGER from `authenticated`.** The project's default privileges added them beyond the four grants, and TRUNCATE ignores row-level security.
+- **The `rls_auto_enable` warning was left alone.** It's not ours: it's the project's built-in event trigger that turns RLS on for new tables, and Postgres won't run an event-trigger function called directly. Revoking EXECUTE from `anon` and `authenticated` would clear the warning; it's a separate choice.
+- **The performance warning is a false positive.** The policies already wrap the call in `select`; `explain` as a signed-in user shows `auth.jwt()` evaluated once (`InitPlan`) and an index scan on `user_id`.
+- **No `updated_at` trigger.** Not asked for; the app sets `updated_at` when it saves.
