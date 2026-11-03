@@ -29,7 +29,7 @@
   .depth { position: fixed; top: 0; right: 0; width: 3px; height: 100vh; background: var(--aqua); transform: scaleY(0); transform-origin: top; z-index: 1; }
 
   .hero { position: relative; overflow: hidden; padding: 4.5rem 1.25rem 7rem; }
-  .hero > div { position: relative; max-width: 41.5rem; margin: 0 auto; }
+  .hero-inner { position: relative; max-width: 41.5rem; margin: 0 auto; }
   .rays {
     position: absolute; inset: -20% -10% 0;
     background: repeating-linear-gradient(105deg, rgba(255, 255, 255, 0.09) 0 7%, transparent 7% 19%);
@@ -57,6 +57,17 @@
   ul { margin: 0 0 1rem; padding-left: 1.25rem; }
   li { margin-bottom: 0.4rem; }
   li::marker { color: var(--aqua); }
+  [hidden] { display: none !important; }
+  .lang {
+    position: absolute; top: -3rem; right: 0;
+    min-height: 44px; padding: 0.4rem 1rem;
+    color: var(--ink); background: rgba(2, 14, 28, 0.35);
+    border: 1px solid var(--aqua); border-radius: 999px;
+    font: 650 0.9375rem/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    cursor: pointer;
+  }
+  .lang:hover { background: rgba(2, 14, 28, 0.6); }
+  .lang:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .kicker { color: var(--muted); font-size: 0.9375rem; margin-bottom: 0.75rem; }
   .lede { font-size: 1.25rem; line-height: 1.45; margin-bottom: 0; }
   .card {
@@ -103,15 +114,24 @@
 <div class="depth" aria-hidden="true"></div>
 <header class="hero">
 <div class="rays" aria-hidden="true"></div>
-<div>
+<div class="hero-inner">
+<button class="lang" type="button" hidden lang="es">Español</button>
+<div data-lang="en">
   <p class="kicker">Project proposal · Design, Build, Ship · Gabriela</p>
   <h1>Patrocinio</h1>
   <p class="lede">International master's students search for US jobs online and can't tell which ones are open to them. Patrocinio shows which employers have actually filed for visas in their field and city, and which of those employers are hiring now.</p>
+</div>
+<div data-lang="es" lang="es" hidden>
+  <p class="kicker">Propuesta de proyecto · Design, Build, Ship · Gabriela</p>
+  <h1>Patrocinio</h1>
+  <p class="lede">Los estudiantes internacionales de maestría buscan trabajo en EE. UU. por internet y no pueden saber cuáles están abiertos para ellos. Patrocinio muestra qué empleadores realmente han presentado solicitudes de visa en su campo y ciudad, y cuáles de ellos están contratando ahora.</p>
+</div>
 </div>
 <svg class="wave" viewBox="0 0 2400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 Q150 15 300 60 T600 60 T900 60 T1200 60 T1500 60 T1800 60 T2100 60 T2400 60 V120 H0 Z"/></svg>
 <svg class="wave two" viewBox="0 0 2400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 Q150 15 300 60 T600 60 T900 60 T1200 60 T1500 60 T1800 60 T2100 60 T2400 60 V120 H0 Z"/></svg>
 </header>
 <main>
+<div data-lang="en">
 
   <h2>What my users told me</h2>
   <p>I talked with three friends, and these are their own words. The English translations are mine.</p>
@@ -139,6 +159,27 @@
   <p><strong>What I take from this:</strong> people lose time because job posts don't tell them whether a job is open to them, and some only find out after applying. None of the three is a student searching in the US right now, so I still need to talk to those students.</p>
 
   <h2>How it works</h2>
+  <figure>
+    <svg viewBox="0 0 420 242" role="img" aria-label="Two paths. Today: search online, apply, find out too late, and lose time. With Patrocinio: choose a field and city, see who filed for visas, apply knowing more, and find out first.">
+      <defs><marker id="tip2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6fe7dd"/></marker></defs>
+      <text class="b" x="109" y="20" text-anchor="middle">Today</text><text class="b" x="311" y="20" text-anchor="middle">With Patrocinio</text>
+      <rect class="box" x="16" y="34" width="186" height="38" rx="8"/><text x="109" y="58" text-anchor="middle">Search online</text>
+      <rect class="box" x="218" y="34" width="186" height="38" rx="8"/><text x="311" y="58" text-anchor="middle">Choose a field and city</text>
+      <path class="flow" d="M109 72 L109 86" marker-end="url(#tip2)"/>
+      <path class="flow" d="M311 72 L311 86" marker-end="url(#tip2)"/>
+      <rect class="box" x="16" y="88" width="186" height="38" rx="8"/><text x="109" y="112" text-anchor="middle">Apply</text>
+      <rect class="box" x="218" y="88" width="186" height="38" rx="8"/><text x="311" y="112" text-anchor="middle">See who filed for visas</text>
+      <path class="flow" d="M109 126 L109 140" marker-end="url(#tip2)"/>
+      <path class="flow" d="M311 126 L311 140" marker-end="url(#tip2)"/>
+      <rect class="box" x="16" y="142" width="186" height="38" rx="8"/><text x="109" y="166" text-anchor="middle">Find out too late</text>
+      <rect class="box" x="218" y="142" width="186" height="38" rx="8"/><text x="311" y="166" text-anchor="middle">Apply knowing more</text>
+      <path class="flow" d="M109 180 L109 194" marker-end="url(#tip2)"/>
+      <path class="flow" d="M311 180 L311 194" marker-end="url(#tip2)"/>
+      <rect class="box" x="16" y="196" width="186" height="38" rx="8"/><text x="109" y="220" text-anchor="middle">Time lost</text>
+      <rect class="glow" x="218" y="196" width="186" height="38" rx="8"/><text x="311" y="220" text-anchor="middle">Find out first</text>
+    </svg>
+    <figcaption>The goal is to find out before you apply. I still have to test this.</figcaption>
+  </figure>
   <ul>
     <li>Sign up, then choose a field and a city.</li>
     <li>See the employers that filed for visas for that kind of role in that city, with the filings behind each one and how recent they are.</li>
@@ -166,6 +207,23 @@
   </div>
 
   <h2>Roadmap</h2>
+  <figure>
+    <svg viewBox="0 0 420 140" role="img" aria-label="Timeline going downward like a dive: proposal on November 3, start on November 10, v1 on November 17, no class on November 24, and the fair on December 1.">
+      <defs><marker id="tip3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6fe7dd"/></marker></defs>
+      <path class="flow" d="M30 22 L390 82"/>
+      <circle cx="30" cy="22" r="5" fill="#062a45" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="30" y="52" text-anchor="middle">Nov 3</text><text class="m" x="30" y="70" text-anchor="middle">Proposal</text>
+      <circle cx="120" cy="37" r="5" fill="#062a45" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="120" y="67" text-anchor="middle">Nov 10</text><text class="m" x="120" y="85" text-anchor="middle">Start</text>
+      <circle cx="210" cy="52" r="8" fill="#6fe7dd" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="210" y="82" text-anchor="middle">Nov 17</text><text class="m" x="210" y="100" text-anchor="middle">v1</text>
+      <circle cx="300" cy="67" r="5" fill="#062a45" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="300" y="97" text-anchor="middle">Nov 24</text><text class="m" x="300" y="115" text-anchor="middle">No class</text>
+      <circle cx="390" cy="82" r="8" fill="#6fe7dd" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="390" y="112" text-anchor="middle">Dec 1</text><text class="m" x="390" y="130" text-anchor="middle">Fair</text>
+    </svg>
+    <figcaption>The dive to the fair.</figcaption>
+  </figure>
   <div class="card roadmap">
     <h3>Before the project starts <span class="date">Now to November 10, alongside Assignment 6</span></h3>
     <p>Do the riskiest part first: load one year of filings for Chicago data roles and check the name matching by hand on 50 employers. Talk to at least two students searching in the US now.</p>
@@ -229,6 +287,160 @@
   </ul>
 
   <footer>Gabriela · MPCS 51238 · Autumn 2026</footer>
+</div>
+<div data-lang="es" lang="es" hidden>
+  <h2>Lo que me dijeron mis usuarios</h2>
+  <p>Hablé con tres amigos, y estas son sus propias palabras.</p>
+  <div class="card">
+    <h3>Hizo una maestría en EE. UU. y regresó a Perú</h3>
+    <blockquote lang="es">“Apliqué a varios trabajos y no logré quedar en ninguno. Lo peor era que muchos de los trabajos publicados no eran para estudiantes internacionales y recién me daba cuenta cuando aplicaba, era tiempo perdido. Los trabajos eran más para americanos.”</blockquote>
+    <p class="context">Regresó a Perú, donde encontró trabajo.</p>
+  </div>
+  <div class="card">
+    <h3>Está por empezar una maestría en EE. UU.</h3>
+    <blockquote lang="es">“Cuando estuve haciendo mi año de trabajo en USA, hace dos años creo. No me gustó el trabajo, sentí que no aprendía nada. Entonces me puse a buscar más trabajos y literal no encontraba, es muy difícil encontrar trabajo cuando eres extranjero.”</blockquote>
+  </div>
+  <div class="card">
+    <h3>Busca desde Perú, sin maestría en EE. UU.</h3>
+    <blockquote lang="es">“Quisiera conseguir un trabajo al menos remoto para USA, sería bonito tener la experiencia de trabajar para una empresa extranjer[a] directamente. Pero postular es muy agotador y confuso, y muchas publicaciones no especifican si el trabajo se puede realizar desde cualquier parte del mundo.”</blockquote>
+    <p class="context">Queda fuera de la v1: ella quiere trabajo remoto desde Perú, y las solicitudes de visa no pueden responder eso.</p>
+  </div>
+  <div class="card">
+    <h3>Otras personas internacionales con las que he hablado sobre postular</h3>
+    <p>En mis palabras, porque no tengo las suyas: todas me dijeron que buscar trabajo es muy agotador, incluido revisar si cada puesto está abierto para estudiantes internacionales.</p>
+  </div>
+  <p><strong>Lo que concluyo:</strong> las personas pierden tiempo porque las publicaciones no les dicen si el trabajo está abierto para ellas, y algunas se enteran recién después de postular. Ninguno de los tres es un estudiante que esté buscando en EE. UU. ahora mismo, así que todavía necesito hablar con esos estudiantes.</p>
+
+  <h2>Cómo funciona</h2>
+  <figure>
+    <svg viewBox="0 0 420 242" role="img" aria-label="Dos caminos. Hoy: buscar por internet, postular, enterarse muy tarde y perder tiempo. Con Patrocinio: elegir campo y ciudad, ver solicitudes de visa, postular con más datos y saberlo antes.">
+      <defs><marker id="tip2-es" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6fe7dd"/></marker></defs>
+      <text class="b" x="109" y="20" text-anchor="middle">Hoy</text><text class="b" x="311" y="20" text-anchor="middle">Con Patrocinio</text>
+      <rect class="box" x="16" y="34" width="186" height="38" rx="8"/><text x="109" y="58" text-anchor="middle">Buscar por internet</text>
+      <rect class="box" x="218" y="34" width="186" height="38" rx="8"/><text x="311" y="58" text-anchor="middle">Elegir campo y ciudad</text>
+      <path class="flow" d="M109 72 L109 86" marker-end="url(#tip2-es)"/>
+      <path class="flow" d="M311 72 L311 86" marker-end="url(#tip2-es)"/>
+      <rect class="box" x="16" y="88" width="186" height="38" rx="8"/><text x="109" y="112" text-anchor="middle">Postular</text>
+      <rect class="box" x="218" y="88" width="186" height="38" rx="8"/><text x="311" y="112" text-anchor="middle">Ver solicitudes de visa</text>
+      <path class="flow" d="M109 126 L109 140" marker-end="url(#tip2-es)"/>
+      <path class="flow" d="M311 126 L311 140" marker-end="url(#tip2-es)"/>
+      <rect class="box" x="16" y="142" width="186" height="38" rx="8"/><text x="109" y="166" text-anchor="middle">Enterarse muy tarde</text>
+      <rect class="box" x="218" y="142" width="186" height="38" rx="8"/><text x="311" y="166" text-anchor="middle">Postular con más datos</text>
+      <path class="flow" d="M109 180 L109 194" marker-end="url(#tip2-es)"/>
+      <path class="flow" d="M311 180 L311 194" marker-end="url(#tip2-es)"/>
+      <rect class="box" x="16" y="196" width="186" height="38" rx="8"/><text x="109" y="220" text-anchor="middle">Tiempo perdido</text>
+      <rect class="glow" x="218" y="196" width="186" height="38" rx="8"/><text x="311" y="220" text-anchor="middle">Saberlo antes</text>
+    </svg>
+    <figcaption>El objetivo es saberlo antes de postular. Todavía tengo que probarlo.</figcaption>
+  </figure>
+  <ul>
+    <li>Te registras y eliges un campo y una ciudad.</li>
+    <li>Ves los empleadores que presentaron solicitudes de visa para ese tipo de puesto en esa ciudad, con las solicitudes de cada uno y qué tan recientes son.</li>
+    <li>Ves los empleos abiertos en esos empleadores y empiezas por los que tienen más probabilidad de estar abiertos para ti.</li>
+  </ul>
+  <figure>
+    <svg viewBox="0 0 420 296" role="img" aria-label="Boceto de la página de la v1. Están elegidos Analista de datos y Chicago, y aparecen tres empleadores de ejemplo, cada uno con su número de solicitudes de visa, el último año y sus empleos abiertos. Una nota dice que una solicitud no promete patrocinio.">
+      <rect class="box" x="16" y="10" width="140" height="34" rx="17"/><text x="86" y="32" text-anchor="middle">Analista de datos</text>
+      <rect class="box" x="166" y="10" width="88" height="34" rx="17"/><text x="210" y="32" text-anchor="middle">Chicago</text>
+      <rect class="box" x="16" y="58" width="388" height="62" rx="8"/>
+      <text class="b" x="30" y="84">Empresa de ejemplo A</text><text class="m" x="30" y="105">12 solicitudes de visa, la última en 2026</text><text class="a" x="390" y="84" text-anchor="end">3 empleos abiertos</text>
+      <rect class="box" x="16" y="128" width="388" height="62" rx="8"/>
+      <text class="b" x="30" y="154">Empresa de ejemplo B</text><text class="m" x="30" y="175">5 solicitudes de visa, la última en 2025</text><text class="a" x="390" y="154" text-anchor="end">1 empleo abierto</text>
+      <rect class="box" x="16" y="198" width="388" height="62" rx="8"/>
+      <text class="b" x="30" y="224">Empresa de ejemplo C</text><text class="m" x="30" y="245">2 solicitudes de visa, la última en 2024</text><text class="a" x="390" y="224" text-anchor="end">Sin empleos abiertos</text>
+      <text class="m" x="210" y="284" text-anchor="middle">Una solicitud no promete que te patrocinarán.</text>
+    </svg>
+    <figcaption>Un boceto de la v1. Las empresas y los números son inventados.</figcaption>
+  </figure>
+  <p>Los datos son públicos. El Departamento de Trabajo de EE. UU. publica estas solicitudes de visa (Labor Condition Applications) cada trimestre. Una solicitud muestra que un empleador planeaba contratar a alguien con visa. No promete que te vaya a patrocinar, y la página lo dirá.</p>
+
+  <h2>Mi enfoque: Systems</h2>
+  <div class="card focus">
+    <p>Lo difícil está detrás de la interfaz: cargar los archivos del gobierno, relacionar “Google LLC” en una solicitud con “Google” en una publicación de trabajo, y mantener los empleos actualizados en segundo plano. Esa relación es lo que hace confiables las respuestas, y es el tipo de trabajo que quiero hacer como profesional de datos. En la Tarea 5 construí un proceso en segundo plano con estados de actualización, y esto profundiza en las mismas habilidades.</p>
+  </div>
+
+  <h2>Plan de trabajo</h2>
+  <figure>
+    <svg viewBox="0 0 420 140" role="img" aria-label="Línea de tiempo que baja como una inmersión: propuesta el 3 de noviembre, inicio el 10 de noviembre, v1 el 17 de noviembre, sin clase el 24 de noviembre y la feria el 1 de diciembre.">
+      <defs><marker id="tip3-es" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6fe7dd"/></marker></defs>
+      <path class="flow" d="M30 22 L390 82"/>
+      <circle cx="30" cy="22" r="5" fill="#062a45" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="30" y="52" text-anchor="middle">3 nov</text><text class="m" x="36" y="70" text-anchor="middle">Propuesta</text>
+      <circle cx="120" cy="37" r="5" fill="#062a45" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="120" y="67" text-anchor="middle">10 nov</text><text class="m" x="120" y="85" text-anchor="middle">Inicio</text>
+      <circle cx="210" cy="52" r="8" fill="#6fe7dd" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="210" y="82" text-anchor="middle">17 nov</text><text class="m" x="210" y="100" text-anchor="middle">v1</text>
+      <circle cx="300" cy="67" r="5" fill="#062a45" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="300" y="97" text-anchor="middle">24 nov</text><text class="m" x="300" y="115" text-anchor="middle">Sin clase</text>
+      <circle cx="390" cy="82" r="8" fill="#6fe7dd" stroke="#6fe7dd" stroke-width="2"/>
+      <text class="b" x="390" y="112" text-anchor="middle">1 dic</text><text class="m" x="390" y="130" text-anchor="middle">Feria</text>
+    </svg>
+    <figcaption>La inmersión hasta la feria.</figcaption>
+  </figure>
+  <div class="card roadmap">
+    <h3>Antes de empezar el proyecto <span class="date">Desde ahora hasta el 10 de noviembre, junto con la Tarea 6</span></h3>
+    <p>Hacer primero lo más riesgoso: cargar un año de solicitudes para puestos de datos en Chicago y revisar a mano la relación de nombres en 50 empleadores. Hablar con al menos dos estudiantes que estén buscando en EE. UU. ahora.</p>
+  </div>
+  <div class="card roadmap">
+    <h3>Semana 1: v1 <span class="date">Del 10 al 17 de noviembre, la v1 se entrega el 17 de noviembre</span></h3>
+    <ul>
+      <li>Registro, y solo puestos de datos en Chicago</li>
+      <li>Empleadores con solicitudes, y las solicitudes de cada uno</li>
+      <li>Empleos abiertos en esos empleadores, de The Muse</li>
+      <li>Todo funcionando de principio a fin en el sitio publicado</li>
+    </ul>
+  </div>
+  <div class="card roadmap">
+    <h3>Semana 2 <span class="date">Del 17 al 24 de noviembre</span></h3>
+    <p>Traer los empleos con un proceso programado en segundo plano y mostrar lo nuevo desde la última visita. Pegar un empleo para revisarlo. Conseguir que los primeros estudiantes lo usen y arreglar los problemas que encuentren.</p>
+  </div>
+  <div class="card roadmap">
+    <h3>Semana 3: v2 <span class="date">Del 24 de noviembre al 1 de diciembre (semana de Acción de Gracias), la feria es el 1 de diciembre</span></h3>
+    <p>Agregar los niveles salariales de las solicitudes, más campos y ciudades si la relación de nombres funciona, y un enlace para guardar empleos en mi tracker, Seguimiento. Luego preparar la feria.</p>
+  </div>
+  <p><strong>Queda fuera:</strong> otros tipos de visa, otros países, personas que postulan desde el extranjero, herramientas de currículum o de postulación automática, y cualquier cosa que parezca asesoría legal.</p>
+  <p><strong>Cómo sabré que funciona:</strong> para el 1 de diciembre, 5 estudiantes internacionales se han registrado y al menos 3 han postulado a un empleo en un empleador que antes no habían considerado.</p>
+
+  <h2>Tecnologías</h2>
+  <figure>
+    <svg viewBox="0 0 420 372" role="img" aria-label="Cómo se mueven los datos. Las solicitudes de visa del Departamento de Trabajo y los empleos abiertos de The Muse entran a un proceso en segundo plano que relaciona los nombres de los empleadores. Los resultados se guardan en Supabase, y la página de Patrocinio los lee.">
+      <defs><marker id="tip-es" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6fe7dd"/></marker></defs>
+      <rect class="box" x="16" y="6" width="186" height="62" rx="8"/><text class="b" x="109" y="32" text-anchor="middle">Depto. de Trabajo</text><text class="m" x="109" y="53" text-anchor="middle">solicitudes, cada trimestre</text>
+      <rect class="box" x="218" y="6" width="186" height="62" rx="8"/><text class="b" x="311" y="32" text-anchor="middle">The Muse</text><text class="m" x="311" y="53" text-anchor="middle">empleos abiertos</text>
+      <path class="flow" d="M109 68 L170 106" marker-end="url(#tip-es)"/>
+      <path class="flow" d="M311 68 L250 106" marker-end="url(#tip-es)"/>
+      <rect class="glow" x="56" y="108" width="308" height="62" rx="8"/><text class="b" x="210" y="134" text-anchor="middle">Trabajo en segundo plano</text><text class="m" x="210" y="155" text-anchor="middle">relaciona “Google LLC” con “Google”</text>
+      <path class="flow" d="M210 170 L210 206" marker-end="url(#tip-es)"/>
+      <rect class="box" x="56" y="208" width="308" height="62" rx="8"/><text class="b" x="210" y="234" text-anchor="middle">Supabase</text><text class="m" x="210" y="255" text-anchor="middle">empleadores, solicitudes y empleos</text>
+      <path class="flow" d="M210 270 L210 306" marker-end="url(#tip-es)"/>
+      <rect class="box" x="56" y="308" width="308" height="62" rx="8"/><text class="b" x="210" y="334" text-anchor="middle">Patrocinio</text><text class="m" x="210" y="355" text-anchor="middle">elige un campo y una ciudad</text>
+    </svg>
+    <figcaption>Cómo se mueven los datos.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Next.js en Vercel:</strong> lo que he usado todo el trimestre, así que puedo dedicar mi tiempo a los datos.</li>
+    <li><strong>Clerk:</strong> registro e inicio de sesión, como en las tareas 4 y 5.</li>
+    <li><strong>Supabase:</strong> Postgres se adapta bien a solicitudes y empleadores, la seguridad a nivel de fila protege los datos de cada persona, y Cron y Edge Functions hacen el trabajo en segundo plano.</li>
+    <li><strong>Archivos del Departamento de Trabajo:</strong> gratis, y la fuente de cada respuesta sobre patrocinio.</li>
+    <li><strong>API de The Muse:</strong> empleos abiertos gratis, y ya está en Seguimiento. El 3 de noviembre tenía 959 empleos de datos para Chicago, aunque algunos son remotos.</li>
+    <li><strong>Servidor MCP:</strong> Supabase, para revisar tablas y aplicar migraciones.</li>
+    <li><strong>CLIs:</strong> git, que también despliega en Vercel, y Playwright, para probar el flujo real en un navegador.</li>
+  </ul>
+  <p>Todo se queda en los niveles gratuitos. Solo cargaré las solicitudes que necesito, empezando por los puestos de datos en Chicago.</p>
+
+  <h2>La versión más ambiciosa</h2>
+  <p>Todos los campos y todas las ciudades de EE. UU., también para quienes aún no se han matriculado: antes de pagar una maestría, ver qué campos y empleadores realmente contratan a graduados internacionales. Me gustaría que esto se convierta en una startup.</p>
+
+  <h2>Lo que todavía no sé</h2>
+  <ul>
+    <li><strong>¿Basta con una lista de patrocinadores?</strong> No le consigue trabajo a nadie. Si el verdadero problema es postular por internet en lugar de conseguir referencias, esto resuelve solo una parte.</li>
+    <li><strong>¿Por qué no las herramientas que ya existen?</strong> Interstride, Jobright y MyVisaJobs ya muestran el historial de patrocinio. Necesito preguntarles a los estudiantes si las han probado y qué les falta.</li>
+    <li><strong>¿Quién pagaría?</strong> Los estudiantes, las universidades o nadie. Todavía no lo sé.</li>
+    <li><strong>¿Funcionará la relación de nombres?</strong> No la he probado, y por eso va primero.</li>
+  </ul>
+
+  <footer>Gabriela · MPCS 51238 · Otoño 2026</footer>
+</div>
 </main>
 <script>
   (function () {
@@ -243,6 +455,27 @@
     window.addEventListener('scroll', setDepth, { passive: true });
     window.addEventListener('resize', setDepth);
     setDepth();
+
+    // English and Spanish live in this one file. The button switches between them,
+    // and #es opens the page in Spanish.
+    var button = document.querySelector('.lang');
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-lang') !== lang;
+      });
+      document.documentElement.lang = lang;
+      document.title = lang === 'es' ? 'Patrocinio: propuesta de proyecto' : 'Patrocinio: a project proposal';
+      button.textContent = lang === 'es' ? 'English' : 'Español';
+      button.lang = lang === 'es' ? 'en' : 'es';
+      setDepth();
+    }
+    button.hidden = false;
+    button.addEventListener('click', function () {
+      var next = document.documentElement.lang === 'es' ? 'en' : 'es';
+      setLang(next);
+      history.replaceState(null, '', '#' + next);
+    });
+    if (location.hash === '#es') setLang('es');
 
     if (still) return;
 
