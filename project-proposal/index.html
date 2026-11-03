@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patrocinio: a project proposal</title>
+<meta name="description" content="A way for international master's students to see which US employers have actually filed for visas in their field and city.">
+<style>
+  :root {
+    --bg: #ebe2d0;
+    --surface: #fffcf6;
+    --ink: #2a1d14;
+    --muted: #54412f;
+    --line: #bcae99;
+    --accent: #3e5a3b;
+    --accent-soft: #dde4d4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 1.0625rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 44rem; margin: 0 auto; padding: 3.5rem 1.25rem 4rem; }
+  h1, h2 { font-family: ui-serif, Georgia, serif; font-weight: 400; }
+  h1 { font-size: clamp(2.5rem, 2rem + 3vw, 3.5rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 1.25rem; }
+  h2 { font-size: 1.625rem; line-height: 1.2; margin: 3rem 0 0.75rem; }
+  h3 { font-size: 1.0625rem; font-weight: 650; margin: 0 0 0.25rem; }
+  p { margin: 0 0 1rem; }
+  ul { margin: 0 0 1rem; padding-left: 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .kicker { color: var(--muted); font-size: 0.9375rem; margin-bottom: 0.75rem; }
+  .lede { font-size: 1.25rem; line-height: 1.45; }
+  .note { color: var(--muted); font-size: 0.9375rem; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+  .focus { background: var(--accent-soft); border-color: var(--accent); }
+  .date { color: var(--muted); font-size: 0.9375rem; display: block; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9375rem; }
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">Project proposal · Design, Build, Ship · Gabriela</p>
+  <h1>Patrocinio</h1>
+  <p class="lede">International master's students search for US jobs online and can't tell which ones are open to them. Patrocinio shows which employers have actually filed for visas in their field and city, and which of those employers are hiring now.</p>
+
+  <h2>What my users told me</h2>
+  <p>These are my summaries of what they told me, not exact quotes.</p>
+  <div class="card">
+    <h3>Did a master's in the US, then went home</h3>
+    <p>He didn't find a job after his master's. He searched online, and most of the jobs were “para americanos.” He went back to Peru, where he found work.</p>
+  </div>
+  <div class="card">
+    <h3>About to start a master's in the US</h3>
+    <p>She worked here before and searched online for another job, but didn't find one. She wants more information about jobs here.</p>
+  </div>
+  <div class="card">
+    <h3>Looking from Peru, with no US master's</h3>
+    <p>She hasn't applied yet. She sees a lot of requirements and finds it overwhelming.</p>
+  </div>
+  <div class="card">
+    <h3>Other international people I've talked to about applying</h3>
+    <p>They all told me that looking for jobs is very tiring, including checking whether each one is open to international students.</p>
+  </div>
+  <p><strong>What I take from this:</strong> the checking is the tiring part, and nobody has a clear place to focus. Only some of them named visas directly, and none of the three I followed up with is a student searching in the US right now, so I still need to talk to those students.</p>
+
+  <h2>How it works</h2>
+  <ul>
+    <li>Sign up, then choose a field and a city.</li>
+    <li>See the employers that filed for visas for that kind of role in that city, with the filings behind each one and how recent they are.</li>
+    <li>See the open jobs at those employers, and start with the ones most likely to be open to you.</li>
+  </ul>
+  <p>The data is public. The US Department of Labor publishes these visa filings (Labor Condition Applications) every quarter. A filing shows that an employer planned to hire someone on a visa. It doesn't promise that they'll sponsor you, and the page will say so.</p>
+
+  <h2>My focus: Systems</h2>
+  <div class="card focus">
+    <p>The hard part is behind the interface: loading the government files, matching “Google LLC” in a filing to “Google” in a job post, and keeping jobs current in the background. That matching is what makes the answers trustworthy, and it's the kind of work I want to do as a data professional. In Assignment 5, I built a background worker with freshness states, and this goes deeper on the same skills.</p>
+  </div>
+
+  <h2>Roadmap</h2>
+  <div class="card">
+    <h3>Before the project starts <span class="date">Now to November 10, alongside Assignment 6</span></h3>
+    <p>Do the riskiest part first: load one year of filings for Chicago data roles and check the name matching by hand on 50 employers. Talk to at least two students searching in the US now.</p>
+  </div>
+  <div class="card">
+    <h3>Week 1: v1 <span class="date">November 10 to 17, v1 due November 17</span></h3>
+    <ul>
+      <li>Sign-up, and data roles in Chicago only</li>
+      <li>Employers with filings, and the filings behind each one</li>
+      <li>Open jobs at those employers, from The Muse</li>
+      <li>All of it working end to end on the live site</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Week 2 <span class="date">November 17 to 24</span></h3>
+    <p>Get jobs through a scheduled background worker, and show what's new since the last visit. Paste in a job to check it. Get the first students using it, and fix what they run into.</p>
+  </div>
+  <div class="card">
+    <h3>Week 3: v2 <span class="date">November 24 to December 1 (Thanksgiving week), the fair is December 1</span></h3>
+    <p>Add wage levels from the filings, more fields and cities if the matching holds up, and a link to save jobs in my tracker, Seguimiento. Then prepare for the fair.</p>
+  </div>
+  <p><strong>Leaving out:</strong> other visa types, other countries, people applying from abroad, résumé or auto-apply tools, and anything that sounds like legal advice.</p>
+  <p><strong>How I'll know it works:</strong> by December 1, 5 international students have signed up, and at least 3 have applied to a job at an employer they hadn't considered before.</p>
+
+  <h2>Tech stack</h2>
+  <ul>
+    <li><strong>Next.js on Vercel:</strong> what I've used all quarter, so I can spend my time on the data.</li>
+    <li><strong>Clerk:</strong> sign-up and sign-in, as in Assignments 4 and 5.</li>
+    <li><strong>Supabase:</strong> Postgres fits filings and employers, row-level security protects each person's data, and Cron and Edge Functions run the background work.</li>
+    <li><strong>Department of Labor files:</strong> free, and the source of every sponsorship answer.</li>
+    <li><strong>The Muse API:</strong> free open jobs, and already in Seguimiento. On November 3, it listed 959 data jobs for Chicago, though some are remote.</li>
+    <li><strong>MCP server:</strong> Supabase, to inspect tables and apply migrations.</li>
+    <li><strong>CLIs:</strong> git, which also deploys to Vercel, and Playwright, to test the real flow in a browser.</li>
+  </ul>
+  <p>Everything stays on free tiers. I'll load only the filings I need, starting with Chicago data roles.</p>
+
+  <h2>The most ambitious version</h2>
+  <p>Every field and every US city, for people who haven't enrolled yet too: before you pay for a master's, see which fields and employers actually hire international graduates. I'd like this to become a startup.</p>
+
+  <h2>What I don't know yet</h2>
+  <ul>
+    <li><strong>Is a list of sponsors enough?</strong> It doesn't get anyone hired. If the real problem is applying online instead of getting referrals, this solves only part of it.</li>
+    <li><strong>Why not existing tools?</strong> Interstride, Jobright and MyVisaJobs already show sponsorship history. I need to ask students whether they've tried them and what's missing.</li>
+    <li><strong>Who would pay?</strong> Students, universities, or nobody. I don't know yet.</li>
+    <li><strong>Will the matching work?</strong> I haven't tested it, which is why it comes first.</li>
+  </ul>
+
+  <footer>Gabriela · MPCS 51238 · Autumn 2026</footer>
+</main>
+</body>
+</html>
