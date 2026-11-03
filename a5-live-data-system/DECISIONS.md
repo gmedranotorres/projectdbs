@@ -63,3 +63,17 @@
 - **In development only, /?simulate=stale (or down, or loading) shows a state,** so each can be looked at without stopping the worker.
 - **The 60-second and 5-minute limits** come from the measurements: 6 missed runs, and several missed Divvy files.
 - **Known limit:** ages compare the database's time with the device's clock, so a device with a clock over a minute off could show stale when it isn't.
+
+## Round 5: deployed (Nov 3, 2026)
+
+**What I asked.** I created the Vercel project with `a5-live-data-system` as its Root Directory, added the environment variables, and sent Claude the URL to check.
+
+**What changed.** The README has the live URL. `E2E_BASE_URL` points the Playwright tests at a deployed site.
+
+**What was checked on the deployed site.**
+- The 3 browser tests pass there: isolation, updates without a refresh, reconnecting.
+- A new visitor gets the welcome and sign-up pages. `?simulate=down` does nothing in production.
+- The browser's code has no secret keys. One search hit for `sb_secret_` is the Supabase library checking a key's prefix, with no key after it.
+- The worker kept running overnight with my laptop closed: 5,436 runs from 04:39 to about 18:45 UTC, no real failures, longest gap 20 seconds.
+
+**Not yet checked.** A classmate hasn't signed up yet, so a brand-new person's sign-up hasn't been tested from start to finish.

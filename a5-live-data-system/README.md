@@ -2,7 +2,7 @@
 
 Follow the Divvy bike stations you use, and watch bikes and docks change live, without refreshing. Assignment 5: a live data system.
 
-**Live site:** add the Vercel URL here after deploying.
+**Live site:** https://projectdbs-a5-live-data-system.vercel.app
 
 ## How data moves
 
@@ -64,6 +64,7 @@ Put these in `.env.local` (names only; the values come from the Clerk and Supaba
 ```bash
 npm test            # the worker and the freshness rules
 npm run test:e2e    # the real page and database, in a browser
+E2E_BASE_URL=https://projectdbs-a5-live-data-system.vercel.app npm run test:e2e   # the same, on the deployed site
 ```
 
 - **`tests/worker.test.ts`** runs the real worker logic on saved Divvy responses, with a pretend database. It checks that only real changes are saved, a 304 saves nothing, and bad data saves nothing and records a failed run.

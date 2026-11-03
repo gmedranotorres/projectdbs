@@ -11,6 +11,8 @@ try {
 }
 
 const PORT = 3000;
+// Set E2E_BASE_URL to test a deployed site instead of starting a local one.
+const deployed = process.env.E2E_BASE_URL;
 
 export default defineConfig({
   testDir: "./tests",
@@ -21,15 +23,17 @@ export default defineConfig({
   retries: 0,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: `http://localhost:${PORT}`,
+    baseURL: deployed ?? `http://localhost:${PORT}`,
     trace: "retain-on-failure",
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
-  webServer: {
-    command: "npm run dev",
-    url: `http://localhost:${PORT}`,
-    // A dev server already running is used as it is.
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  webServer: deployed
+    ? undefined
+    : {
+        command: "npm run dev",
+        url: `http://localhost:${PORT}`,
+        // A dev server already running is used as it is.
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+      },
 });
