@@ -23,6 +23,12 @@ Three new tables. Migrations are in supabase/migrations/.
 
 Clerk is Supabase's third-party auth provider, as in Assignment 4. Every new table revokes TRUNCATE, REFERENCES and TRIGGER from authenticated, because the project's default privileges grant them and TRUNCATE ignores row-level security. anon gets nothing.
 
+## Live page rules
+
+- Subscribe to Realtime only after setAuth() has Clerk's token. Without it, the page joins as anon and every event arrives refused.
+- A Realtime event isn't always a row: read it through rowFromEvent, never payload.new directly. A refused event has an empty row, which would read as a failed run.
+- The status bar stays in view. Numbers are never shown as zero while loading.
+
 ## Data and keys
 
 - Never read .env files (.env, .env.local or any other): don't open, print, search or copy them, with any tool, including the shell. Ask me if you need to know what's set.

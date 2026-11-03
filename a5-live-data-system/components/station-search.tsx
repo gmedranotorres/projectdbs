@@ -117,7 +117,8 @@ export function StationSearch({
                 <div className="min-w-0">
                   <p className="font-medium wrap-anywhere">{station.name}</p>
                   <p className="text-sm text-muted tabular-nums">
-                    {classicBikes(station)} classic · {station.ebikes} e-bikes · {station.docks} docks
+                    {classicBikes(station)} classic · {station.ebikes} {station.ebikes === 1 ? "e-bike" : "e-bikes"} ·{" "}
+                    {station.docks} {station.docks === 1 ? "dock" : "docks"}
                   </p>
                 </div>
                 <Button

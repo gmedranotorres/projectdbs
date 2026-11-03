@@ -28,7 +28,7 @@ function simulated(requested: string | null, now: number): Freshness | null {
 
 export function LiveBoard() {
   const live = useLiveData();
-  const { supabase, stations, latestRun, lastGoodRun, loaded, loadFailed, connection, changes, announcement, now, follow, unfollow, reload } = live;
+  const { supabase, stations, latestRun, lastGoodRun, loaded, loadFailed, connectionLost, changes, announcement, now, follow, unfollow, reload } = live;
   const requested = useSearchParams().get("simulate");
   const [busyId, setBusyId] = useState<string | null>(null);
   const [followError, setFollowError] = useState<string | null>(null);
@@ -58,7 +58,10 @@ export function LiveBoard() {
     <div className="space-y-6">
       <PageHeader title="Your stations" description="Bikes and open docks at the Divvy stations you follow. No need to refresh." />
 
-      <StatusBar freshness={freshness} connection={connection} />
+      {/* Stays in view, so nobody reads old numbers further down without knowing. */}
+      <div className="sticky top-2 z-10">
+        <StatusBar freshness={freshness} connectionLost={connectionLost} />
+      </div>
 
       {/* Announced one at a time, without interrupting a screen reader. */}
       <p aria-live="polite" className="sr-only">
@@ -69,7 +72,7 @@ export function LiveBoard() {
       </p>
 
       {loadFailed && (
-        <Card role="alert" className="border-error bg-error-soft">
+        <Card role="alert" tone="error">
           <p className="font-medium">Your stations didn&apos;t load.</p>
           <p className="mt-1 text-sm">Check your connection, then try again.</p>
           <Button variant="secondary" size="sm" className="mt-3" onClick={() => void reload()}>
@@ -84,7 +87,7 @@ export function LiveBoard() {
         !loadFailed && (
           <>
             {stations.length === 0 ? (
-              <Card className="border-dashed border-line-strong">
+              <Card tone="empty">
                 <h2 className="font-serif text-heading">You&apos;re not following any stations yet</h2>
                 <p className="mt-2 text-muted">
                   Follow the stations you actually use, then keep this page open and watch the bikes come and go.

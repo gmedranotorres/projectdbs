@@ -44,7 +44,7 @@ Station names, locations and capacity aren't in this file. They're in `station_i
 | **`divvy_stations` → Page** | Each changed row of a followed station, through Realtime | If the table isn't in Realtime, read access isn't granted, or there's no policy, the page gets nothing **with no error**. |
 | **`worker_runs` → Page** | Each new run, through Realtime | The same silent failure, but it looks like **stale** even though the worker is fine. |
 | **Page → `followed_stations`** | Follow and unfollow, with the Clerk token | If row-level security is off, people can read and change each other's choices. |
-| **Clerk → Page** | A session token that lasts about a minute | Realtime asks for a new token on every heartbeat. Without that, a page left open would go quiet. |
+| **Clerk → Page** | A session token that lasts about a minute | Realtime asks for a new token on every heartbeat. If the page subscribes before it has a token, Realtime treats it as anonymous and refuses every event: this happened while building it (see DECISIONS.md). |
 
 ## The page's states
 

@@ -1,5 +1,4 @@
 import { formatAge, type Freshness } from "@/lib/freshness";
-import type { Connection } from "@/hooks/useLiveData";
 
 const time = (iso: string) => new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
@@ -9,9 +8,10 @@ function Dot({ className }: { className: string }) {
 
 // How fresh the data is, in words. Each state has its own title and icon, so
 // nothing depends on telling the colors apart.
-export function StatusBar({ freshness, connection }: { freshness: Freshness; connection: Connection }) {
-  const connectionNote =
-    connection === "lost" ? " The live connection dropped, so this page is checking every 30 seconds." : "";
+export function StatusBar({ freshness, connectionLost }: { freshness: Freshness; connectionLost: boolean }) {
+  const connectionNote = connectionLost
+    ? " The live connection dropped, so this page is reconnecting and checking every 30 seconds."
+    : "";
 
   switch (freshness.state) {
     case "loading":

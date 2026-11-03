@@ -42,7 +42,8 @@ export function StationCard({
   return (
     <Card
       data-testid="station"
-      className={`transition-colors duration-1000 motion-reduce:transition-none ${recent ? "bg-accent-soft" : ""}`}
+      tone={recent ? "highlight" : "default"}
+      className="transition-colors duration-1000 motion-reduce:transition-none"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">

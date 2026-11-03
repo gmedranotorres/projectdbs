@@ -17,6 +17,18 @@ function required(name: string): string {
 async function signIn(browser: Browser, email: string): Promise<{ context: BrowserContext; page: Page }> {
   const context = await browser.newContext();
   const page = await context.newPage();
+  // Keeps hold of each Realtime connection, so a test can cut it.
+  await page.addInitScript(() => {
+    const NativeWebSocket = window.WebSocket;
+    const sockets: WebSocket[] = [];
+    (window as unknown as { realtimeSockets: WebSocket[] }).realtimeSockets = sockets;
+    window.WebSocket = class extends NativeWebSocket {
+      constructor(url: string | URL, protocols?: string | string[]) {
+        super(url, protocols);
+        if (String(url).includes("/realtime/")) sockets.push(this);
+      }
+    };
+  });
   await page.goto("/");
   await clerk.signIn({ page, emailAddress: email });
   await page.goto("/");
@@ -88,7 +100,35 @@ test("the page shows Live and keeps checking without a refresh", async ({ browse
       .toBe(true);
     await expect(status).toHaveAttribute("data-state", "fresh");
     // The words that only appear when Realtime has refused or dropped the page.
-    await expect(status).not.toContainText("live connection dropped");
+    await expect(status).not.toContainText("connection dropped");
+  } finally {
+    await a.context.close();
+  }
+});
+
+test("Realtime comes back after the connection is cut", async ({ browser }) => {
+  test.setTimeout(90_000);
+  const a = await signIn(browser, required("E2E_USER_A_EMAIL"));
+  try {
+    const status = a.page.getByTestId("status");
+    await expect(status).toHaveAttribute("data-state", "fresh", { timeout: 20_000 });
+
+    const ageIn = async () => {
+      const text = (await status.textContent()) ?? "";
+      const match = text.match(/Checked (just now|(\\d+) seconds ago)/);
+      return !match ? 999 : match[1] === "just now" ? 0 : Number(match[2]);
+    };
+
+    await a.page.evaluate(() => {
+      for (const socket of (window as unknown as { realtimeSockets: WebSocket[] }).realtimeSockets) socket.close();
+    });
+
+    // The page's backup check only runs once a run is over 30 seconds old. So an
+    // age that resets before then can only have come from Realtime reconnecting.
+    await a.page.waitForTimeout(12_000);
+    await expect.poll(ageIn, { timeout: 15_000, intervals: [500] }).toBeLessThan(5);
+    await expect(status).not.toContainText("connection dropped");
+    await expect(status).toHaveAttribute("data-state", "fresh");
   } finally {
     await a.context.close();
   }

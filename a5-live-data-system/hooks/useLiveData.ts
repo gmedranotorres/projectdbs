@@ -12,8 +12,11 @@ export const MAX_FOLLOWS = 20;
 export const CHANGE_SHOWS_FOR_MS = 20_000;
 // When no run has arrived for this long, stop trusting Realtime alone and ask.
 const CHECK_IN_AFTER_MS = 30_000;
+// A dropped connection usually comes back by itself, so wait before saying so.
+export const LOST_NOTE_AFTER_MS = 15_000;
+const REJOIN_AFTER_MS = 2_000;
 
-export type Connection = "connecting" | "live" | "lost";
+type Connection = "connecting" | "live" | "lost";
 export type RecentChange = { classic: number; ebikes: number; docks: number; at: number };
 
 type RunSummary = Pick<WorkerRun, "ran_at" | "ok" | "source_updated_at">;
@@ -38,6 +41,9 @@ export function useLiveData() {
   const [loaded, setLoaded] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
   const [connection, setConnection] = useState<Connection>("connecting");
+  const [lostAt, setLostAt] = useState<number | null>(null);
+  // Going up by one replaces both Realtime channels with new ones.
+  const [attempt, setAttempt] = useState(0);
   const [changes, setChanges] = useState<Record<string, RecentChange>>({});
   const [announcement, setAnnouncement] = useState("");
   const [now, setNow] = useState(0);
@@ -93,31 +99,49 @@ export function useLiveData() {
   // Every run, whether or not it changed anything: the page's heartbeat.
   useEffect(() => {
     if (!realtimeReady) return;
+    let active = true;
+    let rejoin: ReturnType<typeof setTimeout> | undefined;
+
+    const markLost = () => {
+      setConnection("lost");
+      setLostAt((at) => at ?? Date.now());
+    };
+
     const channel = supabase
       .channel("worker-runs")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "worker_runs" }, (payload) => {
         const run = rowFromEvent<WorkerRun>(payload, "ran_at");
         if (!run) {
-          setConnection("lost");
+          markLost();
           return;
         }
-        setConnection("live");
         setLatestRun((current) => (current && current.ran_at > run.ran_at ? current : run));
         if (run.ok) setLastGoodRun((current) => (current && current.ran_at > run.ran_at ? current : run));
       })
       .subscribe((status) => {
+        // Removing this channel ourselves also reports CLOSED. That isn't a problem.
+        if (!active) return;
+        clearTimeout(rejoin);
         if (status === "SUBSCRIBED") {
           setConnection("live");
-          // Anything that changed while we were connecting.
+          setLostAt(null);
+          // Anything that changed while we weren't connected.
           void load();
-        } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
-          setConnection("lost");
+        } else {
+          // CHANNEL_ERROR, TIMED_OUT or CLOSED. A closed channel stays closed, so
+          // after a moment, make new ones with a fresh token.
+          markLost();
+          rejoin = setTimeout(() => {
+            void supabase.realtime.setAuth().finally(() => setAttempt((n) => n + 1));
+          }, REJOIN_AFTER_MS);
         }
       });
     return () => {
+      active = false;
+      clearTimeout(rejoin);
       void supabase.removeChannel(channel);
     };
-  }, [supabase, load, realtimeReady]);
+  }, [supabase, load, realtimeReady, attempt]);
 
   // The changes to the stations this person follows, and only those. The filter
   // is what keeps each page from receiving every station's changes.
@@ -131,10 +155,7 @@ export function useLiveData() {
         { event: "UPDATE", schema: "public", table: "divvy_stations", filter: `station_id=in.(${followedIds})` },
         (payload) => {
           const next = rowFromEvent<Station>(payload, "station_id");
-          if (!next) {
-            setConnection("lost");
-            return;
-          }
+          if (!next) return;
           const at = Date.now();
           setStations((current) => {
             const previous = current.find((s) => s.station_id === next.station_id);
@@ -156,7 +177,7 @@ export function useLiveData() {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [supabase, followedIds, realtimeReady]);
+  }, [supabase, followedIds, realtimeReady, attempt]);
 
   // The clock behind "12 seconds ago". It's also how the page notices silence:
   // when the worker stops, no event ever arrives to say so.
@@ -206,5 +227,8 @@ export function useLiveData() {
     [supabase, load],
   );
 
-  return { supabase, stations, latestRun, lastGoodRun, loaded, loadFailed, connection, changes, announcement, now, follow, unfollow, reload: load };
+  // The note appears only once the connection has been gone for a while.
+  const connectionLost = connection === "lost" && lostAt !== null && now - lostAt > LOST_NOTE_AFTER_MS;
+
+  return { supabase, stations, latestRun, lastGoodRun, loaded, loadFailed, connectionLost, changes, announcement, now, follow, unfollow, reload: load };
 }
