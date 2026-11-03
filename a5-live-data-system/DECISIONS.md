@@ -30,3 +30,12 @@
 - **Broke the worker three ways to check the tests.** Rewriting every station failed 3 tests, skipping a shape check failed 1, and never sending the ETag failed 1. The worker was restored and all 12 pass.
 - **Station names aren't refreshed.** The information file is fetched only when an unknown station appears, so a renamed station keeps its old name.
 - **Advisor warnings about `rls_auto_enable()` left alone,** as in Assignment 4: that function came with the project. The new tables and function added no warnings.
+
+## Round 3: the schedule (Nov 2, 2026)
+
+**What I asked.** Schedule the worker every 10 seconds. An earlier attempt was declined, so Claude asked, and I chose 10 seconds over 30.
+
+**What changed.** Supabase Cron now calls the worker every 10 seconds. In the first minute and a half: 8 runs, all successful, with rows changed going 95, then 0 six times (304s), then 24 when Divvy's next file came out.
+
+**What I rejected or decided myself.**
+- **The cleanup job was split out.** The migration with both jobs was declined twice, once before and once after I approved it. The worker's job alone went through, which suggests the DELETE statements trigger Supabase's confirmation for destructive SQL. That's a likely cause, not a confirmed one. Claude didn't hide the DELETEs to get past the check. The SQL is in supabase/prune-worker-history.sql, to run in the SQL editor.

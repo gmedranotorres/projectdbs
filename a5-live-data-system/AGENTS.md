@@ -18,7 +18,7 @@ Estaciones (working name): signed-in people follow the Divvy bike stations they 
 Three new tables. Migrations are in supabase/migrations/.
 
 - **divvy_stations**: one row per station. Only the worker writes. Any signed-in person reads. In Realtime.
-- **worker_runs**: one row per run: when it ran, whether it worked, how many rows changed, the source's timestamp and ETag, and any error. Only the worker writes. Any signed-in person reads. In Realtime. Old rows are pruned.
+- **worker_runs**: one row per run: when it ran, whether it worked, how many rows changed, the source's timestamp and ETag, and any error. Only the worker writes. Any signed-in person reads. In Realtime. Old rows are pruned by the job in supabase/prune-worker-history.sql, once it has been run in the SQL editor.
 - **followed_stations**: user_id text default auth.jwt()->>'sub', station_id, created_at. Row-level security: a person reads and changes only rows where user_id = auth.jwt()->>'sub'. The browser never sends user_id.
 
 Clerk is Supabase's third-party auth provider, as in Assignment 4. Every new table revokes TRUNCATE, REFERENCES and TRIGGER from authenticated, because the project's default privileges grant them and TRUNCATE ignores row-level security. anon gets nothing.
