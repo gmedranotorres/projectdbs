@@ -7,7 +7,8 @@ Estaciones (working name): signed-in people follow the Divvy bike stations they 
 - Stack: Next.js (App Router, TypeScript) and Tailwind, Clerk for sign-in, Supabase for the database, Realtime and the worker (an Edge Function run by Supabase Cron), deployed on Vercel. New packages are limited to Clerk's, Supabase's and Playwright's; ask first if you think another is needed.
 - Supabase project: the same one as Assignment 4, reached through the MCP server in .mcp.json. Don't touch the applications or user_settings tables: Seguimiento uses them.
 - The Edge Function runs on Deno, so `supabase` stays in the exclude list in tsconfig.json.
-- Components and tokens: Calm, copied from ../a4-full-stack-app, never imported across folders at runtime. No one-off styles.
+- Look: a Chicago street, set by the tokens in app/globals.css: sky blue and navy, Barlow Condensed for headlines, Inter for the interface. Components began as copies from ../a4-full-stack-app; never import across folders at runtime. All bikes and scenery are SVG drawn in code in components/bikes.tsx, not image files. No one-off styles.
+- The dock rack draws one bike per real bike, so it must always match the numbers. Bike colors (classic, e-bike) are validated for color blindness, and aren't reused for warnings.
 - Accessibility: everything works with the keyboard, focus is visible, text contrast is at least 4.5:1. Live changes are announced politely with aria-live, and motion respects prefers-reduced-motion. A state is never shown by color alone.
 - No invented content. Station data comes only from Divvy.
 - Change only what I ask for.

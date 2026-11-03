@@ -2,6 +2,7 @@
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { useEffect, useId, useState } from "react";
+import { Bike } from "@/components/bikes";
 import { MAX_FOLLOWS } from "@/hooks/useLiveData";
 import { classicBikes } from "@/lib/freshness";
 import type { Database, Station } from "@/lib/supabase/database.types";
@@ -83,7 +84,7 @@ export function StationSearch({
 
   return (
     <section aria-labelledby={`${listId}-title`}>
-      <h2 id={`${listId}-title`} className="font-serif text-heading">
+      <h2 id={`${listId}-title`} className="font-display text-heading">
         Add a station
       </h2>
       <div className="mt-3">
@@ -114,7 +115,8 @@ export function StationSearch({
             const following = followedIds.has(station.station_id);
             return (
               <li key={station.station_id} className="flex items-center justify-between gap-3 px-4 py-2.5">
-                <div className="min-w-0">
+                <Bike type="classic" className="hidden h-6 w-10 shrink-0 text-classic sm:block" />
+                <div className="min-w-0 flex-1">
                   <p className="font-medium wrap-anywhere">{station.name}</p>
                   <p className="text-sm text-muted tabular-nums">
                     {classicBikes(station)} classic · {station.ebikes} {station.ebikes === 1 ? "e-bike" : "e-bikes"} ·{" "}

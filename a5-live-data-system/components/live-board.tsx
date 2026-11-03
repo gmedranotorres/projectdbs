@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useLiveData } from "@/hooks/useLiveData";
 import { getFreshness, STATES, type Freshness, type FreshnessState } from "@/lib/freshness";
+import { Bike, Dock, StreetScene } from "./bikes";
 import { StationCard } from "./station-card";
 import { StationSearch } from "./station-search";
 import { StatusBar } from "./status-bar";
@@ -56,6 +57,8 @@ export function LiveBoard() {
 
   return (
     <div className="space-y-6">
+      <StreetScene moving={freshness.state === "fresh"} className="h-32 rounded-card border border-line md:h-44" />
+
       <PageHeader title="Your stations" description="Bikes and open docks at the Divvy stations you follow. No need to refresh." />
 
       {/* Stays in view, so nobody reads old numbers further down without knowing. */}
@@ -88,7 +91,13 @@ export function LiveBoard() {
           <>
             {stations.length === 0 ? (
               <Card tone="empty">
-                <h2 className="font-serif text-heading">You&apos;re not following any stations yet</h2>
+                <div aria-hidden="true" className="mb-3 flex items-end gap-1">
+                  <Dock className="h-7 w-12 text-dock" />
+                  <Dock className="h-7 w-12 text-dock" />
+                  <Bike type="classic" className="h-7 w-12 text-classic" />
+                  <Dock className="h-7 w-12 text-dock" />
+                </div>
+                <h2 className="font-display text-heading">You&apos;re not following any stations yet</h2>
                 <p className="mt-2 text-muted">
                   Follow the stations you actually use, then keep this page open and watch the bikes come and go.
                 </p>

@@ -2,10 +2,10 @@ import { Show } from "@clerk/nextjs";
 import { Suspense, type ReactNode } from "react";
 import { ButtonLink } from "./ui";
 
-// Clerk's sign-in, sign-up and account menu, dressed in Calm. Every value
+// Clerk's sign-in, sign-up and account menu, dressed to match the site. Every value
 // is a token from globals.css, so they change with the rest of the site.
 // Fields are outlined in line-strong, as ours are: line alone is too faint.
-export const calmAppearance = {
+export const siteAppearance = {
   variables: {
     colorPrimary: "var(--accent)",
     colorPrimaryForeground: "var(--accent-ink)",

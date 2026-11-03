@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
 
-// Small building blocks shared by every page, from Calm by way of Assignment 4.
+// Small building blocks shared by every page, carried over from Assignment 4.
 // Tap targets are at least 44px tall, and inputs use 16px text so phones don't
 // zoom in on focus. Most have files of their own; import everything from here.
 

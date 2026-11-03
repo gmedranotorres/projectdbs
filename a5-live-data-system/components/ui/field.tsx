@@ -13,7 +13,7 @@ import { createContext, useContext, useId, type ComponentProps, type ReactNode }
 // many too many. Typing past the limit is allowed (nothing pasted is cut
 // off silently); saving then shows the error.
 //
-// The controls are Calm's, from A2: a 1px outline in the muted color that
+// The controls: a 1px outline in the muted color that
 // darkens under the pointer, 2px red when there's an error, and dashed when
 // disabled. Their text is 16px so phones don't zoom in on focus.
 

@@ -1,10 +1,7 @@
+import { SpinningWheel } from "@/components/bikes";
 import { formatAge, type Freshness } from "@/lib/freshness";
 
 const time = (iso: string) => new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
-
-function Dot({ className }: { className: string }) {
-  return <span aria-hidden="true" className={`inline-block size-2.5 shrink-0 rounded-full ${className}`} />;
-}
 
 // How fresh the data is, in words. Each state has its own title and icon, so
 // nothing depends on telling the colors apart.
@@ -66,18 +63,18 @@ function Bar({
   }[tone];
 
   return (
-    <div className={`rounded-card border px-4 py-3 ${box}`} data-testid="status" data-state={tone}>
-      <p className="flex items-center gap-2 font-semibold">
-        {tone === "quiet" && <Dot className="animate-pulse bg-muted motion-reduce:animate-none" />}
-        {tone === "fresh" && <Dot className="bg-accent" />}
+    <div className={`rounded-card border px-4 py-3 shadow-raised ${box}`} data-testid="status" data-state={tone}>
+      <p className="flex items-center gap-2 font-display text-xl leading-tight font-bold tracking-wide uppercase">
+        {tone === "quiet" && <SpinningWheel spinning className="size-5 shrink-0 text-muted" />}
+        {tone === "fresh" && <SpinningWheel spinning className="size-5 shrink-0 text-accent" />}
         {tone === "stale" && (
-          <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4 shrink-0 text-late" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5 shrink-0 text-late" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="10" cy="10" r="7.5" />
             <path d="M10 6v4.5l3 1.5" strokeLinecap="round" />
           </svg>
         )}
         {tone === "down" && (
-          <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4 shrink-0 text-error" fill="currentColor">
+          <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5 shrink-0 text-error" fill="currentColor">
             <path d="M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm-.9 4.25h1.8v5.5H9.1v-5.5Zm.9 9a1.15 1.15 0 1 1 0-2.3 1.15 1.15 0 0 1 0 2.3Z" />
           </svg>
         )}

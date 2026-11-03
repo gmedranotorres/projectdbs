@@ -77,3 +77,19 @@
 - The worker kept running overnight with my laptop closed: 5,436 runs from 04:39 to about 18:45 UTC, no real failures, longest gap 20 seconds.
 
 **Not yet checked.** A classmate hasn't signed up yet, so a brand-new person's sign-up hasn't been tested from start to finish.
+
+## Round 6: a design that looks like bikes (Nov 3, 2026)
+
+**What I asked.** Change the design: it didn't look like a website about bikes. And add bikes, drawn with code.
+
+**What changed.** Only the look; the worker, the database and how data reaches the page are untouched.
+- **A Chicago street:** sky blue and navy instead of oat and sage, and condensed road-sign lettering (Barlow Condensed) instead of a serif.
+- **Bikes drawn in code:** `components/bikes.tsx` has a classic bike, an e-bike, an empty dock, a wheel and a whole street scene, all SVG, with no image files or new packages.
+- **A dock rack on each station:** one drawing per real bike and open dock, so the picture shows the live numbers. A browser check counted the drawings on each card against the numbers.
+- **The picture follows the data:** riders cross the street and wheels turn only while the page is Live. When the data is stale or down, they stop.
+
+**What I rejected or decided myself.**
+- **Teal for e-bikes, not orange.** Both passed the color-blindness validator, but orange sits too close to the warning and error colors. E-bikes also have a bolt, and docks are a different shape, so color is never the only sign.
+- **The rack stops at 40 places** and says "+N more", since a few stations have over 100.
+- **Not Divvy's look.** No Divvy logo or brand colors, since this isn't made by them. The footer says so.
+- **The bikes are hidden from screen readers,** because they repeat numbers already in words. Animation turns off for people who ask for reduced motion.

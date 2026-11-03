@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 
-// Calm's card: the surface color, a thin edge, large corners and a soft shadow.
+// The card: the surface color, a thin edge, large corners and a soft shadow.
 // The tone replaces the edge and background together, since two classes setting
 // the same property can't be relied on to override each other.
 const tones = {

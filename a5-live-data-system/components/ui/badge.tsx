@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-// Calm's badge. Every badge carries words, so color is never the only sign.
+// The badge. Every badge carries words, so color is never the only sign.
 export type BadgeTone = "neutral" | "warning" | "closed";
 
 const tones: Record<BadgeTone, string> = {

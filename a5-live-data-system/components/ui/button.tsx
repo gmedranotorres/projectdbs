@@ -1,9 +1,8 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
 
-// Calm's button, from A2. "primary" is the one main action in view: a
-// filled deep-sage button with light, semibold words, so it stands out from
-// everything else on the page (after A3 feedback that CTAs were too quiet),
+// The button. "primary" is the one main action in view: a filled blue button
+// with light, semibold words, so it stands out from everything else on the page,
 // "secondary" is everything else, "quiet" is a minor action with no edge,
 // and "danger" is for deleting. Under the pointer a button takes the tint;
 // pressed, it gets a dark edge and moves down 1px. Disabled, its edge is

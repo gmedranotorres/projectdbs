@@ -1,51 +1,50 @@
 @import "tailwindcss";
 
-/* The Calm design system from A2 (../a2-ui-ux-visual-design, themes/calm.ts),
-   copied here as values so this project builds on its own. Calm is light
-   only, so there is no dark palette.
-
-   Colors are roles, not hues. Warnings and errors always come with words
-   and an icon, so nothing depends on telling red from green.
-
-   After A3 feedback ("brown or beige type on tan is hard to read", "can
-   CTAs feel more prominent?") the roles stay, with more distance between
-   them: darker ink and muted text, a whiter surface lifted off the oat
-   page by a soft shadow, and a deep sage primary button with light words. */
+/* The site's look: a Chicago street. Sky blue and navy, condensed lettering like
+   a road sign, and a white surface so the bikes stand out. Colors are roles, not
+   hues. Warnings and errors always come with words and an icon, so nothing
+   depends on telling red from green. Light only, so there is no dark palette. */
 :root {
-  /* Calm's six roles */
-  --bg: #ebe2d0; /* background: oat paper */
-  --surface: #fffcf6; /* surface: warm white, lighter so cards stand off the page */
-  --ink: #2a1d14; /* text: brown ink, darkened (12.7:1 on the page) */
-  --muted: #54412f; /* muted text: walnut, darkened (7.5:1 on the page) */
-  --line: #bcae99; /* border: a little darker, so card edges show */
-  --accent: #3e5a3b; /* accent: deep sage, the primary button only */
+  /* The six main roles */
+  --bg: #e6f2fa; /* the page: pale sky */
+  --surface: #ffffff; /* cards and the header */
+  --ink: #0d2438; /* text: navy (13.9:1 on the page) */
+  --muted: #3f5568; /* quieter text (6.8:1 on the page) */
+  --line: #b7cbdb; /* card edges and dividers */
+  --accent: #0a5a9c; /* the primary button, and links on hover */
 
-  /* Calm's colors for jobs the six roles can't do */
-  --accent-soft: #dde4d4; /* accent tint: sage mist */
-  --accent-strong: #747e65; /* deeper accent: sage with 28% ink, for marks such as link underlines */
-  --accent-hover: #2f4a2d; /* the primary button under the pointer: a step darker */
-  --accent-ink: var(--surface); /* the label on the primary button: light on deep sage */
+  /* Colors for jobs the six roles can't do */
+  --accent-soft: #d3e9f8; /* a light tint: Live, and a station that just changed */
+  --accent-strong: #4f86b3; /* marks such as link underlines */
+  --accent-hover: #084a80; /* the primary button under the pointer: a step darker */
+  --accent-ink: var(--surface); /* the label on the primary button */
   --line-strong: var(--muted); /* the outline of fields; the border role is too faint alone */
   --focus: var(--ink);
 
-  /* Colors Calm doesn't have, from A3 */
-  --subtle: #efede7;
+  /* The bikes in the dock rack: checked with the color-blindness validator.
+     E-bikes also have a bolt, and docks are a different shape. */
+  --classic: #0a5a9c;
+  --ebike: #00897b;
+  --dock: #667b8d;
+
+  /* Other roles */
+  --subtle: #eef4f8;
   --late: #7a4300;
   --late-soft: #fbecd2;
   --error: #b02a1f;
   --error-soft: #fbe9e6;
 
-  /* Type roles: Newsreader for headlines, Inter for the interface */
-  --type-serif: var(--newsreader), ui-serif, Georgia, serif;
+  /* Type roles: Barlow Condensed for headlines, Inter for the interface */
+  --type-display: var(--barlow), ui-sans-serif, system-ui, sans-serif;
   --type-sans: var(--inter), ui-sans-serif, system-ui, sans-serif;
   --type-display-size: clamp(2.5rem, 1.75rem + 3.5vw, 4rem); /* 40 to 64px */
-  --type-display-weight: 300;
-  --type-display-leading: 1.02;
-  --type-display-tracking: -0.02em;
+  --type-display-weight: 700;
+  --type-display-leading: 1;
+  --type-display-tracking: 0;
   --type-heading-size: 1.5rem; /* 24px */
-  --type-heading-weight: 400;
+  --type-heading-weight: 600;
   --type-heading-leading: 1.15;
-  --type-heading-tracking: -0.005em;
+  --type-heading-tracking: 0;
   --type-body-size: 1rem; /* 16px */
   --type-body-weight: 400;
   --type-body-leading: 1.6;
@@ -82,7 +81,7 @@
 }
 
 /* The tokens as Tailwind classes: bg-surface, text-ink, text-muted,
-   border-line, font-serif text-display, rounded-card, shadow-raised... */
+   border-line, font-display text-display, rounded-card, shadow-raised... */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -96,13 +95,16 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-ink: var(--accent-ink);
   --color-accent-soft: var(--accent-soft);
+  --color-classic: var(--classic);
+  --color-ebike: var(--ebike);
+  --color-dock: var(--dock);
   --color-late: var(--late);
   --color-late-soft: var(--late-soft);
   --color-error: var(--error);
   --color-error-soft: var(--error-soft);
 
   --font-sans: var(--type-sans);
-  --font-serif: var(--type-serif);
+  --font-display: var(--type-display);
 
   --text-display: var(--type-display-size);
   --text-display--font-weight: var(--type-display-weight);
@@ -169,6 +171,73 @@ body {
 input[type="date"]:focus-within {
   outline: var(--border-thick) solid var(--focus);
   outline-offset: 2px;
+}
+
+/* The road under the header. */
+.road-stripe {
+  height: 10px;
+  background:
+    repeating-linear-gradient(90deg, #f5c518 0 24px, transparent 24px 48px) center / 100% 2px no-repeat,
+    #24384c;
+}
+
+/* Wheels turn inside anything marked is-moving, and riders cross the street.
+   Each part turns around its own center. Reduced motion turns all of it off. */
+.bike-wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.is-moving .bike-wheel {
+  animation: wheel-spin 0.9s linear infinite;
+}
+.ride {
+  animation: ride 20s linear infinite;
+}
+.ride-fast {
+  animation-duration: 13s;
+  animation-delay: -6s;
+}
+.lane {
+  animation: lane 2.4s linear infinite;
+}
+.street-scene[data-moving="false"] .ride,
+.street-scene[data-moving="false"] .lane {
+  animation-play-state: paused;
+}
+.roll-in {
+  animation: roll-in 0.9s ease-out;
+}
+@keyframes wheel-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ride {
+  from {
+    transform: translateX(var(--ride-from));
+  }
+  to {
+    transform: translateX(var(--ride-to));
+  }
+}
+@keyframes lane {
+  to {
+    stroke-dashoffset: -80;
+  }
+}
+@keyframes roll-in {
+  from {
+    transform: translateX(-16px);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-moving .bike-wheel,
+  .ride,
+  .lane,
+  .roll-in {
+    animation: none;
+  }
 }
 
 /* Native controls such as date inputs draw in light, to match. */
