@@ -7,52 +7,96 @@
 <meta name="description" content="A way for international master's students to see which US employers have actually filed for visas in their field and city.">
 <style>
   :root {
-    --bg: #f4efe4;
-    --surface: #ffffff;
-    --ink: #1f2a24;
-    --muted: #4a5750;
-    --line: #c9c6b6;
-    --accent: #24594a;
-    --accent-soft: #dce9e1;
+    --ink: #eef8fa;
+    --muted: #bcd6dd;
+    --aqua: #6fe7dd;
+    --abyss: #020e1c;
+    --card: rgba(255, 255, 255, 0.08);
+    --line: rgba(111, 231, 221, 0.28);
   }
   * { box-sizing: border-box; }
+  /* The water lives on the root so the bubbles can sit between it and the words.
+     It covers the whole page, so it gets darker the further down you scroll. */
+  html {
+    background: var(--abyss) linear-gradient(180deg, #0a4a64 0%, #083e5a 18%, #062a45 50%, var(--abyss) 100%) no-repeat;
+  }
   body {
     margin: 0;
-    background: var(--bg);
     color: var(--ink);
     font: 400 1.0625rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   }
-  main { max-width: 44rem; margin: 0 auto; padding: 3.5rem 1.25rem 4rem; }
+  #bubbles { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+  .depth { position: fixed; top: 0; right: 0; width: 3px; height: 100vh; background: var(--aqua); transform: scaleY(0); transform-origin: top; z-index: 1; }
+
+  .hero { position: relative; overflow: hidden; padding: 4.5rem 1.25rem 7rem; }
+  .hero > div { position: relative; max-width: 41.5rem; margin: 0 auto; }
+  .rays {
+    position: absolute; inset: -20% -10% 0;
+    background: repeating-linear-gradient(105deg, rgba(255, 255, 255, 0.09) 0 7%, transparent 7% 19%);
+    -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%);
+    mask-image: linear-gradient(180deg, #000, transparent 85%);
+    animation: rays 14s ease-in-out infinite alternate;
+  }
+  @keyframes rays { from { transform: translateX(-3%) skewX(-3deg); opacity: 0.6; } to { transform: translateX(3%) skewX(3deg); opacity: 1; } }
+  .wave {
+    position: absolute; left: 0; bottom: 0; width: 200%; height: 90px;
+    -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent);
+    mask-image: linear-gradient(180deg, #000 35%, transparent);
+    animation: drift 18s linear infinite;
+  }
+  .wave.two { height: 70px; animation-duration: 11s; animation-direction: reverse; }
+  .wave path { fill: rgba(255, 255, 255, 0.07); }
+  @keyframes drift { to { transform: translateX(-50%); } }
+
+  main { max-width: 44rem; margin: 0 auto; padding: 0.5rem 1.25rem 5rem; }
   h1, h2 { font-family: ui-serif, Georgia, serif; font-weight: 400; }
-  h1 { font-size: clamp(2.5rem, 2rem + 3vw, 3.5rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 1.25rem; }
-  h2 { font-size: 1.625rem; line-height: 1.2; margin: 3rem 0 0.75rem; }
+  h1 { font-size: clamp(2.75rem, 2rem + 4vw, 4.25rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 1.25rem; }
+  h2 { font-size: 1.75rem; line-height: 1.2; margin: 3.5rem 0 0.75rem; color: var(--aqua); }
   h3 { font-size: 1.0625rem; font-weight: 650; margin: 0 0 0.25rem; }
   p { margin: 0 0 1rem; }
   ul { margin: 0 0 1rem; padding-left: 1.25rem; }
   li { margin-bottom: 0.4rem; }
-  a { color: var(--accent); }
-  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  li::marker { color: var(--aqua); }
   .kicker { color: var(--muted); font-size: 0.9375rem; margin-bottom: 0.75rem; }
-  .lede { font-size: 1.25rem; line-height: 1.45; }
-  .note { color: var(--muted); font-size: 0.9375rem; }
+  .lede { font-size: 1.25rem; line-height: 1.45; margin-bottom: 0; }
   .card {
-    background: var(--surface);
+    background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     padding: 1rem 1.25rem;
     margin-bottom: 0.75rem;
   }
   .card p:last-child, .card ul:last-child { margin-bottom: 0; }
-  .focus { background: var(--accent-soft); border-color: var(--accent); }
-  .date { color: var(--muted); font-size: 0.9375rem; display: block; }
+  .focus { background: var(--aqua); border-color: var(--aqua); color: #04202f; animation: glow 5s ease-in-out infinite alternate; }
+  @keyframes glow { from { box-shadow: 0 0 12px rgba(111, 231, 221, 0.2); } to { box-shadow: 0 0 36px rgba(111, 231, 221, 0.5); } }
+  .roadmap { border-left: 3px solid var(--aqua); }
+  .date { color: var(--aqua); font-size: 0.9375rem; display: block; }
   footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9375rem; }
+
+  /* Added by the script, so the page still reads with JavaScript off. */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rays, .wave, .focus { animation: none; }
+    #bubbles { display: none; }
+  }
 </style>
 </head>
 <body>
-<main>
+<canvas id="bubbles" aria-hidden="true"></canvas>
+<div class="depth" aria-hidden="true"></div>
+<header class="hero">
+<div class="rays" aria-hidden="true"></div>
+<div>
   <p class="kicker">Project proposal · Design, Build, Ship · Gabriela</p>
   <h1>Patrocinio</h1>
   <p class="lede">International master's students search for US jobs online and can't tell which ones are open to them. Patrocinio shows which employers have actually filed for visas in their field and city, and which of those employers are hiring now.</p>
+</div>
+<svg class="wave" viewBox="0 0 2400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 Q150 15 300 60 T600 60 T900 60 T1200 60 T1500 60 T1800 60 T2100 60 T2400 60 V120 H0 Z"/></svg>
+<svg class="wave two" viewBox="0 0 2400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 Q150 15 300 60 T600 60 T900 60 T1200 60 T1500 60 T1800 60 T2100 60 T2400 60 V120 H0 Z"/></svg>
+</header>
+<main>
 
   <h2>What my users told me</h2>
   <p>These are my summaries of what they told me, not exact quotes.</p>
@@ -88,11 +132,11 @@
   </div>
 
   <h2>Roadmap</h2>
-  <div class="card">
+  <div class="card roadmap">
     <h3>Before the project starts <span class="date">Now to November 10, alongside Assignment 6</span></h3>
     <p>Do the riskiest part first: load one year of filings for Chicago data roles and check the name matching by hand on 50 employers. Talk to at least two students searching in the US now.</p>
   </div>
-  <div class="card">
+  <div class="card roadmap">
     <h3>Week 1: v1 <span class="date">November 10 to 17, v1 due November 17</span></h3>
     <ul>
       <li>Sign-up, and data roles in Chicago only</li>
@@ -101,11 +145,11 @@
       <li>All of it working end to end on the live site</li>
     </ul>
   </div>
-  <div class="card">
+  <div class="card roadmap">
     <h3>Week 2 <span class="date">November 17 to 24</span></h3>
     <p>Get jobs through a scheduled background worker, and show what's new since the last visit. Paste in a job to check it. Get the first students using it, and fix what they run into.</p>
   </div>
-  <div class="card">
+  <div class="card roadmap">
     <h3>Week 3: v2 <span class="date">November 24 to December 1 (Thanksgiving week), the fair is December 1</span></h3>
     <p>Add wage levels from the filings, more fields and cities if the matching holds up, and a link to save jobs in my tracker, Seguimiento. Then prepare for the fair.</p>
   </div>
@@ -137,5 +181,73 @@
 
   <footer>Gabriela · MPCS 51238 · Autumn 2026</footer>
 </main>
+<script>
+  (function () {
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // A thin line on the right edge shows how far down you've gone.
+    var depth = document.querySelector('.depth');
+    function setDepth() {
+      var room = document.documentElement.scrollHeight - window.innerHeight;
+      depth.style.transform = 'scaleY(' + (room > 0 ? window.scrollY / room : 0) + ')';
+    }
+    window.addEventListener('scroll', setDepth, { passive: true });
+    window.addEventListener('resize', setDepth);
+    setDepth();
+
+    if (still) return;
+
+    // Headings and cards rise into view as you reach them.
+    if ('IntersectionObserver' in window) {
+      var seen = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); seen.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('main h2, main .card').forEach(function (el) {
+        el.classList.add('reveal');
+        seen.observe(el);
+      });
+    }
+
+    // Bubbles rising behind the page.
+    var canvas = document.getElementById('bubbles');
+    var ctx = canvas.getContext('2d');
+    var bubbles = [];
+    var w, h;
+    function size() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function bubble(anywhere) {
+      return {
+        x: Math.random() * w,
+        y: anywhere ? Math.random() * h : h + 10,
+        r: 1 + Math.random() * 3.5,
+        speed: 0.15 + Math.random() * 0.45,
+        sway: Math.random() * 6.28,
+        alpha: 0.12 + Math.random() * 0.2
+      };
+    }
+    window.addEventListener('resize', size);
+    size();
+    for (var i = 0, n = w < 700 ? 14 : 28; i < n; i++) bubbles.push(bubble(true));
+    (function frame() {
+      ctx.clearRect(0, 0, w, h);
+      bubbles.forEach(function (b, i) {
+        b.y -= b.speed;
+        b.sway += 0.012;
+        if (b.y < -10) { bubbles[i] = bubble(false); return; }
+        ctx.beginPath();
+        ctx.arc(b.x + Math.sin(b.sway) * 10, b.y, b.r, 0, 6.29);
+        ctx.strokeStyle = 'rgba(190, 240, 245, ' + b.alpha + ')';
+        ctx.stroke();
+      });
+      requestAnimationFrame(frame);
+    })();
+  })();
+</script>
 </body>
 </html>
