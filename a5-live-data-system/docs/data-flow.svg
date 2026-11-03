@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 560" width="1280" height="560" font-family="-apple-system, Helvetica, Arial, sans-serif" role="img" aria-label="Data flow: the Divvy feed goes to the worker, which saves only changed rows to the database, and Realtime pushes them to the page.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#44403c"/></marker>
+  </defs>
+  <style>
+    .t{font-size:18px;font-weight:700}.s{font-size:13px;fill:#57534e}.l{font-size:12.5px;fill:#292524}.c{font-size:13px;fill:#292524}
+    .tt{font-size:13.5px;font-weight:700;fill:#292524}.ln{stroke:#44403c;stroke-width:1.6;fill:none}.d{stroke-dasharray:5 4}
+  </style>
+  <rect width="1280" height="560" fill="#fff"/>
+
+  <!-- Source -->
+  <rect x="30" y="140" width="185" height="170" rx="12" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="122" y="172" text-anchor="middle" class="t" fill="#2563eb">Data source</text>
+  <text x="122" y="198" text-anchor="middle" class="c">Divvy station_status</text>
+  <text x="122" y="224" text-anchor="middle" class="s">2,079 stations</text>
+  <text x="122" y="244" text-anchor="middle" class="s">New file every 60 s</text>
+  <text x="122" y="264" text-anchor="middle" class="s">Public, no API key</text>
+  <text x="122" y="284" text-anchor="middle" class="s">Supports ETags</text>
+
+  <!-- Cron -->
+  <rect x="345" y="30" width="225" height="58" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="457" y="55" text-anchor="middle" class="tt">Supabase Cron</text>
+  <text x="457" y="75" text-anchor="middle" class="s">every 10 seconds</text>
+  <path class="ln" marker-end="url(#a)" d="M457 88V130"/>
+
+  <!-- Worker -->
+  <rect x="345" y="132" width="225" height="210" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="457" y="164" text-anchor="middle" class="t" fill="#7c3aed">Worker</text>
+  <text x="457" y="184" text-anchor="middle" class="s">Edge Function on Supabase</text>
+  <text x="362" y="214" class="c">1. Ask: anything new?</text>
+  <text x="362" y="238" class="c">2. Check the file's shape</text>
+  <text x="362" y="262" class="c">3. Compare with saved rows</text>
+  <text x="362" y="286" class="c">4. Upsert only what changed</text>
+  <text x="362" y="310" class="c">5. Record the run</text>
+
+  <!-- Source <-> worker -->
+  <path class="ln" marker-end="url(#a)" d="M345 190H217"/>
+  <text x="280" y="164" text-anchor="middle" class="l">GET, with the</text>
+  <text x="280" y="180" text-anchor="middle" class="l">last ETag</text>
+  <path class="ln" marker-end="url(#a)" d="M215 262H343"/>
+  <text x="280" y="284" text-anchor="middle" class="l">304: nothing new</text>
+  <text x="280" y="300" text-anchor="middle" class="l">200: 760 KB JSON</text>
+
+  <!-- Database -->
+  <rect x="690" y="72" width="235" height="400" rx="12" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+  <text x="807" y="104" text-anchor="middle" class="t" fill="#059669">Database</text>
+  <text x="807" y="124" text-anchor="middle" class="s">Postgres on Supabase</text>
+  <rect x="706" y="140" width="203" height="94" rx="8" fill="#fff" stroke="#059669"/>
+  <text x="807" y="164" text-anchor="middle" class="tt">divvy_stations</text>
+  <text x="807" y="186" text-anchor="middle" class="s">bikes, e-bikes, docks</text>
+  <text x="807" y="204" text-anchor="middle" class="s">Any signed-in user reads</text>
+  <text x="807" y="222" text-anchor="middle" class="s">Only the worker writes</text>
+  <rect x="706" y="248" width="203" height="94" rx="8" fill="#fff" stroke="#059669"/>
+  <text x="807" y="272" text-anchor="middle" class="tt">worker_runs</text>
+  <text x="807" y="294" text-anchor="middle" class="s">when, worked?, rows changed</text>
+  <text x="807" y="312" text-anchor="middle" class="s">Any signed-in user reads</text>
+  <text x="807" y="330" text-anchor="middle" class="s">Only the worker writes</text>
+  <rect x="706" y="356" width="203" height="100" rx="8" fill="#fff" stroke="#059669"/>
+  <text x="807" y="380" text-anchor="middle" class="tt">followed_stations</text>
+  <text x="807" y="402" text-anchor="middle" class="s">who follows which station</text>
+  <text x="807" y="420" text-anchor="middle" class="s">Row-level security:</text>
+  <text x="807" y="438" text-anchor="middle" class="s">each person's own rows only</text>
+
+  <!-- Worker -> DB -->
+  <path class="ln" marker-end="url(#a)" d="M570 187H704"/>
+  <text x="630" y="165" text-anchor="middle" class="l">Upsert only</text>
+  <text x="630" y="181" text-anchor="middle" class="l">changed rows</text>
+  <path class="ln" marker-end="url(#a)" d="M570 295H704"/>
+  <text x="630" y="273" text-anchor="middle" class="l">One row</text>
+  <text x="630" y="289" text-anchor="middle" class="l">per run</text>
+
+  <!-- Page -->
+  <rect x="1075" y="132" width="180" height="210" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text x="1165" y="164" text-anchor="middle" class="t" fill="#ea580c">Page</text>
+  <text x="1165" y="184" text-anchor="middle" class="s">Next.js on Vercel</text>
+  <text x="1165" y="214" text-anchor="middle" class="c">Live station counts</text>
+  <text x="1165" y="240" text-anchor="middle" class="c">Freshness, and states:</text>
+  <text x="1165" y="260" text-anchor="middle" class="s">loading, fresh,</text>
+  <text x="1165" y="278" text-anchor="middle" class="s">stale, down</text>
+  <text x="1165" y="306" text-anchor="middle" class="s">Own timer spots silence</text>
+
+  <!-- DB -> Page -->
+  <path class="ln" marker-end="url(#a)" d="M909 187H1073"/>
+  <text x="992" y="165" text-anchor="middle" class="l">Realtime: changes to</text>
+  <text x="992" y="181" text-anchor="middle" class="l">followed stations</text>
+  <path class="ln" marker-end="url(#a)" d="M909 295H1073"/>
+  <text x="992" y="273" text-anchor="middle" class="l">Realtime:</text>
+  <text x="992" y="289" text-anchor="middle" class="l">each new run</text>
+  <path class="ln" marker-end="url(#a)" d="M1165 342V406H911"/>
+  <text x="1010" y="398" text-anchor="middle" class="l">Follow, unfollow</text>
+
+  <!-- Clerk -->
+  <rect x="1075" y="440" width="180" height="76" rx="12" fill="#fafaf9" stroke="#78716c" stroke-width="1.5"/>
+  <text x="1165" y="468" text-anchor="middle" class="tt">Clerk</text>
+  <text x="1165" y="488" text-anchor="middle" class="s">Signs people in; its token</text>
+  <text x="1165" y="505" text-anchor="middle" class="s">says who's asking</text>
+  <path class="ln d" marker-end="url(#a)" d="M1215 440V344"/>
+  <text x="1222" y="398" class="l">token</text>
+
+  <!-- Key -->
+  <text x="30" y="440" class="tt">Who can write what</text>
+  <text x="30" y="462" class="c">The worker uses the Supabase secret key, which stays on</text>
+  <text x="30" y="482" class="c">Supabase's servers. The page uses the publishable key and</text>
+  <text x="30" y="502" class="c">the person's Clerk token, so row-level security always applies.</text>
+</svg>
