@@ -68,6 +68,18 @@
   }
   .card p:last-child, .card ul:last-child { margin-bottom: 0; }
   blockquote { margin: 0.5rem 0; font-family: ui-serif, Georgia, serif; font-size: 1.125rem; line-height: 1.45; }
+  figure { margin: 1.25rem 0 1.5rem; }
+  figure svg { display: block; width: 100%; max-width: 32rem; height: auto; margin: 0 auto; }
+  figcaption { color: var(--muted); font-size: 0.9375rem; text-align: center; margin-top: 0.5rem; }
+  svg text { font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--ink); }
+  svg .b { font-weight: 650; font-size: 15px; }
+  svg .m { fill: var(--muted); font-size: 13px; }
+  svg .a { fill: var(--aqua); font-weight: 650; }
+  svg .box { fill: rgba(255, 255, 255, 0.08); stroke: var(--line); }
+  svg .glow { fill: var(--aqua); }
+  svg .glow + text, svg .glow + text + text { fill: #04202f; }
+  .flow { fill: none; stroke: var(--aqua); stroke-width: 2; stroke-dasharray: 6 6; animation: flow 1.4s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -12; } }
   .translation, .context { color: var(--muted); font-size: 0.9375rem; }
   .translation { margin-bottom: 0.5rem; }
   .focus { background: var(--aqua); border-color: var(--aqua); color: #04202f; animation: glow 5s ease-in-out infinite alternate; }
@@ -81,7 +93,7 @@
   .reveal.in { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    .rays, .wave, .focus { animation: none; }
+    .rays, .wave, .focus, .flow { animation: none; }
     #bubbles { display: none; }
   }
 </style>
@@ -132,6 +144,20 @@
     <li>See the employers that filed for visas for that kind of role in that city, with the filings behind each one and how recent they are.</li>
     <li>See the open jobs at those employers, and start with the ones most likely to be open to you.</li>
   </ul>
+  <figure>
+    <svg viewBox="0 0 420 296" role="img" aria-label="Sketch of the v1 page. Data analyst and Chicago are chosen, and three example employers are listed, each with its number of visa filings, the latest year and its open jobs. A note says a filing doesn't promise sponsorship.">
+      <rect class="box" x="16" y="10" width="118" height="34" rx="17"/><text x="75" y="32" text-anchor="middle">Data analyst</text>
+      <rect class="box" x="144" y="10" width="88" height="34" rx="17"/><text x="188" y="32" text-anchor="middle">Chicago</text>
+      <rect class="box" x="16" y="58" width="388" height="62" rx="8"/>
+      <text class="b" x="30" y="84">Example Company A</text><text class="m" x="30" y="105">12 visa filings, latest in 2026</text><text class="a" x="390" y="84" text-anchor="end">3 open jobs</text>
+      <rect class="box" x="16" y="128" width="388" height="62" rx="8"/>
+      <text class="b" x="30" y="154">Example Company B</text><text class="m" x="30" y="175">5 visa filings, latest in 2025</text><text class="a" x="390" y="154" text-anchor="end">1 open job</text>
+      <rect class="box" x="16" y="198" width="388" height="62" rx="8"/>
+      <text class="b" x="30" y="224">Example Company C</text><text class="m" x="30" y="245">2 visa filings, latest in 2024</text><text class="a" x="390" y="224" text-anchor="end">No open jobs</text>
+      <text class="m" x="210" y="284" text-anchor="middle">A filing doesn't promise they'll sponsor you.</text>
+    </svg>
+    <figcaption>A sketch of v1. The companies and numbers are made up.</figcaption>
+  </figure>
   <p>The data is public. The US Department of Labor publishes these visa filings (Labor Condition Applications) every quarter. A filing shows that an employer planned to hire someone on a visa. It doesn't promise that they'll sponsor you, and the page will say so.</p>
 
   <h2>My focus: Systems</h2>
@@ -165,6 +191,21 @@
   <p><strong>How I'll know it works:</strong> by December 1, 5 international students have signed up, and at least 3 have applied to a job at an employer they hadn't considered before.</p>
 
   <h2>Tech stack</h2>
+  <figure>
+    <svg viewBox="0 0 420 372" role="img" aria-label="How data moves. Department of Labor visa filings and open jobs from The Muse go into background work that matches employer names. The results are saved in Supabase, and the Patrocinio page reads them.">
+      <defs><marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6fe7dd"/></marker></defs>
+      <rect class="box" x="16" y="6" width="186" height="62" rx="8"/><text class="b" x="109" y="32" text-anchor="middle">Dept. of Labor</text><text class="m" x="109" y="53" text-anchor="middle">visa filings, each quarter</text>
+      <rect class="box" x="218" y="6" width="186" height="62" rx="8"/><text class="b" x="311" y="32" text-anchor="middle">The Muse</text><text class="m" x="311" y="53" text-anchor="middle">open jobs</text>
+      <path class="flow" d="M109 68 L170 106" marker-end="url(#tip)"/>
+      <path class="flow" d="M311 68 L250 106" marker-end="url(#tip)"/>
+      <rect class="glow" x="56" y="108" width="308" height="62" rx="8"/><text class="b" x="210" y="134" text-anchor="middle">Background work</text><text class="m" x="210" y="155" text-anchor="middle">matches “Google LLC” to “Google”</text>
+      <path class="flow" d="M210 170 L210 206" marker-end="url(#tip)"/>
+      <rect class="box" x="56" y="208" width="308" height="62" rx="8"/><text class="b" x="210" y="234" text-anchor="middle">Supabase</text><text class="m" x="210" y="255" text-anchor="middle">employers, filings and jobs</text>
+      <path class="flow" d="M210 270 L210 306" marker-end="url(#tip)"/>
+      <rect class="box" x="56" y="308" width="308" height="62" rx="8"/><text class="b" x="210" y="334" text-anchor="middle">Patrocinio</text><text class="m" x="210" y="355" text-anchor="middle">choose a field and a city</text>
+    </svg>
+    <figcaption>How data moves.</figcaption>
+  </figure>
   <ul>
     <li><strong>Next.js on Vercel:</strong> what I've used all quarter, so I can spend my time on the data.</li>
     <li><strong>Clerk:</strong> sign-up and sign-in, as in Assignments 4 and 5.</li>
@@ -212,7 +253,7 @@
           if (e.isIntersecting) { e.target.classList.add('in'); seen.unobserve(e.target); }
         });
       }, { rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('main h2, main .card').forEach(function (el) {
+      document.querySelectorAll('main h2, main .card, main figure').forEach(function (el) {
         el.classList.add('reveal');
         seen.observe(el);
       });
