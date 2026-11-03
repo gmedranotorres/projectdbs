@@ -67,6 +67,9 @@
     margin-bottom: 0.75rem;
   }
   .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+  blockquote { margin: 0.5rem 0; font-family: ui-serif, Georgia, serif; font-size: 1.125rem; line-height: 1.45; }
+  .translation, .context { color: var(--muted); font-size: 0.9375rem; }
+  .translation { margin-bottom: 0.5rem; }
   .focus { background: var(--aqua); border-color: var(--aqua); color: #04202f; animation: glow 5s ease-in-out infinite alternate; }
   @keyframes glow { from { box-shadow: 0 0 12px rgba(111, 231, 221, 0.2); } to { box-shadow: 0 0 36px rgba(111, 231, 221, 0.5); } }
   .roadmap { border-left: 3px solid var(--aqua); }
@@ -99,24 +102,29 @@
 <main>
 
   <h2>What my users told me</h2>
-  <p>These are my summaries of what they told me, not exact quotes.</p>
+  <p>I talked with three friends, and these are their own words. The English translations are mine.</p>
   <div class="card">
     <h3>Did a master's in the US, then went home</h3>
-    <p>He didn't find a job after his master's. He searched online, and most of the jobs were “para americanos.” He went back to Peru, where he found work.</p>
+    <blockquote lang="es">“Apliqué a varios trabajos y no logré quedar en ninguno. Lo peor era que muchos de los trabajos publicados no eran para estudiantes internacionales y recién me daba cuenta cuando aplicaba, era tiempo perdido. Los trabajos eran más para americanos.”</blockquote>
+    <p class="translation">“I applied to several jobs and didn't get any of them. The worst part was that many of the posted jobs weren't for international students, and I only realized it when I applied. It was wasted time. The jobs were more for Americans.”</p>
+    <p class="context">He went back to Peru, where he found a job.</p>
   </div>
   <div class="card">
     <h3>About to start a master's in the US</h3>
-    <p>She worked here before and searched online for another job, but didn't find one. She wants more information about jobs here.</p>
+    <blockquote lang="es">“Cuando estuve haciendo mi año de trabajo en USA, hace dos años creo. No me gustó el trabajo, sentí que no aprendía nada. Entonces me puse a buscar más trabajos y literal no encontraba, es muy difícil encontrar trabajo cuando eres extranjero.”</blockquote>
+    <p class="translation">“When I was doing my year of work in the US, about two years ago, I think. I didn't like the job, and I felt I wasn't learning anything. So I started looking for more jobs and literally couldn't find any. It's very hard to find a job when you're a foreigner.”</p>
   </div>
   <div class="card">
     <h3>Looking from Peru, with no US master's</h3>
-    <p>She hasn't applied yet. She sees a lot of requirements and finds it overwhelming.</p>
+    <blockquote lang="es">“Quisiera conseguir un trabajo al menos remoto para USA, sería bonito tener la experiencia de trabajar para una empresa extranjer[a] directamente. Pero postular es muy agotador y confuso, y muchas publicaciones no especifican si el trabajo se puede realizar desde cualquier parte del mundo.”</blockquote>
+    <p class="translation">“I'd like to get a job for the US, at least a remote one. It would be nice to have the experience of working directly for a foreign company. But applying is very tiring and confusing, and many posts don't say whether the job can be done from anywhere in the world.”</p>
+    <p class="context">She's outside v1: she wants remote work from Peru, and visa filings can't answer that.</p>
   </div>
   <div class="card">
     <h3>Other international people I've talked to about applying</h3>
-    <p>They all told me that looking for jobs is very tiring, including checking whether each one is open to international students.</p>
+    <p>In my words, since I don't have theirs: they all told me that looking for jobs is very tiring, including checking whether each one is open to international students.</p>
   </div>
-  <p><strong>What I take from this:</strong> the checking is the tiring part, and nobody has a clear place to focus. Only some of them named visas directly, and none of the three I followed up with is a student searching in the US right now, so I still need to talk to those students.</p>
+  <p><strong>What I take from this:</strong> people lose time because job posts don't tell them whether a job is open to them, and some only find out after applying. None of the three is a student searching in the US right now, so I still need to talk to those students.</p>
 
   <h2>How it works</h2>
   <ul>
