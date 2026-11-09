@@ -1,0 +1,346 @@
+{
+  "source": "Course syllabi, Autumn 2026: Design, Build, Ship (PDF); PPHA 32300 (PDF); Data Science Clinic (clinic.ds.uchicago.edu/syllabus)",
+  "timezone": "America/Chicago",
+  "courses": [
+    {
+      "id": "dbs",
+      "name": "Design, Build, Ship",
+      "code": "MPCS 51238",
+      "class": {
+        "days": [
+          "Tue"
+        ],
+        "start": "17:30",
+        "end": "19:30",
+        "place": "Crerar 298",
+        "attendance_taken": true
+      },
+      "office_hours": [
+        {
+          "who": "André Marques (instructor)",
+          "days": [
+            "Tue"
+          ],
+          "start": "16:30",
+          "end": "17:30"
+        },
+        {
+          "who": "André Marques (instructor)",
+          "days": [
+            "Tue"
+          ],
+          "start": "19:30",
+          "end": "20:30"
+        },
+        {
+          "who": "Lauren Campbell (TA)",
+          "days": [
+            "Mon"
+          ],
+          "start": "11:00",
+          "end": "13:00"
+        },
+        {
+          "who": "Ariel Rudolph (TA)",
+          "days": [
+            "Tue",
+            "Wed"
+          ],
+          "start": "09:00",
+          "end": "10:30"
+        }
+      ],
+      "weekly": [
+        {
+          "what": "Async materials (recordings, exercises, questions), about 1 hour",
+          "posted": "end of each Wednesday",
+          "due": "before the next class"
+        },
+        {
+          "what": "Assignment and project work",
+          "hours_per_week": "7.5 to 10"
+        }
+      ],
+      "deadlines": [
+        {
+          "id": "a6",
+          "what": "Assignment 6: Life Harness. Demo (3 to 5 min) posted in #general, link submitted in Google Classroom",
+          "due": "2026-11-10T17:30",
+          "extension_days_allowed": true
+        },
+        {
+          "id": "v1",
+          "what": "Project v1: the smallest complete version that works",
+          "due": "2026-11-17T17:30",
+          "extension_days_allowed": true
+        },
+        {
+          "id": "v2",
+          "what": "Project v2: improved after real people used it, demoed at the fair",
+          "due": "2026-12-01T17:30",
+          "extension_days_allowed": false
+        },
+        {
+          "id": "fair",
+          "what": "Project fair, in person (required for every grade)",
+          "due": "2026-12-01T17:30",
+          "extension_days_allowed": false
+        }
+      ],
+      "schedule": [
+        {
+          "week": 7,
+          "date": "2026-11-10",
+          "topic": "Agent Loops & Evals",
+          "milestone_assigned": "Project v1"
+        },
+        {
+          "week": 8,
+          "date": "2026-11-17",
+          "topic": "Security & Trust",
+          "milestone_assigned": "Project v2"
+        },
+        {
+          "week": null,
+          "date": "2026-11-24",
+          "topic": "Thanksgiving break, no class"
+        },
+        {
+          "week": 9,
+          "date": "2026-12-01",
+          "topic": "Project Fair"
+        },
+        {
+          "week": 10,
+          "date": "2026-12-08",
+          "topic": "No class (finals week)"
+        }
+      ],
+      "rules": {
+        "extension_days_per_quarter": 3,
+        "extension_day_length_hours": 24,
+        "one_shot_submissions": "marked incomplete; iterate instead"
+      }
+    },
+    {
+      "id": "micro",
+      "name": "Principles of Microeconomics and Public Policy I",
+      "code": "PPHA 32300",
+      "class": {
+        "days": [
+          "Mon",
+          "Wed"
+        ],
+        "start": "15:00",
+        "end": "16:20",
+        "place": "Keller 0007",
+        "note": "Gabriela's section. The syllabus lists the 3 PM sections (5, 6) in other rooms; Keller 0007 is what she attends.",
+        "attendance": "required; 2 absences free, then -1 point of final grade each",
+        "devices": "no laptops or phones in class"
+      },
+      "ta_session": {
+        "days": [
+          "Fri"
+        ],
+        "start": "13:30",
+        "end": "14:20",
+        "place": "Remote",
+        "section": 6,
+        "attendance_required": true
+      },
+      "office_hours": [
+        {
+          "who": "Prof. Turner",
+          "days": [
+            "Mon"
+          ],
+          "start": "14:30",
+          "end": "15:30",
+          "place": "Keller 2047 or Zoom",
+          "note": "reserve a 10-minute slot"
+        },
+        {
+          "who": "Prof. Jones",
+          "days": [
+            "Thu"
+          ],
+          "start": "14:30",
+          "end": "15:30",
+          "place": "Keller 2082",
+          "note": "reserve a 10-minute slot"
+        }
+      ],
+      "weekly": [
+        {
+          "what": "Problem set",
+          "assigned": "Thursday",
+          "due": "following Thursday 23:59, PDF to Gradescope, no name on it"
+        }
+      ],
+      "deadlines": [
+        {
+          "id": "micro-quiz2",
+          "what": "Quiz II (lectures 8-13), in person. One handwritten 8.5x11 sheet (both sides) and a basic calculator. No make-ups.",
+          "due": "2026-11-13T09:00",
+          "ends": "2026-11-13T09:50"
+        },
+        {
+          "id": "micro-ps7",
+          "what": "Problem set 7",
+          "due": "2026-11-19T23:59"
+        },
+        {
+          "id": "micro-writing",
+          "what": "Group writing assignment (groups of 3-4, one submission)",
+          "due": "2026-11-20T23:59"
+        },
+        {
+          "id": "micro-ps8",
+          "what": "Problem set 8",
+          "due": "2026-12-03T23:59"
+        },
+        {
+          "id": "micro-final",
+          "what": "Final exam (lectures 1-18), Keller Center, rooms TBA. Same sheet and calculator rules.",
+          "due": "2026-12-08T10:00",
+          "ends": "2026-12-08T12:00"
+        }
+      ],
+      "practice_only": [
+        "Problem set 6 (week before Quiz II)",
+        "Problem set 9 (week before the final)"
+      ],
+      "schedule": [
+        {
+          "date": "2026-11-09",
+          "topic": "Lecture 13: Market Power I (monopoly), GLS 9.1-9.5"
+        },
+        {
+          "date": "2026-11-11",
+          "topic": "Lecture 14: Market Power II (solutions, monopsony), GLS 9.6"
+        },
+        {
+          "date": "2026-11-13",
+          "topic": "Quiz II"
+        },
+        {
+          "date": "2026-11-16",
+          "topic": "Lecture 15: Risk & Insurance, GLS 14.5"
+        },
+        {
+          "date": "2026-11-18",
+          "topic": "Lecture 16: Missing Markets I (adverse selection), GLS 16.1"
+        },
+        {
+          "date": "2026-11-23",
+          "topic": "Thanksgiving break"
+        },
+        {
+          "date": "2026-11-25",
+          "topic": "Thanksgiving break"
+        },
+        {
+          "date": "2026-11-30",
+          "topic": "Lecture 17: Missing Markets II (moral hazard), GLS 16.2-16.3"
+        },
+        {
+          "date": "2026-12-02",
+          "topic": "Lecture 18: Review"
+        }
+      ],
+      "rules": {
+        "late": "lose 25% per 6 hours late; zero after 24 hours, unless core-micro@uchicago.edu agrees before the deadline",
+        "lowest_ps_dropped": true,
+        "ai": "Claude may be consulted for problem sets and the writing assignment, but every word handed in must be the student's own. No AI at all on quizzes or the final."
+      }
+    },
+    {
+      "id": "clinic",
+      "name": "Data Science Clinic",
+      "code": "MPCS 57300 (cross-listed DATA 27200, CAPP 30300, PPHA 30581, MACS 30300)",
+      "class": {
+        "days": [
+          "Tue",
+          "Thu"
+        ],
+        "start": "17:00",
+        "end": "18:20",
+        "place": "5460 N University, Room 105",
+        "note": "Used for orientation and the mid-quarter presentations. Overlaps Design, Build, Ship on Tuesdays."
+      },
+      "project_meetings": {
+        "mentor_session": {
+          "days": [
+            "Thu"
+          ],
+          "start": "15:30",
+          "end": "16:30",
+          "place": "Ryerson",
+          "with": "mentor and TA, in person"
+        },
+        "ta_work_sessions": {
+          "days": [
+            "Mon",
+            "Fri"
+          ],
+          "start": "10:15",
+          "end": "11:15",
+          "place": "in person",
+          "attendance_required": true
+        },
+        "lateness": "points deducted for arriving late"
+      },
+      "weekly": [
+        {
+          "what": "Open GitHub issues for next week's tasks (with acceptance criteria), post links in the project Slack thread",
+          "due": "Thursday midnight (day of the mentor session)"
+        },
+        {
+          "what": "Work pushed to a PR, progress comment on each issue, Slack links, short update (slides recommended)",
+          "due": "Wednesday midnight (day before the mentor session)"
+        },
+        {
+          "what": "Respond to TA code reviews on PRs",
+          "due": "during the week"
+        },
+        {
+          "what": "Clinic work",
+          "hours_per_week": "at least 15 (graduate)"
+        }
+      ],
+      "deadlines_note": "The clinic gives week numbers only; Canvas has the official dates. The dates below are ESTIMATES that assume Week 9 = Nov 23 and Week 10 = Nov 30 (registrar weeks). Confirm on Canvas.",
+      "deadlines": [
+        {
+          "id": "clinic-video1",
+          "what": "Video, first draft (Week 9 Wed)",
+          "due": "2026-11-25",
+          "estimated": true
+        },
+        {
+          "id": "clinic-video2",
+          "what": "Video, second draft and one-pager, first draft (Week 9 Fri)",
+          "due": "2026-11-27",
+          "estimated": true,
+          "note": "falls on Thanksgiving Friday if the estimate is right; check Canvas"
+        },
+        {
+          "id": "clinic-tech",
+          "what": "Final technical submission: reproducible on a fresh clone, works in Docker (Week 10 Wed)",
+          "due": "2026-12-02",
+          "estimated": true
+        },
+        {
+          "id": "clinic-final",
+          "what": "Final video, final one-pager, peer review #3, external partner email (Week 10 Thu)",
+          "due": "2026-12-03",
+          "estimated": true
+        }
+      ],
+      "rules": {
+        "peer_reviews": "no make-ups",
+        "task_done_when": "its PR is merged to main",
+        "no_code_pushed": "0 for the week if the task needed code"
+      }
+    }
+  ]
+}

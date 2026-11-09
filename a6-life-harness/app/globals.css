@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* Morning paper: warm cream, dark ink, one sunrise accent. Each course has its
+   own color, but its name is always printed too, so nothing depends on color. */
+:root {
+  --bg: #f6f1e7;
+  --surface: #fffdf8;
+  --ink: #221c15;      /* 15.6:1 on bg */
+  --muted: #5d5346;    /* 7.0:1 on bg */
+  --line: #e2d8c6;
+  --accent: #a4461a;   /* sunrise; 5.6:1 on bg */
+  --accent-soft: #f6dfcf;
+  --dbs: #2c5a87;
+  --micro: #7a3f86;
+  --clinic: #2c6e52;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-dbs: var(--dbs);
+  --color-micro: var(--micro);
+  --color-clinic: var(--clinic);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .flash { animation: flash 1.6s ease-out; }
+  @keyframes flash { from { background: var(--accent-soft); } to { background: transparent; } }
+}
