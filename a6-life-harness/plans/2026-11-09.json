@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-09",
+  "saved_at": "2026-11-09T17:08:00-06:00",
+  "check_in": { "at": "17:04", "woke_at": "07:30", "wake_target": "08:45" },
+  "headline": "A6 is due tomorrow at 5:30. Ship the demo tonight, then start the Quiz II notes sheet.",
+  "weather": { "summary": "Clear. 11°C now, 8°C by 19:00, no rain.", "commute": "walk", "why": "No travel left today" },
+  "blocks": [
+    { "start": "17:15", "end": "19:00", "kind": "work", "course": "dbs", "title": "A6: demo and submit", "outcome": "3 to 5 min demo posted in #general and the link submitted in Google Classroom" },
+    { "start": "19:00", "end": "19:30", "kind": "buffer", "title": "Buffer / dinner" },
+    { "start": "19:30", "end": "21:00", "kind": "study", "course": "micro", "title": "Quiz II: notes sheet outline", "outcome": "Outline of the notes sheet with one section per lecture (8 to 13), key formulas and graphs listed" }
+  ],
+  "deadlines": [
+    { "what": "A6: Life Harness", "course": "dbs", "due": "2026-11-10T17:30" },
+    { "what": "Clinic PR and progress comments (her cutoff: 21:00)", "course": "clinic", "due": "2026-11-11T21:00" },
+    { "what": "Micro Quiz II (lectures 8 to 13), no make-ups", "course": "micro", "due": "2026-11-13T09:00" },
+    { "what": "Clinic video, first draft", "course": "clinic", "due": "2026-11-25", "estimated": true },
+    { "what": "Clinic video, second draft and one-pager, first draft", "course": "clinic", "due": "2026-11-27", "estimated": true }
+  ],
+  "carried_over": [],
+  "notes": [
+    "Clinic team hasn't picked sorting by vendor or by test type. A Slack draft asking to decide by Tue noon is in chat.",
+    "Quiz II allows one handwritten 8.5x11 sheet (both sides) and a basic calculator. She writes the sheet herself."
+  ]
+}
