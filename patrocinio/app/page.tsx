@@ -16,20 +16,17 @@ export default function Home() {
         </p>
       </header>
 
-      <section aria-label="Search" className="mt-6 flex flex-wrap gap-3">
-        <label className="flex flex-col text-sm">
-          <span className="text-muted">Field</span>
-          <select disabled className="mt-1 rounded-lg border border-line bg-surface px-3 py-2 text-ink" defaultValue="data">
-            <option value="data">Data roles</option>
-          </select>
-        </label>
-        <label className="flex flex-col text-sm">
-          <span className="text-muted">City</span>
-          <select disabled className="mt-1 rounded-lg border border-line bg-surface px-3 py-2 text-ink" defaultValue="chi">
-            <option value="chi">Chicago, IL</option>
-          </select>
-        </label>
-        <p className="self-end pb-2 text-sm text-muted">More fields and cities are coming.</p>
+      {/* v1 covers one field and one city. Testers took locked dropdowns for broken
+          ones (Nov 17), so this states the scope as text instead. */}
+      <section aria-label="What this shows" className="mt-6 rounded-xl border border-line bg-surface p-4">
+        <p>
+          Showing <strong>data jobs</strong> in <strong>Chicago, IL</strong>
+          <span className="text-muted"> · the only field and city for now. More are coming.</span>
+        </p>
+        <p className="mt-1 text-sm text-muted">
+          Data jobs here means data scientists, data and business intelligence analysts, data engineers, statisticians,
+          operations research analysts and data architects.
+        </p>
       </section>
 
       <aside className="mt-6 rounded-xl bg-warn-soft p-4 text-sm text-warn-ink">
