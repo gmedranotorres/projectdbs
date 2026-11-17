@@ -9,6 +9,8 @@ type Props = {
 };
 
 const PAGE = 30;
+// Job links come from third-party job boards: only link to https pages.
+const safeUrl = (u: string) => (/^https:\/\//i.test(u) ? u : undefined);
 const SERVICE_NAMES: Record<string, string> = { greenhouse: "Greenhouse", lever: "Lever", ashby: "Ashby" };
 // "Chicago, IL; New York, NY; Remote" -> "Chicago, IL + 2 more"
 function shortLocation(loc: string) {
@@ -128,7 +130,7 @@ function EmployerCard({ row }: { row: EmployerRow }) {
           <ul className="mt-2 divide-y divide-line">
             {jobs.map((j) => (
               <li key={j.id} className="flex flex-wrap items-baseline justify-between gap-x-3 py-2">
-                <a href={j.url} target="_blank" rel="noopener noreferrer" className="font-medium underline decoration-line underline-offset-4 hover:decoration-accent">
+                <a href={safeUrl(j.url)} target="_blank" rel="noopener noreferrer" className="font-medium underline decoration-line underline-offset-4 hover:decoration-accent">
                   {j.title}
                 </a>
                 <span className="text-sm text-muted">
