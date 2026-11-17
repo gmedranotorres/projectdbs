@@ -1,0 +1,4 @@
+# Raw DOL visa-filing files: too large for GitHub (over 100 MB)
+*.xlsx
+.DS_Store
+.env*

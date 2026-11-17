@@ -1,0 +1,8 @@
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+.env*
+# Intermediate extract from the raw DOL files; rebuild with scripts/extract_filings.py
+data/chicago_filings.csv
