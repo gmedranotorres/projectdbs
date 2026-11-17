@@ -11,8 +11,8 @@
    "filings": 33,
    "latest": "2025-08-28",
    "topTitles": [
-    "Consultant",
     "Senior Consultant",
+    "Consultant",
     "Manager"
    ],
    "recent": [
@@ -179,7 +179,7 @@
    "topTitles": [
     "Operations Research Analysts - KBGFJG159556-6",
     "Operations Research Analysts - KBGFJG221977-3",
-    "=\"Statisticians - KBGFJG223387-3\""
+    "Statisticians - KBGFJG223387-3"
    ],
    "recent": [
     {
@@ -343,9 +343,9 @@
    "filings": 30,
    "latest": "2025-09-08",
    "topTitles": [
-    "Principal Analytical Consultant",
     "Business & Marketing Data Scientist",
-    "=\"Business & Marketing Data Scientist\""
+    "Data Engineer",
+    "Principal Analytical Consultant"
    ],
    "recent": [
     {
@@ -398,21 +398,21 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business & Marketing Data Scientist\"",
+     "jobTitle": "Business & Marketing Data Scientist",
      "socTitle": "Statisticians",
      "date": "2025-03-31",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Business and Marketing Data Scientist\"",
+     "jobTitle": "Senior Business and Marketing Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-03-28",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Systems Analyst\"",
+     "jobTitle": "Business Systems Analyst",
      "socTitle": "Database Architects",
      "date": "2025-03-24",
      "wageLevel": "II",
@@ -427,8 +427,8 @@
    "latest": "2025-09-23",
    "topTitles": [
     "Senior Associate",
-    "Associate",
-    "Senior Manager"
+    "Manager",
+    "Associate"
    ],
    "recent": [
     {
@@ -510,8 +510,8 @@
    "latest": "2025-09-29",
    "topTitles": [
     "Associate, Quant Analytics Associate Sr",
-    "=\"Vice President, Quant Analytics Manager\"",
-    "Quant Analytics Associate Sr"
+    "Vice President, Quant Analytics Manager",
+    "Vice President, Lead Solutions Analyst"
    ],
    "recent": [
     {
@@ -592,7 +592,7 @@
    "filings": 22,
    "latest": "2025-09-23",
    "topTitles": [
-    "=\"Data Engineer\"",
+    "Data Engineer",
     "Senior Data Scientist",
     "Data Science Manager"
    ],
@@ -759,8 +759,8 @@
    "latest": "2025-09-24",
    "topTitles": [
     "Research Data Analyst",
-    "=\"Research Data Analyst Senior\"",
-    "Statistical Analyst"
+    "Statistical Analyst",
+    "Statistical Analyst Senior"
    ],
    "recent": [
     {
@@ -841,9 +841,9 @@
    "filings": 18,
    "latest": "2025-09-15",
    "topTitles": [
+    "Data Eng, Mgmt and Governance Assoc Mgr",
     "Data Eng, Mgmt & Governance Specialist",
-    "Data Eng, Mgmt and Governance Manager",
-    "=\"Data Engineer, Management & Governance Specialist\""
+    "Data Eng, Mgmt and Governance Manager"
    ],
    "recent": [
     {
@@ -1007,9 +1007,9 @@
    "filings": 16,
    "latest": "2025-06-06",
    "topTitles": [
+    "Lead Business Intelligence Engineer",
     "Senior Data Engineer",
-    "Lead Data Warehouse Engineer",
-    "=\"Lead Business Intelligence Engineer\""
+    "Lead Data Warehouse Engineer"
    ],
    "recent": [
     {
@@ -1076,7 +1076,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Lead Business Intelligence Engineer\"",
+     "jobTitle": "Lead Business Intelligence Engineer",
      "socTitle": "Database Architects",
      "date": "2025-03-10",
      "wageLevel": "III",
@@ -1090,9 +1090,9 @@
    "filings": 15,
    "latest": "2025-09-26",
    "topTitles": [
-    "=\"Business Manager\"",
     "Business Manager",
-    "Manager, Data Science"
+    "Manager, Data Science",
+    "Principal Associate, Data Science"
    ],
    "recent": [
     {
@@ -1145,21 +1145,21 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Manager\"",
+     "jobTitle": "Business Manager",
      "socTitle": "Data Scientists",
      "date": "2025-03-14",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Manager\"",
+     "jobTitle": "Business Manager",
      "socTitle": "Data Scientists",
      "date": "2025-03-06",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Manager, Data Science\"",
+     "jobTitle": "Senior Manager, Data Science",
      "socTitle": "Data Scientists",
      "date": "2025-03-06",
      "wageLevel": "IV",
@@ -1173,7 +1173,7 @@
    "filings": 15,
    "latest": "2025-09-12",
    "topTitles": [
-    "=\"Sr Analyst, Ops Strategy\"",
+    "Sr Analyst, Ops Strategy",
     "Manager, Risk & Data Science",
     "Manager, Fraud Analytics"
    ],
@@ -1193,56 +1193,56 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr Analyst, Ops Strategy\"",
+     "jobTitle": "Sr Analyst, Ops Strategy",
      "socTitle": "Operations Research Analysts",
      "date": "2025-03-04",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Associate Product Manager, Card Servicing\"",
+     "jobTitle": "Associate Product Manager, Card Servicing",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-03",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr Analyst, Ops Strategy\"",
+     "jobTitle": "Sr Analyst, Ops Strategy",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-21",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr Analyst, Data  - Fraud Ops\"",
+     "jobTitle": "Sr Analyst, Data  - Fraud Ops",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-19",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Product Sr. Analyst, Card Servicing\"",
+     "jobTitle": "Product Sr. Analyst, Card Servicing",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-13",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr Analyst, Data - Fraud Ops\"",
+     "jobTitle": "Sr Analyst, Data - Fraud Ops",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-12",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Associate, Fraud Analytics\"",
+     "jobTitle": "Associate, Fraud Analytics",
      "socTitle": "Financial Quantitative Analysts",
      "date": "2025-02-11",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr Analyst, Card\"",
+     "jobTitle": "Sr Analyst, Card",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-11",
      "wageLevel": "I",
@@ -1257,8 +1257,8 @@
    "latest": "2025-08-15",
    "topTitles": [
     "Senior Data Engineer",
-    "Enterprise Data Governance Consultant",
-    "Data Analytics Consulting Director"
+    "Data Analytics Consultant",
+    "Enterprise Data Governance Consultant"
    ],
    "recent": [
     {
@@ -1297,7 +1297,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Analytics Consultant\"",
+     "jobTitle": "Data Analytics Consultant",
      "socTitle": "Data Scientists",
      "date": "2025-03-11",
      "wageLevel": "II",
@@ -1340,7 +1340,7 @@
    "latest": "2025-08-13",
    "topTitles": [
     "AI Senior Machine Learning Scientist",
-    "=\"Data Science Solution Consultant Senior\"",
+    "Data Science Solution Consultant Senior",
     "Data Scientist"
    ],
    "recent": [
@@ -1401,14 +1401,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Science Solution Consultant Senior\"",
+     "jobTitle": "Data Science Solution Consultant Senior",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-22",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Science Solution Consultant Senior\"",
+     "jobTitle": "Data Science Solution Consultant Senior",
      "socTitle": "Database Administrators",
      "date": "2025-01-02",
      "wageLevel": "II",
@@ -1505,9 +1505,9 @@
    "filings": 12,
    "latest": "2025-09-18",
    "topTitles": [
+    "Research Specialist",
     "IT Tech Associate (Sr Enterprise Storage & Backup Engineer)",
-    "IT Technical Associate (Associate - Business Intelligence)",
-    "Biostatistician"
+    "IT Technical Associate (Associate - Business Intelligence)"
    ],
    "recent": [
     {
@@ -1553,7 +1553,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Research Specialist\"",
+     "jobTitle": "Research Specialist",
      "socTitle": "Data Scientists",
      "date": "2025-01-23",
      "wageLevel": "II",
@@ -1590,7 +1590,7 @@
    "topTitles": [
     "VP, Data Engineering Manager",
     "AVP, Credit Model Development",
-    "=\"VP, Data Engineering Manager\""
+    "Senior Analyst, Model Validation"
    ],
    "recent": [
     {
@@ -1657,7 +1657,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"VP, Data Engineering Manager\"",
+     "jobTitle": "VP, Data Engineering Manager",
      "socTitle": "Software Developers",
      "date": "2025-03-31",
      "wageLevel": "IV",
@@ -1673,7 +1673,7 @@
    "topTitles": [
     "Sr. Data Engineer",
     "Data Engineer",
-    "=\"Senior Data Product Manager\""
+    "Senior Data Product Manager"
    ],
    "recent": [
     {
@@ -1712,35 +1712,35 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Product Manager\"",
+     "jobTitle": "Senior Data Product Manager",
      "socTitle": "Information Technology Project Managers",
      "date": "2025-02-21",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Product Manager\"",
+     "jobTitle": "Senior Data Product Manager",
      "socTitle": "Information Technology Project Managers",
      "date": "2025-02-12",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Cloud Solution Architect\"",
+     "jobTitle": "Cloud Solution Architect",
      "socTitle": "Database Architects",
      "date": "2025-01-31",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Lead Data Engineer\"",
+     "jobTitle": "Lead Data Engineer",
      "socTitle": "Data Warehousing Specialists",
      "date": "2025-01-27",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Engineer\"",
+     "jobTitle": "Senior Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-01-27",
      "wageLevel": "IV",
@@ -1755,7 +1755,7 @@
    "latest": "2025-09-18",
    "topTitles": [
     "Analytics Developer",
-    "=\"Analytics Developer\"",
+    "Quantitative Research Engineer",
     "Principal Technical Architect"
    ],
    "recent": [
@@ -1781,28 +1781,28 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Analytics Developer\"",
+     "jobTitle": "Analytics Developer",
      "socTitle": "Data Scientists",
      "date": "2025-03-27",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Quantitative Research Engineer\"",
+     "jobTitle": "Quantitative Research Engineer",
      "socTitle": "Data Scientists",
      "date": "2025-03-17",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Analytics Developer\"",
+     "jobTitle": "Senior Analytics Developer",
      "socTitle": "Data Warehousing Specialists",
      "date": "2025-03-10",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Analytics Developer\"",
+     "jobTitle": "Analytics Developer",
      "socTitle": "Database Architects",
      "date": "2025-01-13",
      "wageLevel": "I",
@@ -1892,7 +1892,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Product Manager, People Analytics & Measurement\"",
+     "jobTitle": "Product Manager, People Analytics & Measurement",
      "socTitle": "Information Technology Project Managers",
      "date": "2025-03-19",
      "wageLevel": "III",
@@ -1922,7 +1922,7 @@
    "topTitles": [
     "Data Engineer (20831.345)",
     "Sr. Manager Enterprise Architect",
-    "=\"Manager - Integration, COE (20831.366)\""
+    "Manager - Integration, COE (20831.366)"
    ],
    "recent": [
     {
@@ -1968,21 +1968,21 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Manager - Integration, COE (20831.366)\"",
+     "jobTitle": "Manager - Integration, COE (20831.366)",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-27",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Manager - Data Application Architect (20831.240)\"",
+     "jobTitle": "Manager - Data Application Architect (20831.240)",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-24",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"MGR- DATA SUPPORT MANAGER (20831.141)\"",
+     "jobTitle": "MGR- DATA SUPPORT MANAGER (20831.141)",
      "socTitle": "Software Developers",
      "date": "2025-02-19",
      "wageLevel": "II",
@@ -2065,7 +2065,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Machine Learning Engineer\"",
+     "jobTitle": "Machine Learning Engineer",
      "socTitle": "Data Scientists",
      "date": "2025-01-31",
      "wageLevel": "II",
@@ -2171,7 +2171,7 @@
    "topTitles": [
     "Sr. Manager Data Product",
     "SR TECHNOLOGY ARCHITECT",
-    "=\"SR. Business Architect\""
+    "SR. Business Architect"
    ],
    "recent": [
     {
@@ -2210,28 +2210,28 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"SR. Business Architect\"",
+     "jobTitle": "SR. Business Architect",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-28",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Lead Data Scientist\"",
+     "jobTitle": "Lead Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-02-27",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"SR DATA SCIENTIST\"",
+     "jobTitle": "SR DATA SCIENTIST",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-12",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Analyst\"",
+     "jobTitle": "Business Analyst",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-10",
      "wageLevel": "II",
@@ -2419,8 +2419,8 @@
    "latest": "2025-07-25",
    "topTitles": [
     "Associate Data Engineer",
-    "Associate Data Scientist",
-    "Data Scientist"
+    "Senior Data Engineer",
+    "Associate Data Scientist"
    ],
    "recent": [
     {
@@ -2503,7 +2503,7 @@
    "topTitles": [
     "Business Intelligence Engineer III",
     "Data Engineer I",
-    "=\"Business Intelligence Engineer I\""
+    "Business Intelligence Engineer I"
    ],
    "recent": [
     {
@@ -2528,28 +2528,28 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Intelligence Engineer I\"",
+     "jobTitle": "Business Intelligence Engineer I",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-25",
      "wageLevel": "I",
      "positions": 10
     },
     {
-     "jobTitle": "=\"Data Scientist III\"",
+     "jobTitle": "Data Scientist III",
      "socTitle": "Data Scientists",
      "date": "2025-03-14",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Intelligence Engineer III\"",
+     "jobTitle": "Business Intelligence Engineer III",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-13",
      "wageLevel": "III",
      "positions": 10
     },
     {
-     "jobTitle": "=\"Data Scientist II\"",
+     "jobTitle": "Data Scientist II",
      "socTitle": "Data Scientists",
      "date": "2025-02-14",
      "wageLevel": "II",
@@ -2577,9 +2577,9 @@
    "filings": 9,
    "latest": "2025-08-26",
    "topTitles": [
+    "Sr Mgr, Data Engineering",
     "Sr Data Scientist",
-    "Data Scientist",
-    "=\"Mgr, Strategic Analytics\""
+    "Data Scientist"
    ],
    "recent": [
     {
@@ -2632,14 +2632,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Mgr, Strategic Analytics\"",
+     "jobTitle": "Mgr, Strategic Analytics",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-25",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr Mgr, Data Engineering\"",
+     "jobTitle": "Sr Mgr, Data Engineering",
      "socTitle": "Software Developers",
      "date": "2025-02-05",
      "wageLevel": "IV",
@@ -2723,8 +2723,8 @@
    "latest": "2025-05-29",
    "topTitles": [
     "Senior Data Analyst, Funding Risk",
-    "=\"Senior Data Analyst, Transaction Risk\"",
-    "=\"Software Engineer, Data Engineering\""
+    "Senior Data Analyst, Transaction Risk",
+    "Software Engineer, Data Engineering"
    ],
    "recent": [
     {
@@ -2763,14 +2763,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Analyst, Transaction Risk\"",
+     "jobTitle": "Senior Data Analyst, Transaction Risk",
      "socTitle": "Financial Risk Specialists",
      "date": "2025-02-27",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Software Engineer, Data Engineering\"",
+     "jobTitle": "Software Engineer, Data Engineering",
      "socTitle": "Database Architects",
      "date": "2025-01-10",
      "wageLevel": "IV",
@@ -2792,8 +2792,8 @@
    "latest": "2025-08-06",
    "topTitles": [
     "Senior Pricing Analyst",
-    "=\"Senior Data Engineer\"",
-    "=\"Manager, Revenue & Margin Management\""
+    "Senior Data Engineer",
+    "Manager, Revenue & Margin Management"
    ],
    "recent": [
     {
@@ -2832,21 +2832,21 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Engineer\"",
+     "jobTitle": "Senior Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-03-06",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Manager, Revenue & Margin Management\"",
+     "jobTitle": "Manager, Revenue & Margin Management",
      "socTitle": "Statisticians",
      "date": "2025-01-16",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Software Engineer II, Data & ML Platform\"",
+     "jobTitle": "Software Engineer II, Data & ML Platform",
      "socTitle": "Software Developers",
      "date": "2025-01-10",
      "wageLevel": "II",
@@ -2929,7 +2929,7 @@
    "filings": 7,
    "latest": "2025-09-09",
    "topTitles": [
-    "=\"Manager “ Data Engineering\"",
+    "Manager “ Data Engineering",
     "Manager – Data Engineering",
     "Senior Manager – Data Engineering"
    ],
@@ -2949,14 +2949,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Manager “ Data Engineering\"",
+     "jobTitle": "Manager “ Data Engineering",
      "socTitle": "Software Developers",
      "date": "2025-02-21",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Manager “ Data Engineering\"",
+     "jobTitle": "Manager “ Data Engineering",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-28",
      "wageLevel": "III",
@@ -2992,7 +2992,7 @@
    "latest": "2025-08-06",
    "topTitles": [
     "Director-IC Data Engineering",
-    "=\"Senior Specialist-IC Quantitative Risk Management\"",
+    "Senior Specialist-IC Quantitative Risk Management",
     "Specialist III-IC Data Sciences"
    ],
    "recent": [
@@ -3025,14 +3025,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Specialist-IC Quantitative Risk Management\"",
+     "jobTitle": "Senior Specialist-IC Quantitative Risk Management",
      "socTitle": "Statisticians",
      "date": "2025-03-24",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Specialist-IC Quantitative Risk Management\"",
+     "jobTitle": "Senior Specialist-IC Quantitative Risk Management",
      "socTitle": "Statisticians",
      "date": "2025-02-07",
      "wageLevel": "III",
@@ -3053,8 +3053,8 @@
    "filings": 7,
    "latest": "2025-09-24",
    "topTitles": [
+    "Technical Business Developer III",
     "BUSINESS INTELLIGENCE ENGINEER I",
-    "=\"Technical Business Developer III\"",
     "Inside Account Exec II 43"
    ],
    "recent": [
@@ -3094,7 +3094,7 @@
      "positions": 10
     },
     {
-     "jobTitle": "=\"Technical Business Developer III\"",
+     "jobTitle": "Technical Business Developer III",
      "socTitle": "Operations Research Analysts",
      "date": "2025-03-03",
      "wageLevel": "III",
@@ -3239,8 +3239,8 @@
    "latest": "2025-06-10",
    "topTitles": [
     "Data Scientist",
-    "=\"Business Intelligence Manager II\"",
-    "=\"Data Engineering Team Lead\""
+    "Business Intelligence Manager II",
+    "Data Engineering Team Lead"
    ],
    "recent": [
     {
@@ -3279,14 +3279,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Intelligence Manager II\"",
+     "jobTitle": "Business Intelligence Manager II",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-13",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineering Team Lead\"",
+     "jobTitle": "Data Engineering Team Lead",
      "socTitle": "Computer and Information Systems Managers",
      "date": "2025-02-04",
      "wageLevel": "II",
@@ -3300,9 +3300,9 @@
    "filings": 7,
    "latest": "2025-05-16",
    "topTitles": [
-    "=\"Quantitative Research Engineer\"",
     "Quantitative Research Engineer",
-    "=\"Quantitative Research Engineer II\""
+    "Quantitative Research Engineer II",
+    "Quantitative Researcher"
    ],
    "recent": [
     {
@@ -3334,21 +3334,21 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Quantitative Research Engineer II\"",
+     "jobTitle": "Quantitative Research Engineer II",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-24",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Quantitative Research Engineer\"",
+     "jobTitle": "Quantitative Research Engineer",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-22",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Quantitative Research Engineer\"",
+     "jobTitle": "Quantitative Research Engineer",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-17",
      "wageLevel": "II",
@@ -3363,8 +3363,8 @@
    "latest": "2025-09-02",
    "topTitles": [
     "Manager, Eng - Data Science",
-    "=\"Staff Data Engineer\"",
-    "=\"Data Scientist II\""
+    "Staff Data Engineer",
+    "Data Scientist II"
    ],
    "recent": [
     {
@@ -3389,14 +3389,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Staff Data Engineer\"",
+     "jobTitle": "Staff Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-03-05",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Scientist II\"",
+     "jobTitle": "Data Scientist II",
      "socTitle": "Data Scientists",
      "date": "2025-02-06",
      "wageLevel": "IV",
@@ -3418,7 +3418,6 @@
    "latest": "2025-08-26",
    "topTitles": [
     "ADVANCED BUSINESS ANALYST",
-    "=\"ADVANCED BUSINESS ANALYST\"",
     "SENIOR BUSINESS ANALYST"
    ],
    "recent": [
@@ -3444,7 +3443,7 @@
      "positions": 10
     },
     {
-     "jobTitle": "=\"ADVANCED BUSINESS ANALYST\"",
+     "jobTitle": "ADVANCED BUSINESS ANALYST",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-27",
      "wageLevel": "III",
@@ -3529,7 +3528,7 @@
    "topTitles": [
     "Business Intelligence Manager",
     "Data Architect",
-    "=\"Senior Manager - PMO Net Zero\""
+    "Senior Manager - PMO Net Zero"
    ],
    "recent": [
     {
@@ -3554,7 +3553,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Manager - PMO Net Zero\"",
+     "jobTitle": "Senior Manager - PMO Net Zero",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-28",
      "wageLevel": "III",
@@ -3584,7 +3583,7 @@
    "topTitles": [
     "Digital Marketing Advisor",
     "Senior Data Scientist",
-    "=\"Senior Data Analyst\""
+    "Senior Data Analyst"
    ],
    "recent": [
     {
@@ -3595,21 +3594,21 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Analyst\"",
+     "jobTitle": "Senior Data Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-02-13",
      "wageLevel": "",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Scientist\"",
+     "jobTitle": "Senior Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-01-17",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Digital Marketing Advisor\"",
+     "jobTitle": "Digital Marketing Advisor",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-17",
      "wageLevel": "III",
@@ -3802,9 +3801,9 @@
    "filings": 5,
    "latest": "2025-08-29",
    "topTitles": [
+    "Senior Consultant, Data Engineering",
     "Sr. Consultant, Data Engineering",
-    "Manager, Data Engineering",
-    "=\"Senior Consultant, Data Engineering\""
+    "Manager, Data Engineering"
    ],
    "recent": [
     {
@@ -3822,7 +3821,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Consultant, Data Engineering\"",
+     "jobTitle": "Senior Consultant, Data Engineering",
      "socTitle": "Database Architects",
      "date": "2025-02-19",
      "wageLevel": "III",
@@ -3991,7 +3990,7 @@
    "latest": "2025-09-25",
    "topTitles": [
     "Senior Lead Data Engineer",
-    "=\"Data Analysis Manager\"",
+    "Data Analysis Manager",
     "Senior Business Analyst"
    ],
    "recent": [
@@ -4017,7 +4016,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Analysis Manager\"",
+     "jobTitle": "Data Analysis Manager",
      "socTitle": "Data Scientists",
      "date": "2025-01-21",
      "wageLevel": "IV",
@@ -4038,27 +4037,27 @@
    "filings": 5,
    "latest": "2025-03-24",
    "topTitles": [
-    "Senior Data Scientist",
     "Senior Managing Consultant",
-    "=\"Senior Data Engineer\""
+    "Senior Data Scientist",
+    "Senior Data Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Data Engineer\"",
+     "jobTitle": "Senior Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-03-24",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Data Warehousing Specialists",
      "date": "2025-03-07",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Managing Consultant\"",
+     "jobTitle": "Senior Managing Consultant",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-18",
      "wageLevel": "IV",
@@ -4135,7 +4134,6 @@
    "latest": "2025-05-29",
    "topTitles": [
     "Senior Product Analyst",
-    "=\"Data Analyst\"",
     "Data Analyst"
    ],
    "recent": [
@@ -4161,7 +4159,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Analyst\"",
+     "jobTitle": "Data Analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-05",
      "wageLevel": "I",
@@ -4183,8 +4181,8 @@
    "latest": "2025-06-04",
    "topTitles": [
     "Data Scientist, Tempus Discover",
-    "=\"Biostatistician II\"",
-    "=\"Sales Operations Analyst\""
+    "Biostatistician II",
+    "Sales Operations Analyst"
    ],
    "recent": [
     {
@@ -4195,21 +4193,21 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Biostatistician II\"",
+     "jobTitle": "Biostatistician II",
      "socTitle": "Biostatisticians",
      "date": "2025-02-28",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sales Operations Analyst\"",
+     "jobTitle": "Sales Operations Analyst",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-19",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Bioinformatics Data Scientist\"",
+     "jobTitle": "Bioinformatics Data Scientist",
      "socTitle": "Bioinformatics Scientists",
      "date": "2025-01-22",
      "wageLevel": "IV",
@@ -4278,9 +4276,9 @@
    "filings": 5,
    "latest": "2025-05-08",
    "topTitles": [
-    "=\"Senior Director, Data Strategy & Measurement Consulting\"",
-    "=\"Senior Analyst, Marketing Intelligence\"",
-    "=\"Manager, Marketing Science\""
+    "Senior Director, Data Strategy & Measurement Consulting",
+    "Senior Analyst, Marketing Intelligence",
+    "Manager, Marketing Science"
    ],
    "recent": [
     {
@@ -4291,28 +4289,28 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Director, Data Strategy & Measurement Consulting\"",
+     "jobTitle": "Senior Director, Data Strategy & Measurement Consulting",
      "socTitle": "Statisticians",
      "date": "2025-03-12",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Analyst, Marketing Intelligence\"",
+     "jobTitle": "Senior Analyst, Marketing Intelligence",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-07",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Manager, Marketing Science\"",
+     "jobTitle": "Manager, Marketing Science",
      "socTitle": "Data Scientists",
      "date": "2025-03-06",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Analyst, Data Science\"",
+     "jobTitle": "Analyst, Data Science",
      "socTitle": "Data Scientists",
      "date": "2025-02-10",
      "wageLevel": "I",
@@ -4326,9 +4324,8 @@
    "filings": 5,
    "latest": "2025-06-10",
    "topTitles": [
-    "=\"Data Engineer\"",
-    "=\"Data Governance and Security Engineer\"",
-    "Data Engineer"
+    "Data Engineer",
+    "Data Governance and Security Engineer"
    ],
    "recent": [
     {
@@ -4339,28 +4336,28 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Governance and Security Engineer\"",
+     "jobTitle": "Data Governance and Security Engineer",
      "socTitle": "Information Security Engineers",
      "date": "2025-03-06",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-03-03",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-02-24",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-02-24",
      "wageLevel": "II",
@@ -4375,7 +4372,7 @@
    "latest": "2025-05-09",
    "topTitles": [
     "Quantitative Researcher",
-    "=\"Senior Quantitative Researcher\"",
+    "Senior Quantitative Researcher",
     "Junior Quantitative Researcher"
    ],
    "recent": [
@@ -4408,7 +4405,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Quantitative Researcher\"",
+     "jobTitle": "Senior Quantitative Researcher",
      "socTitle": "Statisticians",
      "date": "2025-03-03",
      "wageLevel": "II",
@@ -4423,8 +4420,8 @@
    "latest": "2025-06-26",
    "topTitles": [
     "Vice President; Quantitative Finance Analyst",
-    "=\"Vice President; Quantitative Finance Analyst\"",
-    "Vice President; Sr Quantitative Finance Analyst"
+    "Vice President; Sr Quantitative Finance Analyst",
+    "Assistant Vice President; Quantitative Finance Analyst"
    ],
    "recent": [
     {
@@ -4456,7 +4453,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Vice President; Quantitative Finance Analyst\"",
+     "jobTitle": "Vice President; Quantitative Finance Analyst",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-14",
      "wageLevel": "II",
@@ -4470,8 +4467,8 @@
    "filings": 5,
    "latest": "2025-08-29",
    "topTitles": [
+    "Data Integration Developer",
     "Principal Data Engineer",
-    "=\"Data Integration Developer\"",
     "Senior Data Engineer"
    ],
    "recent": [
@@ -4504,7 +4501,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Integration Developer\"",
+     "jobTitle": "Data Integration Developer",
      "socTitle": "Data Warehousing Specialists",
      "date": "2025-01-29",
      "wageLevel": "IV",
@@ -4519,7 +4516,7 @@
    "latest": "2025-09-26",
    "topTitles": [
     "Senior Manager, Strategy & Operations",
-    "=\"Sr Assoc, Dasher & Logistics - Strgy & Ops\"",
+    "Sr Assoc, Dasher & Logistics - Strgy & Ops",
     "Data Scientist, Analytics"
    ],
    "recent": [
@@ -4552,7 +4549,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr Assoc, Dasher & Logistics - Strgy & Ops\"",
+     "jobTitle": "Sr Assoc, Dasher & Logistics - Strgy & Ops",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-16",
      "wageLevel": "I",
@@ -4654,9 +4651,9 @@
    "filings": 4,
    "latest": "2025-06-26",
    "topTitles": [
-    "Data Analyst",
     "Data Scientist",
-    "=\"Data Scientist\""
+    "Data Analyst",
+    "Senior Data Engineer"
    ],
    "recent": [
     {
@@ -4667,7 +4664,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Scientist\"",
+     "jobTitle": "Data Scientist",
      "socTitle": "Computer and Information Research Scientists",
      "date": "2025-03-24",
      "wageLevel": "IV",
@@ -4737,7 +4734,7 @@
    "latest": "2025-08-05",
    "topTitles": [
     "Senior Scientist, Tech",
-    "=\"Senior Data Solutions Analyst, Uber Advertising\"",
+    "Senior Data Solutions Analyst, Uber Advertising",
     "Manager, Strategy & Planning"
    ],
    "recent": [
@@ -4756,7 +4753,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Solutions Analyst, Uber Advertising\"",
+     "jobTitle": "Senior Data Solutions Analyst, Uber Advertising",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-19",
      "wageLevel": "IV",
@@ -4777,20 +4774,20 @@
    "filings": 4,
    "latest": "2025-03-31",
    "topTitles": [
-    "=\"Sales Strategic Planning & Operations (SSPO) Lead\"",
+    "Sales Strategic Planning & Operations (SSPO) Lead",
     "Data Scientist",
     "Data Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Sales Strategic Planning & Operations (SSPO) Lead\"",
+     "jobTitle": "Sales Strategic Planning & Operations (SSPO) Lead",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-31",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sales Strategic Planning & Operations (SSPO) Lead\"",
+     "jobTitle": "Sales Strategic Planning & Operations (SSPO) Lead",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-13",
      "wageLevel": "IV",
@@ -4860,26 +4857,26 @@
    "latest": "2025-03-21",
    "topTitles": [
     "Business Analysis Manager",
-    "=\"Leader, Data Science\"",
-    "=\"Business Analyst\""
+    "Leader, Data Science",
+    "Business Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Leader, Data Science\"",
+     "jobTitle": "Leader, Data Science",
      "socTitle": "Data Scientists",
      "date": "2025-03-21",
      "wageLevel": "III",
      "positions": 15
     },
     {
-     "jobTitle": "=\"Business Analyst\"",
+     "jobTitle": "Business Analyst",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-28",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Scientist\"",
+     "jobTitle": "Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-01-16",
      "wageLevel": "III",
@@ -4900,8 +4897,7 @@
    "filings": 4,
    "latest": "2025-07-03",
    "topTitles": [
-    "Data Scientist",
-    "=\"Data Scientist\""
+    "Data Scientist"
    ],
    "recent": [
     {
@@ -4912,14 +4908,14 @@
      "positions": 5
     },
     {
-     "jobTitle": "=\"Data Scientist\"",
+     "jobTitle": "Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-01-31",
      "wageLevel": "IV",
      "positions": 5
     },
     {
-     "jobTitle": "=\"Data Scientist\"",
+     "jobTitle": "Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-01-31",
      "wageLevel": "IV",
@@ -4941,7 +4937,7 @@
    "latest": "2025-05-02",
    "topTitles": [
     "Software Engineer- Data Pipeline Engineering",
-    "=\"Sr. Engineer- Machine Learning Regulatory\"",
+    "Sr. Engineer- Machine Learning Regulatory",
     "Associate, Cboe Labs"
    ],
    "recent": [
@@ -4967,7 +4963,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr. Engineer- Machine Learning Regulatory\"",
+     "jobTitle": "Sr. Engineer- Machine Learning Regulatory",
      "socTitle": "Data Scientists",
      "date": "2025-03-06",
      "wageLevel": "II",
@@ -4982,7 +4978,7 @@
    "latest": "2025-09-12",
    "topTitles": [
     "Business Intelligence Analyst II",
-    "=\"Business Intelligence Analyst\""
+    "Business Intelligence Analyst"
    ],
    "recent": [
     {
@@ -5007,7 +5003,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Intelligence Analyst\"",
+     "jobTitle": "Business Intelligence Analyst",
      "socTitle": "Market Research Analysts and Marketing Specialists",
      "date": "2025-03-04",
      "wageLevel": "IV",
@@ -5382,19 +5378,19 @@
    "latest": "2025-03-03",
    "topTitles": [
     "Population Health Analyst",
-    "=\"Statistician\"",
-    "=\"Statistician Sr.\""
+    "Statistician",
+    "Statistician Sr."
    ],
    "recent": [
     {
-     "jobTitle": "=\"Statistician\"",
+     "jobTitle": "Statistician",
      "socTitle": "Statisticians",
      "date": "2025-03-03",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Statistician Sr.\"",
+     "jobTitle": "Statistician Sr.",
      "socTitle": "Statisticians",
      "date": "2025-01-22",
      "wageLevel": "I",
@@ -5551,11 +5547,11 @@
    "topTitles": [
     "Financial System Analyst",
     "Business and Systems Support Analyst",
-    "=\"Data Engineer\""
+    "Data Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-29",
      "wageLevel": "IV",
@@ -5585,11 +5581,11 @@
    "topTitles": [
     "Consultant, Business Intelligence",
     "Senior Developer, Data Integration",
-    "=\"Senior Consultant Data Science\""
+    "Senior Consultant Data Science"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Consultant Data Science\"",
+     "jobTitle": "Senior Consultant Data Science",
      "socTitle": "Statisticians",
      "date": "2025-02-24",
      "wageLevel": "IV",
@@ -5650,7 +5646,7 @@
    "latest": "2025-08-04",
    "topTitles": [
     "Data Lead",
-    "=\"Senior Data Engineer\"",
+    "Senior Data Engineer",
     "Sr. Technical Architect"
    ],
    "recent": [
@@ -5662,7 +5658,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Engineer\"",
+     "jobTitle": "Senior Data Engineer",
      "socTitle": "Database Administrators",
      "date": "2025-02-27",
      "wageLevel": "III",
@@ -5750,7 +5746,7 @@
    "filings": 3,
    "latest": "2025-06-03",
    "topTitles": [
-    "=\"Senior Data Scientist\"",
+    "Senior Data Scientist",
     "Senior Business Analyst",
     "Data Scientist"
    ],
@@ -5770,7 +5766,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Scientist\"",
+     "jobTitle": "Senior Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-03-17",
      "wageLevel": "IV",
@@ -5784,7 +5780,7 @@
    "filings": 3,
    "latest": "2025-04-30",
    "topTitles": [
-    "=\"Quantitative Researcher\"",
+    "Quantitative Researcher",
     "Sr. Data Scientist"
    ],
    "recent": [
@@ -5796,14 +5792,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Quantitative Researcher\"",
+     "jobTitle": "Quantitative Researcher",
      "socTitle": "Statisticians",
      "date": "2025-03-11",
      "wageLevel": "I",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Quantitative Researcher\"",
+     "jobTitle": "Quantitative Researcher",
      "socTitle": "Statisticians",
      "date": "2025-03-11",
      "wageLevel": "I",
@@ -5817,7 +5813,7 @@
    "filings": 3,
    "latest": "2025-04-15",
    "topTitles": [
-    "=\"Junior Data Scientist\"",
+    "Junior Data Scientist",
     "Data Scientist"
    ],
    "recent": [
@@ -5829,14 +5825,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Junior Data Scientist\"",
+     "jobTitle": "Junior Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-03-05",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Junior Data Scientist\"",
+     "jobTitle": "Junior Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-02-18",
      "wageLevel": "II",
@@ -5850,8 +5846,8 @@
    "filings": 3,
    "latest": "2025-06-16",
    "topTitles": [
-    "=\"Data Engineer II\"",
-    "=\"Business Analyst II\"",
+    "Data Engineer II",
+    "Business Analyst II",
     "Data Analyst"
    ],
    "recent": [
@@ -5863,14 +5859,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineer II\"",
+     "jobTitle": "Data Engineer II",
      "socTitle": "Database Architects",
      "date": "2025-03-05",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Analyst II\"",
+     "jobTitle": "Business Analyst II",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-25",
      "wageLevel": "II",
@@ -5885,7 +5881,7 @@
    "latest": "2025-06-18",
    "topTitles": [
     "Lead Analyst - Data Science",
-    "=\"Lead Analyst - Analytics Technology\""
+    "Lead Analyst - Analytics Technology"
    ],
    "recent": [
     {
@@ -5903,7 +5899,7 @@
      "positions": 5
     },
     {
-     "jobTitle": "=\"Lead Analyst - Analytics Technology\"",
+     "jobTitle": "Lead Analyst - Analytics Technology",
      "socTitle": "Operations Research Analysts",
      "date": "2025-03-05",
      "wageLevel": "III",
@@ -5918,7 +5914,7 @@
    "latest": "2025-04-11",
    "topTitles": [
     "Data Engineer III",
-    "=\"Data Product Manager\""
+    "Data Product Manager"
    ],
    "recent": [
     {
@@ -5936,7 +5932,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Product Manager\"",
+     "jobTitle": "Data Product Manager",
      "socTitle": "Project Management Specialists",
      "date": "2025-03-04",
      "wageLevel": "III",
@@ -5951,7 +5947,7 @@
    "latest": "2025-07-01",
    "topTitles": [
     "Associate Principal, Data Strategy and Analytics",
-    "=\"Senior Consultant, Customer Engagement Analytics\""
+    "Senior Consultant, Customer Engagement Analytics"
    ],
    "recent": [
     {
@@ -5969,7 +5965,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Consultant, Customer Engagement Analytics\"",
+     "jobTitle": "Senior Consultant, Customer Engagement Analytics",
      "socTitle": "Medical Scientists, Except Epidemiologists",
      "date": "2025-03-03",
      "wageLevel": "IV",
@@ -5983,7 +5979,7 @@
    "filings": 3,
    "latest": "2025-08-08",
    "topTitles": [
-    "=\"Sr. Data Engineer\"",
+    "Sr. Data Engineer",
     "Data Scientist",
     "Senior Manager, Decision Science"
    ],
@@ -6003,7 +5999,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Sr. Data Engineer\"",
+     "jobTitle": "Sr. Data Engineer",
      "socTitle": "Data Scientists",
      "date": "2025-02-27",
      "wageLevel": "III",
@@ -6017,7 +6013,7 @@
    "filings": 3,
    "latest": "2025-07-01",
    "topTitles": [
-    "=\"DATA ARCHITECT\"",
+    "DATA ARCHITECT",
     "DATA ENGINEER",
     "BUSINESS INTELLIGENCE (BI) ARCHITECT"
    ],
@@ -6037,7 +6033,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"DATA ARCHITECT\"",
+     "jobTitle": "DATA ARCHITECT",
      "socTitle": "Database Architects",
      "date": "2025-02-12",
      "wageLevel": "II",
@@ -6051,8 +6047,8 @@
    "filings": 3,
    "latest": "2025-04-21",
    "topTitles": [
-    "=\"Associate Director, Trading Strategy Researcher\"",
-    "=\"Vice President, Trading Strategy Research\"",
+    "Associate Director, Trading Strategy Researcher",
+    "Vice President, Trading Strategy Research",
     "Senior Associate, Trading Management"
    ],
    "recent": [
@@ -6064,14 +6060,14 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Associate Director, Trading Strategy Researcher\"",
+     "jobTitle": "Associate Director, Trading Strategy Researcher",
      "socTitle": "Statisticians",
      "date": "2025-02-11",
      "wageLevel": "III",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Vice President, Trading Strategy Research\"",
+     "jobTitle": "Vice President, Trading Strategy Research",
      "socTitle": "Statisticians",
      "date": "2025-02-04",
      "wageLevel": "III",
@@ -6085,9 +6081,8 @@
    "filings": 3,
    "latest": "2025-09-30",
    "topTitles": [
-    "=\"Senior Data Scientist\"",
-    "Data Science Lead",
-    "Senior Data Scientist"
+    "Senior Data Scientist",
+    "Data Science Lead"
    ],
    "recent": [
     {
@@ -6105,7 +6100,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Scientist\"",
+     "jobTitle": "Senior Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-02-07",
      "wageLevel": "II",
@@ -6119,7 +6114,7 @@
    "filings": 3,
    "latest": "2025-06-25",
    "topTitles": [
-    "=\"Machine Learning Engineer\"",
+    "Machine Learning Engineer",
     "Data Science Lead, Customer Intelligence",
     "Data Analyst"
    ],
@@ -6139,7 +6134,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Machine Learning Engineer\"",
+     "jobTitle": "Machine Learning Engineer",
      "socTitle": "Software Developers",
      "date": "2025-02-07",
      "wageLevel": "II",
@@ -6153,9 +6148,8 @@
    "filings": 3,
    "latest": "2025-06-17",
    "topTitles": [
-    "=\"Vice President\"",
-    "Director",
-    "Vice President"
+    "Vice President",
+    "Director"
    ],
    "recent": [
     {
@@ -6173,7 +6167,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Vice President\"",
+     "jobTitle": "Vice President",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-29",
      "wageLevel": "III",
@@ -6536,11 +6530,11 @@
    "latest": "2025-02-24",
    "topTitles": [
     "Data Engineer",
-    "=\"Senior Data Engineer\""
+    "Senior Data Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Data Engineer\"",
+     "jobTitle": "Senior Data Engineer",
      "socTitle": "Software Developers",
      "date": "2025-02-24",
      "wageLevel": "IV",
@@ -6867,11 +6861,11 @@
    "latest": "2025-03-06",
    "topTitles": [
     "Sr. Salesforce Business Analyst",
-    "=\"IT Engineer\""
+    "IT Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"IT Engineer\"",
+     "jobTitle": "IT Engineer",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-06",
      "wageLevel": "III",
@@ -6893,11 +6887,11 @@
    "latest": "2025-01-29",
    "topTitles": [
     "Applied Data Science Manager",
-    "=\"Senior Applied Data Scientist\""
+    "Senior Applied Data Scientist"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Applied Data Scientist\"",
+     "jobTitle": "Senior Applied Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-01-29",
      "wageLevel": "II",
@@ -7072,7 +7066,6 @@
    "filings": 2,
    "latest": "2025-04-01",
    "topTitles": [
-    "=\"Performance Analyst\"",
     "Performance Analyst"
    ],
    "recent": [
@@ -7084,7 +7077,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Performance Analyst\"",
+     "jobTitle": "Performance Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-03-31",
      "wageLevel": "I",
@@ -7098,19 +7091,19 @@
    "filings": 2,
    "latest": "2025-03-26",
    "topTitles": [
-    "=\"Senior Consultant\"",
-    "=\"Senior Director\""
+    "Senior Consultant",
+    "Senior Director"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Consultant\"",
+     "jobTitle": "Senior Consultant",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-26",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Director\"",
+     "jobTitle": "Senior Director",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-13",
      "wageLevel": "IV",
@@ -7124,18 +7117,18 @@
    "filings": 2,
    "latest": "2025-03-21",
    "topTitles": [
-    "=\"Principal Operations Analyst\""
+    "Principal Operations Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Principal Operations Analyst\"",
+     "jobTitle": "Principal Operations Analyst",
      "socTitle": "Operations Research Analysts",
      "date": "2025-03-21",
      "wageLevel": "II",
      "positions": 4
     },
     {
-     "jobTitle": "=\"Principal Operations Analyst\"",
+     "jobTitle": "Principal Operations Analyst",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-16",
      "wageLevel": "I",
@@ -7149,19 +7142,19 @@
    "filings": 2,
    "latest": "2025-03-18",
    "topTitles": [
-    "=\"Analytics Lead\"",
-    "=\"Data Analyst\""
+    "Analytics Lead",
+    "Data Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Analytics Lead\"",
+     "jobTitle": "Analytics Lead",
      "socTitle": "Database Architects",
      "date": "2025-03-18",
      "wageLevel": "IV",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Analyst\"",
+     "jobTitle": "Data Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-01-23",
      "wageLevel": "I",
@@ -7175,7 +7168,7 @@
    "filings": 2,
    "latest": "2025-06-26",
    "topTitles": [
-    "=\"Data Engineer\"",
+    "Data Engineer",
     "Associate Director, Analytics"
    ],
    "recent": [
@@ -7187,7 +7180,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Data Scientists",
      "date": "2025-03-14",
      "wageLevel": "II",
@@ -7201,7 +7194,7 @@
    "filings": 2,
    "latest": "2025-04-07",
    "topTitles": [
-    "=\"Business Intelligence Engineer\"",
+    "Business Intelligence Engineer",
     "Data Engineering Manager"
    ],
    "recent": [
@@ -7213,7 +7206,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Business Intelligence Engineer\"",
+     "jobTitle": "Business Intelligence Engineer",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-13",
      "wageLevel": "II",
@@ -7227,7 +7220,7 @@
    "filings": 2,
    "latest": "2025-09-18",
    "topTitles": [
-    "=\"Senior Quantitative Researcher\"",
+    "Senior Quantitative Researcher",
     "Senior Engineer, Database Engineering"
    ],
    "recent": [
@@ -7239,7 +7232,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Quantitative Researcher\"",
+     "jobTitle": "Senior Quantitative Researcher",
      "socTitle": "Statisticians",
      "date": "2025-03-13",
      "wageLevel": "II",
@@ -7253,7 +7246,7 @@
    "filings": 2,
    "latest": "2025-05-19",
    "topTitles": [
-    "=\"Client Data Strategy Specialist\"",
+    "Client Data Strategy Specialist",
     "Consultant, Risk Consulting"
    ],
    "recent": [
@@ -7265,7 +7258,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Client Data Strategy Specialist\"",
+     "jobTitle": "Client Data Strategy Specialist",
      "socTitle": "Statisticians",
      "date": "2025-03-10",
      "wageLevel": "II",
@@ -7279,18 +7272,18 @@
    "filings": 2,
    "latest": "2025-03-06",
    "topTitles": [
-    "=\"Data Engineer\""
+    "Data Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Data Scientists",
      "date": "2025-03-06",
      "wageLevel": "II",
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Data Scientists",
      "date": "2025-02-24",
      "wageLevel": "II",
@@ -7304,7 +7297,7 @@
    "filings": 2,
    "latest": "2025-09-24",
    "topTitles": [
-    "=\"Data Privacy Counsel\"",
+    "Data Privacy Counsel",
     "Business Intelligence Analyst"
    ],
    "recent": [
@@ -7316,7 +7309,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Privacy Counsel\"",
+     "jobTitle": "Data Privacy Counsel",
      "socTitle": "Lawyers",
      "date": "2025-03-03",
      "wageLevel": "II",
@@ -7330,7 +7323,7 @@
    "filings": 2,
    "latest": "2025-05-06",
    "topTitles": [
-    "=\"Data Scientist\"",
+    "Data Scientist",
     "Senior Quantitative Researcher"
    ],
    "recent": [
@@ -7342,7 +7335,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Data Scientist\"",
+     "jobTitle": "Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-02-25",
      "wageLevel": "II",
@@ -7356,7 +7349,7 @@
    "filings": 2,
    "latest": "2025-08-25",
    "topTitles": [
-    "=\"Application Support Analyst\"",
+    "Application Support Analyst",
     "Business Analyst"
    ],
    "recent": [
@@ -7368,7 +7361,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Application Support Analyst\"",
+     "jobTitle": "Application Support Analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-28",
      "wageLevel": "II",
@@ -7382,7 +7375,7 @@
    "filings": 2,
    "latest": "2025-04-30",
    "topTitles": [
-    "=\"Senior Data Scientist\"",
+    "Senior Data Scientist",
     "Support Analyst"
    ],
    "recent": [
@@ -7394,7 +7387,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Senior Data Scientist\"",
+     "jobTitle": "Senior Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-01-27",
      "wageLevel": "III",
@@ -7408,7 +7401,7 @@
    "filings": 2,
    "latest": "2025-05-29",
    "topTitles": [
-    "=\"Technology Consultant, Senior Solution Architect\"",
+    "Technology Consultant, Senior Solution Architect",
     "Principal"
    ],
    "recent": [
@@ -7420,7 +7413,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Technology Consultant, Senior Solution Architect\"",
+     "jobTitle": "Technology Consultant, Senior Solution Architect",
      "socTitle": "Database Architects",
      "date": "2025-01-27",
      "wageLevel": "IV",
@@ -7434,7 +7427,7 @@
    "filings": 2,
    "latest": "2025-04-18",
    "topTitles": [
-    "=\"Associate Quantitative Analyst\"",
+    "Associate Quantitative Analyst",
     "Quantitative Researcher"
    ],
    "recent": [
@@ -7446,7 +7439,7 @@
      "positions": 1
     },
     {
-     "jobTitle": "=\"Associate Quantitative Analyst\"",
+     "jobTitle": "Associate Quantitative Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-01-03",
      "wageLevel": "II",
@@ -10483,11 +10476,11 @@
    "filings": 1,
    "latest": "2025-03-25",
    "topTitles": [
-    "=\"Senior BI Data Architect 9284782\""
+    "Senior BI Data Architect 9284782"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior BI Data Architect 9284782\"",
+     "jobTitle": "Senior BI Data Architect 9284782",
      "socTitle": "Information Technology Project Managers",
      "date": "2025-03-25",
      "wageLevel": "IV",
@@ -10501,11 +10494,11 @@
    "filings": 1,
    "latest": "2025-03-25",
    "topTitles": [
-    "=\"Senior Data Integration Engineer\""
+    "Senior Data Integration Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Data Integration Engineer\"",
+     "jobTitle": "Senior Data Integration Engineer",
      "socTitle": "Software Developers",
      "date": "2025-03-25",
      "wageLevel": "II",
@@ -10519,11 +10512,11 @@
    "filings": 1,
    "latest": "2025-03-18",
    "topTitles": [
-    "=\"Sr. Data Scientist-Technical, Workforce Management Analytics\""
+    "Sr. Data Scientist-Technical, Workforce Management Analytics"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Sr. Data Scientist-Technical, Workforce Management Analytics\"",
+     "jobTitle": "Sr. Data Scientist-Technical, Workforce Management Analytics",
      "socTitle": "Data Scientists",
      "date": "2025-03-18",
      "wageLevel": "IV",
@@ -10537,11 +10530,11 @@
    "filings": 1,
    "latest": "2025-03-17",
    "topTitles": [
-    "=\"Quantitative Analyst\""
+    "Quantitative Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Quantitative Analyst\"",
+     "jobTitle": "Quantitative Analyst",
      "socTitle": "Statisticians",
      "date": "2025-03-17",
      "wageLevel": "I",
@@ -10555,11 +10548,11 @@
    "filings": 1,
    "latest": "2025-03-17",
    "topTitles": [
-    "=\"Analyst\""
+    "Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Analyst\"",
+     "jobTitle": "Analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-17",
      "wageLevel": "II",
@@ -10573,11 +10566,11 @@
    "filings": 1,
    "latest": "2025-03-17",
    "topTitles": [
-    "=\"Data Engineer, Dashboarding & Reporting \""
+    "Data Engineer, Dashboarding & Reporting"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Engineer, Dashboarding & Reporting \"",
+     "jobTitle": "Data Engineer, Dashboarding & Reporting",
      "socTitle": "Data Scientists",
      "date": "2025-03-17",
      "wageLevel": "II",
@@ -10591,11 +10584,11 @@
    "filings": 1,
    "latest": "2025-03-14",
    "topTitles": [
-    "=\"Sr. Product Manager, Insights\""
+    "Sr. Product Manager, Insights"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Sr. Product Manager, Insights\"",
+     "jobTitle": "Sr. Product Manager, Insights",
      "socTitle": "Data Scientists",
      "date": "2025-03-14",
      "wageLevel": "IV",
@@ -10609,11 +10602,11 @@
    "filings": 1,
    "latest": "2025-03-14",
    "topTitles": [
-    "=\"Data Engineer\""
+    "Data Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Engineer\"",
+     "jobTitle": "Data Engineer",
      "socTitle": "Database Architects",
      "date": "2025-03-14",
      "wageLevel": "II",
@@ -10627,11 +10620,11 @@
    "filings": 1,
    "latest": "2025-03-13",
    "topTitles": [
-    "=\"Senior Business Analyst - Project Management\""
+    "Senior Business Analyst - Project Management"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Business Analyst - Project Management\"",
+     "jobTitle": "Senior Business Analyst - Project Management",
      "socTitle": "Data Scientists",
      "date": "2025-03-13",
      "wageLevel": "I",
@@ -10645,11 +10638,11 @@
    "filings": 1,
    "latest": "2025-03-12",
    "topTitles": [
-    "=\"Specialist Director\""
+    "Specialist Director"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Specialist Director\"",
+     "jobTitle": "Specialist Director",
      "socTitle": "Statisticians",
      "date": "2025-03-12",
      "wageLevel": "IV",
@@ -10663,11 +10656,11 @@
    "filings": 1,
    "latest": "2025-03-12",
    "topTitles": [
-    "=\"Business Operations Lead Data Analyst\""
+    "Business Operations Lead Data Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Business Operations Lead Data Analyst\"",
+     "jobTitle": "Business Operations Lead Data Analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-03-12",
      "wageLevel": "II",
@@ -10681,11 +10674,11 @@
    "filings": 1,
    "latest": "2025-03-11",
    "topTitles": [
-    "=\"Senior Data Scientist\""
+    "Senior Data Scientist"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Data Scientist\"",
+     "jobTitle": "Senior Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-03-11",
      "wageLevel": "III",
@@ -10699,11 +10692,11 @@
    "filings": 1,
    "latest": "2025-03-11",
    "topTitles": [
-    "=\"Data Analytics Engineer II\""
+    "Data Analytics Engineer II"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Analytics Engineer II\"",
+     "jobTitle": "Data Analytics Engineer II",
      "socTitle": "Data Scientists",
      "date": "2025-03-11",
      "wageLevel": "II",
@@ -10717,11 +10710,11 @@
    "filings": 1,
    "latest": "2025-03-11",
    "topTitles": [
-    "=\"Business Intelligence Analyst\""
+    "Business Intelligence Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Business Intelligence Analyst\"",
+     "jobTitle": "Business Intelligence Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-03-11",
      "wageLevel": "II",
@@ -10735,11 +10728,11 @@
    "filings": 1,
    "latest": "2025-03-11",
    "topTitles": [
-    "=\"Marketing Automation Analyst, Senior\""
+    "Marketing Automation Analyst, Senior"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Marketing Automation Analyst, Senior\"",
+     "jobTitle": "Marketing Automation Analyst, Senior",
      "socTitle": "Operations Research Analysts",
      "date": "2025-03-11",
      "wageLevel": "III",
@@ -10753,11 +10746,11 @@
    "filings": 1,
    "latest": "2025-03-11",
    "topTitles": [
-    "=\"Senior Business Analyst, Clinical Operations\""
+    "Senior Business Analyst, Clinical Operations"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Business Analyst, Clinical Operations\"",
+     "jobTitle": "Senior Business Analyst, Clinical Operations",
      "socTitle": "Operations Research Analysts",
      "date": "2025-03-11",
      "wageLevel": "II",
@@ -10771,11 +10764,11 @@
    "filings": 1,
    "latest": "2025-03-10",
    "topTitles": [
-    "=\"Distribution Analyst\""
+    "Distribution Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Distribution Analyst\"",
+     "jobTitle": "Distribution Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-03-10",
      "wageLevel": "I",
@@ -10789,11 +10782,11 @@
    "filings": 1,
    "latest": "2025-03-06",
    "topTitles": [
-    "=\"Data Management Manager\""
+    "Data Management Manager"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Management Manager\"",
+     "jobTitle": "Data Management Manager",
      "socTitle": "Software Developers",
      "date": "2025-03-06",
      "wageLevel": "IV",
@@ -10807,11 +10800,11 @@
    "filings": 1,
    "latest": "2025-03-06",
    "topTitles": [
-    "=\"Marketing Data Analyst\""
+    "Marketing Data Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Marketing Data Analyst\"",
+     "jobTitle": "Marketing Data Analyst",
      "socTitle": "Market Research Analysts and Marketing Specialists",
      "date": "2025-03-06",
      "wageLevel": "IV",
@@ -10825,11 +10818,11 @@
    "filings": 1,
    "latest": "2025-03-06",
    "topTitles": [
-    "=\"BI DEVELOPER-TABLEAU AND SQL\""
+    "BI DEVELOPER-TABLEAU AND SQL"
    ],
    "recent": [
     {
-     "jobTitle": "=\"BI DEVELOPER-TABLEAU AND SQL\"",
+     "jobTitle": "BI DEVELOPER-TABLEAU AND SQL",
      "socTitle": "Data Scientists",
      "date": "2025-03-06",
      "wageLevel": "III",
@@ -10843,11 +10836,11 @@
    "filings": 1,
    "latest": "2025-03-05",
    "topTitles": [
-    "=\"Technical Business Developer III\""
+    "Technical Business Developer III"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Technical Business Developer III\"",
+     "jobTitle": "Technical Business Developer III",
      "socTitle": "Operations Research Analysts",
      "date": "2025-03-05",
      "wageLevel": "III",
@@ -10861,11 +10854,11 @@
    "filings": 1,
    "latest": "2025-03-03",
    "topTitles": [
-    "=\"Manager, Data Science\""
+    "Manager, Data Science"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Manager, Data Science\"",
+     "jobTitle": "Manager, Data Science",
      "socTitle": "Data Scientists",
      "date": "2025-03-03",
      "wageLevel": "IV",
@@ -10879,11 +10872,11 @@
    "filings": 1,
    "latest": "2025-02-28",
    "topTitles": [
-    "=\"Test Lead\""
+    "Test Lead"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Test Lead\"",
+     "jobTitle": "Test Lead",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-28",
      "wageLevel": "II",
@@ -10897,11 +10890,11 @@
    "filings": 1,
    "latest": "2025-02-28",
    "topTitles": [
-    "=\"Program Manager, Clinical Market Analysis\""
+    "Program Manager, Clinical Market Analysis"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Program Manager, Clinical Market Analysis\"",
+     "jobTitle": "Program Manager, Clinical Market Analysis",
      "socTitle": "Statisticians",
      "date": "2025-02-28",
      "wageLevel": "IV",
@@ -10915,11 +10908,11 @@
    "filings": 1,
    "latest": "2025-02-27",
    "topTitles": [
-    "=\"Senior Analytics Specialist\""
+    "Senior Analytics Specialist"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Analytics Specialist\"",
+     "jobTitle": "Senior Analytics Specialist",
      "socTitle": "Computer Systems Analysts",
      "date": "2025-02-27",
      "wageLevel": "III",
@@ -10933,11 +10926,11 @@
    "filings": 1,
    "latest": "2025-02-26",
    "topTitles": [
-    "=\"Data Scientist\""
+    "Data Scientist"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Scientist\"",
+     "jobTitle": "Data Scientist",
      "socTitle": "Statisticians",
      "date": "2025-02-26",
      "wageLevel": "II",
@@ -10951,11 +10944,11 @@
    "filings": 1,
    "latest": "2025-02-24",
    "topTitles": [
-    "=\"Assistant Vice President\""
+    "Assistant Vice President"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Assistant Vice President\"",
+     "jobTitle": "Assistant Vice President",
      "socTitle": "Statisticians",
      "date": "2025-02-24",
      "wageLevel": "IV",
@@ -10969,11 +10962,11 @@
    "filings": 1,
    "latest": "2025-02-23",
    "topTitles": [
-    "=\"Senior Manager 1\""
+    "Senior Manager 1"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Manager 1\"",
+     "jobTitle": "Senior Manager 1",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-23",
      "wageLevel": "IV",
@@ -10987,11 +10980,11 @@
    "filings": 1,
    "latest": "2025-02-21",
    "topTitles": [
-    "=\"Senior IT Business Systems Analyst\""
+    "Senior IT Business Systems Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior IT Business Systems Analyst\"",
+     "jobTitle": "Senior IT Business Systems Analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-02-21",
      "wageLevel": "II",
@@ -11005,11 +10998,11 @@
    "filings": 1,
    "latest": "2025-02-18",
    "topTitles": [
-    "=\"Data Analyst\""
+    "Data Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Analyst\"",
+     "jobTitle": "Data Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-02-18",
      "wageLevel": "I",
@@ -11023,11 +11016,11 @@
    "filings": 1,
    "latest": "2025-02-14",
    "topTitles": [
-    "=\"Sr. Business Intelligence Analyst\""
+    "Sr. Business Intelligence Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Sr. Business Intelligence Analyst\"",
+     "jobTitle": "Sr. Business Intelligence Analyst",
      "socTitle": "Statisticians",
      "date": "2025-02-14",
      "wageLevel": "II",
@@ -11041,11 +11034,11 @@
    "filings": 1,
    "latest": "2025-02-12",
    "topTitles": [
-    "=\"FS Analytics and Technology Manager\""
+    "FS Analytics and Technology Manager"
    ],
    "recent": [
     {
-     "jobTitle": "=\"FS Analytics and Technology Manager\"",
+     "jobTitle": "FS Analytics and Technology Manager",
      "socTitle": "Financial Examiners",
      "date": "2025-02-12",
      "wageLevel": "IV",
@@ -11059,11 +11052,11 @@
    "filings": 1,
    "latest": "2025-02-11",
    "topTitles": [
-    "=\"Senior Manager, Data Science\""
+    "Senior Manager, Data Science"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Manager, Data Science\"",
+     "jobTitle": "Senior Manager, Data Science",
      "socTitle": "Data Scientists",
      "date": "2025-02-11",
      "wageLevel": "IV",
@@ -11077,11 +11070,11 @@
    "filings": 1,
    "latest": "2025-02-10",
    "topTitles": [
-    "=\"Sr. SAP/APO Analyst\""
+    "Sr. SAP/APO Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Sr. SAP/APO Analyst\"",
+     "jobTitle": "Sr. SAP/APO Analyst",
      "socTitle": "Operations Research Analysts",
      "date": "2025-02-10",
      "wageLevel": "III",
@@ -11095,11 +11088,11 @@
    "filings": 1,
    "latest": "2025-01-31",
    "topTitles": [
-    "=\"Quantitative Model Analyst\""
+    "Quantitative Model Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Quantitative Model Analyst\"",
+     "jobTitle": "Quantitative Model Analyst",
      "socTitle": "Statisticians",
      "date": "2025-01-31",
      "wageLevel": "IV",
@@ -11113,11 +11106,11 @@
    "filings": 1,
    "latest": "2025-01-31",
    "topTitles": [
-    "=\"Senior Data Engineer\""
+    "Senior Data Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Data Engineer\"",
+     "jobTitle": "Senior Data Engineer",
      "socTitle": "Data Scientists",
      "date": "2025-01-31",
      "wageLevel": "IV",
@@ -11131,11 +11124,11 @@
    "filings": 1,
    "latest": "2025-01-30",
    "topTitles": [
-    "=\"Researcher\""
+    "Researcher"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Researcher\"",
+     "jobTitle": "Researcher",
      "socTitle": "Statisticians",
      "date": "2025-01-30",
      "wageLevel": "I",
@@ -11149,11 +11142,11 @@
    "filings": 1,
    "latest": "2025-01-30",
    "topTitles": [
-    "=\"Senior Machine Learning Engineer\""
+    "Senior Machine Learning Engineer"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Machine Learning Engineer\"",
+     "jobTitle": "Senior Machine Learning Engineer",
      "socTitle": "Electrical Engineers",
      "date": "2025-01-30",
      "wageLevel": "IV",
@@ -11167,11 +11160,11 @@
    "filings": 1,
    "latest": "2025-01-28",
    "topTitles": [
-    "=\"Sr Data Scientist\""
+    "Sr Data Scientist"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Sr Data Scientist\"",
+     "jobTitle": "Sr Data Scientist",
      "socTitle": "Statisticians",
      "date": "2025-01-28",
      "wageLevel": "IV",
@@ -11185,11 +11178,11 @@
    "filings": 1,
    "latest": "2025-01-27",
    "topTitles": [
-    "=\"Commercial Analytics Manager\""
+    "Commercial Analytics Manager"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Commercial Analytics Manager\"",
+     "jobTitle": "Commercial Analytics Manager",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-27",
      "wageLevel": "IV",
@@ -11203,11 +11196,11 @@
    "filings": 1,
    "latest": "2025-01-24",
    "topTitles": [
-    "=\"Sr. Strategic Solutions Specialist, Data & Technol\""
+    "Sr. Strategic Solutions Specialist, Data & Technol"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Sr. Strategic Solutions Specialist, Data & Technol\"",
+     "jobTitle": "Sr. Strategic Solutions Specialist, Data & Technol",
      "socTitle": "Information Technology Project Managers",
      "date": "2025-01-24",
      "wageLevel": "IV",
@@ -11221,11 +11214,11 @@
    "filings": 1,
    "latest": "2025-01-24",
    "topTitles": [
-    "=\"Tempo Analytics Manager\""
+    "Tempo Analytics Manager"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Tempo Analytics Manager\"",
+     "jobTitle": "Tempo Analytics Manager",
      "socTitle": "Operations Research Analysts",
      "date": "2025-01-24",
      "wageLevel": "III",
@@ -11239,11 +11232,11 @@
    "filings": 1,
    "latest": "2025-01-23",
    "topTitles": [
-    "=\"Salesforce Business analyst\""
+    "Salesforce Business analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Salesforce Business analyst\"",
+     "jobTitle": "Salesforce Business analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-23",
      "wageLevel": "II",
@@ -11257,11 +11250,11 @@
    "filings": 1,
    "latest": "2025-01-21",
    "topTitles": [
-    "=\"Product Data Scientist\""
+    "Product Data Scientist"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Product Data Scientist\"",
+     "jobTitle": "Product Data Scientist",
      "socTitle": "Data Scientists",
      "date": "2025-01-21",
      "wageLevel": "II",
@@ -11275,11 +11268,11 @@
    "filings": 1,
    "latest": "2025-01-21",
    "topTitles": [
-    "=\"Senior Analyst, Market Risk-Refining Products Trading\""
+    "Senior Analyst, Market Risk-Refining Products Trading"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Analyst, Market Risk-Refining Products Trading\"",
+     "jobTitle": "Senior Analyst, Market Risk-Refining Products Trading",
      "socTitle": "Data Scientists",
      "date": "2025-01-21",
      "wageLevel": "I",
@@ -11293,11 +11286,11 @@
    "filings": 1,
    "latest": "2025-01-17",
    "topTitles": [
-    "=\"Global Media Analytics Manager\""
+    "Global Media Analytics Manager"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Global Media Analytics Manager\"",
+     "jobTitle": "Global Media Analytics Manager",
      "socTitle": "Market Research Analysts and Marketing Specialists",
      "date": "2025-01-17",
      "wageLevel": "III",
@@ -11311,11 +11304,11 @@
    "filings": 1,
    "latest": "2025-01-17",
    "topTitles": [
-    "=\"Data Governance Analyst\""
+    "Data Governance Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Governance Analyst\"",
+     "jobTitle": "Data Governance Analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-17",
      "wageLevel": "II",
@@ -11329,11 +11322,11 @@
    "filings": 1,
    "latest": "2025-01-16",
    "topTitles": [
-    "=\"Systems Administrator (4)\""
+    "Systems Administrator (4)"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Systems Administrator (4)\"",
+     "jobTitle": "Systems Administrator (4)",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-16",
      "wageLevel": "III",
@@ -11347,11 +11340,11 @@
    "filings": 1,
    "latest": "2025-01-14",
    "topTitles": [
-    "=\"Data Quality Manager\""
+    "Data Quality Manager"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Quality Manager\"",
+     "jobTitle": "Data Quality Manager",
      "socTitle": "Data Warehousing Specialists",
      "date": "2025-01-14",
      "wageLevel": "IV",
@@ -11365,11 +11358,11 @@
    "filings": 1,
    "latest": "2025-01-14",
    "topTitles": [
-    "=\"Research Associate/Data Analyst\""
+    "Research Associate/Data Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Research Associate/Data Analyst\"",
+     "jobTitle": "Research Associate/Data Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-01-14",
      "wageLevel": "I",
@@ -11383,11 +11376,11 @@
    "filings": 1,
    "latest": "2025-01-13",
    "topTitles": [
-    "=\"Deployment Strategist (11525.3683)\""
+    "Deployment Strategist (11525.3683)"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Deployment Strategist (11525.3683)\"",
+     "jobTitle": "Deployment Strategist (11525.3683)",
      "socTitle": "Data Scientists",
      "date": "2025-01-13",
      "wageLevel": "II",
@@ -11401,11 +11394,11 @@
    "filings": 1,
    "latest": "2025-01-10",
    "topTitles": [
-    "=\"Senior Business Intelligence Analyst\""
+    "Senior Business Intelligence Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Business Intelligence Analyst\"",
+     "jobTitle": "Senior Business Intelligence Analyst",
      "socTitle": "Business Intelligence Analysts",
      "date": "2025-01-10",
      "wageLevel": "II",
@@ -11419,11 +11412,11 @@
    "filings": 1,
    "latest": "2025-01-03",
    "topTitles": [
-    "=\"Data Scientist II\""
+    "Data Scientist II"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Data Scientist II\"",
+     "jobTitle": "Data Scientist II",
      "socTitle": "Data Scientists",
      "date": "2025-01-03",
      "wageLevel": "II",
@@ -11437,11 +11430,11 @@
    "filings": 1,
    "latest": "2025-01-02",
    "topTitles": [
-    "=\"Senior Data Analyst\""
+    "Senior Data Analyst"
    ],
    "recent": [
     {
-     "jobTitle": "=\"Senior Data Analyst\"",
+     "jobTitle": "Senior Data Analyst",
      "socTitle": "Data Scientists",
      "date": "2025-01-02",
      "wageLevel": "III",

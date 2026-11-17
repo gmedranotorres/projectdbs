@@ -1,0 +1,1661 @@
+{
+ "savedAt": "2026-11-17T19:32:20.070Z",
+ "boards": [
+  {
+   "employer": "Beyond Finance LLC",
+   "board": "greenhouse:beyondfinance",
+   "total": 22,
+   "kept": 7
+  },
+  {
+   "employer": "Tiger Analytics, Inc.",
+   "board": "ashby:tiger",
+   "total": 4,
+   "kept": 0
+  },
+  {
+   "employer": "Chime Financial, Inc.",
+   "board": "greenhouse:chime",
+   "total": 74,
+   "kept": 5
+  },
+  {
+   "employer": "Enova Financial Holdings, LLC",
+   "board": "greenhouse:enova",
+   "total": 38,
+   "kept": 5
+  },
+  {
+   "employer": "84.51 LLC",
+   "board": "greenhouse:8451",
+   "total": 22,
+   "kept": 11
+  },
+  {
+   "employer": "Akuna Capital, LLC",
+   "board": "greenhouse:akunacapital",
+   "total": 31,
+   "kept": 6
+  },
+  {
+   "employer": "Charles Schwab & Company, Inc.",
+   "board": "greenhouse:charles",
+   "total": 3,
+   "kept": 0
+  },
+  {
+   "employer": "Groupon, Inc.",
+   "board": "greenhouse:groupon",
+   "total": 28,
+   "kept": 0
+  },
+  {
+   "employer": "Stripe, Inc.",
+   "board": "greenhouse:stripe",
+   "total": 793,
+   "kept": 13
+  },
+  {
+   "employer": "Arthur J. Gallagher Service Company, LLC",
+   "board": "ashby:arthur",
+   "total": 1,
+   "kept": 0
+  },
+  {
+   "employer": "Rehabilitation Institute of Chicago",
+   "board": "greenhouse:rehabilitation",
+   "total": 1,
+   "kept": 0
+  },
+  {
+   "employer": "66degrees, LLC",
+   "board": "greenhouse:66degrees",
+   "total": 17,
+   "kept": 0
+  },
+  {
+   "employer": "Polar Operations LLC",
+   "board": "ashby:polar",
+   "total": 3,
+   "kept": 0
+  },
+  {
+   "employer": "Sunrise Futures, LLC",
+   "board": "greenhouse:sunrise",
+   "total": 15,
+   "kept": 0
+  },
+  {
+   "employer": "Fetch Rewards, LLC",
+   "board": "greenhouse:fetch",
+   "total": 56,
+   "kept": 0
+  },
+  {
+   "employer": "dunnhumby, Inc.",
+   "board": "greenhouse:dunnhumby",
+   "total": 55,
+   "kept": 0
+  },
+  {
+   "employer": "Samsara Inc.",
+   "board": "greenhouse:samsara",
+   "total": 312,
+   "kept": 5
+  },
+  {
+   "employer": "BUDDERFLY, INC",
+   "board": "greenhouse:budderfly",
+   "total": 18,
+   "kept": 0
+  },
+  {
+   "employer": "ActiveCampaign, LLC",
+   "board": "lever:activecampaign",
+   "total": 10,
+   "kept": 0
+  },
+  {
+   "employer": "Chowbus, Inc.",
+   "board": "greenhouse:chowbus",
+   "total": 96,
+   "kept": 1
+  },
+  {
+   "employer": "Insight Global, LLC",
+   "board": "greenhouse:insight",
+   "total": 5,
+   "kept": 0
+  },
+  {
+   "employer": "William Blair & Company, LLC",
+   "board": "greenhouse:williamblair",
+   "total": 51,
+   "kept": 9
+  },
+  {
+   "employer": "Vesta Corporation",
+   "board": "ashby:vesta",
+   "total": 13,
+   "kept": 0
+  },
+  {
+   "employer": "Harbor Employees LLC",
+   "board": "ashby:harbor",
+   "total": 5,
+   "kept": 0
+  },
+  {
+   "employer": "IMC AMERICAS, INC.",
+   "board": "greenhouse:imc",
+   "total": 154,
+   "kept": 19
+  },
+  {
+   "employer": "Affirm, Inc.",
+   "board": "greenhouse:affirm",
+   "total": 220,
+   "kept": 0
+  },
+  {
+   "employer": "Social Finance, LLC",
+   "board": "greenhouse:socialfinance",
+   "total": 7,
+   "kept": 0
+  },
+  {
+   "employer": "FCB Worldwide, Inc.",
+   "board": "greenhouse:fcbworldwide",
+   "total": 1,
+   "kept": 0
+  },
+  {
+   "employer": "Antares Capital, LP",
+   "board": "ashby:antares",
+   "total": 83,
+   "kept": 0
+  },
+  {
+   "employer": "Proper Consulting Group, LLC",
+   "board": "lever:proper",
+   "total": 13,
+   "kept": 0
+  },
+  {
+   "employer": "QUANTUM TECHNOLOGIES LLC",
+   "board": "ashby:quantum",
+   "total": 22,
+   "kept": 0
+  },
+  {
+   "employer": "Adyen N.V.",
+   "board": "greenhouse:adyen",
+   "total": 237,
+   "kept": 8
+  },
+  {
+   "employer": "Mission Lane LLC",
+   "board": "greenhouse:missionlane",
+   "total": 14,
+   "kept": 0
+  },
+  {
+   "employer": "Veeva Systems Inc.",
+   "board": "lever:veeva",
+   "total": 862,
+   "kept": 0
+  },
+  {
+   "employer": "Block, Inc.",
+   "board": "greenhouse:block",
+   "total": 188,
+   "kept": 0
+  },
+  {
+   "employer": "Uber Freight US LLC",
+   "board": "greenhouse:uberfreight",
+   "total": 90,
+   "kept": 6
+  },
+  {
+   "employer": "The Leland Stanford, Jr University",
+   "board": "ashby:leland",
+   "total": 192,
+   "kept": 0
+  },
+  {
+   "employer": "CRITICAL MASS (U.S.) INC.",
+   "board": "greenhouse:criticalmass",
+   "total": 21,
+   "kept": 0
+  },
+  {
+   "employer": "Context Analytics, Inc.",
+   "board": "ashby:context",
+   "total": 3,
+   "kept": 0
+  },
+  {
+   "employer": "Insight Direct USA, Inc",
+   "board": "greenhouse:insight",
+   "total": 5,
+   "kept": 0
+  },
+  {
+   "employer": "Keystone Automotive Industries, Inc.",
+   "board": "greenhouse:keystone",
+   "total": 23,
+   "kept": 0
+  },
+  {
+   "employer": "American Institutes for Research",
+   "board": "greenhouse:americaninstitutesforresearch",
+   "total": 16,
+   "kept": 4
+  },
+  {
+   "employer": "SPINS LLC",
+   "board": "greenhouse:spins",
+   "total": 8,
+   "kept": 0
+  },
+  {
+   "employer": "Recidiviz Inc.",
+   "board": "greenhouse:recidiviz",
+   "total": 12,
+   "kept": 0
+  },
+  {
+   "employer": "PALANTIR TECHNOLOGIES INC.",
+   "board": "lever:palantir",
+   "total": 301,
+   "kept": 0
+  },
+  {
+   "employer": "Cornerstone Research, Inc.",
+   "board": "greenhouse:cornerstone",
+   "total": 4,
+   "kept": 0
+  },
+  {
+   "employer": "Brunswick Corporation",
+   "board": "ashby:brunswick",
+   "total": 6,
+   "kept": 0
+  },
+  {
+   "employer": "Plume Design, Inc.",
+   "board": "greenhouse:plume",
+   "total": 23,
+   "kept": 0
+  },
+  {
+   "employer": "Tower Research Capital LLC",
+   "board": "greenhouse:towerresearchcapital",
+   "total": 92,
+   "kept": 6
+  },
+  {
+   "employer": "Vanta Inc.",
+   "board": "ashby:vanta",
+   "total": 79,
+   "kept": 0
+  },
+  {
+   "employer": "Infinite Computer Solutions, Inc.",
+   "board": "ashby:infinite",
+   "total": 3,
+   "kept": 0
+  },
+  {
+   "employer": "Symphony Corporation",
+   "board": "greenhouse:symphony",
+   "total": 16,
+   "kept": 0
+  },
+  {
+   "employer": "Syndigo LLC",
+   "board": "greenhouse:syndigo",
+   "total": 34,
+   "kept": 0
+  },
+  {
+   "employer": "fairlife, LLC",
+   "board": "greenhouse:fairlife",
+   "total": 55,
+   "kept": 2
+  },
+  {
+   "employer": "Reddit, Inc.",
+   "board": "greenhouse:reddit",
+   "total": 148,
+   "kept": 0
+  },
+  {
+   "employer": "Phoenix Tree Publishing Inc.",
+   "board": "ashby:phoenix",
+   "total": 11,
+   "kept": 0
+  },
+  {
+   "employer": "Ralph Lauren Corporation",
+   "board": "ashby:ralph",
+   "total": 16,
+   "kept": 0
+  },
+  {
+   "employer": "Cuesta Partners LLC",
+   "board": "ashby:cuesta-partners",
+   "total": 14,
+   "kept": 1
+  },
+  {
+   "employer": "SageSure Insurance Managers, LLC",
+   "board": "greenhouse:sagesure",
+   "total": 21,
+   "kept": 2
+  },
+  {
+   "employer": "StackAdapt US Inc.",
+   "board": "greenhouse:stackadapt",
+   "total": 75,
+   "kept": 0
+  },
+  {
+   "employer": "Relativity ODA LLC",
+   "board": "greenhouse:relativity",
+   "total": 398,
+   "kept": 0
+  },
+  {
+   "employer": "TECHNOLOGY SQUARE INC.",
+   "board": "greenhouse:technology",
+   "total": 1,
+   "kept": 0
+  },
+  {
+   "employer": "Coupa Software, Inc.",
+   "board": "lever:coupa",
+   "total": 51,
+   "kept": 0
+  },
+  {
+   "employer": "COLLECTIVEHEALTH, INC.",
+   "board": "greenhouse:collectivehealth",
+   "total": 2,
+   "kept": 0
+  },
+  {
+   "employer": "Gauntlet Networks, Inc.",
+   "board": "lever:gauntlet",
+   "total": 5,
+   "kept": 0
+  },
+  {
+   "employer": "GENEVA TRADING USA LLC",
+   "board": "greenhouse:genevatrading",
+   "total": 12,
+   "kept": 2
+  },
+  {
+   "employer": "Energy CX, LLC",
+   "board": "greenhouse:energycx",
+   "total": 9,
+   "kept": 1
+  },
+  {
+   "employer": "Abacus Data Systems, Inc. d/b/a CARET",
+   "board": "greenhouse:abacus",
+   "total": 47,
+   "kept": 0
+  },
+  {
+   "employer": "Vantage Services LLC",
+   "board": "ashby:vantage",
+   "total": 7,
+   "kept": 0
+  },
+  {
+   "employer": "Phoenix Innovations LLC",
+   "board": "ashby:phoenix",
+   "total": 11,
+   "kept": 0
+  },
+  {
+   "employer": "Daydream",
+   "board": "ashby:daydream",
+   "total": 8,
+   "kept": 0
+  },
+  {
+   "employer": "Extend, Inc.",
+   "board": "greenhouse:extend",
+   "total": 13,
+   "kept": 0
+  },
+  {
+   "employer": "Prosper Marketplace, Inc.",
+   "board": "lever:prosper",
+   "total": 11,
+   "kept": 0
+  },
+  {
+   "employer": "Healthcare, Inc.",
+   "board": "lever:healthcare",
+   "total": 6,
+   "kept": 0
+  },
+  {
+   "employer": "Oliver Wyman, LLC",
+   "board": "lever:oliverwyman",
+   "total": 2,
+   "kept": 0
+  },
+  {
+   "employer": "Braze, Inc.",
+   "board": "greenhouse:braze",
+   "total": 335,
+   "kept": 5
+  },
+  {
+   "employer": "Purple Web Inc",
+   "board": "greenhouse:purple",
+   "total": 1,
+   "kept": 0
+  },
+  {
+   "employer": "Campfire, LLC",
+   "board": "ashby:campfire",
+   "total": 51,
+   "kept": 0
+  },
+  {
+   "employer": "Workato Inc.",
+   "board": "greenhouse:workato",
+   "total": 64,
+   "kept": 0
+  }
+ ],
+ "jobs": [
+  {
+   "id": "greenhouse:6129655",
+   "title": "Business Analytics Associate",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/beyondfinance/jobs/6129655",
+   "published": "2024-07-23",
+   "employerKey": "BEYOND FINANCE",
+   "board": "greenhouse:beyondfinance",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:6129668",
+   "title": "Director of Strategy & Analytics",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/beyondfinance/jobs/6129668",
+   "published": "2024-07-23",
+   "employerKey": "BEYOND FINANCE",
+   "board": "greenhouse:beyondfinance",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:6129669",
+   "title": "Manager of Marketing Analytics",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/beyondfinance/jobs/6129669",
+   "published": "2024-07-23",
+   "employerKey": "BEYOND FINANCE",
+   "board": "greenhouse:beyondfinance",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:6129675",
+   "title": "Manager, Strategy & Analytics",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/beyondfinance/jobs/6129675",
+   "published": "2024-07-23",
+   "employerKey": "BEYOND FINANCE",
+   "board": "greenhouse:beyondfinance",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8089011",
+   "title": "Senior Analyst, FP&A",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/beyondfinance/jobs/8089011",
+   "published": "2026-07-28",
+   "employerKey": "BEYOND FINANCE",
+   "board": "greenhouse:beyondfinance",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:6176019",
+   "title": "Sr. Analyst, Marketing Analytics",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/beyondfinance/jobs/6176019",
+   "published": "2024-08-13",
+   "employerKey": "BEYOND FINANCE",
+   "board": "greenhouse:beyondfinance",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:6961066",
+   "title": "Strategy & Operations Analyst",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/beyondfinance/jobs/6961066",
+   "published": "2025-06-06",
+   "employerKey": "BEYOND FINANCE",
+   "board": "greenhouse:beyondfinance",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8569366002",
+   "title": "AI/ML Engineer",
+   "location": "Chicago, IL, USA; New York, NY, USA; San Francisco, CA, USA",
+   "url": "https://boards.greenhouse.io/chime/jobs/8569366002?gh_jid=8569366002",
+   "published": "2026-06-08",
+   "employerKey": "CHIME FINANCIAL",
+   "board": "greenhouse:chime",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8904126002",
+   "title": "Data Scientist, Dispute Risk",
+   "location": "Chicago, IL, USA",
+   "url": "https://boards.greenhouse.io/chime/jobs/8904126002?gh_jid=8904126002",
+   "published": "2026-11-09",
+   "employerKey": "CHIME FINANCIAL",
+   "board": "greenhouse:chime",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8779819002",
+   "title": "Lead Analyst, Financial Crimes",
+   "location": "Chicago, IL, USA",
+   "url": "https://boards.greenhouse.io/chime/jobs/8779819002?gh_jid=8779819002",
+   "published": "2026-09-04",
+   "employerKey": "CHIME FINANCIAL",
+   "board": "greenhouse:chime",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8788322002",
+   "title": "Lead Data Scientist, Credit Risk",
+   "location": "Chicago, IL, USA; San Francisco, CA, USA",
+   "url": "https://boards.greenhouse.io/chime/jobs/8788322002?gh_jid=8788322002",
+   "published": "2026-10-13",
+   "employerKey": "CHIME FINANCIAL",
+   "board": "greenhouse:chime",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8917560002",
+   "title": "Sr. Analyst, Identity & KYC",
+   "location": "Chicago, IL, USA",
+   "url": "https://boards.greenhouse.io/chime/jobs/8917560002?gh_jid=8917560002",
+   "published": "2026-10-26",
+   "employerKey": "CHIME FINANCIAL",
+   "board": "greenhouse:chime",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8366036",
+   "title": "Analytics Internship Summer 2027 (Hybrid) ",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/enova/jobs/8366036",
+   "published": "2026-11-09",
+   "employerKey": "ENOVA FINANCIAL",
+   "board": "greenhouse:enova",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8374651",
+   "title": "Business Compliance Sr. Analyst",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/enova/jobs/8374651",
+   "published": "2026-11-10",
+   "employerKey": "ENOVA FINANCIAL",
+   "board": "greenhouse:enova",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8318404",
+   "title": "Data Scientist - Portfolio Consumer (Hybrid)",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/enova/jobs/8318404",
+   "published": "2026-10-23",
+   "employerKey": "ENOVA FINANCIAL",
+   "board": "greenhouse:enova",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8324579",
+   "title": "Lead Data Scientist (Hybrid)",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/enova/jobs/8324579",
+   "published": "2026-10-26",
+   "employerKey": "ENOVA FINANCIAL",
+   "board": "greenhouse:enova",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8372084",
+   "title": "Senior Analyst, Paid Search (Hybrid)",
+   "location": "Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/enova/jobs/8372084",
+   "published": "2026-11-10",
+   "employerKey": "ENOVA FINANCIAL",
+   "board": "greenhouse:enova",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8614134002",
+   "title": "Director, Product Management, AI Platform, Kroger Precision Marketing (P4644)",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8614134002",
+   "published": "2026-06-30",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8924511002",
+   "title": "Lead AI/ML Engineer (P4363)",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8924511002",
+   "published": "2026-11-03",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8773368002",
+   "title": "Lead Data Engineer ",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8773368002",
+   "published": "2026-10-29",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8924525002",
+   "title": "Lead Data Scientist (P4296)",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8924525002",
+   "published": "2026-11-13",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8618262002",
+   "title": "Lead Data Scientist - Relevancy Sciences (P3764)",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8618262002",
+   "published": "2026-07-10",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8842412002",
+   "title": "Lead Product Manager - AI Platforms Kroger Precision Marketing (P989) ",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8842412002",
+   "published": "2026-09-24",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8631401002",
+   "title": "Lead Product Manager - APPLIED AI (P4560)",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8631401002",
+   "published": "2026-07-13",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8947178002",
+   "title": " Lead Product Manager, Data Strategy Engagement (P4657) ",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8947178002",
+   "published": "2026-11-17",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8725891002",
+   "title": "Lead Software Engineer, AI (P4577)",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8725891002",
+   "published": "2026-08-18",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8928908002",
+   "title": "Senior Client Success Manager - Insights (P4666) / G2",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8928908002",
+   "published": "2026-11-03",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8923332002",
+   "title": "Senior Data Engineer (P1754) (P1752)",
+   "location": "Cincinnati, OH; Chicago, IL",
+   "url": "https://job-boards.greenhouse.io/8451/jobs/8923332002",
+   "published": "2026-10-29",
+   "employerKey": "84 51",
+   "board": "greenhouse:8451",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8016687",
+   "title": "Junior Quantitative Developer & Strategist",
+   "location": "Chicago, IL ",
+   "url": "https://www.akunacapital.com/careers/job/8016687/?gh_jid=8016687",
+   "published": "2026-07-13",
+   "employerKey": "AKUNA CAPITAL",
+   "board": "greenhouse:akunacapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8036541",
+   "title": "Junior Quantitative Researcher",
+   "location": "Chicago, IL ",
+   "url": "https://www.akunacapital.com/careers/job/8036541/?gh_jid=8036541",
+   "published": "2026-07-13",
+   "employerKey": "AKUNA CAPITAL",
+   "board": "greenhouse:akunacapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:7496416",
+   "title": "Quantitative Researcher",
+   "location": "Chicago, IL",
+   "url": "https://www.akunacapital.com/careers/job/7496416/?gh_jid=7496416",
+   "published": "2026-01-02",
+   "employerKey": "AKUNA CAPITAL",
+   "board": "greenhouse:akunacapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:7846695",
+   "title": "Quantitative Researcher - Prediction Markets",
+   "location": "Chicago, IL",
+   "url": "https://www.akunacapital.com/careers/job/7846695/?gh_jid=7846695",
+   "published": "2026-04-28",
+   "employerKey": "AKUNA CAPITAL",
+   "board": "greenhouse:akunacapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8036614",
+   "title": "Quantitative Research Intern, Summer 2027",
+   "location": "Chicago, IL ",
+   "url": "https://www.akunacapital.com/careers/job/8036614/?gh_jid=8036614",
+   "published": "2026-07-13",
+   "employerKey": "AKUNA CAPITAL",
+   "board": "greenhouse:akunacapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:7496411",
+   "title": "Software Engineer - Data Engineering",
+   "location": "Chicago, IL",
+   "url": "https://www.akunacapital.com/careers/job/7496411/?gh_jid=7496411",
+   "published": "2026-01-02",
+   "employerKey": "AKUNA CAPITAL",
+   "board": "greenhouse:akunacapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8144196",
+   "title": "AI Engineer",
+   "location": "Chicago",
+   "url": "https://stripe.com/jobs/search?gh_jid=8144196",
+   "published": "2026-10-07",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8354566",
+   "title": "AMER Data Analyst - Sales Strategy and Operations",
+   "location": "Chicago, US Remote, SF, NYC, Seattle",
+   "url": "https://stripe.com/jobs/search?gh_jid=8354566",
+   "published": "2026-11-05",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8354560",
+   "title": "Credit Operations Analyst",
+   "location": "Chicago, IL; Atlanta, GA; Toronto, Canada",
+   "url": "https://stripe.com/jobs/search?gh_jid=8354560",
+   "published": "2026-11-11",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:7747640",
+   "title": "Forward Deployed AI Accelerator, Marketing",
+   "location": "Seattle, San Francisco, New York, Chicago, Atlanta, Remote in the US, Canada",
+   "url": "https://stripe.com/jobs/search?gh_jid=7747640",
+   "published": "2026-03-26",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8395851",
+   "title": "Forward Deployed AI Accelerator, Marketing",
+   "location": "Seattle, San Francisco, New York, Chicago, Atlanta, Remote in the US, Canada",
+   "url": "https://stripe.com/jobs/search?gh_jid=8395851",
+   "published": "2026-11-17",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8055930",
+   "title": "Forward Deployed AI Accelerator, Sales Development",
+   "location": "Seattle, San Francisco, New York, Chicago, Atlanta, Remote in the US, Canada",
+   "url": "https://stripe.com/jobs/search?gh_jid=8055930",
+   "published": "2026-07-13",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8335413",
+   "title": "Manager, Marketing Analytics",
+   "location": "Toronto, Chicago, Atlanta",
+   "url": "https://stripe.com/jobs/search?gh_jid=8335413",
+   "published": "2026-11-04",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8230306",
+   "title": "Renewals Analyst",
+   "location": "Chicago, IL",
+   "url": "https://stripe.com/jobs/search?gh_jid=8230306",
+   "published": "2026-09-24",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:7230921",
+   "title": "Risk Operations Analyst",
+   "location": "Chicago, Atlanta, US-Remote, Toro",
+   "url": "https://stripe.com/jobs/search?gh_jid=7230921",
+   "published": "2025-09-10",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8248507",
+   "title": "SaaS Platform and AI Partner Marketing Lead",
+   "location": "San Francisco, New York, Seattle, Chicago, Atlanta, Remote in the US",
+   "url": "https://stripe.com/jobs/search?gh_jid=8248507",
+   "published": "2026-10-05",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8164674",
+   "title": "Sales Strategy & Operations Analyst ",
+   "location": "Chicago",
+   "url": "https://stripe.com/jobs/search?gh_jid=8164674",
+   "published": "2026-09-01",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8248509",
+   "title": "Solutions Architect, AI",
+   "location": "NYC, SF, or Chicago",
+   "url": "https://stripe.com/jobs/search?gh_jid=8248509",
+   "published": "2026-10-08",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8079783",
+   "title": "Strategy & Analytics Business Partner Analyst",
+   "location": "US-SF, US-Seattle, US-NYC, US-Chicago, US-Georgia or US-Remote",
+   "url": "https://stripe.com/jobs/search?gh_jid=8079783",
+   "published": "2026-07-30",
+   "employerKey": "STRIPE",
+   "board": "greenhouse:stripe",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8024110",
+   "title": "AI Engineer, Customer Success",
+   "location": "Remote - Austin; Remote - CA; Remote - Chicago; Remote - Dallas; Remote - Houston; Remote - Seattle",
+   "url": "https://www.samsara.com/company/careers/roles/8024110?gh_jid=8024110",
+   "published": "2026-06-26",
+   "employerKey": "SAMSARA",
+   "board": "greenhouse:samsara",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8306612",
+   "title": "Digital Customer Success Manager, AI & Automation",
+   "location": "Remote - Austin; Remote - CA; Remote - Chicago; Remote - Dallas; Remote - Houston; Remote - Seattle",
+   "url": "https://www.samsara.com/company/careers/roles/8306612?gh_jid=8306612",
+   "published": "2026-10-21",
+   "employerKey": "SAMSARA",
+   "board": "greenhouse:samsara",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8281490",
+   "title": "Senior AI Data & Analytics Engineer II",
+   "location": "Remote - Chicago",
+   "url": "https://www.samsara.com/company/careers/roles/8281490?gh_jid=8281490",
+   "published": "2026-10-14",
+   "employerKey": "SAMSARA",
+   "board": "greenhouse:samsara",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8053880",
+   "title": "Senior Sales Operations Analyst",
+   "location": "Remote - Austin; Remote - CA; Remote - Chicago; Remote - Dallas; Remote - Houston; Remote - Seattle",
+   "url": "https://www.samsara.com/company/careers/roles/8053880?gh_jid=8053880",
+   "published": "2026-08-24",
+   "employerKey": "SAMSARA",
+   "board": "greenhouse:samsara",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:7960413",
+   "title": "Specialist Seller, Enterprise Core (AI Products)",
+   "location": "Atlanta, Georgia, United States; Remote - Chicago; Remote - MA; Remote - TX",
+   "url": "https://www.samsara.com/company/careers/roles/7960413?gh_jid=7960413",
+   "published": "2026-05-27",
+   "employerKey": "SAMSARA",
+   "board": "greenhouse:samsara",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8199735003",
+   "title": "Full Stack Engineer, GTM Systems (Built with and powered by AI)",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/chowbus/jobs/8199735003",
+   "published": "2026-11-09",
+   "employerKey": "CHOWBUS",
+   "board": "greenhouse:chowbus",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5187076007",
+   "title": "2027 Investment Banking Full-Time Analyst, Life Sciences - MedTech",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5187076007",
+   "published": "2026-08-05",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5263634007",
+   "title": "Analyst, PWM Private Capital",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5263634007",
+   "published": "2026-10-13",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5274564007",
+   "title": "Compliance Analyst – Trade Surveillance",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5274564007",
+   "published": "2026-10-26",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5102983007",
+   "title": "Data & AI Engineer – Equities Technology",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5102983007",
+   "published": "2026-04-09",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5079388007",
+   "title": "Lead Data Scientist – AI Engineer",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5079388007",
+   "published": "2026-03-13",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5247647007",
+   "title": "Research Analyst - U.S. Growth & Core (Financials)",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5247647007",
+   "published": "2026-09-24",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5079386007",
+   "title": "Senior Data Scientist – AI Engineer",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5079386007",
+   "published": "2026-03-13",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5242287007",
+   "title": "Working in Technology (WiT) - Agentic AI Development - Summer 2027",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5242287007",
+   "published": "2026-09-22",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5242282007",
+   "title": "Working in Technology (WiT) - Agentic AI Development- Summer 2027",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://www.williamblair.com/Careers/job-description?gh_jid=5242282007",
+   "published": "2026-09-22",
+   "employerKey": "WILLIAM BLAIR",
+   "board": "greenhouse:williamblair",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4439297101",
+   "title": "Data Engineer",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4439297101",
+   "published": "2025-06-10",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4945646101",
+   "title": "Data Engineer - Infrastructure",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4945646101",
+   "published": "2026-08-05",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4907368101",
+   "title": "Graduate Quantitative Researcher (BS/MS)",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4907368101",
+   "published": "2026-07-01",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4912325101",
+   "title": "Graduate Quantitative Researcher (PhD)",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4912325101",
+   "published": "2026-07-01",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4713602101",
+   "title": "Hardware Machine Learning Engineer",
+   "location": "Chicago, United States; New York, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4713602101",
+   "published": "2026-02-13",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4975945101",
+   "title": "Hardware Machine Learning PhD Research Internship",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4975945101",
+   "published": "2026-09-23",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4913831101",
+   "title": "Macro Analyst",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4913831101",
+   "published": "2026-06-30",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4999969101",
+   "title": "Operations Analyst – Mid Office",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4999969101",
+   "published": "2026-10-07",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4874399101",
+   "title": "Quantitative Developer - Python",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4874399101",
+   "published": "2026-05-29",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4660792101",
+   "title": "Quantitative Researcher - Data Curation",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4660792101",
+   "published": "2025-08-22",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4740859101",
+   "title": "Quantitative Researcher – Futures",
+   "location": "Chicago, United States; New York, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4740859101",
+   "published": "2025-12-18",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4286816101",
+   "title": "Quantitative Researcher - Options",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4286816101",
+   "published": "2024-02-06",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4907399101",
+   "title": "Quantitative Research Intern (BS/MS) - Summer 2027",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4907399101",
+   "published": "2026-07-01",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4907400101",
+   "title": "Quantitative Research Intern (PhD) - Summer 2027",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4907400101",
+   "published": "2026-07-01",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4823923101",
+   "title": "Quantitative Trader Intern - Summer 2027",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4823923101",
+   "published": "2026-07-01",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4792587101",
+   "title": "Quantitative Trading Strategist - Equity Options",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4792587101",
+   "published": "2026-02-27",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4823946101",
+   "title": "Research Analyst Intern - Summer 2027",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4823946101",
+   "published": "2026-11-04",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4682071101",
+   "title": "Software Engineer – AI Powered Engineering",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4682071101",
+   "published": "2025-09-26",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4960533101",
+   "title": "Software Engineer - AI Tooling",
+   "location": "Chicago, United States",
+   "url": "https://job-boards.eu.greenhouse.io/imc/jobs/4960533101",
+   "published": "2026-11-06",
+   "employerKey": "IMC",
+   "board": "greenhouse:imc",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8269079",
+   "title": "CDD Risk Analyst, Event Driven Reviews",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8269079",
+   "published": "2026-10-12",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8301681",
+   "title": "Collections Analyst",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8301681",
+   "published": "2026-10-22",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8113712",
+   "title": "Engineering Manager, Machine Learning - Personalize Intelligence",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8113712",
+   "published": "2026-08-31",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8331933",
+   "title": "Senior CDD Risk Analyst, Direct Customer Onboarding",
+   "location": "Chicago; San Francisco",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8331933",
+   "published": "2026-11-04",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8354222",
+   "title": "Senior Collections Analyst, Commercial Credit",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8354222",
+   "published": "2026-11-04",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8354239",
+   "title": "Senior Credit Operations Analyst, Collections & Recovery",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8354239",
+   "published": "2026-11-04",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8160354",
+   "title": "Senior Optimization Data Analyst",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8160354",
+   "published": "2026-09-03",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:8071079",
+   "title": "Technical Program Manager – Data Foundations",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/adyen/jobs/8071079",
+   "published": "2026-07-30",
+   "employerKey": "ADYEN N V",
+   "board": "greenhouse:adyen",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:5193110008",
+   "title": "Applied Scientist III - Shipper Pricing",
+   "location": "Chicago, IL 60607, United States",
+   "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5193110008",
+   "published": "2026-04-17",
+   "employerKey": "UBER FREIGHT",
+   "board": "greenhouse:uberfreight",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5453271008",
+   "title": "Pricing Analyst II - Intermodal ",
+   "location": "Chicago, IL 60607, United States",
+   "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5453271008",
+   "published": "2026-10-23",
+   "employerKey": "UBER FREIGHT",
+   "board": "greenhouse:uberfreight",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5441441008",
+   "title": "Senior Manager, Logistics Analytics & Optimization",
+   "location": "Chicago, IL 60607, United States",
+   "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5441441008",
+   "published": "2026-10-28",
+   "employerKey": "UBER FREIGHT",
+   "board": "greenhouse:uberfreight",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5445211008",
+   "title": "Sr. Business Process Analyst I - Senior Billing Analyst",
+   "location": "Chicago, IL 60607, United States",
+   "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5445211008",
+   "published": "2026-10-16",
+   "employerKey": "UBER FREIGHT",
+   "board": "greenhouse:uberfreight",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5474231008",
+   "title": "Sr Sales Compensation Analyst",
+   "location": "Chicago, IL 60607, United States",
+   "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5474231008",
+   "published": "2026-11-12",
+   "employerKey": "UBER FREIGHT",
+   "board": "greenhouse:uberfreight",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5367024008",
+   "title": "Sr. Strategic Data Finance Analyst ",
+   "location": "Chicago, IL 60607, United States",
+   "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5367024008",
+   "published": "2026-08-07",
+   "employerKey": "UBER FREIGHT",
+   "board": "greenhouse:uberfreight",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5480453008",
+   "title": "Data Scientist, Education Systems and Policy",
+   "location": "US-Remote | US-VA-Arlington | US-NC-Chapel Hill | US-IL-Chicago | US-CA-Sacramento | US-TX-Austin",
+   "url": "https://job-boards.greenhouse.io/americaninstitutesforresearch/jobs/5480453008",
+   "published": "2026-11-13",
+   "employerKey": "AMERICAN INSTITUTES FOR RESEARCH",
+   "board": "greenhouse:americaninstitutesforresearch",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5481755008",
+   "title": "Data Scientist, Education Systems and Policy",
+   "location": "US-Remote | US-VA-Arlington | US-NC-Chapel Hill | US-IL-Chicago | US-CA-Sacramento | US-TX-Austin",
+   "url": "https://job-boards.greenhouse.io/americaninstitutesforresearch/jobs/5481755008",
+   "published": "2026-11-13",
+   "employerKey": "AMERICAN INSTITUTES FOR RESEARCH",
+   "board": "greenhouse:americaninstitutesforresearch",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5471021008",
+   "title": "Quantitative Researcher, Evidence Synthesis & Meta-Analysis",
+   "location": "US-Remote | US-VA-Arlington | US-NC-Chapel Hill | US-IL-Chicago | US-CA-Sacramento | US-TX-Austin",
+   "url": "https://job-boards.greenhouse.io/americaninstitutesforresearch/jobs/5471021008",
+   "published": "2026-11-04",
+   "employerKey": "AMERICAN INSTITUTES FOR RESEARCH",
+   "board": "greenhouse:americaninstitutesforresearch",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5448353008",
+   "title": "Senior Quantitative Researcher – CMMI Evaluations",
+   "location": "US-Remote | US-VA-Arlington | US-NC-Chapel Hill | US-IL-Chicago | US-CA-Sacramento | US-TX-Austin",
+   "url": "https://job-boards.greenhouse.io/americaninstitutesforresearch/jobs/5448353008",
+   "published": "2026-10-08",
+   "employerKey": "AMERICAN INSTITUTES FOR RESEARCH",
+   "board": "greenhouse:americaninstitutesforresearch",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8249131",
+   "title": "AI Enablement Lead",
+   "location": "New York, Chicago, Charleston, Las Vegas, Miami",
+   "url": "https://www.tower-research.com/open-positions/?gh_jid=8249131",
+   "published": "2026-11-04",
+   "employerKey": "TOWER RESEARCH CAPITAL",
+   "board": "greenhouse:towerresearchcapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8044334",
+   "title": "Quantitative Developer Intern - Summer 2027",
+   "location": "New York, Chicago",
+   "url": "https://www.tower-research.com/open-positions/?gh_jid=8044334",
+   "published": "2026-07-05",
+   "employerKey": "TOWER RESEARCH CAPITAL",
+   "board": "greenhouse:towerresearchcapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8024142",
+   "title": "Quantitative Trader/Researcher - 2027",
+   "location": "New York, Chicago",
+   "url": "https://www.tower-research.com/open-positions/?gh_jid=8024142",
+   "published": "2026-07-05",
+   "employerKey": "TOWER RESEARCH CAPITAL",
+   "board": "greenhouse:towerresearchcapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8024128",
+   "title": "Quantitative Trader/Researcher Intern - Summer 2027",
+   "location": "New York, Chicago",
+   "url": "https://www.tower-research.com/open-positions/?gh_jid=8024128",
+   "published": "2026-07-05",
+   "employerKey": "TOWER RESEARCH CAPITAL",
+   "board": "greenhouse:towerresearchcapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:16635",
+   "title": "Quantitative Trader / Researcher - US",
+   "location": "New York, Chicago, Charleston, Las Vegas, Miami",
+   "url": "https://www.tower-research.com/open-positions/?gh_jid=16635",
+   "published": "2026-09-10",
+   "employerKey": "TOWER RESEARCH CAPITAL",
+   "board": "greenhouse:towerresearchcapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5372616",
+   "title": "Senior Options Quantitative Researcher",
+   "location": "New York, Chicago",
+   "url": "https://www.tower-research.com/open-positions/?gh_jid=5372616",
+   "published": "2023-09-19",
+   "employerKey": "TOWER RESEARCH CAPITAL",
+   "board": "greenhouse:towerresearchcapital",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5274073007",
+   "title": "Associate Scientist",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://job-boards.greenhouse.io/fairlife/jobs/5274073007",
+   "published": "2026-10-23",
+   "employerKey": "FAIRLIFE",
+   "board": "greenhouse:fairlife",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5170802007",
+   "title": "Senior Supply Chain Analyst-Network Optimization",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://job-boards.greenhouse.io/fairlife/jobs/5170802007",
+   "published": "2026-06-23",
+   "employerKey": "FAIRLIFE",
+   "board": "greenhouse:fairlife",
+   "kind": "exact"
+  },
+  {
+   "id": "ashby:43bd76d3-3905-4895-9afb-2a6d049d89a5",
+   "title": "Data Architect | US",
+   "location": "Chicago",
+   "url": "https://jobs.ashbyhq.com/cuesta-partners/43bd76d3-3905-4895-9afb-2a6d049d89a5",
+   "published": "2026-01-28",
+   "employerKey": "CUESTA PARTNERS",
+   "board": "ashby:cuesta-partners",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:4700275006",
+   "title": "Consumer Affairs Analyst",
+   "location": "Cheshire, Connecticut, United States; Chicago, Illinois, United States; Cincinnati, Ohio, United States; Houston, Texas, United States; Marlton, New Jersey, United States; Tallahassee, Florida, United States",
+   "url": "https://www.sagesure.com/careers/current-job-openings/?gh_jid=4700275006",
+   "published": "2026-09-03",
+   "employerKey": "SAGESURE INSURANCE MANAGERS",
+   "board": "greenhouse:sagesure",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:4670725006",
+   "title": "Senior Catastrophe Risk Analyst",
+   "location": "Chicago, Illinois, United States; Jersey City, New Jersey, United States; Marlton, New Jersey, United States; Tampa, Florida, United States",
+   "url": "https://www.sagesure.com/careers/current-job-openings/?gh_jid=4670725006",
+   "published": "2026-05-07",
+   "employerKey": "SAGESURE INSURANCE MANAGERS",
+   "board": "greenhouse:sagesure",
+   "kind": "prefix"
+  },
+  {
+   "id": "greenhouse:5130534007",
+   "title": "Director of Data Services ",
+   "location": "Chicago Office",
+   "url": "https://job-boards.greenhouse.io/genevatrading/jobs/5130534007",
+   "published": "2026-05-06",
+   "employerKey": "GENEVA TRADING",
+   "board": "greenhouse:genevatrading",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5242246007",
+   "title": "Systems Support Analyst Intern",
+   "location": "Chicago Office",
+   "url": "https://job-boards.greenhouse.io/genevatrading/jobs/5242246007",
+   "published": "2026-09-22",
+   "employerKey": "GENEVA TRADING",
+   "board": "greenhouse:genevatrading",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:5263510007",
+   "title": "Senior Utility Analyst",
+   "location": "Chicago, Illinois, United States",
+   "url": "https://job-boards.greenhouse.io/energycx/jobs/5263510007",
+   "published": "2026-10-19",
+   "employerKey": "ENERGY CX",
+   "board": "greenhouse:energycx",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8359913",
+   "title": "AI Architect",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/braze/jobs/8359913",
+   "published": "2026-11-06",
+   "employerKey": "BRAZE",
+   "board": "greenhouse:braze",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8249906",
+   "title": "Sales Operations Systems and Data Lead",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/braze/jobs/8249906",
+   "published": "2026-10-09",
+   "employerKey": "BRAZE",
+   "board": "greenhouse:braze",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8187014",
+   "title": "Senior Sales Operations Analyst",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/braze/jobs/8187014",
+   "published": "2026-09-08",
+   "employerKey": "BRAZE",
+   "board": "greenhouse:braze",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8170742",
+   "title": "Staff Applied Scientist",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/braze/jobs/8170742",
+   "published": "2026-09-01",
+   "employerKey": "BRAZE",
+   "board": "greenhouse:braze",
+   "kind": "exact"
+  },
+  {
+   "id": "greenhouse:8209434",
+   "title": "Staff Machine Learning Engineer, ML Platform",
+   "location": "Chicago",
+   "url": "https://job-boards.greenhouse.io/braze/jobs/8209434",
+   "published": "2026-09-16",
+   "employerKey": "BRAZE",
+   "board": "greenhouse:braze",
+   "kind": "exact"
+  }
+ ]
+}

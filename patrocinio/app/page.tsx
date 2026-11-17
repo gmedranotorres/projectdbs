@@ -1,13 +1,8 @@
 import Results from "@/components/Results";
-import { fetchChicagoDataJobs } from "@/lib/jobs";
-import { dataset, joinJobs } from "@/lib/results";
+import { buildRows, dataset } from "@/lib/results";
 
-// Rebuild the page (and refetch jobs) at most every 6 hours.
-export const revalidate = 21600;
-
-export default async function Home() {
-  const jobs = await fetchChicagoDataJobs();
-  const { rows, stats } = joinJobs(jobs.ok ? jobs.jobs : []);
+export default function Home() {
+  const { rows, stats } = buildRows();
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
@@ -42,21 +37,16 @@ export default async function Home() {
         for this kind of role. Ask the recruiter, too.
       </aside>
 
-      <Results
-        rows={rows}
-        jobsOk={jobs.ok}
-        jobsError={jobs.ok ? null : jobs.error}
-        jobsFetchedAt={jobs.fetchedAt}
-        stats={{ ...stats, employers: dataset.employers.length, filings: dataset.filingsCounted }}
-      />
+      <Results rows={rows} stats={stats} />
 
       <footer className="mt-12 border-t border-line pt-6 text-sm text-muted">
         <p>
           Visa filings: {dataset.source}. Only certified filings for data roles with a main worksite in Chicago, IL.
         </p>
         <p className="mt-2">
-          Open jobs: <a className="underline" href="https://www.themuse.com">The Muse</a>, Data and Analytics and Data Science jobs in
-          Chicago. Job posts are matched to filings by employer name, so some matches can be wrong.
+          Open jobs: each employer’s own job board on Greenhouse, Lever or Ashby, found by guessing the board’s name from the
+          employer’s name. Only jobs located in Chicago with a data title are shown. Employers with their own careers site
+          (like Google or JPMorgan) don’t show jobs yet.
         </p>
         <p className="mt-2">Not legal advice. Built for international students in MPCS 51238, Autumn 2026.</p>
       </footer>

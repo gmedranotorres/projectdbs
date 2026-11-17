@@ -45,7 +45,11 @@ export type Employer = {
   recent: Filing[];   // newest first, capped
 };
 
-const rows = parseCsv(readFileSync("data/chicago_filings.csv", "utf8"));
+// Some cells arrive as Excel formulas: ="Lead Business Intelligence Engineer"
+const unformula = (v: string) => v.replace(/^="?(.*?)"?$/, "$1").trim();
+const rows = parseCsv(readFileSync("data/chicago_filings.csv", "utf8")).map((r) =>
+  Object.fromEntries(Object.entries(r).map(([k, v]) => [k, unformula(v)])),
+);
 const kept = rows.filter((r) => COUNTED_STATUSES.has(r.CASE_STATUS) && isDataRole(r.SOC_CODE, r.JOB_TITLE));
 
 const groups = new Map<string, Row[]>();

@@ -5,21 +5,25 @@ import type { EmployerRow } from "@/lib/results";
 
 type Props = {
   rows: EmployerRow[];
-  jobsOk: boolean;
-  jobsError: string | null;
-  jobsFetchedAt: string;
-  stats: { employers: number; filings: number; jobs: number; companies: number; matchedCompanies: number; employersHiring: number };
+  stats: { employers: number; filings: number; boardsFound: number; employersHiring: number; jobs: number; jobsCheckedAt: string };
 };
 
 const PAGE = 30;
+const SERVICE_NAMES: Record<string, string> = { greenhouse: "Greenhouse", lever: "Lever", ashby: "Ashby" };
+// "Chicago, IL; New York, NY; Remote" -> "Chicago, IL + 2 more"
+function shortLocation(loc: string) {
+  const parts = loc.split(/;|\|/).map((p) => p.trim()).filter(Boolean);
+  const first = parts.find((p) => /chicago/i.test(p)) ?? parts[0] ?? "";
+  return parts.length > 1 ? `${first} + ${parts.length - 1} more` : first;
+}
 const fmtMonth = (iso: string) =>
   new Date(iso + "T12:00:00").toLocaleDateString("en-US", { month: "short", year: "numeric" });
 const fmtDay = (iso: string) =>
-  iso ? new Date(iso + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "";
+  iso ? new Date(iso + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
 
-export default function Results({ rows, jobsOk, jobsError, jobsFetchedAt, stats }: Props) {
+export default function Results({ rows, stats }: Props) {
   const [query, setQuery] = useState("");
-  const [hiringOnly, setHiringOnly] = useState(jobsOk && stats.employersHiring > 0);
+  const [hiringOnly, setHiringOnly] = useState(stats.employersHiring > 0);
   const [shown, setShown] = useState(PAGE);
 
   const filtered = useMemo(() => {
@@ -27,7 +31,7 @@ export default function Results({ rows, jobsOk, jobsError, jobsFetchedAt, stats 
     return rows.filter(
       (r) =>
         (!hiringOnly || r.jobs.length > 0) &&
-        (!q || r.name.toLowerCase().includes(q) || r.jobCompanies.some((c) => c.toLowerCase().includes(q))),
+        (!q || r.name.toLowerCase().includes(q)),
     );
   }, [rows, query, hiringOnly]);
 
@@ -36,23 +40,13 @@ export default function Results({ rows, jobsOk, jobsError, jobsFetchedAt, stats 
       <p className="text-lg">
         <strong>{stats.employers.toLocaleString()} employers</strong> filed {stats.filings.toLocaleString()} visa filings
         for data roles in Chicago between Oct 2024 and Sep 2025.{" "}
-        {jobsOk ? (
-          <>
-            <strong>{stats.employersHiring} of them</strong> have data jobs open now.
-          </>
-        ) : null}
+        <strong>{stats.employersHiring} of them</strong> have {stats.jobs} data jobs open in Chicago now.
       </p>
-
-      {jobsOk ? (
-        <p className="mt-1 text-sm text-muted">
-          Open jobs checked {new Date(jobsFetchedAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}:{" "}
-          {stats.jobs} Chicago data jobs at {stats.companies} companies, {stats.matchedCompanies} of which filed for visas.
-        </p>
-      ) : (
-        <p role="status" className="mt-2 rounded-lg bg-warn-soft p-3 text-sm text-warn-ink">
-          Open jobs couldn’t be loaded right now, so this shows the visa filings only. ({jobsError})
-        </p>
-      )}
+      <p className="mt-1 text-sm text-muted">
+        Open jobs checked{" "}
+        {new Date(stats.jobsCheckedAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "America/Chicago" })}{" "}
+        on the {stats.boardsFound} employer job boards we could find. Most large employers aren’t covered yet.
+      </p>
 
       <div className="mt-5 flex flex-wrap items-center gap-4">
         <label className="flex-1 min-w-[14rem]">
@@ -69,7 +63,6 @@ export default function Results({ rows, jobsOk, jobsError, jobsFetchedAt, stats 
           <input
             type="checkbox"
             checked={hiringOnly}
-            disabled={!jobsOk}
             onChange={(e) => { setHiringOnly(e.target.checked); setShown(PAGE); }}
             className="h-4 w-4 accent-[var(--accent)]"
           />
@@ -113,8 +106,8 @@ export default function Results({ rows, jobsOk, jobsError, jobsFetchedAt, stats 
 function EmployerCard({ row }: { row: EmployerRow }) {
   const [allJobs, setAllJobs] = useState(false);
   const jobs = allJobs ? row.jobs : row.jobs.slice(0, 4);
-  const prefixNames = row.jobCompanies.filter((c) => c.toUpperCase() !== row.name.toUpperCase());
-  const partial = row.jobs.some((j) => j.kind === "prefix");
+  const [service, slug] = (row.board ?? ":").split(":");
+  const guessed = row.jobs.some((j) => j.kind === "prefix");
 
   return (
     <li className="rounded-xl border border-line bg-surface p-4 sm:p-5">
@@ -139,7 +132,7 @@ function EmployerCard({ row }: { row: EmployerRow }) {
                   {j.title}
                 </a>
                 <span className="text-sm text-muted">
-                  {[j.level, fmtDay(j.published)].filter(Boolean).join(" · ")}
+                  {[shortLocation(j.location), fmtDay(j.published)].filter(Boolean).join(" · ")}
                 </span>
               </li>
             ))}
@@ -149,14 +142,13 @@ function EmployerCard({ row }: { row: EmployerRow }) {
               {allJobs ? "Show fewer" : `Show all ${row.jobs.length} jobs`}
             </button>
           )}
-          {partial && prefixNames.length > 0 && (
-            <p className="mt-2 text-xs text-muted">
-              Matched by name: jobs are posted as “{prefixNames.join("”, “")}”, and the filings are under “{row.name}”.
-            </p>
-          )}
+          <p className="mt-2 text-xs text-muted">
+            From {SERVICE_NAMES[service] ?? service} job board “{slug}”.
+            {guessed && " Found from the first word of the employer’s name, so check it’s the same company."}
+          </p>
         </div>
       ) : (
-        <p className="mt-3 text-sm text-muted">No open data jobs found on The Muse right now.</p>
+        <p className="mt-3 text-sm text-muted">No open Chicago data jobs found on their job board, or we couldn’t find their job board yet.</p>
       )}
 
       <details className="mt-3 text-sm">
@@ -174,7 +166,7 @@ function EmployerCard({ row }: { row: EmployerRow }) {
               <tr key={i} className="border-t border-line">
                 <td className="py-1 pr-2">{f.jobTitle}</td>
                 <td className="py-1 pr-2">{f.wageLevel || "—"}</td>
-                <td className="py-1 whitespace-nowrap">{fmtDay(f.date)} {f.date.slice(0, 4)}</td>
+                <td className="py-1 whitespace-nowrap">{fmtDay(f.date)}</td>
               </tr>
             ))}
           </tbody>
