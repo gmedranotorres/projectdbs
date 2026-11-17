@@ -1,47 +1,71 @@
 @import "tailwindcss";
 
-/* Paper and pine green, from the proposal. Contrast checked against --bg. */
+/* Deep water, from the proposal (project-proposal/index.html): the page gets
+   darker the further down you go, with aqua for what matters. */
 :root {
-  --bg: #f5f3ee;
-  --surface: #ffffff;
-  --ink: #17241f;
-  --muted: #55625c;
-  --line: #dcd8cd;
-  --accent: #1f5c46;      /* pine */
-  --accent-soft: #e2efe8;
-  --warn-soft: #fbf1dc;
-  --warn-ink: #6b4a0f;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0d1714;
-    --surface: #14211d;
-    --ink: #e9f2ee;
-    --muted: #a8b8b1;
-    --line: #2a3a34;
-    --accent: #7fd1ae;
-    --accent-soft: #1b3229;
-    --warn-soft: #2d2512;
-    --warn-ink: #f0d79c;
-  }
+  color-scheme: dark;
+  --ink: #eef8fa;
+  --muted: #bcd6dd;
+  --aqua: #6fe7dd;
+  --abyss: #020e1c;
+  --card: rgba(255, 255, 255, 0.08);
+  --line: rgba(111, 231, 221, 0.28);
 }
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
+  --color-accent: var(--aqua);
+  --color-abyss: var(--abyss);
+  --color-surface: var(--card);
   --color-line: var(--line);
-  --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
-  --color-warn-soft: var(--warn-soft);
-  --color-warn-ink: var(--warn-ink);
-  --font-display: var(--font-fraunces);
-  --font-sans: var(--font-inter);
+  --font-display: ui-serif, Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+/* The water lives on the root so the bubbles can sit between it and the words. */
+html {
+  background: var(--abyss) linear-gradient(180deg, #0a4a64 0%, #083e5a 18%, #062a45 50%, var(--abyss) 100%) no-repeat;
+}
 body {
-  background: var(--bg);
+  margin: 0;
   color: var(--ink);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font: 400 1.0625rem/1.6 var(--font-sans);
+}
+
+#bubbles { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.depth { position: fixed; top: 0; right: 0; width: 3px; height: 100vh; background: var(--aqua); transform: scaleY(0); transform-origin: top; z-index: 1; }
+
+.hero { position: relative; overflow: hidden; padding: 4rem 1rem 6.5rem; }
+.rays {
+  position: absolute; inset: -20% -10% 0;
+  background: repeating-linear-gradient(105deg, rgba(255, 255, 255, 0.09) 0 7%, transparent 7% 19%);
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%);
+  mask-image: linear-gradient(180deg, #000, transparent 85%);
+  animation: rays 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes rays { from { transform: translateX(-3%) skewX(-3deg); opacity: 0.6; } to { transform: translateX(3%) skewX(3deg); opacity: 1; } }
+.wave {
+  position: absolute; left: 0; bottom: 0; width: 200%; height: 90px;
+  -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent);
+  mask-image: linear-gradient(180deg, #000 35%, transparent);
+  animation: drift 18s linear infinite;
+  pointer-events: none;
+}
+.wave.two { height: 70px; animation-duration: 11s; animation-direction: reverse; }
+.wave path { fill: rgba(255, 255, 255, 0.07); }
+@keyframes drift { to { transform: translateX(-50%); } }
+
+/* The one thing to read before applying: an aqua edge, like the proposal's roadmap. */
+.callout { border-left: 3px solid var(--aqua); }
+
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rays, .wave { animation: none; }
+  #bubbles { display: none; }
 }

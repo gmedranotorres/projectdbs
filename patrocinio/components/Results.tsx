@@ -40,9 +40,9 @@ export default function Results({ rows, stats }: Props) {
   return (
     <section aria-label="Employers" className="mt-8">
       <p className="text-lg">
-        <strong>{stats.employers.toLocaleString()} employers</strong> filed {stats.filings.toLocaleString()} visa filings
+        <strong className="text-accent">{stats.employers.toLocaleString()} employers</strong> filed {stats.filings.toLocaleString()} visa filings
         for data roles in Chicago between Oct 2024 and Sep 2025.{" "}
-        <strong>{stats.employersHiring} of them</strong> have {stats.jobs} data jobs open in Chicago now.
+        <strong className="text-accent">{stats.employersHiring} of them</strong> have {stats.jobs} data jobs open in Chicago now.
       </p>
       <p className="mt-1 text-sm text-muted">
         Open jobs checked{" "}
@@ -58,7 +58,7 @@ export default function Results({ rows, stats }: Props) {
             value={query}
             onChange={(e) => { setQuery(e.target.value); setShown(PAGE); }}
             placeholder="Search an employer, e.g. Google"
-            className="w-full rounded-lg border border-line bg-surface px-3 py-2"
+            className="w-full rounded-lg border border-line bg-abyss/40 px-3 py-2 placeholder:text-muted/80"
           />
         </label>
         <label className="flex items-center gap-2 text-sm">
@@ -66,7 +66,7 @@ export default function Results({ rows, stats }: Props) {
             type="checkbox"
             checked={hiringOnly}
             onChange={(e) => { setHiringOnly(e.target.checked); setShown(PAGE); }}
-            className="h-4 w-4 accent-[var(--accent)]"
+            className="h-4 w-4 accent-[var(--aqua)]"
           />
           Only employers hiring now
         </label>
@@ -96,7 +96,7 @@ export default function Results({ rows, stats }: Props) {
       {shown < filtered.length && (
         <button
           onClick={() => setShown(shown + PAGE)}
-          className="mt-6 w-full rounded-lg border border-line bg-surface py-3 font-medium"
+          className="mt-6 min-h-11 w-full rounded-full border border-accent bg-abyss/35 py-3 font-semibold hover:bg-abyss/60"
         >
           Show more ({filtered.length - shown} left)
         </button>
