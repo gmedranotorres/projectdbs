@@ -6,6 +6,8 @@ International students searching for US jobs can't tell which ones are open to t
 
 Live site: https://projectdbs-patrociniov1.vercel.app
 
+Plan for v2, from testing v1 with four people: [V2_PLAN.md](V2_PLAN.md)
+
 ## How the data moves
 
 ```
